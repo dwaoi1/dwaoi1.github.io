@@ -89,11 +89,20 @@ def main():
     # Deduplicate based on something unique if needed, e.g., Picture URL or Name+Color?
     # For now, we'll keep all entries.
     
-    output_file = "one_piece_cards.json"
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(all_cards, f, indent=2, ensure_ascii=False)
+    # Save directly to the React app's data file
+    output_file = "../one_piece_app/src/data.json"
     
-    print(f"Done. Saved {len(all_cards)} cards to {output_file}")
+    try:
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(all_cards, f, indent=2, ensure_ascii=False)
+        print(f"Done. Saved {len(all_cards)} cards to {output_file}")
+    except FileNotFoundError:
+        # Fallback if the directory doesn't exist (e.g. running standalone)
+        fallback_file = "one_piece_cards.json"
+        print(f"Could not find {output_file}. Saving to {fallback_file} instead.")
+        with open(fallback_file, 'w', encoding='utf-8') as f:
+            json.dump(all_cards, f, indent=2, ensure_ascii=False)
+        print(f"Done. Saved {len(all_cards)} cards to {fallback_file}")
 
 if __name__ == "__main__":
     main()
