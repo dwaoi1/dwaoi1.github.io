@@ -1,9 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import './CardTable.css';
 
 const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 100;
 
   // Extract unique values for dropdowns
   const characters = useMemo(() => {
@@ -24,6 +26,67 @@ const CardTable = ({ data }) => {
       return charMatch && colorMatch;
     });
   }, [data, selectedCharacter, selectedColor]);
+
+  // Reset page on filter change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCharacter, selectedColor]);
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Generate page numbers to display
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxVisiblePages = 5;
+    
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    if (startPage > 1) {
+        pageNumbers.push(
+            <button key={1} onClick={() => handlePageChange(1)} className={currentPage === 1 ? 'active' : ''}>
+                1
+            </button>
+        );
+        if (startPage > 2) {
+            pageNumbers.push(<span key="dots1" className="pagination-dots">...</span>);
+        }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(
+            <button key={i} onClick={() => handlePageChange(i)} className={currentPage === i ? 'active' : ''}>
+                {i}
+            </button>
+        );
+    }
+
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            pageNumbers.push(<span key="dots2" className="pagination-dots">...</span>);
+        }
+        pageNumbers.push(
+            <button key={totalPages} onClick={() => handlePageChange(totalPages)} className={currentPage === totalPages ? 'active' : ''}>
+                {totalPages}
+            </button>
+        );
+    }
+
+    return pageNumbers;
+  };
 
   return (
     <div className="card-table-container">
@@ -71,8 +134,8 @@ const CardTable = ({ data }) => {
                 </tr>
             </thead>
             <tbody>
-                {filteredData.length > 0 ? (
-                    filteredData.map((item, index) => (
+                {currentItems.length > 0 ? (
+                    currentItems.map((item, index) => (
                         <tr key={index}>
                             <td className="picture-cell">
                                 <img 
@@ -93,6 +156,32 @@ const CardTable = ({ data }) => {
                 )}
             </tbody>
         </table>
+      </div>
+
+      {filteredData.length > itemsPerPage && (
+        <div className="pagination">
+            <button 
+                onClick={() => handlePageChange(currentPage - 1)} 
+                disabled={currentPage === 1}
+                className="pagination-btn"
+            >
+                Prev
+            </button>
+            <div className="page-numbers">
+                {renderPageNumbers()}
+            </div>
+            <button 
+                onClick={() => handlePageChange(currentPage + 1)} 
+                disabled={currentPage === totalPages}
+                className="pagination-btn"
+            >
+                Next
+            </button>
+        </div>
+      )}
+      
+      <div className="pagination-info">
+        Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredData.length)} of {filteredData.length} results
       </div>
     </div>
   );
