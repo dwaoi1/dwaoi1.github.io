@@ -138,12 +138,14 @@ const CardTable = ({ data }) => {
                     currentItems.map((item, index) => (
                         <tr key={index}>
                             <td className="picture-cell">
-                                <img 
-                                    src={item.Picture} 
-                                    alt={item.Character} 
-                                    loading="lazy"
-                                    onError={(e) => {e.target.src = 'https://via.placeholder.com/150?text=No+Image'}} 
-                                />
+                                <a href={item.Picture} target="_blank" rel="noopener noreferrer">
+                                    <img 
+                                        src={item.Picture} 
+                                        alt={item.Character} 
+                                        loading="lazy"
+                                        onError={(e) => {e.target.src = 'https://via.placeholder.com/150?text=No+Image'}} 
+                                    />
+                                </a>
                             </td>
                             <td>{item.Character}</td>
                             <td>{item.Color}</td>
