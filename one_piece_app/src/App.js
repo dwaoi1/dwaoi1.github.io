@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>One Piece Card Game Index</h1>
+        <p>{cardData.length} cards have been loaded</p>
       </header>
       <main>
         <CardTable data={cardData} />
