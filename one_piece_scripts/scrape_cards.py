@@ -65,14 +65,13 @@ def scrape_card_data(html_content):
     return cards_data
 
 def main():
-    # Look for all .html files in the current directory or a specific input directory
-    # For this script, we'll look in the current directory where the script is run
-    html_files = glob.glob("*.html")
+    # Look for all .html files in the current directory and the html_files subdirectory
+    html_files = glob.glob("*.html") + glob.glob("html_files/*.html")
     
     all_cards = []
     
     if not html_files:
-        print("No HTML files found in the current directory.")
+        print("No HTML files found in the current directory or html_files folder.")
         # For testing purposes, we might want to allow specifying a path
         return
 
