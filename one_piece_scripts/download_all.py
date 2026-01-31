@@ -103,9 +103,10 @@ def deduplicate_by_picture(cards):
     seen_pictures = set()
     for card in cards:
         picture = card.get("Picture", "")
-        if picture and picture in seen_pictures:
+        picture_key = os.path.basename(picture) if picture else ""
+        if picture_key and picture_key in seen_pictures:
             continue
-        seen_pictures.add(picture)
+        seen_pictures.add(picture_key)
         unique_cards.append(card)
     return unique_cards
 
