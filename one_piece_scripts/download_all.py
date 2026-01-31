@@ -110,9 +110,6 @@ def parse_downloaded_html(output_dir):
         print(f"Extracted {len(data)} cards from {file_path}")
 
     try:
-        output_dir = os.path.dirname(OUTPUT_JSON)
-        if output_dir:
-            os.makedirs(output_dir, exist_ok=True)
         with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
             json.dump(all_cards, f, indent=2, ensure_ascii=False)
         print(f"Done. Saved {len(all_cards)} cards to {OUTPUT_JSON}")
@@ -152,7 +149,7 @@ def download_series():
         print(f"Downloading Series ID: {s_id}...")
         
         try:
-            payload = {'series': s_id, 'reprintsFlag': 'on'}
+            payload = {'series': s_id, 'reprintsFlag': 'off'}
             response = requests.post(
                 URL,
                 headers={"User-Agent": USER_AGENT},
