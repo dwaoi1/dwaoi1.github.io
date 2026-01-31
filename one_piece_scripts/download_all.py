@@ -7,7 +7,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-SERIES_IDS = [
+ASIA_EN_SERIES_IDS = [
     '556302', '556301', '556203', '556202', '556201',
     '556114', '556113', '556112', '556111', '556110',
     '556109', '556108', '556107', '556106', '556105',
@@ -21,9 +21,15 @@ SERIES_IDS = [
     '556801',
 ]
 
-URL = "https://asia-en.onepiece-cardgame.com/cardlist/"
+JAPAN_SERIES_IDS = [
+    '550114',
+]
+
+ASIA_EN_URL = "https://asia-en.onepiece-cardgame.com/cardlist/"
+JAPAN_URL = "https://www.onepiece-cardgame.com/cardlist/"
 OUTPUT_DIR = "html_files"
 USE_LIVE_SERIES_IDS = True
+USE_LIVE_JAPAN_SERIES_IDS = True
 OUTPUT_JSON = "../one_piece_app/src/data.json"
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -32,8 +38,8 @@ USER_AGENT = (
 )
 
 
-def fetch_series_ids():
-    response = requests.get(URL, headers={"User-Agent": USER_AGENT}, timeout=30)
+def fetch_series_ids(source_url):
+    response = requests.get(source_url, headers={"User-Agent": USER_AGENT}, timeout=30)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, 'html.parser')
     series_select = soup.find('select', {'name': 'series'})
@@ -46,7 +52,7 @@ def fetch_series_ids():
             ids.append(value)
     return list(dict.fromkeys(ids))
 
-def scrape_card_data(html_content):
+def scrape_card_data(html_content, base_url):
     soup = BeautifulSoup(html_content, 'html.parser')
     cards_data = []
 
@@ -75,9 +81,9 @@ def scrape_card_data(html_content):
                     picture_url = img_tag['src']
 
             if picture_url.startswith('..'):
-                picture_url = picture_url.replace('..', 'https://asia-en.onepiece-cardgame.com')
+                picture_url = picture_url.replace('..', base_url)
             elif picture_url.startswith('/'):
-                picture_url = 'https://asia-en.onepiece-cardgame.com' + picture_url
+                picture_url = base_url + picture_url
 
             cards_data.append({
                 "Character": character_name,
@@ -90,6 +96,18 @@ def scrape_card_data(html_content):
             continue
 
     return cards_data
+
+
+def deduplicate_by_picture(cards):
+    unique_cards = []
+    seen_pictures = set()
+    for card in cards:
+        picture = card.get("Picture", "")
+        if picture and picture in seen_pictures:
+            continue
+        seen_pictures.add(picture)
+        unique_cards.append(card)
+    return unique_cards
 
 
 def parse_downloaded_html(output_dir):
@@ -105,9 +123,16 @@ def parse_downloaded_html(output_dir):
         print(f"Reading {file_path}...")
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        data = scrape_card_data(content)
+        filename = os.path.basename(file_path)
+        if filename.startswith("japan_"):
+            base_url = "https://www.onepiece-cardgame.com"
+        else:
+            base_url = "https://asia-en.onepiece-cardgame.com"
+        data = scrape_card_data(content, base_url)
         all_cards.extend(data)
         print(f"Extracted {len(data)} cards from {file_path}")
+
+    all_cards = deduplicate_by_picture(all_cards)
 
     try:
         with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
@@ -124,49 +149,69 @@ def download_series():
     output_dir = OUTPUT_DIR
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-        
-    series_ids = SERIES_IDS
-    if USE_LIVE_SERIES_IDS:
-        try:
-            live_series_ids = fetch_series_ids()
-            if live_series_ids:
-                series_ids = live_series_ids
-            else:
-                print("Fetched 0 series IDs; falling back to static list.")
-        except Exception as exc:
-            print(f"Failed to fetch series IDs ({exc}); falling back to static list.")
 
-    print(f"Starting download of {len(series_ids)} card sets...")
-    
-    for s_id in series_ids:
-        output_path = os.path.join(output_dir, f"series_{s_id}.html")
-        
-        # Skip if already downloaded
-        if os.path.exists(output_path):
-            print(f"Skipping {s_id} (already exists)")
-            continue
-            
-        print(f"Downloading Series ID: {s_id}...")
-        
-        try:
-            payload = {'series': s_id, 'reprintsFlag': 'off'}
-            response = requests.post(
-                URL,
-                headers={"User-Agent": USER_AGENT},
-                data=payload,
-                timeout=30,
-            )
-            if response.status_code == 200:
-                with open(output_path, 'w', encoding='utf-8') as f:
-                    f.write(response.text)
-                print(f"  -> Saved to {output_path}")
-            else:
-                print(f"  -> Failed: Status {response.status_code}")
-        except Exception as e:
-            print(f"  -> Error: {e}")
-            
-        # Be nice to the server
-        time.sleep(1)
+    sources = [
+        {
+            "name": "asia_en",
+            "url": ASIA_EN_URL,
+            "series_ids": ASIA_EN_SERIES_IDS,
+            "use_live_series_ids": USE_LIVE_SERIES_IDS,
+        },
+        {
+            "name": "japan",
+            "url": JAPAN_URL,
+            "series_ids": JAPAN_SERIES_IDS,
+            "use_live_series_ids": USE_LIVE_JAPAN_SERIES_IDS,
+        },
+    ]
+
+    total_series = 0
+    for source in sources:
+        series_ids = source["series_ids"]
+        if source["use_live_series_ids"]:
+            try:
+                live_series_ids = fetch_series_ids(source["url"])
+                if live_series_ids:
+                    series_ids = live_series_ids
+                else:
+                    print("Fetched 0 series IDs; falling back to static list.")
+            except Exception as exc:
+                print(f"Failed to fetch series IDs ({exc}); falling back to static list.")
+        source["resolved_series_ids"] = series_ids
+        total_series += len(series_ids)
+
+    print(f"Starting download of {total_series} card sets...")
+
+    for source in sources:
+        for s_id in source["resolved_series_ids"]:
+            output_path = os.path.join(output_dir, f"{source['name']}_series_{s_id}.html")
+
+            # Skip if already downloaded
+            if os.path.exists(output_path):
+                print(f"Skipping {source['name']} {s_id} (already exists)")
+                continue
+
+            print(f"Downloading {source['name']} Series ID: {s_id}...")
+
+            try:
+                payload = {'series': s_id, 'reprintsFlag': 'off'}
+                response = requests.post(
+                    source["url"],
+                    headers={"User-Agent": USER_AGENT},
+                    data=payload,
+                    timeout=30,
+                )
+                if response.status_code == 200:
+                    with open(output_path, 'w', encoding='utf-8') as f:
+                        f.write(response.text)
+                    print(f"  -> Saved to {output_path}")
+                else:
+                    print(f"  -> Failed: Status {response.status_code}")
+            except Exception as e:
+                print(f"  -> Error: {e}")
+
+            # Be nice to the server
+            time.sleep(1)
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Download and parse One Piece card data.")
