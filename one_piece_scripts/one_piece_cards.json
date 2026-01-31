@@ -1265,51 +1265,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-001_p4.png?251219"
   },
   {
-    "Character": "Jozu",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-008_r1.png?251219"
-  },
-  {
-    "Character": "Marco",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-018_r1.png?251219"
-  },
-  {
-    "Character": "Rakuyo",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-019_r1.png?251219"
-  },
-  {
-    "Character": "You May Be a Fool...but I Still Love You",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-023_r1.png?251219"
-  },
-  {
-    "Character": "Izo",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-003_r1.png?251219"
-  },
-  {
-    "Character": "Speed Jil",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-006_r1.png?251219"
-  },
-  {
-    "Character": "Namule",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-007_r1.png?251219"
-  },
-  {
-    "Character": "Haruta",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-009_r1.png?251219"
-  },
-  {
-    "Character": "Fossa",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-010_r1.png?251219"
-  },
-  {
     "Character": "Atmos",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST15-001.png?251219"
@@ -1335,11 +1290,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST15-005.png?251219"
   },
   {
-    "Character": "Bartolomeo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-029_r1.png?251219"
-  },
-  {
     "Character": "Fleeting Lullaby",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-057_p1.png?251219"
@@ -1358,11 +1308,6 @@
     "Character": "Tot Musica",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-060_p1.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-061_r1.png?251219"
   },
   {
     "Character": "Uta",
@@ -1415,51 +1360,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-060_p2.png?251219"
   },
   {
-    "Character": "Donquixote Doflamingo",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-073_r1.png?251219"
-  },
-  {
-    "Character": "Overheat",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-086_r1.png?251219"
-  },
-  {
-    "Character": "Gecko Moria",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-054_r1.png?251219"
-  },
-  {
-    "Character": "Bartholomew Kuma",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-057_r1.png?251219"
-  },
-  {
-    "Character": "Jinbe",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-030_r1.png?251219"
-  },
-  {
-    "Character": "Edward Weevil",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-002_r1.png?251219"
-  },
-  {
-    "Character": "Gecko Moria",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-004_r1.png?251219"
-  },
-  {
-    "Character": "Dracule Mihawk",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-005_r2.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-008_r2.png?251219"
-  },
-  {
     "Character": "Crocodile",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST17-001.png?251219"
@@ -1490,49 +1390,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-060_p3.png?251219"
   },
   {
-    "Character": "Uso-Hachi",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-061_r1.png?251219"
-  },
-  {
-    "Character": "O-Robi",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-063_r1.png?251219"
-  },
-  {
-    "Character": "Jinbe",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-066_r1.png?251219"
-  },
-  {
-    "Character": "Zoro-Juurou",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-067_r1.png?251219"
-  },
-  {
-    "Character": "Chopa-Emon",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-068_r1.png?251219"
-  },
-  {
-    "Character": "Fra-Nosuke",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-070_r1.png?251219"
-  },
-  {
-    "Character": "Hone-Kichi",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-072_r1.png?251219"
-  },
-  {
     "Character": "When You're at Sea You Fight against Pirates!!",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-076_p1.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-041_r1.png?251219"
   },
   {
     "Character": "Uso-Hachi",
@@ -1565,51 +1425,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-093_p2.png?251219"
   },
   {
-    "Character": "Koby",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-098_r1.png?251219"
-  },
-  {
-    "Character": "Tsuru",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-106_r1.png?251219"
-  },
-  {
-    "Character": "Donquixote Rosinante",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-108_r1.png?251219"
-  },
-  {
-    "Character": "Jaguar.D.Saul",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-109_r1.png?251219"
-  },
-  {
-    "Character": "Helmeppo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-113_r1.png?251219"
-  },
-  {
-    "Character": "Yamakaji",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-116_r1.png?251219"
-  },
-  {
-    "Character": "Ice Age",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-117_r1.png?251219"
-  },
-  {
-    "Character": "Vergo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-079_r1.png?251219"
-  },
-  {
-    "Character": "Brannew",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-089_r1.png?251219"
-  },
-  {
     "Character": "Smoker",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST19-001.png?251219"
@@ -1638,51 +1453,6 @@
     "Character": "Charlotte Katakuri",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-099_p2.png?251219"
-  },
-  {
-    "Character": "Charlotte Opera",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-106_r1.png?251219"
-  },
-  {
-    "Character": "Charlotte Galette",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-107_r1.png?251219"
-  },
-  {
-    "Character": "Charlotte Smoothie",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-110_r2.png?251219"
-  },
-  {
-    "Character": "Charlotte Pudding",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-112_r1.png?251219"
-  },
-  {
-    "Character": "Streusen",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-115_r1.png?251219"
-  },
-  {
-    "Character": "Ikoku Sovereignty",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-118_r1.png?251219"
-  },
-  {
-    "Character": "Thunder Bolt",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-121_r2.png?251219"
-  },
-  {
-    "Character": "Charlotte Daifuku",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST07-005_r1.png?251219"
-  },
-  {
-    "Character": "Pekoms",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST07-014_r1.png?251219"
   },
   {
     "Character": "Charlotte Katakuri",
@@ -2030,46 +1800,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-001_p2.png?251219"
   },
   {
-    "Character": "Howling Gab",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-006_r1.png?251219"
-  },
-  {
-    "Character": "Bonk Punch",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-010_r1.png?251219"
-  },
-  {
-    "Character": "Hongo",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-011_r1.png?251219"
-  },
-  {
-    "Character": "Monster",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-012_r1.png?251219"
-  },
-  {
-    "Character": "Yasopp",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-013_r1.png?251219"
-  },
-  {
-    "Character": "Limejuice",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-014_r1.png?251219"
-  },
-  {
-    "Character": "Lucky.Roux",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-015_r1.png?251219"
-  },
-  {
-    "Character": "Rockstar",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-016_r1.png?251219"
-  },
-  {
     "Character": "Come On!! We'll Fight You!!",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-020_p1.png?251219"
@@ -2100,54 +1830,14 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST23-005.png?251219"
   },
   {
-    "Character": "Scratchmen Apoo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-015_r1.png?251219"
-  },
-  {
     "Character": "Jewelry Bonney",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-019_p3.png?251219"
   },
   {
-    "Character": "Urouge",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-021_r1.png?251219"
-  },
-  {
-    "Character": "Caribou",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-023_r1.png?251219"
-  },
-  {
-    "Character": "Coribou",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-025_r1.png?251219"
-  },
-  {
-    "Character": "Bartolomeo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-031_r1.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-033_r1.png?251219"
-  },
-  {
-    "Character": "Roronoa Zoro",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-034_r1.png?251219"
-  },
-  {
     "Character": "Demonic Aura Nine-Sword Style Asura Demon Nine Flash",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-036_p1.png?251219"
-  },
-  {
-    "Character": "More Pizza!!",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-037_r1.png?251219"
   },
   {
     "Character": "Capone\"Gang\"Bege",
@@ -2180,49 +1870,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-042_p2.png?251219"
   },
   {
-    "Character": "Alvida",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-043_r1.png?251219"
-  },
-  {
-    "Character": "Cabaji",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-045_r1.png?251219"
-  },
-  {
-    "Character": "Buggy",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-051_r1.png?251219"
-  },
-  {
-    "Character": "Mohji",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-053_r1.png?251219"
-  },
-  {
-    "Character": "Richie",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-054_r1.png?251219"
-  },
-  {
-    "Character": "Mr.1(Daz.Bonez)",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-055_r1.png?251219"
-  },
-  {
-    "Character": "Mr.3(Galdino)",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-056_r1.png?251219"
-  },
-  {
     "Character": "Cross Guild",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-057_p1.png?251219"
-  },
-  {
-    "Character": "Buggy",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-084_r1.png?251219"
   },
   {
     "Character": "Alvida",
@@ -2250,54 +1900,14 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST25-005.png?251219"
   },
   {
-    "Character": "San-Gorou",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-065_r1.png?251219"
-  },
-  {
-    "Character": "Jinbe",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-066_r2.png?251219"
-  },
-  {
-    "Character": "Fra-Nosuke",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-070_r2.png?251219"
-  },
-  {
     "Character": "Monkey.D.Luffy",
     "Color": "Purple/Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-061_p2.png?251219"
   },
   {
-    "Character": "Usopp",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-063_r1.png?251219"
-  },
-  {
-    "Character": "Nami",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-070_r1.png?251219"
-  },
-  {
-    "Character": "Roronoa Zoro",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-076_r1.png?251219"
-  },
-  {
-    "Character": "Gum-Gum Lightning",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-077_r1.png?251219"
-  },
-  {
     "Character": "Gum-Gum Giant",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-078_p1.png?251219"
-  },
-  {
-    "Character": "Brook",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-010_r1.png?251219"
   },
   {
     "Character": "Soba Mask",
@@ -2330,51 +1940,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-081_p2.png?251219"
   },
   {
-    "Character": "Van Augur",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-083_r1.png?251219"
-  },
-  {
-    "Character": "Jesus Burgess",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-086_r1.png?251219"
-  },
-  {
-    "Character": "Shiryu",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-088_r1.png?251219"
-  },
-  {
-    "Character": "Stronger",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-089_r1.png?251219"
-  },
-  {
-    "Character": "Doc Q",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-090_r1.png?251219"
-  },
-  {
-    "Character": "Vasco Shot",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-091_r1.png?251219"
-  },
-  {
-    "Character": "Laffitte",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-095_r1.png?251219"
-  },
-  {
-    "Character": "Fullalead",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-099_r1.png?251219"
-  },
-  {
-    "Character": "Sanjuan.Wolf",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-084_r1.png?251219"
-  },
-  {
     "Character": "Avalo Pizarro",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST27-001.png?251219"
@@ -2405,49 +1970,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-022_p3.png?251219"
   },
   {
-    "Character": "Inuarashi",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-100_r2.png?251219"
-  },
-  {
-    "Character": "Kawamatsu",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-103_r1.png?251219"
-  },
-  {
-    "Character": "Kikunojo",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-104_r1.png?251219"
-  },
-  {
-    "Character": "Denjiro",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-109_r1.png?251219"
-  },
-  {
-    "Character": "Nekomamushi",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-110_r2.png?251219"
-  },
-  {
-    "Character": "Raizo",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-112_r1.png?251219"
-  },
-  {
     "Character": "Blaze Slice",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-116_p1.png?251219"
-  },
-  {
-    "Character": "Portgas.D.Ace",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-035_r1.png?251219"
-  },
-  {
-    "Character": "Yamato",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-016_r1.png?251219"
   },
   {
     "Character": "Ashura Doji",
@@ -15240,11 +14765,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/PRB02-014_p2.png?251219"
   },
   {
-    "Character": "Tony Tony.Chopper",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-006_r1.png?251219"
-  },
-  {
     "Character": "Otama",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-006_p1.png?251219"
@@ -15260,11 +14780,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-006_p3.png?251219"
   },
   {
-    "Character": "Otama",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-006_r1.png?251219"
-  },
-  {
     "Character": "Nami",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-016_p7.png?251219"
@@ -15275,11 +14790,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-024_p2.png?251219"
   },
   {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-024_r1.png?251219"
-  },
-  {
     "Character": "Radical Beam!!",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-029_p3.png?251219"
@@ -15288,11 +14798,6 @@
     "Character": "Radical Beam!!",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-029_p4.png?251219"
-  },
-  {
-    "Character": "Radical Beam!!",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-029_r1.png?251219"
   },
   {
     "Character": "Izo",
@@ -15310,11 +14815,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-033_p4.png?251219"
   },
   {
-    "Character": "Izo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-033_r1.png?251219"
-  },
-  {
     "Character": "Kouzuki Momonosuke",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-041_p2.png?251219"
@@ -15330,29 +14830,14 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-041_p4.png?251219"
   },
   {
-    "Character": "Kouzuki Momonosuke",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-041_r1.png?251219"
-  },
-  {
     "Character": "Trafalgar Law",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-047_p3.png?251219"
   },
   {
-    "Character": "Trafalgar Law",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-047_r1.png?251219"
-  },
-  {
     "Character": "Eustass\"Captain\"Kid",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-051_p3.png?251219"
-  },
-  {
-    "Character": "Eustass\"Captain\"Kid",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-051_r1.png?251219"
   },
   {
     "Character": "Raizo",
@@ -15365,19 +14850,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-052_p2.png?251219"
   },
   {
-    "Character": "Raizo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-052_r1.png?251219"
-  },
-  {
     "Character": "Dracule Mihawk",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-070_p3.png?251219"
-  },
-  {
-    "Character": "Dracule Mihawk",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-070_r1.png?251219"
   },
   {
     "Character": "Boa Hancock",
@@ -15385,24 +14860,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-078_p3.png?251219"
   },
   {
-    "Character": "Boa Hancock",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-078_r1.png?251219"
-  },
-  {
     "Character": "Shanks",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p5.png?251219"
-  },
-  {
-    "Character": "Shanks",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-120_r1.png?251219"
-  },
-  {
-    "Character": "Shanks",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-120_r2.png?251219"
   },
   {
     "Character": "Yamato",
@@ -15410,24 +14870,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-121_p3.png?251219"
   },
   {
-    "Character": "Yamato",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-121_r1.png?251219"
-  },
-  {
     "Character": "Edward.Newgate",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-004_p4.png?251219"
-  },
-  {
-    "Character": "Edward.Newgate",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-004_r1.png?251219"
-  },
-  {
-    "Character": "Portgas.D.Ace",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-013_r1.png?251219"
   },
   {
     "Character": "Makino",
@@ -15438,11 +14883,6 @@
     "Character": "Makino",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-015_p2.png?251219"
-  },
-  {
-    "Character": "Makino",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-015_r1.png?251219"
   },
   {
     "Character": "Marco",
@@ -15460,11 +14900,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-018_p5.png?251219"
   },
   {
-    "Character": "Marco",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-018_r2.png?251219"
-  },
-  {
     "Character": "Judgment of Hell",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-089_p1.png?251219"
@@ -15480,29 +14915,14 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-089_p3.png?251219"
   },
   {
-    "Character": "Judgment of Hell",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-089_r1.png?251219"
-  },
-  {
     "Character": "Kuzan",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-096_p4.png?251219"
   },
   {
-    "Character": "Kuzan",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-096_r1.png?251219"
-  },
-  {
     "Character": "Sakazuki",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-099_p5.png?251219"
-  },
-  {
-    "Character": "Sakazuki",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-099_r1.png?251219"
   },
   {
     "Character": "Tsuru",
@@ -15515,19 +14935,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-106_p5.png?251219"
   },
   {
-    "Character": "Tsuru",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-106_r2.png?251219"
-  },
-  {
     "Character": "Borsalino",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-114_p4.png?251219"
-  },
-  {
-    "Character": "Borsalino",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-114_r1.png?251219"
   },
   {
     "Character": "Ice Age",
@@ -15540,19 +14950,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-117_p5.png?251219"
   },
   {
-    "Character": "Ice Age",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-117_r2.png?251219"
-  },
-  {
     "Character": "Kuzan",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-121_p2.png?251219"
-  },
-  {
-    "Character": "Kuzan",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-121_r1.png?251219"
   },
   {
     "Character": "Izo",
@@ -15570,11 +14970,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-003_p5.png?251219"
   },
   {
-    "Character": "Izo",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-003_r2.png?251219"
-  },
-  {
     "Character": "Gum-Gum Giant Gavel",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-055_p2.png?251219"
@@ -15583,11 +14978,6 @@
     "Character": "Gum-Gum Giant Gavel",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-055_p3.png?251219"
-  },
-  {
-    "Character": "Gum-Gum Giant Gavel",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-055_r1.png?251219"
   },
   {
     "Character": "Sanji's Pilaf",
@@ -15605,11 +14995,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-056_p3.png?251219"
   },
   {
-    "Character": "Sanji's Pilaf",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-056_r1.png?251219"
-  },
-  {
     "Character": "Three Thousand Worlds",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-057_p1.png?251219"
@@ -15625,11 +15010,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-057_p3.png?251219"
   },
   {
-    "Character": "Three Thousand Worlds",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-057_r1.png?251219"
-  },
-  {
     "Character": "Kalifa",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-060_p1.png?251219"
@@ -15640,11 +15020,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-060_p2.png?251219"
   },
   {
-    "Character": "Kalifa",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-060_r1.png?251219"
-  },
-  {
     "Character": "Vergo",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-079_p2.png?251219"
@@ -15653,11 +15028,6 @@
     "Character": "Vergo",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-079_p3.png?251219"
-  },
-  {
-    "Character": "Vergo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-079_r2.png?251219"
   },
   {
     "Character": "Brannew",
@@ -15675,11 +15045,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-089_p5.png?251219"
   },
   {
-    "Character": "Brannew",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-089_r2.png?251219"
-  },
-  {
     "Character": "Air Door",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-094_p1.png?251219"
@@ -15690,19 +15055,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-094_p2.png?251219"
   },
   {
-    "Character": "Air Door",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-094_r1.png?251219"
-  },
-  {
     "Character": "Charlotte Cracker",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-108_p2.png?251219"
-  },
-  {
-    "Character": "Charlotte Cracker",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-108_r1.png?251219"
   },
   {
     "Character": "Charlotte Smoothie",
@@ -15720,19 +15075,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-110_p4.png?251219"
   },
   {
-    "Character": "Charlotte Smoothie",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-110_r1.png?251219"
-  },
-  {
     "Character": "Charlotte Perospero",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-113_p2.png?251219"
-  },
-  {
-    "Character": "Charlotte Perospero",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-113_r1.png?251219"
   },
   {
     "Character": "Shirahoshi",
@@ -15745,11 +15090,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-116_p3.png?251219"
   },
   {
-    "Character": "Shirahoshi",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-116_r1.png?251219"
-  },
-  {
     "Character": "Thunder Bolt",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-121_p4.png?251219"
@@ -15760,24 +15100,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-121_p5.png?251219"
   },
   {
-    "Character": "Thunder Bolt",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-121_r1.png?251219"
-  },
-  {
-    "Character": "Sogeking",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-122_r1.png?251219"
-  },
-  {
     "Character": "Charlotte Katakuri",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-123_p3.png?251219"
-  },
-  {
-    "Character": "Charlotte Katakuri",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-123_r1.png?251219"
   },
   {
     "Character": "Dellinger",
@@ -15790,19 +15115,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-029_p2.png?251219"
   },
   {
-    "Character": "Dellinger",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-029_r1.png?251219"
-  },
-  {
     "Character": "Donquixote Doflamingo",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-031_p2.png?251219"
-  },
-  {
-    "Character": "Donquixote Doflamingo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-031_r1.png?251219"
   },
   {
     "Character": "Baby 5",
@@ -15815,11 +15130,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-032_p2.png?251219"
   },
   {
-    "Character": "Baby 5",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-032_r1.png?251219"
-  },
-  {
     "Character": "Donquixote Family",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-036_p1.png?251219"
@@ -15830,19 +15140,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-036_p2.png?251219"
   },
   {
-    "Character": "Donquixote Family",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-036_r1.png?251219"
-  },
-  {
     "Character": "Kaido",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-044_p3.png?251219"
-  },
-  {
-    "Character": "Kaido",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-044_r1.png?251219"
   },
   {
     "Character": "Gum-Gum Red Roc",
@@ -15860,16 +15160,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-056_p3.png?251219"
   },
   {
-    "Character": "Gum-Gum Red Roc",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-056_r1.png?251219"
-  },
-  {
-    "Character": "Sabo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-083_r1.png?251219"
-  },
-  {
     "Character": "Bartolomeo",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-089_p1.png?251219"
@@ -15885,11 +15175,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-089_p3.png?251219"
   },
   {
-    "Character": "Bartolomeo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-089_r1.png?251219"
-  },
-  {
     "Character": "Barrier!!",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-095_p2.png?251219"
@@ -15898,11 +15183,6 @@
     "Character": "Barrier!!",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-095_p3.png?251219"
-  },
-  {
-    "Character": "Barrier!!",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-095_r1.png?251219"
   },
   {
     "Character": "Capone\"Gang\"Bege",
@@ -15920,19 +15200,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-100_p5.png?251219"
   },
   {
-    "Character": "Capone\"Gang\"Bege",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-100_r1.png?251219"
-  },
-  {
     "Character": "Sanji",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-104_p2.png?251219"
-  },
-  {
-    "Character": "Sanji",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-104_r1.png?251219"
   },
   {
     "Character": "Yamato",
@@ -15940,29 +15210,14 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-112_p3.png?251219"
   },
   {
-    "Character": "Yamato",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-112_r1.png?251219"
-  },
-  {
     "Character": "Koala",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-006_p2.png?251219"
   },
   {
-    "Character": "Koala",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-006_r1.png?251219"
-  },
-  {
     "Character": "Sabo",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-007_p2.png?251219"
-  },
-  {
-    "Character": "Sabo",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-007_r1.png?251219"
   },
   {
     "Character": "Nico Robin",
@@ -15973,11 +15228,6 @@
     "Character": "Nico Robin",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-010_p2.png?251219"
-  },
-  {
-    "Character": "Nico Robin",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-010_r1.png?251219"
   },
   {
     "Character": "Belo Betty",
@@ -15995,11 +15245,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-015_p4.png?251219"
   },
   {
-    "Character": "Belo Betty",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-015_r1.png?251219"
-  },
-  {
     "Character": "Baby 5",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-034_p2.png?251219"
@@ -16015,19 +15260,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-034_p4.png?251219"
   },
   {
-    "Character": "Baby 5",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-034_r1.png?251219"
-  },
-  {
     "Character": "Ulti",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-043_p2.png?251219"
-  },
-  {
-    "Character": "Ulti",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-043_r1.png?251219"
   },
   {
     "Character": "Hound Blaze",
@@ -16045,16 +15280,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-057_p3.png?251219"
   },
   {
-    "Character": "Hound Blaze",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-057_r1.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-069_r1.png?251219"
-  },
-  {
     "Character": "Miss Doublefinger(Zala)",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-073_p1.png?251219"
@@ -16065,24 +15290,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-073_p2.png?251219"
   },
   {
-    "Character": "Miss Doublefinger(Zala)",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-073_r1.png?251219"
-  },
-  {
     "Character": "Eustass\"Captain\"Kid",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-074_p4.png?251219"
-  },
-  {
-    "Character": "Eustass\"Captain\"Kid",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-074_r1.png?251219"
-  },
-  {
-    "Character": "Eustass\"Captain\"Kid",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-074_r2.png?251219"
   },
   {
     "Character": "One-Legged Toy Soldier",
@@ -16100,11 +15310,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-081_p3.png?251219"
   },
   {
-    "Character": "One-Legged Toy Soldier",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-081_r1.png?251219"
-  },
-  {
     "Character": "Shirahoshi",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-082_p1.png?251219"
@@ -16118,11 +15323,6 @@
     "Character": "Shirahoshi",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-082_p3.png?251219"
-  },
-  {
-    "Character": "Shirahoshi",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-082_r1.png?251219"
   },
   {
     "Character": "Satori",
@@ -16140,11 +15340,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-105_p3.png?251219"
   },
   {
-    "Character": "Satori",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-105_r1.png?251219"
-  },
-  {
     "Character": "El Thor",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-114_p2.png?251219"
@@ -16153,11 +15348,6 @@
     "Character": "El Thor",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-114_p3.png?251219"
-  },
-  {
-    "Character": "El Thor",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-114_r1.png?251219"
   },
   {
     "Character": "Two-Hundred Million Volts Amaru",
@@ -16175,11 +15365,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-115_p3.png?251219"
   },
   {
-    "Character": "Two-Hundred Million Volts Amaru",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-115_r1.png?251219"
-  },
-  {
     "Character": "Upper Yard",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-117_p1.png?251219"
@@ -16195,34 +15380,14 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-117_p3.png?251219"
   },
   {
-    "Character": "Upper Yard",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-117_r1.png?251219"
-  },
-  {
     "Character": "Kaido",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-118_p2.png?251219"
   },
   {
-    "Character": "Kaido",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-118_r1.png?251219"
-  },
-  {
     "Character": "Monkey.D.Luffy",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-119_p3.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-119_r1.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-119_r2.png?251219"
   },
   {
     "Character": "Emporio.Ivankov",
@@ -16233,11 +15398,6 @@
     "Character": "Emporio.Ivankov",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-003_p2.png?251219"
-  },
-  {
-    "Character": "Emporio.Ivankov",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-003_r1.png?251219"
   },
   {
     "Character": "Arlong",
@@ -16255,19 +15415,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-023_p3.png?251219"
   },
   {
-    "Character": "Arlong",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-023_r1.png?251219"
-  },
-  {
     "Character": "Hody Jones",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-035_p2.png?251219"
-  },
-  {
-    "Character": "Hody Jones",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-035_r1.png?251219"
   },
   {
     "Character": "Ryuma",
@@ -16285,11 +15435,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-036_p3.png?251219"
   },
   {
-    "Character": "Ryuma",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-036_r1.png?251219"
-  },
-  {
     "Character": "The Billion-fold World Trichiliocosm",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-038_p2.png?251219"
@@ -16298,11 +15443,6 @@
     "Character": "The Billion-fold World Trichiliocosm",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-038_p3.png?251219"
-  },
-  {
-    "Character": "The Billion-fold World Trichiliocosm",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-038_r1.png?251219"
   },
   {
     "Character": "Ama no Murakumo Sword",
@@ -16315,11 +15455,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-056_p2.png?251219"
   },
   {
-    "Character": "Ama no Murakumo Sword",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-056_r1.png?251219"
-  },
-  {
     "Character": "Vinsmoke Ichiji",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-060_p1.png?251219"
@@ -16330,11 +15465,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-060_p2.png?251219"
   },
   {
-    "Character": "Vinsmoke Ichiji",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-060_r1.png?251219"
-  },
-  {
     "Character": "Vinsmoke Niji",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-064_p1.png?251219"
@@ -16343,11 +15473,6 @@
     "Character": "Vinsmoke Niji",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-064_p2.png?251219"
-  },
-  {
-    "Character": "Vinsmoke Niji",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-064_r1.png?251219"
   },
   {
     "Character": "Vinsmoke Niji",
@@ -16365,11 +15490,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-065_p3.png?251219"
   },
   {
-    "Character": "Vinsmoke Niji",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-065_r1.png?251219"
-  },
-  {
     "Character": "Vinsmoke Yonji",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-066_p1.png?251219"
@@ -16378,11 +15498,6 @@
     "Character": "Vinsmoke Yonji",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-066_p2.png?251219"
-  },
-  {
-    "Character": "Vinsmoke Yonji",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-066_r1.png?251219"
   },
   {
     "Character": "Vinsmoke Yonji",
@@ -16400,11 +15515,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-067_p3.png?251219"
   },
   {
-    "Character": "Vinsmoke Yonji",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-067_r1.png?251219"
-  },
-  {
     "Character": "Vinsmoke Reiju",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-068_p1.png?251219"
@@ -16417,17 +15527,7 @@
   {
     "Character": "Vinsmoke Reiju",
     "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-068_r1.png?251219"
-  },
-  {
-    "Character": "Vinsmoke Reiju",
-    "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-069_p3.png?251219"
-  },
-  {
-    "Character": "Vinsmoke Reiju",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-069_r1.png?251219"
   },
   {
     "Character": "Kingdom of GERMA",
@@ -16445,19 +15545,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-079_p3.png?251219"
   },
   {
-    "Character": "Kingdom of GERMA",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-079_r1.png?251219"
-  },
-  {
     "Character": "Gecko Moria",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-086_p2.png?251219"
-  },
-  {
-    "Character": "Gecko Moria",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-086_r1.png?251219"
   },
   {
     "Character": "Victoria Cindry",
@@ -16470,11 +15560,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-091_p2.png?251219"
   },
   {
-    "Character": "Victoria Cindry",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-091_r1.png?251219"
-  },
-  {
     "Character": "Inuarashi",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-100_p1.png?251219"
@@ -16485,19 +15570,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-100_p2.png?251219"
   },
   {
-    "Character": "Inuarashi",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-100_r1.png?251219"
-  },
-  {
     "Character": "Kouzuki Hiyori",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-106_p2.png?251219"
-  },
-  {
-    "Character": "Kouzuki Hiyori",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-106_r1.png?251219"
   },
   {
     "Character": "Nekomamushi",
@@ -16510,11 +15585,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-110_p2.png?251219"
   },
   {
-    "Character": "Nekomamushi",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-110_r1.png?251219"
-  },
-  {
     "Character": "Wyper",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-114_p1.png?251219"
@@ -16525,16 +15595,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-114_p2.png?251219"
   },
   {
-    "Character": "Wyper",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-114_r1.png?251219"
-  },
-  {
-    "Character": "Roronoa Zoro",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-118_r1.png?251219"
-  },
-  {
     "Character": "Koby",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-014_p1.png?251219"
@@ -16543,11 +15603,6 @@
     "Character": "Koby",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-014_p2.png?251219"
-  },
-  {
-    "Character": "Koby",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-014_r1.png?251219"
   },
   {
     "Character": "Bartolomeo",
@@ -16570,11 +15625,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-053_p3.png?251219"
   },
   {
-    "Character": "Nami",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-053_r1.png?251219"
-  },
-  {
     "Character": "Monkey.D.Luffy",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-055_p2.png?251219"
@@ -16583,11 +15633,6 @@
     "Character": "Monkey.D.Luffy",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-055_p3.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-055_r1.png?251219"
   },
   {
     "Character": "Sanji",
@@ -16615,11 +15660,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-006_p10.png?251219"
   },
   {
-    "Character": "Tony Tony.Chopper",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-006_r2.png?251219"
-  },
-  {
     "Character": "Guard Point",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-014_p2.png?251219"
@@ -16628,11 +15668,6 @@
     "Character": "Guard Point",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-014_p3.png?251219"
-  },
-  {
-    "Character": "Guard Point",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-014_r3.png?251219"
   },
   {
     "Character": "Capone\"Gang\"Bege",
@@ -16650,11 +15685,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-004_p5.png?251219"
   },
   {
-    "Character": "Capone\"Gang\"Bege",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-004_r2.png?251219"
-  },
-  {
     "Character": "Dracule Mihawk",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-005_p4.png?251219"
@@ -16665,11 +15695,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-005_p5.png?251219"
   },
   {
-    "Character": "Dracule Mihawk",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-005_r1.png?251219"
-  },
-  {
     "Character": "Trafalgar Law",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-008_p7.png?251219"
@@ -16678,11 +15703,6 @@
     "Character": "Trafalgar Law",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-008_p8.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-008_r1.png?251219"
   },
   {
     "Character": "Boa Hancock",
@@ -16700,19 +15720,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-013_p4.png?251219"
   },
   {
-    "Character": "Boa Hancock",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST03-013_r1.png?251219"
-  },
-  {
     "Character": "Kaido",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST04-003_p4.png?251219"
-  },
-  {
-    "Character": "Kaido",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST04-003_r1.png?251219"
   },
   {
     "Character": "Queen",
@@ -16725,11 +15735,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST04-005_p5.png?251219"
   },
   {
-    "Character": "Queen",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST04-005_r1.png?251219"
-  },
-  {
     "Character": "Blast Breath",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST04-016_p3.png?251219"
@@ -16738,11 +15743,6 @@
     "Character": "Blast Breath",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST04-016_p4.png?251219"
-  },
-  {
-    "Character": "Blast Breath",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST04-016_r1.png?251219"
   },
   {
     "Character": "Helmeppo",
@@ -16755,11 +15755,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST06-010_p2.png?251219"
   },
   {
-    "Character": "Helmeppo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST06-010_r1.png?251219"
-  },
-  {
     "Character": "Shockwave",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST06-014_p1.png?251219"
@@ -16768,11 +15763,6 @@
     "Character": "Shockwave",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST06-014_p2.png?251219"
-  },
-  {
-    "Character": "Shockwave",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST06-014_r1.png?251219"
   },
   {
     "Character": "Charlotte Brulee",
@@ -16785,11 +15775,6 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST07-007_p3.png?251219"
   },
   {
-    "Character": "Charlotte Brulee",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST07-007_r1.png?251219"
-  },
-  {
     "Character": "Narikabura Arrow",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST09-014_p1.png?251219"
@@ -16800,19 +15785,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST09-014_p2.png?251219"
   },
   {
-    "Character": "Narikabura Arrow",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST09-014_r1.png?251219"
-  },
-  {
     "Character": "Trafalgar Law",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST10-010_p3.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST10-010_r1.png?251219"
   },
   {
     "Character": "Duval",
@@ -16825,24 +15800,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST12-014_p2.png?251219"
   },
   {
-    "Character": "Duval",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST12-014_r1.png?251219"
-  },
-  {
     "Character": "Just Shut Up and Come with Us!!!!",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-009_p1.png?251219"
-  },
-  {
-    "Character": "Just Shut Up and Come with Us!!!!",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-009_r1.png?251219"
-  },
-  {
-    "Character": "Cavendish",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-012_r1.png?251219"
   },
   {
     "Character": "Scratchmen Apoo",
@@ -16850,19 +15810,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-015_p2.png?251219"
   },
   {
-    "Character": "Scratchmen Apoo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-015_r2.png?251219"
-  },
-  {
     "Character": "Mountain God",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-018_p1.png?251219"
-  },
-  {
-    "Character": "Mountain God",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-018_r1.png?251219"
   },
   {
     "Character": "Oh Come My Way",
@@ -16870,34 +15820,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-038_p1.png?251219"
   },
   {
-    "Character": "Oh Come My Way",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-038_r1.png?251219"
-  },
-  {
-    "Character": "Brook",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-046_r1.png?251219"
-  },
-  {
-    "Character": "Laboon",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-048_r1.png?251219"
-  },
-  {
     "Character": "Finger Pistol",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-051_p1.png?251219"
-  },
-  {
-    "Character": "Finger Pistol",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-051_r1.png?251219"
-  },
-  {
-    "Character": "Shirahoshi",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-057_r1.png?251219"
   },
   {
     "Character": "Did Someone Say...Kami?",
@@ -16905,29 +15830,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-060_p1.png?251219"
   },
   {
-    "Character": "Did Someone Say...Kami?",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-060_r1.png?251219"
-  },
-  {
-    "Character": "Mr.2.Bon.Kurei(Bentham)",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB01-061_r1.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/EB02-061_r1.png?251219"
-  },
-  {
     "Character": "Killer",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-039_p2.png?251219"
-  },
-  {
-    "Character": "Killer",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-039_r1.png?251219"
   },
   {
     "Character": "You Can Be My Samurai!!",
@@ -16935,19 +15840,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-055_p1.png?251219"
   },
   {
-    "Character": "You Can Be My Samurai!!",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP01-055_r1.png?251219"
-  },
-  {
     "Character": "Curly.Dadan",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-005_p3.png?251219"
-  },
-  {
-    "Character": "Curly.Dadan",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-005_r1.png?251219"
   },
   {
     "Character": "Gum-Gum Rain",
@@ -16955,24 +15850,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-068_p1.png?251219"
   },
   {
-    "Character": "Gum-Gum Rain",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP02-068_r1.png?251219"
-  },
-  {
     "Character": "Buggy",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-008_p2.png?251219"
-  },
-  {
-    "Character": "Buggy",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-008_r2.png?251219"
-  },
-  {
-    "Character": "Kaya",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-044_r1.png?251219"
   },
   {
     "Character": "Nojiko",
@@ -16980,24 +15860,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-048_p1.png?251219"
   },
   {
-    "Character": "Nojiko",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-048_r1.png?251219"
-  },
-  {
     "Character": "Gum-Gum Jet Gatling",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-072_p1.png?251219"
-  },
-  {
-    "Character": "Gum-Gum Jet Gatling",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-072_r1.png?251219"
-  },
-  {
-    "Character": "Six King Pistol",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP03-097_r1.png?251219"
   },
   {
     "Character": "Bad Manners Kick Course",
@@ -17005,24 +15870,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-016_p1.png?251219"
   },
   {
-    "Character": "Bad Manners Kick Course",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-016_r1.png?251219"
-  },
-  {
     "Character": "Ideo",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-077_p1.png?251219"
-  },
-  {
-    "Character": "Ideo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-077_r1.png?251219"
-  },
-  {
-    "Character": "Sabo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-083_r2.png?251219"
   },
   {
     "Character": "Corrida Coliseum",
@@ -17030,19 +15880,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-096_p1.png?251219"
   },
   {
-    "Character": "Corrida Coliseum",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP04-096_r1.png?251219"
-  },
-  {
     "Character": "Emporio.Ivankov",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-004_p2.png?251219"
-  },
-  {
-    "Character": "Emporio.Ivankov",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-004_r1.png?251219"
   },
   {
     "Character": "Revolutionary Army HQ",
@@ -17050,19 +15890,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-021_p2.png?251219"
   },
   {
-    "Character": "Revolutionary Army HQ",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-021_r1.png?251219"
-  },
-  {
     "Character": "Donquixote Rosinante",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-030_p2.png?251219"
-  },
-  {
-    "Character": "Donquixote Rosinante",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-030_r1.png?251219"
   },
   {
     "Character": "Monet",
@@ -17070,39 +15900,14 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-036_p2.png?251219"
   },
   {
-    "Character": "Monet",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-036_r1.png?251219"
-  },
-  {
-    "Character": "Because the Side of Justice Will Be Whichever Side Wins!!",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-037_r1.png?251219"
-  },
-  {
     "Character": "Maynard",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-052_p1.png?251219"
   },
   {
-    "Character": "Maynard",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-052_r1.png?251219"
-  },
-  {
     "Character": "Gamma Knife",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-077_p1.png?251219"
-  },
-  {
-    "Character": "Gamma Knife",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-077_r1.png?251219"
-  },
-  {
-    "Character": "Rebecca",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-091_r1.png?251219"
   },
   {
     "Character": "Mary Geoise",
@@ -17115,34 +15920,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-097_p2.png?251219"
   },
   {
-    "Character": "Mary Geoise",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-097_r1.png?251219"
-  },
-  {
-    "Character": "Gedatsu",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP05-102_r1.png?251219"
-  },
-  {
-    "Character": "Shanks",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-007_r1.png?251219"
-  },
-  {
     "Character": "Gion",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-044_p1.png?251219"
-  },
-  {
-    "Character": "Gion",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-044_r1.png?251219"
-  },
-  {
-    "Character": "Charlotte Pudding",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-047_r1.png?251219"
   },
   {
     "Character": "Sengoku",
@@ -17150,19 +15930,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-049_p1.png?251219"
   },
   {
-    "Character": "Sengoku",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-049_r1.png?251219"
-  },
-  {
     "Character": "Ama no Murakumo Sword",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-056_p3.png?251219"
-  },
-  {
-    "Character": "Ama no Murakumo Sword",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-056_r2.png?251219"
   },
   {
     "Character": "Gravity Blade Raging Tiger",
@@ -17170,19 +15940,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-058_p1.png?251219"
   },
   {
-    "Character": "Gravity Blade Raging Tiger",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-058_r1.png?251219"
-  },
-  {
     "Character": "White Snake",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-059_p1.png?251219"
-  },
-  {
-    "Character": "White Snake",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-059_r1.png?251219"
   },
   {
     "Character": "Vinsmoke Sora",
@@ -17190,19 +15950,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-063_p2.png?251219"
   },
   {
-    "Character": "Vinsmoke Sora",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-063_r1.png?251219"
-  },
-  {
     "Character": "Shiki",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-073_p1.png?251219"
-  },
-  {
-    "Character": "Shiki",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-073_r1.png?251219"
   },
   {
     "Character": "Hitokiri Kamazo",
@@ -17210,24 +15960,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-076_p2.png?251219"
   },
   {
-    "Character": "Hitokiri Kamazo",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-076_r1.png?251219"
-  },
-  {
     "Character": "GERMA 66",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-078_p1.png?251219"
-  },
-  {
-    "Character": "GERMA 66",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-078_r1.png?251219"
-  },
-  {
-    "Character": "Kouzuki Momonosuke",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-107_r1.png?251219"
   },
   {
     "Character": "You're the One Who Should Disappear.",
@@ -17235,24 +15970,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-115_p1.png?251219"
   },
   {
-    "Character": "You're the One Who Should Disappear.",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-115_r1.png?251219"
-  },
-  {
-    "Character": "Roronoa Zoro",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-118_r2.png?251219"
-  },
-  {
     "Character": "Sanji",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-119_p3.png?251219"
-  },
-  {
-    "Character": "Sanji",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP06-119_r1.png?251219"
   },
   {
     "Character": "Moda",
@@ -17260,24 +15980,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-014_p1.png?251219"
   },
   {
-    "Character": "Moda",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-014_r1.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Dragon",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-015_r1.png?251219"
-  },
-  {
     "Character": "Dragon Breath",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-017_p1.png?251219"
-  },
-  {
-    "Character": "Dragon Breath",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-017_r1.png?251219"
   },
   {
     "Character": "Urouge",
@@ -17285,29 +15990,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-021_p4.png?251219"
   },
   {
-    "Character": "Urouge",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-021_r2.png?251219"
-  },
-  {
-    "Character": "Jewelry Bonney",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-026_r1.png?251219"
-  },
-  {
-    "Character": "Basil Hawkins",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-029_r1.png?251219"
-  },
-  {
     "Character": "Bartolomeo",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-031_p1.png?251219"
-  },
-  {
-    "Character": "Bartolomeo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-031_r2.png?251219"
   },
   {
     "Character": "Crocodile",
@@ -17320,24 +16005,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-040_p2.png?251219"
   },
   {
-    "Character": "Crocodile",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-040_r1.png?251219"
-  },
-  {
     "Character": "Slave Arrow",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-056_p1.png?251219"
-  },
-  {
-    "Character": "Slave Arrow",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-056_r1.png?251219"
-  },
-  {
-    "Character": "Sanji",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-064_r1.png?251219"
   },
   {
     "Character": "Slow-Slow Beam Sword",
@@ -17345,54 +16015,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-076_p1.png?251219"
   },
   {
-    "Character": "Slow-Slow Beam Sword",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-076_r1.png?251219"
-  },
-  {
-    "Character": "Franky",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-107_r1.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-109_r1.png?251219"
-  },
-  {
     "Character": "He Possesses the World's Most Brilliant Mind",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-114_p1.png?251219"
-  },
-  {
-    "Character": "He Possesses the World's Most Brilliant Mind",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-114_r1.png?251219"
-  },
-  {
-    "Character": "Sabo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-118_r1.png?251219"
-  },
-  {
-    "Character": "Portgas.D.Ace",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP07-119_r1.png?251219"
-  },
-  {
-    "Character": "Carrot",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-023_r1.png?251219"
-  },
-  {
-    "Character": "Charlotte Pudding",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-067_r1.png?251219"
-  },
-  {
-    "Character": "Black Maria",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-074_r1.png?251219"
   },
   {
     "Character": "It's to Die For...",
@@ -17400,54 +16025,14 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-076_p1.png?251219"
   },
   {
-    "Character": "It's to Die For...",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-076_r1.png?251219"
-  },
-  {
     "Character": "Scratchmen Apoo",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-087_p1.png?251219"
   },
   {
-    "Character": "Scratchmen Apoo",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-087_r1.png?251219"
-  },
-  {
     "Character": "Kalgara",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-099_p1.png?251219"
-  },
-  {
-    "Character": "Kalgara",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-099_r1.png?251219"
-  },
-  {
-    "Character": "Silvers Rayleigh",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP08-118_r1.png?251219"
-  },
-  {
-    "Character": "Uta",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-002_r1.png?251219"
-  },
-  {
-    "Character": "Shanks",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-004_r1.png?251219"
-  },
-  {
-    "Character": "Silvers Rayleigh",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-005_r1.png?251219"
-  },
-  {
-    "Character": "Benn.Beckman",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-009_r1.png?251219"
   },
   {
     "Character": "Limejuice",
@@ -17460,24 +16045,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-014_p3.png?251219"
   },
   {
-    "Character": "Limejuice",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-014_r2.png?251219"
-  },
-  {
-    "Character": "Come On!! We'll Fight You!!",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-020_r1.png?251219"
-  },
-  {
     "Character": "Sabo",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-027_p2.png?251219"
-  },
-  {
-    "Character": "Sabo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-027_r1.png?251219"
   },
   {
     "Character": "Nico Robin",
@@ -17485,49 +16055,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-033_p1.png?251219"
   },
   {
-    "Character": "Nico Robin",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-033_r1.png?251219"
-  },
-  {
-    "Character": "Crocodile",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-046_r1.png?251219"
-  },
-  {
-    "Character": "Dracule Mihawk",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-048_r1.png?251219"
-  },
-  {
     "Character": "Mr.3(Galdino)",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-056_p1.png?251219"
-  },
-  {
-    "Character": "Mr.3(Galdino)",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-056_r2.png?251219"
-  },
-  {
-    "Character": "Cross Guild",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-057_r1.png?251219"
-  },
-  {
-    "Character": "Sanji",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-065_r1.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-069_r1.png?251219"
-  },
-  {
-    "Character": "Franky",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-072_r1.png?251219"
   },
   {
     "Character": "Roronoa Zoro",
@@ -17535,24 +16065,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-076_p1.png?251219"
   },
   {
-    "Character": "Roronoa Zoro",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-076_r2.png?251219"
-  },
-  {
     "Character": "Gum-Gum Lightning",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-077_p1.png?251219"
-  },
-  {
-    "Character": "Gum-Gum Lightning",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-077_r2.png?251219"
-  },
-  {
-    "Character": "Gum-Gum Giant",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-078_r1.png?251219"
   },
   {
     "Character": "Gum-Gum Jump Rope",
@@ -17560,19 +16075,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-079_p1.png?251219"
   },
   {
-    "Character": "Gum-Gum Jump Rope",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-079_r1.png?251219"
-  },
-  {
     "Character": "Catarina Devon",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-084_p1.png?251219"
-  },
-  {
-    "Character": "Catarina Devon",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-084_r1.png?251219"
   },
   {
     "Character": "Jesus Burgess",
@@ -17580,29 +16085,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-086_p1.png?251219"
   },
   {
-    "Character": "Jesus Burgess",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-086_r2.png?251219"
-  },
-  {
-    "Character": "Marshall.D.Teach",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-093_r1.png?251219"
-  },
-  {
-    "Character": "My Era...Begins!!",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-096_r1.png?251219"
-  },
-  {
     "Character": "Black Vortex",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-097_p1.png?251219"
-  },
-  {
-    "Character": "Black Vortex",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-097_r1.png?251219"
   },
   {
     "Character": "Black Hole",
@@ -17610,19 +16095,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-098_p1.png?251219"
   },
   {
-    "Character": "Black Hole",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP09-098_r1.png?251219"
-  },
-  {
     "Character": "Tony Tony.Chopper",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-011_p1.png?251219"
-  },
-  {
-    "Character": "Tony Tony.Chopper",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-011_r1.png?251219"
   },
   {
     "Character": "Ten-Layer Igloo",
@@ -17630,29 +16105,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-018_p1.png?251219"
   },
   {
-    "Character": "Ten-Layer Igloo",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-018_r1.png?251219"
-  },
-  {
-    "Character": "Tashigi",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-032_r1.png?251219"
-  },
-  {
-    "Character": "Kyros",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-046_r1.png?251219"
-  },
-  {
     "Character": "God Thread",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-079_p1.png?251219"
-  },
-  {
-    "Character": "God Thread",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-079_r1.png?251219"
   },
   {
     "Character": "Roronoa Zoro",
@@ -17660,19 +16115,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-095_p1.png?251219"
   },
   {
-    "Character": "Roronoa Zoro",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-095_r1.png?251219"
-  },
-  {
     "Character": "Cavendish",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-105_p1.png?251219"
-  },
-  {
-    "Character": "Cavendish",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-105_r1.png?251219"
   },
   {
     "Character": "Scratchmen Apoo",
@@ -17680,24 +16125,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-108_p1.png?251219"
   },
   {
-    "Character": "Scratchmen Apoo",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-108_r1.png?251219"
-  },
-  {
     "Character": "Basil Hawkins",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-109_p1.png?251219"
-  },
-  {
-    "Character": "Basil Hawkins",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-109_r1.png?251219"
-  },
-  {
-    "Character": "Eustass\"Captain\"Kid",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-112_r1.png?251219"
   },
   {
     "Character": "X.Drake",
@@ -17710,24 +16140,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-114_p2.png?251219"
   },
   {
-    "Character": "X.Drake",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-114_r1.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP10-119_r1.png?251219"
-  },
-  {
     "Character": "Sabo",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-044_p1.png?251219"
-  },
-  {
-    "Character": "Sabo",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-044_r1.png?251219"
   },
   {
     "Character": "Jinbe",
@@ -17740,19 +16155,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-063_p2.png?251219"
   },
   {
-    "Character": "Jinbe",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-063_r1.png?251219"
-  },
-  {
     "Character": "Sanji",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-068_p1.png?251219"
-  },
-  {
-    "Character": "Sanji",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-068_r1.png?251219"
   },
   {
     "Character": "Koala",
@@ -17760,19 +16165,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-069_p2.png?251219"
   },
   {
-    "Character": "Koala",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-069_r1.png?251219"
-  },
-  {
     "Character": "Carrot",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-070_p1.png?251219"
-  },
-  {
-    "Character": "Carrot",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-070_r1.png?251219"
   },
   {
     "Character": "Sabo",
@@ -17780,19 +16175,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-073_p2.png?251219"
   },
   {
-    "Character": "Sabo",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-073_r1.png?251219"
-  },
-  {
     "Character": "Portgas.D.Ace",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-074_p2.png?251219"
-  },
-  {
-    "Character": "Portgas.D.Ace",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-074_r1.png?251219"
   },
   {
     "Character": "Monkey.D.Luffy",
@@ -17800,19 +16185,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-075_p2.png?251219"
   },
   {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-075_r1.png?251219"
-  },
-  {
     "Character": "Adio",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-078_p2.png?251219"
-  },
-  {
-    "Character": "Adio",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-078_r1.png?251219"
   },
   {
     "Character": "Lim",
@@ -17820,19 +16195,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-079_p2.png?251219"
   },
   {
-    "Character": "Lim",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-079_r1.png?251219"
-  },
-  {
     "Character": "Dracule Mihawk",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-081_p2.png?251219"
-  },
-  {
-    "Character": "Dracule Mihawk",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-081_r1.png?251219"
   },
   {
     "Character": "Crocodile",
@@ -17840,19 +16205,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-082_p2.png?251219"
   },
   {
-    "Character": "Crocodile",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-082_r1.png?251219"
-  },
-  {
     "Character": "Shanks",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-083_p1.png?251219"
-  },
-  {
-    "Character": "Shanks",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-083_r1.png?251219"
   },
   {
     "Character": "Jewelry Bonney",
@@ -17860,19 +16215,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-085_p1.png?251219"
   },
   {
-    "Character": "Jewelry Bonney",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-085_r1.png?251219"
-  },
-  {
     "Character": "Trafalgar Law",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-088_p1.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/P-088_r1.png?251219"
   },
   {
     "Character": "Koby",
@@ -18060,19 +16405,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-011_p5.png?251219"
   },
   {
-    "Character": "Brook",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-011_r2.png?251219"
-  },
-  {
     "Character": "Jewelry Bonney",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-007_p4.png?251219"
-  },
-  {
-    "Character": "Jewelry Bonney",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-007_r2.png?251219"
   },
   {
     "Character": "Hina",
@@ -18080,19 +16415,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST06-008_p2.png?251219"
   },
   {
-    "Character": "Hina",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST06-008_r1.png?251219"
-  },
-  {
     "Character": "Jinbe",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST10-005_p1.png?251219"
-  },
-  {
-    "Character": "Jinbe",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST10-005_r1.png?251219"
   },
   {
     "Character": "Shachi & Penguin",
@@ -18100,19 +16425,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST10-008_p2.png?251219"
   },
   {
-    "Character": "Shachi & Penguin",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST10-008_r1.png?251219"
-  },
-  {
     "Character": "Perona",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST12-005_p1.png?251219"
-  },
-  {
-    "Character": "Perona",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST12-005_r1.png?251219"
   },
   {
     "Character": "Plastic Surgery Shot",
@@ -18120,19 +16435,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST12-017_p1.png?251219"
   },
   {
-    "Character": "Plastic Surgery Shot",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST12-017_r1.png?251219"
-  },
-  {
     "Character": "Edward.Newgate",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-004_p2.png?251219"
-  },
-  {
-    "Character": "Edward.Newgate",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-004_r1.png?251219"
   },
   {
     "Character": "Sabo",
@@ -18140,19 +16445,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-007_p2.png?251219"
   },
   {
-    "Character": "Sabo",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-007_r1.png?251219"
-  },
-  {
     "Character": "Portgas.D.Ace",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-010_p2.png?251219"
-  },
-  {
-    "Character": "Portgas.D.Ace",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-010_r1.png?251219"
   },
   {
     "Character": "Monkey.D.Luffy",
@@ -18160,19 +16455,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-014_p2.png?251219"
   },
   {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-014_r1.png?251219"
-  },
-  {
     "Character": "The Three Brothers' Bond",
     "Color": "Yellow",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-019_p1.png?251219"
-  },
-  {
-    "Character": "The Three Brothers' Bond",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST13-019_r1.png?251219"
   },
   {
     "Character": "Nico Robin",
@@ -18180,19 +16465,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-007_p1.png?251219"
   },
   {
-    "Character": "Nico Robin",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-007_r1.png?251219"
-  },
-  {
     "Character": "Brook",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-010_p1.png?251219"
-  },
-  {
-    "Character": "Brook",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-010_r2.png?251219"
   },
   {
     "Character": "Roronoa Zoro",
@@ -18200,19 +16475,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-013_p1.png?251219"
   },
   {
-    "Character": "Roronoa Zoro",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-013_r1.png?251219"
-  },
-  {
     "Character": "I Have My Crew!!",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-016_p1.png?251219"
-  },
-  {
-    "Character": "I Have My Crew!!",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-016_r1.png?251219"
   },
   {
     "Character": "Thousand Sunny",
@@ -18220,19 +16485,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-017_p1.png?251219"
   },
   {
-    "Character": "Thousand Sunny",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST14-017_r1.png?251219"
-  },
-  {
     "Character": "Edward.Newgate",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST15-002_p2.png?251219"
-  },
-  {
-    "Character": "Edward.Newgate",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST15-002_r1.png?251219"
   },
   {
     "Character": "Charlotte Katakuri",
@@ -18240,19 +16495,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST16-003_p1.png?251219"
   },
   {
-    "Character": "Charlotte Katakuri",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST16-003_r1.png?251219"
-  },
-  {
     "Character": "Shanks",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST16-004_p2.png?251219"
-  },
-  {
-    "Character": "Shanks",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST16-004_r1.png?251219"
   },
   {
     "Character": "Monkey.D.Luffy",
@@ -18260,19 +16505,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST16-005_p1.png?251219"
   },
   {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST16-005_r1.png?251219"
-  },
-  {
     "Character": "Trafalgar Law",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST17-002_p1.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST17-002_r1.png?251219"
   },
   {
     "Character": "Buggy",
@@ -18280,19 +16515,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST17-003_p2.png?251219"
   },
   {
-    "Character": "Buggy",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST17-003_r1.png?251219"
-  },
-  {
     "Character": "Marshall.D.Teach",
     "Color": "Blue",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST17-005_p1.png?251219"
-  },
-  {
-    "Character": "Marshall.D.Teach",
-    "Color": "Blue",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST17-005_r1.png?251219"
   },
   {
     "Character": "Uso-Hachi",
@@ -18305,19 +16530,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST18-001_p3.png?251219"
   },
   {
-    "Character": "Uso-Hachi",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST18-001_r1.png?251219"
-  },
-  {
     "Character": "O-Nami",
     "Color": "Purple",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST18-002_p2.png?251219"
-  },
-  {
-    "Character": "O-Nami",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST18-002_r1.png?251219"
   },
   {
     "Character": "San-Gorou",
@@ -18325,19 +16540,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST18-003_p1.png?251219"
   },
   {
-    "Character": "San-Gorou",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST18-003_r1.png?251219"
-  },
-  {
     "Character": "Sengoku",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST19-002_p2.png?251219"
-  },
-  {
-    "Character": "Sengoku",
-    "Color": "Black",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST19-002_r1.png?251219"
   },
   {
     "Character": "Charlotte Brulee",
@@ -18345,19 +16550,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST20-003_p1.png?251219"
   },
   {
-    "Character": "Charlotte Brulee",
-    "Color": "Yellow",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST20-003_r1.png?251219"
-  },
-  {
     "Character": "Sanji",
     "Color": "Red",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST21-003_p2.png?251219"
-  },
-  {
-    "Character": "Sanji",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST21-003_r1.png?251219"
   },
   {
     "Character": "Monkey.D.Luffy",
@@ -18415,254 +16610,9 @@
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-001_p1.png?251219"
   },
   {
-    "Character": "Usopp",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-002_r1.png?251219"
-  },
-  {
-    "Character": "Karoo",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-003_r1.png?251219"
-  },
-  {
-    "Character": "Sanji",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-004_r1.png?251219"
-  },
-  {
-    "Character": "Jinbe",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-005_r1.png?251219"
-  },
-  {
-    "Character": "Tony Tony.Chopper",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-006_r1.png?251219"
-  },
-  {
-    "Character": "Nami",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-007_r1.png?251219"
-  },
-  {
-    "Character": "Nico Robin",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-008_r1.png?251219"
-  },
-  {
-    "Character": "Nefeltari Vivi",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-009_r1.png?251219"
-  },
-  {
-    "Character": "Franky",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-010_r1.png?251219"
-  },
-  {
-    "Character": "Brook",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-011_r1.png?251219"
-  },
-  {
-    "Character": "Monkey.D.Luffy",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-012_r1.png?251219"
-  },
-  {
-    "Character": "Roronoa Zoro",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-013_r1.png?251219"
-  },
-  {
-    "Character": "Guard Point",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-014_r2.png?251219"
-  },
-  {
-    "Character": "Gum-Gum Jet Pistol",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-015_r2.png?251219"
-  },
-  {
-    "Character": "Diable Jambe",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-016_r1.png?251219"
-  },
-  {
-    "Character": "Thousand Sunny",
-    "Color": "Red",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST01-017_r1.png?251219"
-  },
-  {
     "Character": "Eustass\"Captain\"Kid (Parallel)",
     "Color": "Green",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-001_p1.png?251219"
-  },
-  {
-    "Character": "Vito",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-002_r1.png?251219"
-  },
-  {
-    "Character": "Urouge",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-003_r1.png?251219"
-  },
-  {
-    "Character": "Capone\"Gang\"Bege",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-004_r1.png?251219"
-  },
-  {
-    "Character": "Killer",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-005_r1.png?251219"
-  },
-  {
-    "Character": "Koby",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-006_r1.png?251219"
-  },
-  {
-    "Character": "Jewelry Bonney",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-007_r1.png?251219"
-  },
-  {
-    "Character": "Scratchmen Apoo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-008_r1.png?251219"
-  },
-  {
-    "Character": "Trafalgar Law",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-009_r1.png?251219"
-  },
-  {
-    "Character": "Basil Hawkins",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-010_r1.png?251219"
-  },
-  {
-    "Character": "Heat",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-011_r1.png?251219"
-  },
-  {
-    "Character": "Bepo",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-012_r1.png?251219"
-  },
-  {
-    "Character": "Eustass\"Captain\"Kid",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-013_r1.png?251219"
-  },
-  {
-    "Character": "X.Drake",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-014_r1.png?251219"
-  },
-  {
-    "Character": "Scalpel",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-015_r1.png?251219"
-  },
-  {
-    "Character": "Repel",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-016_r1.png?251219"
-  },
-  {
-    "Character": "Straw Sword",
-    "Color": "Green",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST02-017_r1.png?251219"
-  },
-  {
-    "Character": "Shanks",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-001_r1.png?251219"
-  },
-  {
-    "Character": "Ain",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-002_r1.png?251219"
-  },
-  {
-    "Character": "Ann",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-003_r1.png?251219"
-  },
-  {
-    "Character": "Uta",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-004_r1.png?251219"
-  },
-  {
-    "Character": "Carina",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-005_r1.png?251219"
-  },
-  {
-    "Character": "Gild Tesoro",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-006_r1.png?251219"
-  },
-  {
-    "Character": "Gordon",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-007_r1.png?251219"
-  },
-  {
-    "Character": "Shiki",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-008_r1.png?251219"
-  },
-  {
-    "Character": "Scarlet",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-009_r1.png?251219"
-  },
-  {
-    "Character": "Z",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-010_r1.png?251219"
-  },
-  {
-    "Character": "Douglas Bullet",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-011_r1.png?251219"
-  },
-  {
-    "Character": "Baccarat",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-012_r1.png?251219"
-  },
-  {
-    "Character": "Bins",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-013_r1.png?251219"
-  },
-  {
-    "Character": "Buena Festa",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-014_r1.png?251219"
-  },
-  {
-    "Character": "Dr. Indigo",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-015_r1.png?251219"
-  },
-  {
-    "Character": "Lion's Threat Imperial Earth Bind",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-016_r1.png?251219"
-  },
-  {
-    "Character": "Union Armada",
-    "Color": "Purple",
-    "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/ST05-017_r1.png?251219"
   },
   {
     "Character": "Yamato",
@@ -21233,11 +19183,6 @@
     "Character": "Sabo",
     "Color": "Black",
     "Picture": "https://asia-en.onepiece-cardgame.com/images/cardlist/card/OP13-120_p5.png?251219"
-  },
-  {
-    "Character": "バルトロメオ",
-    "Color": "色緑",
-    "Picture": "https://www.onepiece-cardgame.com/images/cardlist/card/P-029_r2.png?260130"
   },
   {
     "Character": "ロロノア・ゾロ",
