@@ -4,39 +4,118 @@ import './CardTable.css';
 const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
+  const [sortBy, setSortBy] = useState('name');
+  const [sortDirection, setSortDirection] = useState('asc');
+  const [wishlistOnly, setWishlistOnly] = useState(false);
+  const [wishlist, setWishlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 100;
+  const wishlistStorageKey = 'opcg-wishlist';
+
+  const getCardCode = (url) => {
+    const match = url.match(/\/([A-Z]+\d{2,}-\d{3})/);
+    return match ? match[1] : '';
+  };
+
+  const getSeriesCode = (cardCode) => (cardCode ? cardCode.split('-')[0] : '');
+
+  const formatSeriesLabel = (seriesCode) => {
+    if (!seriesCode) {
+      return 'Unknown';
+    }
+    const match = seriesCode.match(/^([A-Z]+)(\d{2})$/);
+    return match ? `${match[1]}-${match[2]}` : seriesCode;
+  };
+
+  useEffect(() => {
+    const saved = localStorage.getItem(wishlistStorageKey);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setWishlist(parsed);
+        }
+      } catch (error) {
+        console.warn('Unable to parse wishlist data.', error);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(wishlistStorageKey, JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  const enrichedData = useMemo(() => {
+    return data.map((item) => {
+      const cardCode = getCardCode(item.Picture);
+      const seriesCode = getSeriesCode(cardCode);
+      const cardId = cardCode || item.Picture;
+      return {
+        ...item,
+        cardCode,
+        cardId,
+        seriesCode,
+        seriesLabel: formatSeriesLabel(seriesCode),
+      };
+    });
+  }, [data]);
+
+  const wishlistSet = useMemo(() => new Set(wishlist), [wishlist]);
 
   // Extract unique values for dropdowns
   const characters = useMemo(() => {
-    const chars = new Set(data.map(item => item.Character));
+    const chars = new Set(enrichedData.map(item => item.Character));
     return Array.from(chars).sort();
-  }, [data]);
+  }, [enrichedData]);
 
   const colors = useMemo(() => {
-    const cols = new Set(data.map(item => item.Color));
+    const cols = new Set(enrichedData.map(item => item.Color));
     return Array.from(cols).sort();
-  }, [data]);
+  }, [enrichedData]);
 
   // Filter data
   const filteredData = useMemo(() => {
-    return data.filter(item => {
+    return enrichedData.filter(item => {
       const charMatch = selectedCharacter ? item.Character === selectedCharacter : true;
       const colorMatch = selectedColor ? item.Color === selectedColor : true;
-      return charMatch && colorMatch;
+      const wishlistMatch = wishlistOnly ? wishlistSet.has(item.cardId) : true;
+      return charMatch && colorMatch && wishlistMatch;
     });
-  }, [data, selectedCharacter, selectedColor]);
+  }, [enrichedData, selectedCharacter, selectedColor, wishlistOnly, wishlistSet]);
+
+  const sortedData = useMemo(() => {
+    const sorted = [...filteredData];
+    const direction = sortDirection === 'asc' ? 1 : -1;
+    sorted.sort((a, b) => {
+      let valueA = '';
+      let valueB = '';
+
+      if (sortBy === 'series') {
+        valueA = a.seriesLabel;
+        valueB = b.seriesLabel;
+      } else if (sortBy === 'color') {
+        valueA = a.Color;
+        valueB = b.Color;
+      } else {
+        valueA = a.Character;
+        valueB = b.Character;
+      }
+
+      return valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' }) * direction;
+    });
+    return sorted;
+  }, [filteredData, sortBy, sortDirection]);
 
   // Reset page on filter change
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCharacter, selectedColor]);
+  }, [selectedCharacter, selectedColor, wishlistOnly, sortBy, sortDirection]);
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const currentItems = sortedData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -88,6 +167,16 @@ const CardTable = ({ data }) => {
     return pageNumbers;
   };
 
+  const toggleWishlist = (cardId) => {
+    setWishlist((prev) => {
+      const isSaved = prev.includes(cardId);
+      if (isSaved) {
+        return prev.filter((id) => id !== cardId);
+      }
+      return [...prev, cardId];
+    });
+  };
+
   return (
     <div className="card-table-container">
       <div className="filters">
@@ -118,40 +207,102 @@ const CardTable = ({ data }) => {
             ))}
           </select>
         </div>
+
+        <div className="filter-group">
+          <label htmlFor="sort-select">Sort by:</label>
+          <select
+            id="sort-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="name">Card Name</option>
+            <option value="series">Series (OP-01, PRB-01)</option>
+            <option value="color">Color</option>
+          </select>
+        </div>
+
+        <div className="filter-group">
+          <label htmlFor="sort-direction">Order:</label>
+          <select
+            id="sort-direction"
+            value={sortDirection}
+            onChange={(e) => setSortDirection(e.target.value)}
+          >
+            <option value="asc">A → Z</option>
+            <option value="desc">Z → A</option>
+          </select>
+        </div>
+
+        <div className="filter-group wishlist-filter">
+          <label htmlFor="wishlist-only">Wishlist:</label>
+          <div className="wishlist-toggle">
+            <input
+              id="wishlist-only"
+              type="checkbox"
+              checked={wishlistOnly}
+              onChange={(e) => setWishlistOnly(e.target.checked)}
+            />
+            <span>Only show wishlist ({wishlist.length})</span>
+          </div>
+        </div>
         
-        <button className="reset-btn" onClick={() => {setSelectedCharacter(''); setSelectedColor('')}}>
-            Reset Filters
+        <button
+          className="reset-btn"
+          onClick={() => {
+            setSelectedCharacter('');
+            setSelectedColor('');
+            setSortBy('name');
+            setSortDirection('asc');
+            setWishlistOnly(false);
+          }}
+        >
+            Reset All
         </button>
       </div>
 
       <div className="card-grid-wrapper">
         {currentItems.length > 0 ? (
           <div className="card-grid">
-            {currentItems.map((item, index) => (
-              <a
-                key={`${item.Picture}-${index}`}
-                className="card-grid-item"
-                href={item.Picture}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src={item.Picture}
-                  alt={item.Character}
-                  loading="lazy"
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/150?text=No+Image';
-                  }}
-                />
-              </a>
-            ))}
+            {currentItems.map((item, index) => {
+              const isWishlisted = wishlistSet.has(item.cardId);
+              return (
+                <div key={`${item.Picture}-${index}`} className="card-grid-item">
+                  <button
+                    type="button"
+                    className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      toggleWishlist(item.cardId);
+                    }}
+                    aria-pressed={isWishlisted}
+                    aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                  >
+                    {isWishlisted ? '♥' : '♡'}
+                  </button>
+                  <a
+                    href={item.Picture}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={item.Picture}
+                      alt={item.Character}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                      }}
+                    />
+                  </a>
+                </div>
+              );
+            })}
           </div>
         ) : (
           <div className="no-data">No cards found matching your criteria.</div>
         )}
       </div>
 
-      {filteredData.length > itemsPerPage && (
+      {sortedData.length > itemsPerPage && (
         <div className="pagination">
             <button 
                 onClick={() => handlePageChange(currentPage - 1)} 
@@ -174,8 +325,12 @@ const CardTable = ({ data }) => {
       )}
       
       <div className="pagination-info">
-        Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredData.length)} of {filteredData.length} results
+        Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, sortedData.length)} of {sortedData.length} results
       </div>
+      <p className="filters-note">
+        Series sorting uses the card code embedded in the image URL (for example, OP-01 or ST-01).
+        Alternate art cards that share the same card code will be grouped together in the wishlist and series sort.
+      </p>
     </div>
   );
 };
