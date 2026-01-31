@@ -4,7 +4,7 @@ import './CardTable.css';
 const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-  const [sortBy, setSortBy] = useState('name');
+  const [sortBy, setSortBy] = useState('character');
   const [sortDirection, setSortDirection] = useState('asc');
   const [wishlistOnly, setWishlistOnly] = useState(false);
   const [wishlist, setWishlist] = useState([]);
@@ -61,16 +61,46 @@ const CardTable = ({ data }) => {
   }, [data]);
 
   const wishlistSet = useMemo(() => new Set(wishlist), [wishlist]);
+  const cardIdToCharacter = useMemo(() => {
+    const map = new Map();
+    enrichedData.forEach((item) => {
+      if (!map.has(item.cardId)) {
+        map.set(item.cardId, item.Character);
+      }
+    });
+    return map;
+  }, [enrichedData]);
+  const favoriteCharacterCounts = useMemo(() => {
+    const counts = new Map();
+    wishlist.forEach((cardId) => {
+      const character = cardIdToCharacter.get(cardId);
+      if (!character) {
+        return;
+      }
+      counts.set(character, (counts.get(character) || 0) + 1);
+    });
+    return counts;
+  }, [wishlist, cardIdToCharacter]);
 
   // Extract unique values for dropdowns
   const characters = useMemo(() => {
     const chars = new Set(enrichedData.map(item => item.Character));
-    return Array.from(chars).sort();
-  }, [enrichedData]);
+    return Array.from(chars).sort((a, b) => {
+      const favoriteDiff = (favoriteCharacterCounts.get(b) || 0) - (favoriteCharacterCounts.get(a) || 0);
+      if (favoriteDiff !== 0) {
+        return favoriteDiff;
+      }
+      return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+    });
+  }, [enrichedData, favoriteCharacterCounts]);
 
   const colors = useMemo(() => {
     const cols = new Set(enrichedData.map(item => item.Color));
     return Array.from(cols).sort();
+  }, [enrichedData]);
+  const seriesLabels = useMemo(() => {
+    const labels = new Set(enrichedData.map(item => item.seriesLabel).filter(Boolean));
+    return Array.from(labels).sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
   }, [enrichedData]);
 
   // Filter data
@@ -93,18 +123,23 @@ const CardTable = ({ data }) => {
       if (sortBy === 'series') {
         valueA = a.seriesLabel;
         valueB = b.seriesLabel;
-      } else if (sortBy === 'color') {
-        valueA = a.Color;
-        valueB = b.Color;
-      } else {
-        valueA = a.Character;
-        valueB = b.Character;
+        return valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' }) * direction;
       }
 
-      return valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' }) * direction;
+      if (sortBy === 'character') {
+        const favoriteDiff = (favoriteCharacterCounts.get(b.Character) || 0) - (favoriteCharacterCounts.get(a.Character) || 0);
+        if (favoriteDiff !== 0) {
+          return favoriteDiff;
+        }
+        valueA = a.Character;
+        valueB = b.Character;
+        return valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' }) * direction;
+      }
+
+      return 0;
     });
     return sorted;
-  }, [filteredData, sortBy, sortDirection]);
+  }, [filteredData, sortBy, sortDirection, favoriteCharacterCounts]);
 
   // Reset page on filter change
   useEffect(() => {
@@ -215,9 +250,8 @@ const CardTable = ({ data }) => {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
-            <option value="name">Card Name</option>
-            <option value="series">Series (OP-01, PRB-01)</option>
-            <option value="color">Color</option>
+            <option value="character">Character (favorites first)</option>
+            <option value="series">Series ({seriesLabels.join(', ')})</option>
           </select>
         </div>
 
@@ -251,7 +285,7 @@ const CardTable = ({ data }) => {
           onClick={() => {
             setSelectedCharacter('');
             setSelectedColor('');
-            setSortBy('name');
+            setSortBy('character');
             setSortDirection('asc');
             setWishlistOnly(false);
           }}
