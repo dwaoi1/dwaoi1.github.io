@@ -5,6 +5,7 @@ import os
 import re
 import time
 from urllib.parse import urlparse
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -54,6 +55,12 @@ def fetch_series_ids(source_url):
             ids.append(value)
     return list(dict.fromkeys(ids))
 
+def picture_filename_key(picture_url):
+    if not picture_url:
+        return ""
+    parsed_url = urlparse(picture_url)
+    return os.path.basename(parsed_url.path)
+
 def scrape_card_data(html_content, base_url):
     soup = BeautifulSoup(html_content, 'html.parser')
     cards_data = []
@@ -87,6 +94,10 @@ def scrape_card_data(html_content, base_url):
             elif picture_url.startswith('/'):
                 picture_url = base_url + picture_url
 
+            filename = picture_filename_key(picture_url)
+            if filename and re.search(r"_r\d+\.", filename):
+                continue
+
             cards_data.append({
                 "Character": character_name,
                 "Color": color,
@@ -105,12 +116,7 @@ def deduplicate_by_picture(cards):
     seen_pictures = set()
     for card in cards:
         picture = card.get("Picture", "")
-        picture_key = ""
-        if picture:
-            parsed_url = urlparse(picture)
-            picture_key = os.path.basename(parsed_url.path)
-        if picture_key and re.search(r"_r\\d+\\.", picture_key):
-            continue
+        picture_key = picture_filename_key(picture)
         if picture_key and picture_key in seen_pictures:
             continue
         seen_pictures.add(picture_key)
