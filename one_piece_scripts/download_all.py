@@ -2,6 +2,7 @@ import argparse
 import glob
 import json
 import os
+import re
 import time
 from urllib.parse import urlparse
 import re
