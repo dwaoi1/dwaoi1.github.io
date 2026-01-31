@@ -3,6 +3,7 @@ import glob
 import json
 import os
 import time
+from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -103,7 +104,10 @@ def deduplicate_by_picture(cards):
     seen_pictures = set()
     for card in cards:
         picture = card.get("Picture", "")
-        picture_key = os.path.basename(picture) if picture else ""
+        picture_key = ""
+        if picture:
+            parsed_url = urlparse(picture)
+            picture_key = os.path.basename(parsed_url.path)
         if picture_key and picture_key in seen_pictures:
             continue
         seen_pictures.add(picture_key)
