@@ -2,6 +2,7 @@ import argparse
 import glob
 import json
 import os
+import re
 import time
 from urllib.parse import urlparse
 
@@ -108,6 +109,8 @@ def deduplicate_by_picture(cards):
         if picture:
             parsed_url = urlparse(picture)
             picture_key = os.path.basename(parsed_url.path)
+        if picture_key and re.search(r"_r\\d+\\.", picture_key):
+            continue
         if picture_key and picture_key in seen_pictures:
             continue
         seen_pictures.add(picture_key)
