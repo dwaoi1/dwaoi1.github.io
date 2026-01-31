@@ -4,7 +4,7 @@ import './CardTable.css';
 const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-  const [sortBy, setSortBy] = useState('name');
+  const [sortBy, setSortBy] = useState('character');
   const [sortDirection, setSortDirection] = useState('asc');
   const [wishlistOnly, setWishlistOnly] = useState(false);
   const [wishlist, setWishlist] = useState([]);
@@ -61,27 +61,59 @@ const CardTable = ({ data }) => {
   }, [data]);
 
   const wishlistSet = useMemo(() => new Set(wishlist), [wishlist]);
+  const cardIdToCharacter = useMemo(() => {
+    const map = new Map();
+    enrichedData.forEach((item) => {
+      if (!map.has(item.cardId)) {
+        map.set(item.cardId, item.Character);
+      }
+    });
+    return map;
+  }, [enrichedData]);
+  const favoriteCharacterCounts = useMemo(() => {
+    const counts = new Map();
+    wishlist.forEach((cardId) => {
+      const character = cardIdToCharacter.get(cardId);
+      if (!character) {
+        return;
+      }
+      counts.set(character, (counts.get(character) || 0) + 1);
+    });
+    return counts;
+  }, [wishlist, cardIdToCharacter]);
 
   // Extract unique values for dropdowns
   const characters = useMemo(() => {
     const chars = new Set(enrichedData.map(item => item.Character));
-    return Array.from(chars).sort();
-  }, [enrichedData]);
+    return Array.from(chars).sort((a, b) => {
+      const favoriteDiff = (favoriteCharacterCounts.get(b) || 0) - (favoriteCharacterCounts.get(a) || 0);
+      if (favoriteDiff !== 0) {
+        return favoriteDiff;
+      }
+      return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+    });
+  }, [enrichedData, favoriteCharacterCounts]);
 
   const colors = useMemo(() => {
     const cols = new Set(enrichedData.map(item => item.Color));
     return Array.from(cols).sort();
   }, [enrichedData]);
+  const seriesLabels = useMemo(() => {
+    const labels = new Set(enrichedData.map(item => item.seriesLabel).filter(Boolean));
+    return Array.from(labels).sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+  }, [enrichedData]);
 
   // Filter data
   const filteredData = useMemo(() => {
+    const seriesSelected = sortBy !== 'character';
     return enrichedData.filter(item => {
       const charMatch = selectedCharacter ? item.Character === selectedCharacter : true;
       const colorMatch = selectedColor ? item.Color === selectedColor : true;
       const wishlistMatch = wishlistOnly ? wishlistSet.has(item.cardId) : true;
-      return charMatch && colorMatch && wishlistMatch;
+      const seriesMatch = seriesSelected ? item.seriesLabel === sortBy : true;
+      return charMatch && colorMatch && wishlistMatch && seriesMatch;
     });
-  }, [enrichedData, selectedCharacter, selectedColor, wishlistOnly, wishlistSet]);
+  }, [enrichedData, selectedCharacter, selectedColor, wishlistOnly, wishlistSet, sortBy]);
 
   const sortedData = useMemo(() => {
     const sorted = [...filteredData];
@@ -90,21 +122,16 @@ const CardTable = ({ data }) => {
       let valueA = '';
       let valueB = '';
 
-      if (sortBy === 'series') {
-        valueA = a.seriesLabel;
-        valueB = b.seriesLabel;
-      } else if (sortBy === 'color') {
-        valueA = a.Color;
-        valueB = b.Color;
-      } else {
-        valueA = a.Character;
-        valueB = b.Character;
+      const favoriteDiff = (favoriteCharacterCounts.get(b.Character) || 0) - (favoriteCharacterCounts.get(a.Character) || 0);
+      if (favoriteDiff !== 0) {
+        return favoriteDiff;
       }
-
+      valueA = a.Character;
+      valueB = b.Character;
       return valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' }) * direction;
     });
     return sorted;
-  }, [filteredData, sortBy, sortDirection]);
+  }, [filteredData, sortDirection, favoriteCharacterCounts]);
 
   // Reset page on filter change
   useEffect(() => {
@@ -215,9 +242,10 @@ const CardTable = ({ data }) => {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
-            <option value="name">Card Name</option>
-            <option value="series">Series (OP-01, PRB-01)</option>
-            <option value="color">Color</option>
+            <option value="character">Character (favorites first)</option>
+            {seriesLabels.map((label) => (
+              <option key={label} value={label}>{label}</option>
+            ))}
           </select>
         </div>
 
@@ -251,7 +279,7 @@ const CardTable = ({ data }) => {
           onClick={() => {
             setSelectedCharacter('');
             setSelectedColor('');
-            setSortBy('name');
+            setSortBy('character');
             setSortDirection('asc');
             setWishlistOnly(false);
           }}
@@ -328,8 +356,8 @@ const CardTable = ({ data }) => {
         Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, sortedData.length)} of {sortedData.length} results
       </div>
       <p className="filters-note">
-        Series sorting uses the card code embedded in the image URL (for example, OP-01 or ST-01).
-        Alternate art cards that share the same card code will be grouped together in the wishlist and series sort.
+        Series selection uses the card code embedded in the image URL (for example, OP-01 or ST-01).
+        Alternate art cards that share the same card code will be grouped together in the wishlist and series filter.
       </p>
     </div>
   );
