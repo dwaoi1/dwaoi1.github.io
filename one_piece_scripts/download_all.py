@@ -38,7 +38,7 @@ def download_series():
         print(f"Downloading Series ID: {s_id}...")
         
         try:
-            response = requests.post(URL, data={'series': s_id})
+            response = requests.post(URL, data={'series': s_id, 'reprintsFlag': 'on'})
             if response.status_code == 200:
                 with open(output_path, 'w', encoding='utf-8') as f:
                     f.write(response.text)
