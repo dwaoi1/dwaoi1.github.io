@@ -1,33 +1,48 @@
 import os
-import requests
+import re
 import time
 
-# List of Series IDs extracted from the official website
-# (These correspond to OP-01, OP-02, Starters, etc.)
+import requests
+
 SERIES_IDS = [
-    '556302', '556301', '556203', '556202', '556201', 
-    '556114', '556113', '556112', '556111', '556110', 
-    '556109', '556108', '556107', '556106', '556105', 
-    '556104', '556103', '556102', '556101', '556029', 
-    '556028', '556027', '556026', '556025', '556024', 
-    '556023', '556022', '556021', '556020', '556019', 
-    '556018', '556017', '556016', '556015', '556014', 
-    '556013', '556012', '556011', '556010', '556009', 
-    '556008', '556007', '556006', '556005', '556004', 
-    '556003', '556002', '556001', '556701', '556901', 
-    '556801'
+    '556302', '556301', '556203', '556202', '556201',
+    '556114', '556113', '556112', '556111', '556110',
+    '556109', '556108', '556107', '556106', '556105',
+    '556104', '556103', '556102', '556101', '556029',
+    '556028', '556027', '556026', '556025', '556024',
+    '556023', '556022', '556021', '556020', '556019',
+    '556018', '556017', '556016', '556015', '556014',
+    '556013', '556012', '556011', '556010', '556009',
+    '556008', '556007', '556006', '556005', '556004',
+    '556003', '556002', '556001', '556701', '556901',
+    '556801',
 ]
 
 URL = "https://asia-en.onepiece-cardgame.com/cardlist/"
 OUTPUT_DIR = "html_files"
+USE_LIVE_SERIES_IDS = True
+
+
+def fetch_series_ids():
+    response = requests.get(URL, timeout=30)
+    response.raise_for_status()
+    ids = re.findall(r'<option value="(\d+)"', response.text)
+    return list(dict.fromkeys(ids))
 
 def download_series():
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
         
-    print(f"Starting download of {len(SERIES_IDS)} card sets...")
+    series_ids = SERIES_IDS
+    if USE_LIVE_SERIES_IDS:
+        try:
+            series_ids = fetch_series_ids()
+        except Exception as exc:
+            print(f"Failed to fetch series IDs ({exc}); falling back to static list.")
+
+    print(f"Starting download of {len(series_ids)} card sets...")
     
-    for s_id in SERIES_IDS:
+    for s_id in series_ids:
         output_path = os.path.join(OUTPUT_DIR, f"series_{s_id}.html")
         
         # Skip if already downloaded
@@ -38,7 +53,8 @@ def download_series():
         print(f"Downloading Series ID: {s_id}...")
         
         try:
-            response = requests.post(URL, data={'series': s_id, 'reprintsFlag': 'on'})
+            payload = {'series': s_id, 'reprintsFlag': 'on'}
+            response = requests.post(URL, data=payload)
             if response.status_code == 200:
                 with open(output_path, 'w', encoding='utf-8') as f:
                     f.write(response.text)
