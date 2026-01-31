@@ -124,40 +124,31 @@ const CardTable = ({ data }) => {
         </button>
       </div>
 
-      <div className="table-wrapper">
-        <table className="card-table">
-            <thead>
-                <tr>
-                    <th>Picture</th>
-                    <th>Character</th>
-                    <th>Color</th>
-                </tr>
-            </thead>
-            <tbody>
-                {currentItems.length > 0 ? (
-                    currentItems.map((item, index) => (
-                        <tr key={index}>
-                            <td className="picture-cell">
-                                <a href={item.Picture} target="_blank" rel="noopener noreferrer">
-                                    <img 
-                                        src={item.Picture} 
-                                        alt={item.Character} 
-                                        loading="lazy"
-                                        onError={(e) => {e.target.src = 'https://via.placeholder.com/150?text=No+Image'}} 
-                                    />
-                                </a>
-                            </td>
-                            <td>{item.Character}</td>
-                            <td>{item.Color}</td>
-                        </tr>
-                    ))
-                ) : (
-                    <tr>
-                        <td colSpan="3" className="no-data">No cards found matching your criteria.</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>
+      <div className="card-grid-wrapper">
+        {currentItems.length > 0 ? (
+          <div className="card-grid">
+            {currentItems.map((item, index) => (
+              <a
+                key={`${item.Picture}-${index}`}
+                className="card-grid-item"
+                href={item.Picture}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={item.Picture}
+                  alt={item.Character}
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                  }}
+                />
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div className="no-data">No cards found matching your criteria.</div>
+        )}
       </div>
 
       {filteredData.length > itemsPerPage && (
