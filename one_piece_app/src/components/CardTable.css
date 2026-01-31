@@ -9,6 +9,7 @@
   gap: 20px;
   margin-bottom: 20px;
   align-items: flex-end;
+  flex-wrap: wrap;
   background-color: #f8f9fa;
   padding: 15px;
   border-radius: 8px;
@@ -33,6 +34,26 @@
   border-radius: 4px;
   font-size: 1rem;
   min-width: 200px;
+}
+
+.wishlist-filter {
+  min-width: 220px;
+}
+
+.wishlist-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.wishlist-toggle input {
+  width: 16px;
+  height: 16px;
 }
 
 .reset-btn {
@@ -63,6 +84,7 @@
 }
 
 .card-grid-item {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,6 +105,41 @@
   max-width: 200px;
   height: auto;
   object-fit: contain;
+}
+
+.card-grid-item a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.wishlist-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  color: #ff5c8a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.wishlist-btn:hover {
+  transform: scale(1.05);
+}
+
+.wishlist-btn.active {
+  background-color: #ffebf1;
+  border-color: #ff5c8a;
 }
 
 .no-data {
@@ -178,4 +235,11 @@
   margin-top: 10px;
   color: #666;
   font-size: 0.9rem;
+}
+
+.filters-note {
+  margin-top: 12px;
+  text-align: center;
+  color: #555;
+  font-size: 0.85rem;
 }
