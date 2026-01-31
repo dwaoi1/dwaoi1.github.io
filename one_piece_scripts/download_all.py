@@ -149,7 +149,7 @@ def download_series():
         print(f"Downloading Series ID: {s_id}...")
         
         try:
-            payload = {'series': s_id, 'reprintsFlag': 'on'}
+            payload = {'series': s_id, 'reprintsFlag': 'off'}
             response = requests.post(
                 URL,
                 headers={"User-Agent": USER_AGENT},
