@@ -5,7 +5,6 @@ const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [sortBy, setSortBy] = useState('character');
-  const [sortDirection, setSortDirection] = useState('asc');
   const [wishlistOnly, setWishlistOnly] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +48,7 @@ const CardTable = ({ data }) => {
     return data.map((item) => {
       const cardCode = getCardCode(item.Picture);
       const seriesCode = getSeriesCode(cardCode);
-      const cardId = cardCode || item.Picture;
+      const cardId = item.Picture;
       return {
         ...item,
         cardCode,
@@ -117,7 +116,6 @@ const CardTable = ({ data }) => {
 
   const sortedData = useMemo(() => {
     const sorted = [...filteredData];
-    const direction = sortDirection === 'asc' ? 1 : -1;
     sorted.sort((a, b) => {
       let valueA = '';
       let valueB = '';
@@ -128,15 +126,15 @@ const CardTable = ({ data }) => {
       }
       valueA = a.Character;
       valueB = b.Character;
-      return valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' }) * direction;
+      return valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' });
     });
     return sorted;
-  }, [filteredData, sortDirection, favoriteCharacterCounts]);
+  }, [filteredData, favoriteCharacterCounts]);
 
   // Reset page on filter change
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCharacter, selectedColor, wishlistOnly, sortBy, sortDirection]);
+  }, [selectedCharacter, selectedColor, wishlistOnly, sortBy]);
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -249,18 +247,6 @@ const CardTable = ({ data }) => {
           </select>
         </div>
 
-        <div className="filter-group">
-          <label htmlFor="sort-direction">Order:</label>
-          <select
-            id="sort-direction"
-            value={sortDirection}
-            onChange={(e) => setSortDirection(e.target.value)}
-          >
-            <option value="asc">A → Z</option>
-            <option value="desc">Z → A</option>
-          </select>
-        </div>
-
         <div className="filter-group wishlist-filter">
           <label htmlFor="wishlist-only">Wishlist:</label>
           <div className="wishlist-toggle">
@@ -280,7 +266,6 @@ const CardTable = ({ data }) => {
             setSelectedCharacter('');
             setSelectedColor('');
             setSortBy('character');
-            setSortDirection('asc');
             setWishlistOnly(false);
           }}
         >
@@ -357,7 +342,7 @@ const CardTable = ({ data }) => {
       </div>
       <p className="filters-note">
         Series selection uses the card code embedded in the image URL (for example, OP-01 or ST-01).
-        Alternate art cards that share the same card code will be grouped together in the wishlist and series filter.
+        Alternate art cards are treated as separate entries in the wishlist.
       </p>
     </div>
   );
