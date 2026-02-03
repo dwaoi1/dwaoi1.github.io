@@ -8,6 +8,7 @@ const CardTable = ({ data }) => {
   const [sortBy, setSortBy] = useState('character');
   const [wishlistOnly, setWishlistOnly] = useState(false);
   const [wishlist, setWishlist] = useState([]);
+  const [wishlistEditingEnabled, setWishlistEditingEnabled] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 100;
   const wishlistStorageKey = 'opcg-wishlist';
@@ -199,6 +200,9 @@ const CardTable = ({ data }) => {
   };
 
   const toggleWishlist = (cardId) => {
+    if (!wishlistEditingEnabled) {
+      return;
+    }
     setWishlist((prev) => {
       const isSaved = prev.includes(cardId);
       if (isSaved) {
@@ -211,6 +215,32 @@ const CardTable = ({ data }) => {
   return (
     <div className="card-table-container">
       <div className="filters">
+        <div className="filter-group wishlist-lock">
+          <label htmlFor="wishlist-editing">Wishlist editing:</label>
+          <div className="wishlist-toggle">
+            <input
+              id="wishlist-editing"
+              type="checkbox"
+              checked={wishlistEditingEnabled}
+              onChange={(e) => {
+                const isChecked = e.target.checked;
+                if (!isChecked) {
+                  setWishlistEditingEnabled(false);
+                  return;
+                }
+                const password = window.prompt('Enter password to enable wishlist editing:');
+                if (password === 'MonkeyD') {
+                  setWishlistEditingEnabled(true);
+                  return;
+                }
+                window.alert('Incorrect password. Wishlist editing is still locked.');
+                setWishlistEditingEnabled(false);
+              }}
+            />
+            <span>{wishlistEditingEnabled ? 'Editing enabled' : 'Enable wishlist editing'}</span>
+          </div>
+        </div>
+
         <div className="filter-group">
           <label htmlFor="search-input">Search:</label>
           <input
@@ -305,6 +335,7 @@ const CardTable = ({ data }) => {
                       event.preventDefault();
                       toggleWishlist(item.cardId);
                     }}
+                    disabled={!wishlistEditingEnabled}
                     aria-pressed={isWishlisted}
                     aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                   >
