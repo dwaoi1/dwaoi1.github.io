@@ -4,6 +4,7 @@ import './CardTable.css';
 const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('character');
   const [wishlistOnly, setWishlistOnly] = useState(false);
   const [wishlist, setWishlist] = useState([]);
@@ -105,36 +106,41 @@ const CardTable = ({ data }) => {
   // Filter data
   const filteredData = useMemo(() => {
     const seriesSelected = sortBy !== 'character';
+    const normalizedQuery = searchQuery.trim().toLowerCase();
     return enrichedData.filter(item => {
       const charMatch = selectedCharacter ? item.Character === selectedCharacter : true;
       const colorMatch = selectedColor ? item.Color === selectedColor : true;
       const wishlistMatch = wishlistOnly ? wishlistSet.has(item.cardId) : true;
       const seriesMatch = seriesSelected ? item.seriesLabel === sortBy : true;
-      return charMatch && colorMatch && wishlistMatch && seriesMatch;
+      const searchMatch = normalizedQuery
+        ? item.Character.toLowerCase().includes(normalizedQuery)
+          || item.cardCode.toLowerCase().includes(normalizedQuery)
+        : true;
+      return charMatch && colorMatch && wishlistMatch && seriesMatch && searchMatch;
     });
-  }, [enrichedData, selectedCharacter, selectedColor, wishlistOnly, wishlistSet, sortBy]);
+  }, [enrichedData, selectedCharacter, selectedColor, wishlistOnly, wishlistSet, sortBy, searchQuery]);
 
   const sortedData = useMemo(() => {
     const sorted = [...filteredData];
     sorted.sort((a, b) => {
-      let valueA = '';
-      let valueB = '';
+      const wishlistDiff = Number(wishlistSet.has(b.cardId)) - Number(wishlistSet.has(a.cardId));
+      if (wishlistDiff !== 0) {
+        return wishlistDiff;
+      }
 
       const favoriteDiff = (favoriteCharacterCounts.get(b.Character) || 0) - (favoriteCharacterCounts.get(a.Character) || 0);
       if (favoriteDiff !== 0) {
         return favoriteDiff;
       }
-      valueA = a.Character;
-      valueB = b.Character;
-      return valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' });
+      return a.Character.localeCompare(b.Character, undefined, { numeric: true, sensitivity: 'base' });
     });
     return sorted;
-  }, [filteredData, favoriteCharacterCounts]);
+  }, [filteredData, favoriteCharacterCounts, wishlistSet]);
 
   // Reset page on filter change
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCharacter, selectedColor, wishlistOnly, sortBy]);
+  }, [selectedCharacter, selectedColor, wishlistOnly, sortBy, searchQuery]);
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -206,6 +212,17 @@ const CardTable = ({ data }) => {
     <div className="card-table-container">
       <div className="filters">
         <div className="filter-group">
+          <label htmlFor="search-input">Search:</label>
+          <input
+            id="search-input"
+            type="search"
+            placeholder="Search character or code (e.g., ST01-021)"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        <div className="filter-group">
           <label htmlFor="character-select">Character:</label>
           <select 
             id="character-select" 
@@ -265,6 +282,7 @@ const CardTable = ({ data }) => {
           onClick={() => {
             setSelectedCharacter('');
             setSelectedColor('');
+            setSearchQuery('');
             setSortBy('character');
             setWishlistOnly(false);
           }}
