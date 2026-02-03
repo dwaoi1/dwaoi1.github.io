@@ -36,6 +36,18 @@
   min-width: 200px;
 }
 
+.filter-group input[type="search"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 240px;
+}
+
+.filter-group input[type="search"]::placeholder {
+  color: #868e96;
+}
+
 .wishlist-filter {
   min-width: 220px;
 }
