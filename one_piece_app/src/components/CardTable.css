@@ -52,6 +52,10 @@
   min-width: 220px;
 }
 
+.wishlist-lock {
+  min-width: 220px;
+}
+
 .wishlist-toggle {
   display: flex;
   align-items: center;
@@ -147,6 +151,12 @@
 
 .wishlist-btn:hover {
   transform: scale(1.05);
+}
+
+.wishlist-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
 }
 
 .wishlist-btn.active {
