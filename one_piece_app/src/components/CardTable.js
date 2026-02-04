@@ -8,10 +8,8 @@ const CardTable = ({ data }) => {
   const [sortBy, setSortBy] = useState('character');
   const [wishlistOnly, setWishlistOnly] = useState(false);
   const [wishlist, setWishlist] = useState([]);
-  const [wishlistEditingEnabled, setWishlistEditingEnabled] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 100;
-  const wishlistStorageKey = 'opcg-wishlist';
 
   const getCardCode = (url) => {
     const match = url.match(/\/([A-Z]+\d{2,}-\d{3})/);
@@ -28,18 +26,47 @@ const CardTable = ({ data }) => {
     return match ? `${match[1]}-${match[2]}` : seriesCode;
   };
 
+  const wishlistStorageKey = 'opcg-wishlist';
+
   useEffect(() => {
-    const saved = localStorage.getItem(wishlistStorageKey);
-    if (saved) {
+    let isMounted = true;
+    const loadWishlist = async () => {
       try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          setWishlist(parsed);
+        const response = await fetch(`${process.env.PUBLIC_URL}/wishlist.json`, {
+          cache: 'no-store',
+        });
+        if (!response.ok) {
+          throw new Error(`Wishlist request failed: ${response.status}`);
         }
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          if (isMounted) {
+            setWishlist(data);
+          }
+          localStorage.setItem(wishlistStorageKey, JSON.stringify(data));
+          return;
+        }
+        console.warn('Wishlist data is not an array.');
       } catch (error) {
-        console.warn('Unable to parse wishlist data.', error);
+        const saved = localStorage.getItem(wishlistStorageKey);
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed) && isMounted) {
+              setWishlist(parsed);
+            }
+          } catch (storageError) {
+            console.warn('Unable to parse wishlist data.', storageError);
+          }
+        }
       }
-    }
+    };
+
+    loadWishlist();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -200,9 +227,6 @@ const CardTable = ({ data }) => {
   };
 
   const toggleWishlist = (cardId) => {
-    if (!wishlistEditingEnabled) {
-      return;
-    }
     setWishlist((prev) => {
       const isSaved = prev.includes(cardId);
       if (isSaved) {
@@ -212,35 +236,28 @@ const CardTable = ({ data }) => {
     });
   };
 
+  const handleWishlistExport = () => {
+    const data = JSON.stringify(wishlist, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'wishlist.json';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="card-table-container">
       <div className="filters">
-        <div className="filter-group wishlist-lock">
-          <label htmlFor="wishlist-editing">Wishlist editing:</label>
-          <div className="wishlist-toggle">
-            <input
-              id="wishlist-editing"
-              type="checkbox"
-              checked={wishlistEditingEnabled}
-              onChange={(e) => {
-                const isChecked = e.target.checked;
-                if (!isChecked) {
-                  setWishlistEditingEnabled(false);
-                  return;
-                }
-                const password = window.prompt('Enter password to enable wishlist editing:');
-                if (password === 'MonkeyD') {
-                  setWishlistEditingEnabled(true);
-                  return;
-                }
-                window.alert('Incorrect password. Wishlist editing is still locked.');
-                setWishlistEditingEnabled(false);
-              }}
-            />
-            <span>{wishlistEditingEnabled ? 'Editing enabled' : 'Enable wishlist editing'}</span>
-          </div>
+        <div className="filter-group">
+          <label>Wishlist export:</label>
+          <button type="button" className="reset-btn" onClick={handleWishlistExport}>
+            Download wishlist JSON
+          </button>
         </div>
-
         <div className="filter-group">
           <label htmlFor="search-input">Search:</label>
           <input
@@ -335,7 +352,6 @@ const CardTable = ({ data }) => {
                       event.preventDefault();
                       toggleWishlist(item.cardId);
                     }}
-                    disabled={!wishlistEditingEnabled}
                     aria-pressed={isWishlisted}
                     aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                   >
@@ -392,6 +408,7 @@ const CardTable = ({ data }) => {
       <p className="filters-note">
         Series selection uses the card code embedded in the image URL (for example, OP-01 or ST-01).
         Alternate art cards are treated as separate entries in the wishlist.
+        The wishlist loads from the published wishlist.json file and can be edited locally and exported as JSON.
       </p>
     </div>
   );
