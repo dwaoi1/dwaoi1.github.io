@@ -39,14 +39,14 @@ If specific cards are missing or you want to save a specific page manually:
 5. Run `python3 scrape_cards.py`.
 
 ### Final Step: Update the Website
-1. Go to the app folder:
-   ```bash
-   cd ../one_piece_app
-   ```
-2. Deploy the changes:
-   ```bash
-   npm run deploy
-   ```
+1. Commit and push your changes to `main`.
+2. GitHub Actions will automatically build and deploy the site to GitHub Pages.
+
+### Wishlist Export + Shared Wishlist
+The app loads `one_piece_app/public/wishlist.json` first (shared wishlist) and falls back to the
+browser's local wishlist if the shared file is missing. Use the "Download wishlist JSON" button
+to export your local edits, then replace `one_piece_app/public/wishlist.json` with that file and
+commit + push to share the wishlist with everyone.
 
 ---
 **Website Link:** https://dwaoi1.github.io/
