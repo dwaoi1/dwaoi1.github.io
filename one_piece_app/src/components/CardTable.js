@@ -20,7 +20,7 @@ const CardTable = ({ data }) => {
 
   const formatSeriesLabel = (seriesCode) => {
     if (!seriesCode) {
-      return 'Unknown';
+      return 'Promos/Unknown';
     }
     const match = seriesCode.match(/^([A-Z]+)(\d{2})$/);
     return match ? `${match[1]}-${match[2]}` : seriesCode;
