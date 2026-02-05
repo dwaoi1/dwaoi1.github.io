@@ -32,6 +32,12 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
+          if [ -f wishlist.json ]; then
+            cp wishlist.json one_piece_app/public/wishlist.json
+          fi
+          if [ -f one_piece_scripts/one_piece_cards.json ]; then
+            cp one_piece_scripts/one_piece_cards.json one_piece_app/src/data.json
+          fi
           cd one_piece_app
           npm install
           npm run build
