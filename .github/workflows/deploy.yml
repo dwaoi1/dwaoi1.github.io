@@ -46,9 +46,6 @@ jobs:
     needs: build
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Skip deploy for pull requests
