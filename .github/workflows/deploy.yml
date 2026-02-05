@@ -39,6 +39,11 @@ jobs:
             cp one_piece_scripts/one_piece_cards.json one_piece_app/src/data.json
           fi
           cd one_piece_app
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            export PUBLIC_URL="."
+          else
+            export PUBLIC_URL="https://dwaoi1.github.io/"
+          fi
           npm install
           npm run build
 
