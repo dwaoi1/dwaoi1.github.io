@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
+      - "**"
+  pull_request:
+    branches:
       - main
 
 permissions:
@@ -39,11 +42,9 @@ jobs:
 
   deploy:
     needs: build
-    if: github.actor != 'github-actions[bot]'
+    if: github.actor != 'github-actions[bot]' && (github.event_name == 'pull_request' || github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    environment: github-pages
 
     steps:
       - name: Deploy to GitHub Pages 🚀
