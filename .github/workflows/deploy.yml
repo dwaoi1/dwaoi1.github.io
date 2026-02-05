@@ -32,11 +32,11 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          if [ -f wishlist.json ]; then
-            cp wishlist.json one_piece_app/public/wishlist.json
+          if [ -f gh-pages/wishlist.json ]; then
+            cp gh-pages/wishlist.json one_piece_app/public/wishlist.json
           fi
-          if [ -f one_piece_scripts/one_piece_cards.json ]; then
-            cp one_piece_scripts/one_piece_cards.json one_piece_app/src/data.json
+          if [ -f gh-pages/one_piece_cards.json ]; then
+            cp gh-pages/one_piece_cards.json one_piece_app/src/data.json
           fi
           cd one_piece_app
           if [ "${{ github.event_name }}" = "pull_request" ]; then
