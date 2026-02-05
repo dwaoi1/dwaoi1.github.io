@@ -44,13 +44,17 @@ jobs:
 
   deploy:
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      - name: Skip deploy for pull requests
+        if: github.event_name == 'pull_request'
+        run: echo "Skipping deploy on pull requests."
       - name: Deploy to GitHub Pages 🚀
         id: deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/deploy-pages@v4
