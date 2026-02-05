@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
+      - "**"
+  pull_request:
+    branches:
       - main
 
 permissions:
@@ -28,6 +31,12 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
+          if [ -f wishlist.json ]; then
+            cp wishlist.json one_piece_app/public/wishlist.json
+          fi
+          if [ -f one_piece_scripts/one_piece_cards.json ]; then
+            cp one_piece_scripts/one_piece_cards.json one_piece_app/src/data.json
+          fi
           cd one_piece_app
           npm install
           npm run build
@@ -39,10 +48,10 @@ jobs:
 
   deploy:
     needs: build
-    if: github.actor != 'github-actions[bot]'
+    if: github.actor != 'github-actions[bot]' && (github.event_name == 'pull_request' || github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     environment:
-      name: github-pages
+      name: ${{ github.event_name == 'pull_request' && 'github-pages-preview' || 'github-pages' }}
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
