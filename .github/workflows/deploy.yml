@@ -32,11 +32,13 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          if [ -f gh-pages/wishlist.json ]; then
-            cp gh-pages/wishlist.json one_piece_app/public/wishlist.json
-          fi
-          if [ -f gh-pages/one_piece_cards.json ]; then
-            cp gh-pages/one_piece_cards.json one_piece_app/src/data.json
+          for asset in asset-manifest.json favicon.ico index.html logo192.png logo512.png manifest.json robots.txt test_556.html test_569.html wishlist.json; do
+            if [ -f "gh-pages/${asset}" ]; then
+              cp "gh-pages/${asset}" "one_piece_app/public/${asset}"
+            fi
+          done
+          if [ -f one_piece_scripts/one_piece_cards.json ]; then
+            cp one_piece_scripts/one_piece_cards.json one_piece_app/src/data.json
           fi
           cd one_piece_app
           if [ "${{ github.event_name }}" = "pull_request" ]; then
