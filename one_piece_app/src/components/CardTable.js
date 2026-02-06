@@ -26,6 +26,13 @@ const CardTable = ({ data }) => {
     return match ? `${match[1]}-${match[2]}` : seriesCode;
   };
 
+  const normalizeCharacter = (character) => {
+    if (!character) {
+      return '';
+    }
+    return character.replace(/\s*\(parallel\)\s*$/i, '');
+  };
+
   const wishlistStorageKey = 'opcg-wishlist';
 
   useEffect(() => {
@@ -84,6 +91,7 @@ const CardTable = ({ data }) => {
         cardId,
         seriesCode,
         seriesLabel: formatSeriesLabel(seriesCode),
+        normalizedCharacter: normalizeCharacter(item.Character),
       };
     });
   }, [data]);
@@ -93,7 +101,7 @@ const CardTable = ({ data }) => {
     const map = new Map();
     enrichedData.forEach((item) => {
       if (!map.has(item.cardId)) {
-        map.set(item.cardId, item.Character);
+        map.set(item.cardId, item.normalizedCharacter);
       }
     });
     return map;
@@ -112,7 +120,7 @@ const CardTable = ({ data }) => {
 
   // Extract unique values for dropdowns
   const characters = useMemo(() => {
-    const chars = new Set(enrichedData.map(item => item.Character));
+    const chars = new Set(enrichedData.map(item => item.normalizedCharacter));
     return Array.from(chars).sort((a, b) => {
       const favoriteDiff = (favoriteCharacterCounts.get(b) || 0) - (favoriteCharacterCounts.get(a) || 0);
       if (favoriteDiff !== 0) {
@@ -136,7 +144,7 @@ const CardTable = ({ data }) => {
     const seriesSelected = sortBy !== 'character';
     const normalizedQuery = searchQuery.trim().toLowerCase();
     return enrichedData.filter(item => {
-      const charMatch = selectedCharacter ? item.Character === selectedCharacter : true;
+      const charMatch = selectedCharacter ? item.normalizedCharacter === selectedCharacter : true;
       const colorMatch = selectedColor ? item.Color === selectedColor : true;
       const wishlistMatch = wishlistOnly ? wishlistSet.has(item.cardId) : true;
       const seriesMatch = seriesSelected ? item.seriesLabel === sortBy : true;
@@ -156,11 +164,11 @@ const CardTable = ({ data }) => {
         return wishlistDiff;
       }
 
-      const favoriteDiff = (favoriteCharacterCounts.get(b.Character) || 0) - (favoriteCharacterCounts.get(a.Character) || 0);
+      const favoriteDiff = (favoriteCharacterCounts.get(b.normalizedCharacter) || 0) - (favoriteCharacterCounts.get(a.normalizedCharacter) || 0);
       if (favoriteDiff !== 0) {
         return favoriteDiff;
       }
-      return a.Character.localeCompare(b.Character, undefined, { numeric: true, sensitivity: 'base' });
+      return a.normalizedCharacter.localeCompare(b.normalizedCharacter, undefined, { numeric: true, sensitivity: 'base' });
     });
     return sorted;
   }, [filteredData, favoriteCharacterCounts, wishlistSet]);
