@@ -148,8 +148,11 @@ const CardTable = ({ data }) => {
       const colorMatch = selectedColor ? item.Color === selectedColor : true;
       const wishlistMatch = wishlistOnly ? wishlistSet.has(item.cardId) : true;
       const seriesMatch = seriesSelected ? item.seriesLabel === sortBy : true;
+      const characterLabel = item.Character || '';
+      const normalizedCharacterLabel = item.normalizedCharacter || '';
       const searchMatch = normalizedQuery
-        ? item.Character.toLowerCase().includes(normalizedQuery)
+        ? characterLabel.toLowerCase().includes(normalizedQuery)
+          || normalizedCharacterLabel.toLowerCase().includes(normalizedQuery)
           || item.cardCode.toLowerCase().includes(normalizedQuery)
         : true;
       return charMatch && colorMatch && wishlistMatch && seriesMatch && searchMatch;
