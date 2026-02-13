@@ -1,0 +1,40 @@
+name: Scrape Cardrush Buying Prices
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r one_piece_scripts/requirements.txt
+
+      - name: Scrape Cardrush paginated list
+        run: python one_piece_scripts/scrape_cardrush_buying_prices.py
+
+      - name: Commit updated scrape output
+        run: |
+          if git diff --quiet -- one_piece_scripts/cardrush_buying_prices.json; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add one_piece_scripts/cardrush_buying_prices.json
+          git commit -m "chore: update cardrush buying prices data"
+          git push
