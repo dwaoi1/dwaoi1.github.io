@@ -92,6 +92,14 @@ def main() -> None:
         json.dump(rows, file_obj, ensure_ascii=False, indent=2)
 
     print(f"Saved {len(rows)} rows to {args.output}")
+    preview_count = min(5, len(rows))
+    if preview_count:
+        print(f"Previewing first {preview_count} row(s):")
+        for idx, row in enumerate(rows[:preview_count], start=1):
+            print(
+                f"{idx}. name={row['name']} | rarity={row['rarity']} | "
+                f"model_number={row['model_number']} | amount={row['amount']}"
+            )
 
 
 if __name__ == "__main__":
