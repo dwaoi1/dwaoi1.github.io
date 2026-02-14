@@ -25,7 +25,16 @@ jobs:
         run: pip install -r one_piece_scripts/requirements.txt
 
       - name: Scrape Cardrush paginated list
-        run: python one_piece_scripts/scrape_cardrush_buying_prices.py
+        run: |
+          set -o pipefail
+          python one_piece_scripts/scrape_cardrush_buying_prices.py 2>&1 | tee scrape-cardrush.log
+
+      - name: Upload scrape logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scrape-cardrush-log
+          path: scrape-cardrush.log
 
       - name: Commit updated scrape output
         run: |

@@ -4,14 +4,11 @@ import time
 from typing import Any
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 
 BASE_URL = "https://cardrush.media/onepiece/buying_prices"
-USER_AGENT = (
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-)
+DEFAULT_IMPERSONATE_BROWSER = "chrome124"
 
 
 def find_json_like_list(value: Any) -> list[dict[str, Any]] | None:
@@ -47,12 +44,14 @@ def parse_price_table_from_html(html_text: str) -> list[dict[str, Any]]:
         if not (name_cell and rarity_cell and model_number_cell and amount_cell):
             continue
 
-        parsed_rows.append({
-            "name": name_cell.get_text(strip=True),
-            "rarity": rarity_cell.get_text(strip=True),
-            "model_number": model_number_cell.get_text(strip=True),
-            "amount": amount_cell.get_text(strip=True),
-        })
+        parsed_rows.append(
+            {
+                "name": name_cell.get_text(strip=True),
+                "rarity": rarity_cell.get_text(strip=True),
+                "model_number": model_number_cell.get_text(strip=True),
+                "amount": amount_cell.get_text(strip=True),
+            }
+        )
 
     return parsed_rows
 
@@ -75,7 +74,6 @@ def parse_payload(text: str) -> list[dict[str, Any]]:
             return found or []
 
     soup = BeautifulSoup(text, "html.parser")
-
     next_data = soup.select_one("script#__NEXT_DATA__")
     if next_data and next_data.string:
         parsed = json.loads(next_data.string)
@@ -103,9 +101,35 @@ def discover_max_page(html: str, current_url: str) -> int:
     return max_page
 
 
-def scrape(base_url: str, delay_seconds: float, timeout: int) -> list[dict[str, Any]]:
+def request_page(session: requests.Session, url: str, timeout: int, impersonate: str) -> requests.Response:
+    try:
+        response = session.get(url, timeout=timeout, impersonate=impersonate)
+    except requests.exceptions.ProxyError as exc:
+        raise RuntimeError(
+            "Network proxy blocked access before reaching Cardrush (CONNECT tunnel failed with 403). "
+            "This is a runner/network restriction, not a parser bug."
+        ) from exc
+
+    if response.status_code == 403:
+        snippet = response.text[:600].replace("\n", " ")
+        raise RuntimeError(
+            "Cardrush returned 403 Forbidden. This usually means bot protection blocked the runner IP/fingerprint. "
+            f"Try a different --impersonate value. URL={url} body_snippet={snippet}"
+        )
+    response.raise_for_status()
+    return response
+
+
+def scrape(base_url: str, delay_seconds: float, timeout: int, impersonate: str) -> list[dict[str, Any]]:
     session = requests.Session()
-    session.headers.update({"User-Agent": USER_AGENT})
+    session.headers.update(
+        {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
+            "Referer": "https://cardrush.media/",
+            "Origin": "https://cardrush.media",
+        }
+    )
 
     base_params = {
         "displayMode": "リスト",
@@ -125,8 +149,7 @@ def scrape(base_url: str, delay_seconds: float, timeout: int) -> list[dict[str, 
 
     query = urlencode(base_params, doseq=True)
     first_url = f"{base_url}?{query}"
-    first_response = session.get(first_url, timeout=timeout)
-    first_response.raise_for_status()
+    first_response = request_page(session, first_url, timeout, impersonate)
 
     max_page = discover_max_page(first_response.text, first_response.url)
 
@@ -137,8 +160,7 @@ def scrape(base_url: str, delay_seconds: float, timeout: int) -> list[dict[str, 
         page_query = urlencode(page_params, doseq=True)
         page_url = f"{base_url}?{page_query}"
 
-        response = session.get(page_url, timeout=timeout)
-        response.raise_for_status()
+        response = request_page(session, page_url, timeout, impersonate)
         rows = parse_payload(response.text)
 
         for row in rows:
@@ -157,12 +179,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--base-url", default=BASE_URL)
     parser.add_argument("--delay", type=float, default=0.6)
     parser.add_argument("--timeout", type=int, default=30)
+    parser.add_argument("--impersonate", default=DEFAULT_IMPERSONATE_BROWSER)
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    data = scrape(args.base_url, args.delay, args.timeout)
+    data = scrape(args.base_url, args.delay, args.timeout, args.impersonate)
 
     with open(args.output, "w", encoding="utf-8") as file_obj:
         json.dump(data, file_obj, ensure_ascii=False, indent=2)
