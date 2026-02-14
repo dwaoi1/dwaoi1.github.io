@@ -27,7 +27,17 @@ jobs:
       - name: Scrape Cardrush paginated list
         run: |
           set -o pipefail
-          python one_piece_scripts/scrape_cardrush_buying_prices.py --skip-on-block 2>&1 | tee scrape-cardrush.log
+          month_year_dir=$(date +"%b %Y")
+          dated_json=$(date +"%Y-%m-%d.json")
+          output_dir="one_piece_scripts/cardrush_buying_prices/${month_year_dir}"
+          output_path="${output_dir}/${dated_json}"
+
+          mkdir -p "$output_dir"
+          echo "SCRAPE_OUTPUT_PATH=$output_path" >> "$GITHUB_ENV"
+
+          python one_piece_scripts/scrape_cardrush_buying_prices.py \
+            --output "$output_path" \
+            --skip-on-block 2>&1 | tee scrape-cardrush.log
 
       - name: Upload scrape logs on failure
         if: failure()
@@ -38,12 +48,12 @@ jobs:
 
       - name: Commit updated scrape output
         run: |
-          if git diff --quiet -- one_piece_scripts/cardrush_buying_prices.json; then
+          if git diff --quiet -- "$SCRAPE_OUTPUT_PATH"; then
             echo "No changes to commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add one_piece_scripts/cardrush_buying_prices.json
-          git commit -m "chore: update cardrush buying prices data"
+          git add "$SCRAPE_OUTPUT_PATH"
+          git commit -m "chore: add dated cardrush buying prices data"
           git push
