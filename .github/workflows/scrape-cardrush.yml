@@ -3,7 +3,7 @@ name: Scrape Cardrush Buying Prices
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 */6 * * *"
+    - cron: "17 */20 * * *"
 
 permissions:
   contents: write
@@ -35,9 +35,30 @@ jobs:
           mkdir -p "$output_dir"
           echo "SCRAPE_OUTPUT_PATH=$output_path" >> "$GITHUB_ENV"
 
-          python one_piece_scripts/scrape_cardrush_buying_prices.py \
-            --output "$output_path" \
-            --skip-on-block 2>&1 | tee scrape-cardrush.log
+          max_retries=4
+          retry_delay_seconds=3600
+          attempt=0
+
+          while true; do
+            echo "Scrape attempt $((attempt + 1)) of $((max_retries + 1))"
+            python one_piece_scripts/scrape_cardrush_buying_prices.py \
+              --output "$output_path" 2>&1 | tee scrape-cardrush.log
+            scrape_exit_code=${PIPESTATUS[0]}
+
+            if [ "$scrape_exit_code" -eq 0 ]; then
+              break
+            fi
+
+            if grep -q "403" scrape-cardrush.log && [ "$attempt" -lt "$max_retries" ]; then
+              attempt=$((attempt + 1))
+              echo "Detected 403 response. Retrying in 1 hour (retry ${attempt}/${max_retries})."
+              sleep "$retry_delay_seconds"
+              continue
+            fi
+
+            echo "Scrape failed with exit code ${scrape_exit_code}."
+            exit "$scrape_exit_code"
+          done
 
       - name: Upload scrape logs on failure
         if: failure()
