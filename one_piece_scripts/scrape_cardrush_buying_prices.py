@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import sys
 import time
 
@@ -77,21 +78,26 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--base-url", default=BASE_URL)
     parser.add_argument("--timeout", type=int, default=60)
     parser.add_argument("--wait-seconds", type=float, default=30, help="Seconds to wait after fetch before parsing")
-    parser.add_argument("--skip-on-block", action="store_true", help="Exit successfully when blocked and keep existing JSON")
+    parser.add_argument("--skip-on-block", action="store_true", help="Exit successfully when blocked and save an empty JSON output")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    output_dir = os.path.dirname(args.output)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
+
     try:
         rows = scrape_initial_table(args.base_url, args.timeout, args.wait_seconds)
     except AccessBlockedError as exc:
         if args.skip_on_block:
             print(f"::warning::{exc}")
-            print("Access blocked. Skipping scrape and leaving existing output unchanged.")
-            return
-        print(str(exc), file=sys.stderr)
-        raise
+            print("Access blocked. Saving an empty JSON file for this run.")
+            rows = []
+        else:
+            print(str(exc), file=sys.stderr)
+            raise
 
     with open(args.output, "w", encoding="utf-8") as file_obj:
         json.dump(rows, file_obj, ensure_ascii=False, indent=2)
