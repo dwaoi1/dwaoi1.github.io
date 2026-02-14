@@ -1,5 +1,6 @@
 import argparse
 import json
+import sys
 
 import requests
 from bs4 import BeautifulSoup
@@ -37,16 +38,31 @@ def parse_price_table_from_html(html_text: str) -> list[dict[str, str]]:
     return parsed_rows
 
 
+class AccessBlockedError(RuntimeError):
+    pass
+
+
 def scrape_initial_table(base_url: str, timeout: int) -> list[dict[str, str]]:
-    response = requests.get(
-        base_url,
-        timeout=timeout,
-        headers={
-            "User-Agent": USER_AGENT,
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
-        },
-    )
+    try:
+        response = requests.get(
+            base_url,
+            timeout=timeout,
+            headers={
+                "User-Agent": USER_AGENT,
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
+            },
+        )
+    except requests.exceptions.ProxyError as exc:
+        raise AccessBlockedError(
+            "Network proxy blocked access before reaching Cardrush (CONNECT tunnel failed with 403)."
+        ) from exc
+    if response.status_code == 403:
+        snippet = response.text[:400].replace("\n", " ")
+        raise AccessBlockedError(
+            "Cardrush returned 403 Forbidden for initial page. "
+            f"url={base_url} body_snippet={snippet}"
+        )
     response.raise_for_status()
     return parse_price_table_from_html(response.text)
 
@@ -56,12 +72,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", default="one_piece_scripts/cardrush_buying_prices.json")
     parser.add_argument("--base-url", default=BASE_URL)
     parser.add_argument("--timeout", type=int, default=30)
+    parser.add_argument("--skip-on-block", action="store_true", help="Exit successfully when blocked and keep existing JSON")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    rows = scrape_initial_table(args.base_url, args.timeout)
+    try:
+        rows = scrape_initial_table(args.base_url, args.timeout)
+    except AccessBlockedError as exc:
+        if args.skip_on_block:
+            print(f"::warning::{exc}")
+            print("Access blocked. Skipping scrape and leaving existing output unchanged.")
+            return
+        print(str(exc), file=sys.stderr)
+        raise
 
     with open(args.output, "w", encoding="utf-8") as file_obj:
         json.dump(rows, file_obj, ensure_ascii=False, indent=2)
