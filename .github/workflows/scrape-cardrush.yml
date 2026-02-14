@@ -49,11 +49,23 @@ jobs:
               break
             fi
 
-            if grep -q "403" scrape-cardrush.log && [ "$attempt" -lt "$max_retries" ]; then
-              attempt=$((attempt + 1))
-              echo "Detected 403 response. Retrying in 1 hour (retry ${attempt}/${max_retries})."
-              sleep "$retry_delay_seconds"
-              continue
+            if grep -q "403" scrape-cardrush.log; then
+              if [ "$attempt" -lt "$max_retries" ]; then
+                attempt=$((attempt + 1))
+                echo "Detected 403 response. Retrying in 1 hour (retry ${attempt}/${max_retries})."
+                sleep "$retry_delay_seconds"
+                continue
+              fi
+
+              echo "403 persisted after $((max_retries + 1)) attempts. Saving empty JSON and continuing."
+              python one_piece_scripts/scrape_cardrush_buying_prices.py \
+                --output "$output_path" \
+                --skip-on-block 2>&1 | tee scrape-cardrush.log
+              fallback_exit_code=${PIPESTATUS[0]}
+              if [ "$fallback_exit_code" -ne 0 ]; then
+                exit "$fallback_exit_code"
+              fi
+              break
             fi
 
             echo "Scrape failed with exit code ${scrape_exit_code}."
