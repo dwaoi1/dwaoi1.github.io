@@ -27,7 +27,7 @@ This script will automatically download all known card sets from the website.
    ```bash
    python3 scrape_cards.py
    ```
-   - This reads all the downloaded files and updates the website data.
+   - This reads all the downloaded files and updates `one_piece_scripts/one_piece_cards.json` (used at build time).
 
 ### Option B: Manual Save (If automatic fails)
 If specific cards are missing or you want to save a specific page manually:
