@@ -356,32 +356,34 @@ const CardTable = ({ data }) => {
               const isWishlisted = wishlistSet.has(item.cardId);
               return (
                 <div key={`${item.Picture}-${index}`} className="card-grid-item">
-                  <button
-                    type="button"
-                    className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      toggleWishlist(item.cardId);
-                    }}
-                    aria-pressed={isWishlisted}
-                    aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-                  >
-                    {isWishlisted ? '♥' : '♡'}
-                  </button>
-                  <a
-                    href={item.Picture}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src={item.Picture}
-                      alt={item.Character}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                  <div className="card-image-shell">
+                    <a
+                      href={item.Picture}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={item.Picture}
+                        alt={item.Character}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                        }}
+                      />
+                    </a>
+                    <button
+                      type="button"
+                      className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        toggleWishlist(item.cardId);
                       }}
-                    />
-                  </a>
+                      aria-pressed={isWishlisted}
+                      aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                    >
+                      {isWishlisted ? '♥' : '♡'}
+                    </button>
+                  </div>
                 </div>
               );
             })}

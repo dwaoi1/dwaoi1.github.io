@@ -122,6 +122,12 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
+.card-image-shell {
+  position: relative;
+  display: inline-flex;
+  line-height: 0;
+}
+
 .card-grid-item img {
   width: 100%;
   max-width: 190px;
@@ -130,16 +136,16 @@
 }
 
 .card-grid-item a {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: auto;
 }
 
 .wishlist-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 4px;
+  right: 4px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #ddd;
   border-radius: 999px;
