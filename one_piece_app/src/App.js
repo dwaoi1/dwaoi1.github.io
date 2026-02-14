@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import CardTable from './components/CardTable';
+import opcgLogo from './assets/one-piece-card-game-logo.svg';
 
 function App() {
   const [cardData, setCardData] = useState([]);
@@ -35,7 +36,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>One Piece Card Game Index</h1>
+        <img className="App-logo" src={opcgLogo} alt="One Piece Card Game" />
         <p>{cardData.length} cards have been loaded</p>
       </header>
       <main>
