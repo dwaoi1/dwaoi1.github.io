@@ -10,10 +10,11 @@
   margin-bottom: 20px;
   align-items: flex-end;
   flex-wrap: wrap;
-  background-color: #f8f9fa;
+  background-color: rgba(20, 22, 28, 0.92);
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .filter-group {
@@ -25,27 +26,31 @@
 .filter-group label {
   font-weight: bold;
   font-size: 0.9rem;
-  color: #333;
+  color: #d2d7e2;
 }
 
 .filter-group select {
   padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #3e4555;
+  border-radius: 6px;
   font-size: 1rem;
   min-width: 200px;
+  background-color: #181b22;
+  color: #f3f4f6;
 }
 
 .filter-group input[type="search"] {
   padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #3e4555;
+  border-radius: 6px;
   font-size: 1rem;
   min-width: 240px;
+  background-color: #181b22;
+  color: #f3f4f6;
 }
 
 .filter-group input[type="search"]::placeholder {
-  color: #868e96;
+  color: #8c92a3;
 }
 
 .wishlist-filter {
@@ -61,10 +66,11 @@
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #181b22;
+  border: 1px solid #3e4555;
+  border-radius: 6px;
   font-size: 0.95rem;
+  color: #eef1f7;
 }
 
 .wishlist-toggle input {
@@ -74,7 +80,7 @@
 
 .reset-btn {
     padding: 8px 16px;
-    background-color: #6c757d;
+    background-color: #3c4250;
     color: white;
     border: none;
     border-radius: 4px;
@@ -83,19 +89,19 @@
     height: 35px; /* match select height approx */
 }
 .reset-btn:hover {
-    background-color: #5a6268;
+    background-color: #4a5162;
 }
 
 .card-grid-wrapper {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  padding: 16px;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
 }
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(140px, 1fr));
+  grid-template-columns: repeat(5, minmax(128px, 1fr));
   gap: 16px;
 }
 
@@ -104,10 +110,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #eee;
-  background-color: #fafafa;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -118,7 +124,7 @@
 
 .card-grid-item img {
   width: 100%;
-  max-width: 200px;
+  max-width: 190px;
   height: auto;
   object-fit: contain;
 }
@@ -167,7 +173,7 @@
 .no-data {
   text-align: center;
   padding: 40px;
-  color: #666;
+  color: #b3b8c6;
   font-style: italic;
 }
 
@@ -213,41 +219,41 @@
 
 .pagination-btn {
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: #345a9d;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
 }
 
 .pagination-btn:disabled {
-  background-color: #ccc;
+  background-color: #4f5563;
   cursor: not-allowed;
 }
 
 .page-numbers button {
   padding: 6px 12px;
-  border: 1px solid #ddd;
-  background-color: white;
-  color: #333;
-  border-radius: 4px;
+  border: 1px solid #3f4555;
+  background-color: #171a22;
+  color: #d2d7e2;
+  border-radius: 6px;
   cursor: pointer;
   min-width: 35px;
 }
 
 .page-numbers button.active {
-  background-color: #007bff;
+  background-color: #3f70c7;
   color: white;
-  border-color: #007bff;
+  border-color: #3f70c7;
 }
 
 .page-numbers button:hover:not(.active) {
-  background-color: #f1f1f1;
+  background-color: #262b38;
 }
 
 .pagination-dots {
-  color: #666;
+  color: #9ca4b7;
   font-weight: bold;
   padding: 0 5px;
 }
@@ -255,13 +261,13 @@
 .pagination-info {
   text-align: center;
   margin-top: 10px;
-  color: #666;
+  color: #9ca4b7;
   font-size: 0.9rem;
 }
 
 .filters-note {
   margin-top: 12px;
   text-align: center;
-  color: #555;
+  color: #aab1c0;
   font-size: 0.85rem;
 }
