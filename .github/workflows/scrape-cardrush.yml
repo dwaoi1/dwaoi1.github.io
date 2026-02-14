@@ -27,7 +27,7 @@ jobs:
       - name: Scrape Cardrush paginated list
         run: |
           set -o pipefail
-          python one_piece_scripts/scrape_cardrush_buying_prices.py --skip-on-block --retries-per-impersonate 3 --retry-backoff 1.5 2>&1 | tee scrape-cardrush.log
+          python one_piece_scripts/scrape_cardrush_buying_prices.py 2>&1 | tee scrape-cardrush.log
 
       - name: Upload scrape logs on failure
         if: failure()
