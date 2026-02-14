@@ -78,7 +78,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--base-url", default=BASE_URL)
     parser.add_argument("--timeout", type=int, default=60)
     parser.add_argument("--wait-seconds", type=float, default=30, help="Seconds to wait after fetch before parsing")
-    parser.add_argument("--skip-on-block", action="store_true", help="Exit successfully when blocked and keep existing JSON")
+    parser.add_argument("--skip-on-block", action="store_true", help="Exit successfully when blocked and save an empty JSON output")
     return parser.parse_args()
 
 
