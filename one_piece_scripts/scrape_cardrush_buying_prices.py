@@ -1,11 +1,12 @@
 import argparse
 import json
 import sys
+import time
 
 import requests
 from bs4 import BeautifulSoup
 
-BASE_URL = "https://cardrush.media/onepiece/buying_prices"
+BASE_URL = "https://cardrush.media/onepiece/buying_prices?displayMode=リスト&limit=10000&name=&rarity=&model_number=&amount=&page=1&sort%5Bkey%5D=amount&sort%5Border%5D=desc&associations%5B%5D=ocha_product&to_json_option%5Bexcept%5D%5B%5D=original_image_source&to_json_option%5Bexcept%5D%5B%5D=created_at&to_json_option%5Binclude%5D%5Bocha_product%5D%5Bonly%5D%5B%5D=id&to_json_option%5Binclude%5D%5Bocha_product%5D%5Bmethods%5D%5B%5D=image_source&display_category%5B%5D=最新弾&display_category%5B%5D=通常弾"
 USER_AGENT = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
@@ -42,7 +43,7 @@ class AccessBlockedError(RuntimeError):
     pass
 
 
-def scrape_initial_table(base_url: str, timeout: int) -> list[dict[str, str]]:
+def scrape_initial_table(base_url: str, timeout: int, wait_seconds: float) -> list[dict[str, str]]:
     try:
         response = requests.get(
             base_url,
@@ -64,6 +65,9 @@ def scrape_initial_table(base_url: str, timeout: int) -> list[dict[str, str]]:
             f"url={base_url} body_snippet={snippet}"
         )
     response.raise_for_status()
+    if wait_seconds > 0:
+        print(f"Waiting {wait_seconds} seconds before parsing response...")
+        time.sleep(wait_seconds)
     return parse_price_table_from_html(response.text)
 
 
@@ -71,7 +75,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Scrape only the initial Cardrush One Piece buying prices table")
     parser.add_argument("--output", default="one_piece_scripts/cardrush_buying_prices.json")
     parser.add_argument("--base-url", default=BASE_URL)
-    parser.add_argument("--timeout", type=int, default=30)
+    parser.add_argument("--timeout", type=int, default=60)
+    parser.add_argument("--wait-seconds", type=float, default=30, help="Seconds to wait after fetch before parsing")
     parser.add_argument("--skip-on-block", action="store_true", help="Exit successfully when blocked and keep existing JSON")
     return parser.parse_args()
 
@@ -79,7 +84,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     try:
-        rows = scrape_initial_table(args.base_url, args.timeout)
+        rows = scrape_initial_table(args.base_url, args.timeout, args.wait_seconds)
     except AccessBlockedError as exc:
         if args.skip_on_block:
             print(f"::warning::{exc}")
