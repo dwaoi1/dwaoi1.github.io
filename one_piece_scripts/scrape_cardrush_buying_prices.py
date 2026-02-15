@@ -78,7 +78,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--base-url", default=BASE_URL)
     parser.add_argument("--timeout", type=int, default=60)
     parser.add_argument("--wait-seconds", type=float, default=30, help="Seconds to wait after fetch before parsing")
-    parser.add_argument("--skip-on-block", action="store_true", help="Exit successfully when blocked and save an empty JSON output")
+    parser.add_argument("--max-403-retries", type=int, default=3, help="Number of retries after a 403 response")
+    parser.add_argument("--retry-delay-seconds", type=float, default=180, help="Seconds to sleep before retrying after a 403 response")
     return parser.parse_args()
 
 
@@ -88,15 +89,26 @@ def main() -> None:
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
 
-    try:
-        rows = scrape_initial_table(args.base_url, args.timeout, args.wait_seconds)
-    except AccessBlockedError as exc:
-        if args.skip_on_block:
-            print(f"::warning::{exc}")
-            print("Access blocked. Saving an empty JSON file for this run.")
-            rows = []
-        else:
-            print(str(exc), file=sys.stderr)
+    attempt = 0
+    while True:
+        try:
+            rows = scrape_initial_table(args.base_url, args.timeout, args.wait_seconds)
+            break
+        except AccessBlockedError as exc:
+            if attempt < args.max_403_retries:
+                attempt += 1
+                print(
+                    f"Detected 403-style block. Sleeping {args.retry_delay_seconds} seconds before retry "
+                    f"{attempt}/{args.max_403_retries}...",
+                    file=sys.stderr,
+                )
+                time.sleep(args.retry_delay_seconds)
+                continue
+
+            print(
+                f"403 persisted after {args.max_403_retries + 1} attempts. Exiting with failure.\n{exc}",
+                file=sys.stderr,
+            )
             raise
 
     with open(args.output, "w", encoding="utf-8") as file_obj:
