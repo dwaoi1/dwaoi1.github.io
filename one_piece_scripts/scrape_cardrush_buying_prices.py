@@ -86,7 +86,11 @@ def main() -> None:
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
 
-    rows = scrape_initial_table(args.base_url, args.timeout, args.wait_seconds)
+    try:
+        rows = scrape_initial_table(args.base_url, args.timeout, args.wait_seconds)
+    except AccessBlockedError as exc:
+        print(str(exc), file=sys.stderr)
+        raise SystemExit(3) from exc
 
     with open(args.output, "w", encoding="utf-8") as file_obj:
         json.dump(rows, file_obj, ensure_ascii=False, indent=2)
