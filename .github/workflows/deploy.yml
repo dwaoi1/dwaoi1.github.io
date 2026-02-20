@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - "**"
+      - main
   pull_request:
     branches:
       - main
@@ -14,12 +14,11 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +31,7 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          for asset in asset-manifest.json cards.json favicon.ico index.html logo192.png logo512.png manifest.json robots.txt test_556.html test_569.html wishlist.json; do
+          for asset in cards.json favicon.ico logo192.png logo512.png manifest.json robots.txt wishlist.json; do
             if [ -f "gh-pages/${asset}" ]; then
               cp "gh-pages/${asset}" "one_piece_app/public/${asset}"
             fi
@@ -46,8 +45,9 @@ jobs:
           else
             export PUBLIC_URL="https://dwaoi1.github.io/"
           fi
-          npm install
+          npm ci
           npm run build
+          test -f build/index.html
 
       - name: Upload Pages artifact 📦
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -57,7 +57,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.actor != 'github-actions[bot]' && (github.event_name == 'pull_request' || github.ref == 'refs/heads/main')
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event_name == 'pull_request' && 'github-pages-preview' || 'github-pages' }}
