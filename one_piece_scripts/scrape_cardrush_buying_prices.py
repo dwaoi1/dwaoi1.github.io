@@ -1,16 +1,35 @@
 import argparse
 import json
 import os
+import random
+import sys
 import time
 
 import requests
 from bs4 import BeautifulSoup
 
 BASE_URL = "https://cardrush.media/onepiece/buying_prices?displayMode=リスト&limit=10000&name=&rarity=&model_number=&amount=&page=1&sort%5Bkey%5D=amount&sort%5Border%5D=desc&associations%5B%5D=ocha_product&to_json_option%5Bexcept%5D%5B%5D=original_image_source&to_json_option%5Bexcept%5D%5B%5D=created_at&to_json_option%5Binclude%5D%5Bocha_product%5D%5Bonly%5D%5B%5D=id&to_json_option%5Binclude%5D%5Bocha_product%5D%5Bmethods%5D%5B%5D=image_source&display_category%5B%5D=最新弾&display_category%5B%5D=通常弾"
-USER_AGENT = (
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-)
+USER_AGENT_POOL = [
+    (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    ),
+    (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_6) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    ),
+]
+
+
+def build_human_like_headers() -> dict[str, str]:
+    return {
+        "User-Agent": random.choice(USER_AGENT_POOL),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+    }
 
 
 def parse_price_table_from_html(html_text: str) -> list[dict[str, str]]:
@@ -45,14 +64,12 @@ class AccessBlockedError(RuntimeError):
 
 def scrape_initial_table(base_url: str, timeout: int, wait_seconds: float) -> list[dict[str, str]]:
     try:
+        headers = build_human_like_headers()
+        print(f"Using User-Agent: {headers['User-Agent']}")
         response = requests.get(
             base_url,
             timeout=timeout,
-            headers={
-                "User-Agent": USER_AGENT,
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
-            },
+            headers=headers,
         )
     except requests.exceptions.ProxyError as exc:
         raise AccessBlockedError(
