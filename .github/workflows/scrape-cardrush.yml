@@ -24,7 +24,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r one_piece_scripts/requirements.txt
 
+      - name: Diagnose and clear proxy environment
+        run: |
+          echo "Proxy-related environment variables before cleanup:"
+          env | grep -Ei '(^|_)(http|https|all|no)_proxy=' || true
+
+          unset HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY
+          unset http_proxy https_proxy all_proxy no_proxy
+
+          echo "Proxy-related environment variables after cleanup:"
+          env | grep -Ei '(^|_)(http|https|all|no)_proxy=' || true
+
       - name: Scrape Cardrush paginated list
+        env:
+          HTTP_PROXY: ""
+          HTTPS_PROXY: ""
+          ALL_PROXY: ""
+          NO_PROXY: "cardrush.media"
         run: |
           set -o pipefail
           month_year_dir=$(date +"%b %Y")
@@ -34,6 +50,16 @@ jobs:
 
           mkdir -p "$output_dir"
           echo "SCRAPE_OUTPUT_PATH=$output_path" >> "$GITHUB_ENV"
+
+          echo "Network diagnostics:"
+          python - <<'PY'
+          import os, socket
+          print("HTTP_PROXY=", os.getenv("HTTP_PROXY"))
+          print("HTTPS_PROXY=", os.getenv("HTTPS_PROXY"))
+          print("ALL_PROXY=", os.getenv("ALL_PROXY"))
+          print("NO_PROXY=", os.getenv("NO_PROXY"))
+          print("cardrush.media resolves to:", socket.gethostbyname("cardrush.media"))
+          PY
 
           python one_piece_scripts/scrape_cardrush_buying_prices.py \
             --output "$output_path" 2>&1 | tee scrape-cardrush.log
