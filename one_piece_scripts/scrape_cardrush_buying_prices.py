@@ -4,6 +4,7 @@ import os
 import random
 import sys
 import time
+from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup
@@ -20,10 +21,10 @@ USER_AGENT_POOL = [
     ),
 ]
 
-
-def build_human_like_headers() -> dict[str, str]:
+def build_human_like_headers(user_agent: Optional[str] = None) -> dict[str, str]:
+    selected_user_agent = user_agent or random.choice(USER_AGENT_POOL)
     return {
-        "User-Agent": random.choice(USER_AGENT_POOL),
+        "User-Agent": selected_user_agent,
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
         "Accept-Encoding": "gzip, deflate, br",
@@ -62,19 +63,46 @@ class AccessBlockedError(RuntimeError):
     pass
 
 
-def scrape_initial_table(base_url: str, timeout: int, wait_seconds: float) -> list[dict[str, str]]:
+def scrape_initial_table(
+    base_url: str,
+    timeout: int,
+    wait_seconds: float,
+) -> list[dict[str, str]]:
+    session = requests.Session()
+    selected_user_agent = random.choice(USER_AGENT_POOL)
+    headers = build_human_like_headers(selected_user_agent)
+    session.headers.update(headers)
+    print(f"Using User-Agent: {headers['User-Agent']}")
+
+    homepage_url = "https://cardrush.media/"
     try:
-        headers = build_human_like_headers()
-        print(f"Using User-Agent: {headers['User-Agent']}")
-        response = requests.get(
-            base_url,
-            timeout=timeout,
-            headers=headers,
+        homepage_response = session.get(homepage_url, timeout=timeout)
+        print(
+            "Prefetch homepage status="
+            f"{homepage_response.status_code} "
+            f"server={homepage_response.headers.get('server', 'unknown')} "
+            f"content-type={homepage_response.headers.get('content-type', 'unknown')}"
         )
+        print(f"Prefetch cookies={session.cookies.get_dict()}")
     except requests.exceptions.ProxyError as exc:
         raise AccessBlockedError(
             "Network proxy blocked access before reaching Cardrush (CONNECT tunnel failed with 403)."
         ) from exc
+
+    try:
+        response = session.get(base_url, timeout=timeout)
+    except requests.exceptions.ProxyError as exc:
+        raise AccessBlockedError(
+            "Network proxy blocked access before reaching Cardrush (CONNECT tunnel failed with 403)."
+        ) from exc
+
+    print(
+        "Fetch status="
+        f"{response.status_code} "
+        f"server={response.headers.get('server', 'unknown')} "
+        f"content-type={response.headers.get('content-type', 'unknown')}"
+    )
+
     if response.status_code == 403:
         snippet = response.text[:400].replace("\n", " ")
         raise AccessBlockedError(
@@ -104,7 +132,11 @@ def main() -> None:
         os.makedirs(output_dir, exist_ok=True)
 
     try:
-        rows = scrape_initial_table(args.base_url, args.timeout, args.wait_seconds)
+        rows = scrape_initial_table(
+            args.base_url,
+            args.timeout,
+            args.wait_seconds,
+        )
     except AccessBlockedError as exc:
         print(str(exc), file=sys.stderr)
         raise SystemExit(3) from exc
