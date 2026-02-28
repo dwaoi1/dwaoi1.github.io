@@ -3,7 +3,7 @@ name: Scrape Cardrush Buying Prices
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 */10 * * *"
+    - cron: "17 * * * *"
 
 permissions:
   contents: write
@@ -35,14 +35,10 @@ jobs:
           echo "Proxy-related environment variables after cleanup:"
           env | grep -Ei '(^|_)(http|https|all|no)_proxy=' || true
 
-      - name: Scrape Cardrush paginated list
+      - name: Decide whether today's scrape is needed
         env:
-          HTTP_PROXY: ""
-          HTTPS_PROXY: ""
-          ALL_PROXY: ""
-          NO_PROXY: "cardrush.media"
+          TZ: Asia/Tokyo
         run: |
-          set -o pipefail
           month_year_dir=$(date +"%b %Y")
           dated_json=$(date +"%Y-%m-%d.json")
           output_dir="one_piece_scripts/cardrush_buying_prices/${month_year_dir}"
@@ -50,6 +46,46 @@ jobs:
 
           mkdir -p "$output_dir"
           echo "SCRAPE_OUTPUT_PATH=$output_path" >> "$GITHUB_ENV"
+
+          if [ ! -f "$output_path" ]; then
+            echo "No scrape output for today yet; scraping now."
+            echo "SHOULD_SCRAPE=true" >> "$GITHUB_ENV"
+            exit 0
+          fi
+
+          echo "Found today's scrape output at $output_path; validating JSON..."
+          if python - "$output_path" <<'PY'
+          import json
+          import sys
+
+          path = sys.argv[1]
+          with open(path, 'r', encoding='utf-8') as f:
+              data = json.load(f)
+
+          if not isinstance(data, list):
+              raise SystemExit("JSON root is not a list")
+
+          if len(data) == 0:
+              raise SystemExit("JSON list is empty")
+
+          print(f"Validated JSON list with {len(data)} rows")
+          PY
+          then
+            echo "Today's JSON is already valid; skipping scrape."
+            echo "SHOULD_SCRAPE=false" >> "$GITHUB_ENV"
+          else
+            echo "Today's JSON exists but is invalid/empty; scraping again."
+            echo "SHOULD_SCRAPE=true" >> "$GITHUB_ENV"
+          fi
+      - name: Scrape Cardrush paginated list
+        if: env.SHOULD_SCRAPE == 'true'
+        env:
+          HTTP_PROXY: ""
+          HTTPS_PROXY: ""
+          ALL_PROXY: ""
+          NO_PROXY: "cardrush.media"
+        run: |
+          set -o pipefail
 
           echo "Network diagnostics:"
           python - <<'PY'
@@ -62,16 +98,17 @@ jobs:
           PY
 
           python one_piece_scripts/scrape_cardrush_buying_prices.py \
-            --output "$output_path" 2>&1 | tee scrape-cardrush.log
+            --output "$SCRAPE_OUTPUT_PATH" 2>&1 | tee scrape-cardrush.log
 
       - name: Upload scrape logs on failure
-        if: failure()
+        if: failure() && env.SHOULD_SCRAPE == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: scrape-cardrush-log
           path: scrape-cardrush.log
 
       - name: Commit updated scrape output
+        if: env.SHOULD_SCRAPE == 'true'
         run: |
           if [ ! -f "$SCRAPE_OUTPUT_PATH" ]; then
             echo "Expected output file was not created: $SCRAPE_OUTPUT_PATH"
