@@ -1,44 +1,61 @@
 # Making scraping traffic look less bot-like (practical guidance)
 
 ## Environment note
-External web requests from this environment returned `403 Forbidden` at the proxy layer during research attempts (`curl -I https://example.com`, `curl -I https://developer.mozilla.org/...`).
+Standard HTTP request libraries (like Python's default requests) often return 403 Forbidden at the proxy/WAF layer (e.g., AWS WAF, Cloudflare) during research attempts. This is usually due to TLS and HTTP/2 fingerprinting rather than IP blocking.
 
 ## Practical guidance
-1. Use a **real, current browser User-Agent** string (matching a browser version that actually exists).
-2. Keep UA and platform internally consistent (e.g., Windows UA should not be paired with Linux-only headers).
-3. Send a realistic header set, not only `User-Agent`:
-   - `Accept`, `Accept-Language`, `Accept-Encoding`, `Connection`
-   - Chromium-family often sends `sec-ch-ua*` headers in browser contexts.
-4. Persist sessions (cookies) so each request chain looks like one user journey instead of stateless hits.
-5. Use human pacing: random jitter between requests, bounded concurrency, and backoff on 429/503.
-6. Avoid impossible navigation patterns (e.g., deep URL fetches without first loading listing pages).
-7. If detection is strict, use a browser automation stack that matches real browser behavior (JS execution, timing, TLS, HTTP2 fingerprints), not just UA spoofing.
-8. Respect site Terms, robots policy, and legal boundaries.
+1. Spoof TLS and HTTP/2 Fingerprints: Modern WAFs analyze the cryptographic handshake (JA3/JA4 fingerprinting). Standard HTTP libraries use OpenSSL, which has a distinct bot signature. Use TLS-impersonation libraries (like curl_cffi) to mimic a real browser's network signature.
+2. Keep UA, headers, and TLS strictly consistent: Do not randomly rotate User-Agents if you are spoofing a specific TLS fingerprint. If your TLS fingerprint mimics Chrome 124, your User-Agent and sec-ch-ua headers must strictly match Windows/Mac Chrome 124. Mismatches trigger instant blocks.
+3. Send a modern, realistic header set: Don't just send User-Agent. You must include modern Chromium-family headers that real browsers send:
+   - Accept, Accept-Language, Accept-Encoding
+   - sec-ch-ua, sec-ch-ua-mobile, sec-ch-ua-platform
+   - sec-fetch-dest, sec-fetch-mode, sec-fetch-site
+4. Persist sessions (cookies): Load the homepage or base domain first so your session establishes tracking cookies, making your request chain look like a legitimate user journey instead of stateless API hits.
+5. Use human pacing: Add random jitter between requests, bound your concurrency, and implement exponential backoff on 403, 429, or 503 errors.
+6. Avoid impossible navigation patterns: Don't fetch deep pagination or hidden API endpoints without first establishing a session on the parent listing pages.
 
 ## Python example (requests)
 ```python
-import random, time, requests
+import random
+import time
+# Use curl_cffi to bypass JA3/JA4 TLS fingerprinting blocks
+from curl_cffi import requests
 
-UA_POOL = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_6) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-]
-
-s = requests.Session()
-s.headers.update({
-    "User-Agent": random.choice(UA_POOL),
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+# The User-Agent and sec-ch headers MUST exactly match the impersonated browser
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Connection": "keep-alive",
-})
+    "sec-ch-ua": '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": '"Windows"',
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "none",
+    "sec-fetch-user": "?1",
+    "upgrade-insecure-requests": "1",
+}
+
+# impersonate="chrome124" mimics Chrome's exact TLS and HTTP/2 settings
+s = requests.Session(impersonate="chrome124")
+s.headers.update(headers)
+
+# Establish session cookies by hitting the homepage first
+try:
+    s.get("https://example.com", timeout=20)
+except Exception:
+    pass
+
+urls = ["https://example.com/page1", "https://example.com/page2"]
 
 for url in urls:
     r = s.get(url, timeout=20)
-    if r.status_code in (429, 503):
+    
+    # Handle WAF blocks and rate limits
+    if r.status_code in (403, 429, 503):
+        print(f"Blocked or rate-limited: {r.status_code}")
         time.sleep(random.uniform(8, 20))
     else:
+        # Normal human-like pacing between successful requests
         time.sleep(random.uniform(1.2, 4.7))
 ```
