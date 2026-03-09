@@ -124,7 +124,36 @@ def main() -> None:
         json.dump(rows, file_obj, ensure_ascii=False, indent=2)
 
     print(f"Saved {len(rows)} rows to {args.output}")
-    
+    target_queries = [
+        "モンキー・D・ルフィ(パラレル/ペンキ背景/漫画絵) OP05-119",
+        "モンキー・D・ルフィ(illust:otton) ST10-006",
+        "ボア・ハンコック(パラレル/illust:PENEKOR) OP14-112",
+        "ボア・ハンコック(illust:Takashi Kojima) OP02-059",
+        "ポートガス・D・エース(パラレル/SP/黒背景/illust:otton) ST13-011[OP12]",
+        "サンジ(illust:Koushi Rokushiro) OP10-005",
+        "ロロノア・ゾロ(修正後/ワノ国/麦わらの一味) P-042"
+    ]
+
+    print("\n--- Specific Cards Preview ---")
+    for query in target_queries:
+        # Remove normal and full-width Japanese spaces for safer matching
+        safe_query = query.replace(" ", "").replace("　", "")
+        
+        found_row = next(
+            (row for row in rows 
+             if row['name'].replace(" ", "").replace("　", "") in safe_query 
+             and row['model_number'] in query), 
+            None
+        )
+        
+        if found_row:
+            print(
+                f"✅ Found: {found_row['name']} | rarity={found_row['rarity']} | "
+                f"model={found_row['model_number']} | amount={found_row['amount']}"
+            )
+        else:
+            print(f"❌ Not found in current prices: {query}")
+
 
 if __name__ == "__main__":
     main()
