@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import './PriceModal.css';
 
 const TIME_RANGES = [
@@ -47,15 +47,14 @@ function niceTicks(minVal, maxVal, count) {
 
 const PriceModal = ({ item, priceHistory, onClose }) => {
   const [timeRange, setTimeRange] = useState(30);
-
-  const handleKeyDown = useCallback((e) => {
-    if (e.key === 'Escape') onClose();
-  }, [onClose]);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
+    const handler = (e) => { if (e.key === 'Escape') onCloseRef.current(); };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, []);
 
   const cardCode = item.cardCode;
   const histData = priceHistory[cardCode];
