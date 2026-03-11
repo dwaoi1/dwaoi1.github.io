@@ -47,6 +47,8 @@ function niceTicks(minVal, maxVal, count) {
 
 const PriceModal = ({ item, priceHistory, onClose }) => {
   const [timeRange, setTimeRange] = useState(30);
+  const [showSealed, setShowSealed] = useState(true);
+  const [showGoldText, setShowGoldText] = useState(true);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
@@ -67,11 +69,34 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
     return histData.history.filter(p => p.date >= cutoffStr);
   }, [histData, timeRange]);
 
-  const chart = useMemo(() => {
-    if (filteredHistory.length === 0) return null;
+  // Determine which variant types are available in the filtered window
+  const hasSealed = useMemo(() => filteredHistory.some(p => p.sealed), [filteredHistory]);
+  const hasGoldText = useMemo(() => filteredHistory.some(p => p.goldText), [filteredHistory]);
 
-    const prices = filteredHistory.map(p => p.minPrice);
-    const maxPrices = filteredHistory.map(p => p.maxPrice);
+  // Build effective history from selected variant groups
+  const effectiveHistory = useMemo(() => {
+    return filteredHistory.map(p => {
+      const allPrices = [p.minPrice, p.maxPrice].filter(v => v != null);
+      if (showSealed && p.sealed) allPrices.push(p.sealed.minPrice, p.sealed.maxPrice);
+      if (showGoldText && p.goldText) allPrices.push(p.goldText.minPrice, p.goldText.maxPrice);
+      const validPrices = allPrices.filter(v => v != null);
+      if (validPrices.length === 0) return null;
+      return {
+        date: p.date,
+        minPrice: Math.min(...validPrices),
+        maxPrice: Math.max(...validPrices),
+        count: p.count
+          + (showSealed && p.sealed ? p.sealed.count : 0)
+          + (showGoldText && p.goldText ? p.goldText.count : 0),
+      };
+    }).filter(Boolean);
+  }, [filteredHistory, showSealed, showGoldText]);
+
+  const chart = useMemo(() => {
+    if (effectiveHistory.length === 0) return null;
+
+    const prices = effectiveHistory.map(p => p.minPrice);
+    const maxPrices = effectiveHistory.map(p => p.maxPrice);
     const dataMinPrice = Math.min(...prices);
     const dataMaxPrice = Math.max(...maxPrices);
     const priceRange = dataMaxPrice - dataMinPrice;
@@ -80,21 +105,21 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
     const yMax = dataMaxPrice + priceRange * 0.1;
     const yRange = yMax - yMin || 1;
 
-    const n = filteredHistory.length;
+    const n = effectiveHistory.length;
     const xScale = (i) =>
       MARGIN.left + (n > 1 ? (i / (n - 1)) * PLOT_W : PLOT_W / 2);
     const yScale = (price) =>
       MARGIN.top + PLOT_H - ((price - yMin) / yRange) * PLOT_H;
 
-    const minPoints = filteredHistory
+    const minPoints = effectiveHistory
       .map((p, i) => `${xScale(i)},${yScale(p.minPrice)}`)
       .join(' ');
 
-    const hasRange = filteredHistory.some(p => p.count > 1 && p.minPrice !== p.maxPrice);
+    const hasRange = effectiveHistory.some(p => p.count > 1 && p.minPrice !== p.maxPrice);
     const areaPoints = hasRange
       ? [
-          ...filteredHistory.map((p, i) => `${xScale(i)},${yScale(p.maxPrice)}`),
-          ...filteredHistory
+          ...effectiveHistory.map((p, i) => `${xScale(i)},${yScale(p.maxPrice)}`),
+          ...effectiveHistory
             .slice()
             .reverse()
             .map((p, i, arr) => `${xScale(arr.length - 1 - i)},${yScale(p.minPrice)}`),
@@ -113,9 +138,9 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
     }
 
     return { minPoints, areaPoints, xScale, yScale, yTicks, xTickIndices, hasRange };
-  }, [filteredHistory]);
+  }, [effectiveHistory]);
 
-  const latestPoint = filteredHistory[filteredHistory.length - 1];
+  const latestPoint = effectiveHistory[effectiveHistory.length - 1];
 
   return (
     <div
@@ -147,7 +172,34 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           ))}
         </div>
 
-        {!histData || filteredHistory.length === 0 ? (
+        {(hasSealed || hasGoldText) && (
+          <div className="price-modal-variant-filters">
+            {hasSealed && (
+              <label className="variant-filter-label">
+                <input
+                  type="checkbox"
+                  checked={showSealed}
+                  onChange={e => setShowSealed(e.target.checked)}
+                />
+                <span className="variant-filter-dot variant-filter-dot--sealed" />
+                Sealed (未開封)
+              </label>
+            )}
+            {hasGoldText && (
+              <label className="variant-filter-label">
+                <input
+                  type="checkbox"
+                  checked={showGoldText}
+                  onChange={e => setShowGoldText(e.target.checked)}
+                />
+                <span className="variant-filter-dot variant-filter-dot--gold" />
+                Gold text (金文字)
+              </label>
+            )}
+          </div>
+        )}
+
+        {!histData || effectiveHistory.length === 0 ? (
           <div className="price-modal-no-data">
             {!histData
               ? 'No price data available for this card.'
@@ -210,7 +262,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                   fill="#9ca4b7"
                   transform={`rotate(-35,${chart.xScale(i)},${MARGIN.top + PLOT_H + 16})`}
                 >
-                  {formatDate(filteredHistory[i].date)}
+                  {formatDate(effectiveHistory[i].date)}
                 </text>
               ))}
 
@@ -233,7 +285,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               />
 
               {/* Data point dots */}
-              {filteredHistory.map((p, i) => (
+              {effectiveHistory.map((p, i) => (
                 <circle
                   key={i}
                   cx={chart.xScale(i)}
@@ -244,7 +296,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                   <title>
                     {p.date}: {formatYen(p.minPrice)}
                     {p.count > 1
-                      ? ` – ${formatYen(p.maxPrice)} (${p.count} variants)`
+                      ? ` – ${formatYen(p.maxPrice)} (${p.count} price entries)`
                       : ''}
                   </title>
                 </circle>
@@ -265,7 +317,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
             <strong>{formatYen(latestPoint.minPrice)}</strong>
             {latestPoint.count > 1 && (
               <span className="price-modal-variants">
-                {' '}({latestPoint.count} variants, up to {formatYen(latestPoint.maxPrice)})
+                {' '}({latestPoint.count} price entries, up to {formatYen(latestPoint.maxPrice)})
               </span>
             )}
           </div>

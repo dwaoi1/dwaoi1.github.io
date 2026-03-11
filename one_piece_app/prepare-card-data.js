@@ -72,19 +72,37 @@ function buildPriceData() {
     }
   }
 
-  // Compact to min/max price per date
+  // Helper: compute min/max/count for a subset of entries
+  function priceGroup(subset) {
+    const prices = subset.map(e => parseAmount(e.amount)).filter(p => p !== null);
+    if (prices.length === 0) return null;
+    return { minPrice: Math.min(...prices), maxPrice: Math.max(...prices), count: subset.length };
+  }
+
+  // Compact to min/max price per date, with optional sealed/goldText sub-groups
   const priceHistory = {};
   for (const [code, dateMap] of Object.entries(historyByCode)) {
     const history = [];
     for (const [date, entries] of Object.entries(dateMap)) {
-      const prices = entries.map(e => parseAmount(e.amount)).filter(p => p !== null);
-      if (prices.length === 0) continue;
-      history.push({
-        date,
-        minPrice: Math.min(...prices),
-        maxPrice: Math.max(...prices),
-        count: entries.length,
-      });
+      const allPrices = entries.map(e => parseAmount(e.amount)).filter(p => p !== null);
+      if (allPrices.length === 0) continue;
+
+      // Classify entries into base / sealed / gold-text-only groups
+      const sealedEntries = entries.filter(e => e.name && e.name.includes('未開封'));
+      const goldTextEntries = entries.filter(e => e.name && e.name.includes('金文字') && !(e.name.includes('未開封')));
+      const baseEntries = entries.filter(e => !(e.name && (e.name.includes('未開封') || e.name.includes('金文字'))));
+
+      const baseGroup = priceGroup(baseEntries);
+      const histEntry = baseGroup
+        ? { date, minPrice: baseGroup.minPrice, maxPrice: baseGroup.maxPrice, count: baseGroup.count }
+        : { date, minPrice: Math.min(...allPrices), maxPrice: Math.max(...allPrices), count: entries.length };
+
+      const sealed = priceGroup(sealedEntries);
+      const goldText = priceGroup(goldTextEntries);
+      if (sealed) histEntry.sealed = sealed;
+      if (goldText) histEntry.goldText = goldText;
+
+      history.push(histEntry);
     }
     history.sort((a, b) => a.date.localeCompare(b.date));
     if (history.length > 0) {
@@ -148,9 +166,11 @@ function buildPriceData() {
   };
 
   // Name-pattern breakdown for multi-price cards (common keywords in parentheses)
+  // "illust:" in card names is the artist credit for CS Championship Series event promos.
+  // These are special limited-edition cards signed by a specific illustrator.
   const NAME_PATTERNS = [
     { key: 'パラレル', label: 'Parallel' },
-    { key: 'illust', label: 'Illust variant' },
+    { key: 'illust', label: 'CS promo (artist credit)' },
     { key: '未開封', label: 'Sealed' },
     { key: '漫画', label: 'Manga art' },
     { key: '金文字', label: 'Gold text' },
@@ -161,11 +181,24 @@ function buildPriceData() {
     { key: '開封品', label: 'Opened' },
   ];
   const namePatternCounts = {};
+  const namePatternExamples = {};
   for (const { cardCode, entries } of multiplePrices) {
     for (const e of entries) {
       for (const { key, label } of NAME_PATTERNS) {
         if (e.name.includes(key)) {
           namePatternCounts[label] = (namePatternCounts[label] || 0) + 1;
+          // Collect up to 3 illustrative examples for the 'CS promo' label
+          if (label === 'CS promo (artist credit)' && e.name.includes('illust:')) {
+            if (!namePatternExamples[label]) namePatternExamples[label] = [];
+            if (namePatternExamples[label].length < 3) {
+              const illustMatch = e.name.match(/illust:([^/）)]+)/);
+              const artist = illustMatch ? illustMatch[1].trim() : '';
+              const entry = `${cardCode} by ${artist}`;
+              if (!namePatternExamples[label].includes(entry)) {
+                namePatternExamples[label].push(entry);
+              }
+            }
+          }
           break;
         }
       }
@@ -173,7 +206,38 @@ function buildPriceData() {
   }
   const multiPricePatterns = Object.entries(namePatternCounts)
     .sort((a, b) => b[1] - a[1])
-    .map(([pattern, count]) => ({ pattern, count }));
+    .map(([pattern, count]) => ({
+      pattern,
+      count,
+      ...(namePatternExamples[pattern] ? { examples: namePatternExamples[pattern] } : {}),
+    }));
+
+  // Rarity breakdown for cards without prices (parsed from HTML scraped data)
+  const htmlDir = path.resolve(__dirname, '../one_piece_scripts/html_files');
+  const codeToRarity = {};
+  if (fs.existsSync(htmlDir)) {
+    for (const entry of fs.readdirSync(htmlDir)) {
+      if (!entry.endsWith('.html')) continue;
+      const content = fs.readFileSync(path.join(htmlDir, entry), 'utf8');
+      const pattern = /<div class="infoCol">\s*<span>([^<]+)<\/span>\s*\|\s*<span>([^<]+)<\/span>/g;
+      let m;
+      while ((m = pattern.exec(content)) !== null) {
+        const code = m[1].trim();
+        const rarity = m[2].trim();
+        if (!codeToRarity[code]) codeToRarity[code] = rarity;
+      }
+    }
+  }
+  const rarityBreakdown = (codes) => {
+    const counts = {};
+    for (const code of codes) {
+      const rarity = codeToRarity[code] || 'Unknown';
+      counts[rarity] = (counts[rarity] || 0) + 1;
+    }
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([rarity, count]) => ({ rarity, count }));
+  };
 
   const unmatchedData = {
     asOf: latestDate,
@@ -183,6 +247,7 @@ function buildPriceData() {
     pricesWithoutCardsBreakdown: seriesBreakdown(pricesWithoutCards.map(e => e.modelNumber)),
     cardsWithoutPrices,
     cardsWithoutPricesBreakdown: seriesBreakdown(cardsWithoutPrices),
+    cardsWithoutPricesRarityBreakdown: rarityBreakdown(cardsWithoutPrices),
   };
 
   const unmatchedTarget = path.resolve(__dirname, 'public/unmatched_prices.json');
