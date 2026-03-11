@@ -87,10 +87,10 @@ const CardTable = ({ data }) => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`${process.env.PUBLIC_URL}/price_history.json`, { cache: 'no-store' })
+    fetch(`${process.env.PUBLIC_URL}/cardrush_price_data.json`, { cache: 'no-store' })
       .then(r => r.ok ? r.json() : null)
       .then(d => { if (d && isMounted) setPriceHistory(d); })
-      .catch(err => console.warn('Unable to load price_history.json', err));
+      .catch(err => console.warn('Unable to load cardrush_price_data.json', err));
     return () => { isMounted = false; };
   }, []);
 
@@ -479,11 +479,10 @@ const CardTable = ({ data }) => {
                   {unmatchedData.multiPricePatterns && unmatchedData.multiPricePatterns.length > 0 && (
                     <span className="unmatched-breakdown-inline">
                       Common reasons:{' '}
-                      {unmatchedData.multiPricePatterns.slice(0, 5).map(({ pattern, count, examples }) => (
+                      {unmatchedData.multiPricePatterns.slice(0, 5).map(({ pattern, count }) => (
                         <span
                           key={pattern}
                           className="breakdown-chip"
-                          title={examples ? `e.g. ${examples.join(', ')}` : undefined}
                         >
                           {pattern} ×{count}
                         </span>
