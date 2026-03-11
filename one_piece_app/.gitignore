@@ -11,6 +11,10 @@
 # production
 /build
 
+# generated price data files (produced by prepare-card-data.js at build time)
+/public/price_history.json
+/public/unmatched_prices.json
+
 # misc
 .DS_Store
 .env.local

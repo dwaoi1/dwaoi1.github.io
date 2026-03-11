@@ -1,5 +1,6 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import './CardTable.css';
+import PriceModal from './PriceModal';
 
 const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
@@ -9,6 +10,10 @@ const CardTable = ({ data }) => {
   const [wishlistOnly, setWishlistOnly] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [priceModal, setPriceModal] = useState(null);
+  const [priceHistory, setPriceHistory] = useState({});
+  const [unmatchedData, setUnmatchedData] = useState(null);
+  const [showUnmatched, setShowUnmatched] = useState(false);
   const itemsPerPage = 100;
 
   const getCardCode = (url) => {
@@ -79,6 +84,48 @@ const CardTable = ({ data }) => {
   useEffect(() => {
     localStorage.setItem(wishlistStorageKey, JSON.stringify(wishlist));
   }, [wishlist]);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`${process.env.PUBLIC_URL}/price_history.json`, { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && isMounted) setPriceHistory(d); })
+      .catch(err => console.warn('Unable to load price_history.json', err));
+    return () => { isMounted = false; };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`${process.env.PUBLIC_URL}/unmatched_prices.json`, { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && isMounted) setUnmatchedData(d); })
+      .catch(err => console.warn('Unable to load unmatched_prices.json', err));
+    return () => { isMounted = false; };
+  }, []);
+
+  const getLatestPrice = useCallback((cardCode) => {
+    const data = priceHistory[cardCode];
+    if (!data || !data.history.length) return null;
+    return data.history[data.history.length - 1];
+  }, [priceHistory]);
+
+  const formatPriceBadge = (pricePoint) => {
+    if (!pricePoint) return null;
+    const v = pricePoint.minPrice;
+    let label;
+    if (v >= 1000000) {
+      const m = v / 1000000;
+      label = `¥${Number.isInteger(m) ? m : m.toFixed(1)}M`;
+    } else if (v >= 10000) {
+      label = `¥${Math.round(v / 1000)}k`;
+    } else if (v >= 1000) {
+      label = `¥${(v / 1000).toFixed(1)}k`;
+    } else {
+      label = `¥${v}`;
+    }
+    return pricePoint.count > 1 ? `${label}+` : label;
+  };
+
 
   const enrichedData = useMemo(() => {
     return data.map((item) => {
@@ -354,13 +401,16 @@ const CardTable = ({ data }) => {
           <div className="card-grid">
             {currentItems.map((item, index) => {
               const isWishlisted = wishlistSet.has(item.cardId);
+              const pricePoint = getLatestPrice(item.cardCode);
+              const priceBadge = formatPriceBadge(pricePoint);
               return (
                 <div key={`${item.Picture}-${index}`} className="card-grid-item">
                   <div className="card-image-shell">
-                    <a
-                      href={item.Picture}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      className="card-image-btn"
+                      onClick={() => setPriceModal(item)}
+                      aria-label={`View price history for ${item.cardCode || item.Character}`}
                     >
                       <img
                         src={item.Picture}
@@ -370,7 +420,12 @@ const CardTable = ({ data }) => {
                           e.target.src = 'https://via.placeholder.com/150?text=No+Image';
                         }}
                       />
-                    </a>
+                    </button>
+                    {priceBadge && (
+                      <span className={`price-badge${pricePoint.count > 1 ? ' price-badge--multi' : ''}`}>
+                        {priceBadge}
+                      </span>
+                    )}
                     <button
                       type="button"
                       className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
@@ -422,7 +477,86 @@ const CardTable = ({ data }) => {
         Series selection uses the card code embedded in the image URL (for example, OP-01 or ST-01).
         Alternate art cards are treated as separate entries in the wishlist.
         The wishlist loads from the published wishlist.json file and can be edited locally and exported as JSON.
+        Click any card image to view its Cardrush buying price history.
       </p>
+
+      {unmatchedData && (
+        <div className="unmatched-section">
+          <button
+            type="button"
+            className="unmatched-toggle"
+            onClick={() => setShowUnmatched(v => !v)}
+            aria-expanded={showUnmatched}
+          >
+            {showUnmatched ? '▾' : '▸'} Cards without a single price match
+            <span className="unmatched-counts">
+              {unmatchedData.multiplePrices.length} multi-price &middot;{' '}
+              {unmatchedData.pricesWithoutCards.length} price-only &middot;{' '}
+              {unmatchedData.cardsWithoutPrices.length} card-only
+            </span>
+          </button>
+
+          {showUnmatched && (
+            <div className="unmatched-body">
+              <p className="unmatched-date">As of {unmatchedData.asOf}</p>
+
+              <details className="unmatched-group">
+                <summary>
+                  Cards with multiple prices ({unmatchedData.multiplePrices.length})
+                </summary>
+                <ul className="unmatched-list">
+                  {unmatchedData.multiplePrices.map(({ cardCode, priceCount, entries }) => (
+                    <li key={cardCode} className="unmatched-item">
+                      <span className="unmatched-code">{cardCode}</span>
+                      <span className="unmatched-detail">
+                        {priceCount} prices:{' '}
+                        {entries.map(e => `${e.name} (${e.amount})`).join(' · ')}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+
+              <details className="unmatched-group">
+                <summary>
+                  Price entries without a matching card ({unmatchedData.pricesWithoutCards.length})
+                </summary>
+                <ul className="unmatched-list">
+                  {unmatchedData.pricesWithoutCards.map(({ modelNumber, latestEntries }) => (
+                    <li key={modelNumber} className="unmatched-item">
+                      <span className="unmatched-code">{modelNumber}</span>
+                      <span className="unmatched-detail">
+                        {latestEntries.map(e => `${e.name} (${e.amount})`).join(' · ')}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+
+              <details className="unmatched-group">
+                <summary>
+                  Cards without any price data ({unmatchedData.cardsWithoutPrices.length})
+                </summary>
+                <ul className="unmatched-list unmatched-list--codes">
+                  {unmatchedData.cardsWithoutPrices.map(code => (
+                    <li key={code} className="unmatched-item">
+                      <span className="unmatched-code">{code}</span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </div>
+          )}
+        </div>
+      )}
+
+      {priceModal && (
+        <PriceModal
+          item={priceModal}
+          priceHistory={priceHistory}
+          onClose={() => setPriceModal(null)}
+        />
+      )}
     </div>
   );
 };
