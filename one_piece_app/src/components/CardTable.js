@@ -479,8 +479,14 @@ const CardTable = ({ data }) => {
                   {unmatchedData.multiPricePatterns && unmatchedData.multiPricePatterns.length > 0 && (
                     <span className="unmatched-breakdown-inline">
                       Common reasons:{' '}
-                      {unmatchedData.multiPricePatterns.slice(0, 5).map(({ pattern, count }) => (
-                        <span key={pattern} className="breakdown-chip">{pattern} ×{count}</span>
+                      {unmatchedData.multiPricePatterns.slice(0, 5).map(({ pattern, count, examples }) => (
+                        <span
+                          key={pattern}
+                          className="breakdown-chip"
+                          title={examples ? `e.g. ${examples.join(', ')}` : undefined}
+                        >
+                          {pattern} ×{count}
+                        </span>
                       ))}
                     </span>
                   )}

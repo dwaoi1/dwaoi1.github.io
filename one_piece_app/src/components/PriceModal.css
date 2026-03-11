@@ -134,3 +134,47 @@
   color: #9ca4b7;
   font-size: 0.85rem;
 }
+
+/* Variant filter checkboxes */
+.price-modal-variant-filters {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding: 8px 12px;
+  background: #13151e;
+  border: 1px solid #2d3348;
+  border-radius: 8px;
+}
+
+.variant-filter-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.83rem;
+  color: #a0aec0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.variant-filter-label input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  accent-color: #63b3ed;
+}
+
+.variant-filter-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.variant-filter-dot--sealed {
+  background-color: #f6ad55;
+}
+
+.variant-filter-dot--gold {
+  background-color: #f6e05e;
+}
