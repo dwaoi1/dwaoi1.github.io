@@ -4,7 +4,7 @@ Build compiled price data from raw Cardrush daily JSON files.
 
 Reads:
   one_piece_scripts/cardrush_buying_prices/**/*.json   (daily price scrapes)
-  one_piece_app/public/cards.json                      (card list with names and rarities)
+  one_piece_scripts/one_piece_cards.json               (card list with names and rarities)
 
 Writes:
   one_piece_app/public/cardrush_price_history.json  -- price history per card (committed by scrape workflow)
@@ -18,7 +18,7 @@ import re
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
-CARDS_JSON = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cards.json')
+CARDS_JSON = os.path.join(SCRIPT_DIR, 'one_piece_cards.json')
 PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_history.json')
 UNMATCHED_OUT = os.path.join(SCRIPT_DIR, 'unmatched_prices.json')
 
