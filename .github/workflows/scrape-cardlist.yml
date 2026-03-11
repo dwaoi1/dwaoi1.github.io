@@ -35,6 +35,25 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Preflight checks for scraper outputs
+          if [ ! -f "one_piece_scripts/one_piece_cards.json" ]; then
+            echo "Expected output JSON 'one_piece_scripts/one_piece_cards.json' was not created by the scraper."
+            echo "Check the logs for the 'Scrape card list (Japan first, then Asia)' step."
+            exit 1
+          fi
+
+          if [ ! -d "one_piece_scripts/html_files" ]; then
+            echo "Expected directory 'one_piece_scripts/html_files' was not created by the scraper."
+            echo "Check the logs for the 'Scrape card list (Japan first, then Asia)' step."
+            exit 1
+          fi
+
+          if ! ls one_piece_scripts/html_files/*.html >/dev/null 2>&1; then
+            echo "No HTML files were generated in 'one_piece_scripts/html_files'."
+            echo "Check the logs for the 'Scrape card list (Japan first, then Asia)' step."
+            exit 1
+          fi
           git add one_piece_scripts/html_files/
           git add one_piece_scripts/one_piece_cards.json
 
