@@ -11,8 +11,7 @@
 # production
 /build
 
-# generated price data files (copied from one_piece_scripts/ by deploy.yml at build time)
-/public/cardrush_price_data.json
+# unmatched_prices.json is copied from one_piece_scripts/ by deploy.yml at build time
 /public/unmatched_prices.json
 
 # misc

@@ -7,9 +7,9 @@ Reads:
   one_piece_scripts/html_files/*.html                  (card HTML for rarity info)
   one_piece_scripts/one_piece_cards.json               (card list)
 
-Writes (both committed to the repo; copied to public/ by deploy.yml):
-  one_piece_scripts/cardrush_price_data.json  -- price history per card code
-  one_piece_scripts/unmatched_prices.json     -- diagnostic / rarity breakdown
+Writes:
+  one_piece_app/public/cardrush_price_data.json  -- price history per card (committed by scrape workflow)
+  one_piece_scripts/unmatched_prices.json        -- diagnostic / rarity breakdown (copied to public/ by deploy.yml)
 """
 
 import json
@@ -17,10 +17,11 @@ import os
 import re
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
 HTML_DIR = os.path.join(SCRIPT_DIR, 'html_files')
 CARDS_JSON = os.path.join(SCRIPT_DIR, 'one_piece_cards.json')
-PRICE_DATA_OUT = os.path.join(SCRIPT_DIR, 'cardrush_price_data.json')
+PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_data.json')
 UNMATCHED_OUT = os.path.join(SCRIPT_DIR, 'unmatched_prices.json')
 
 

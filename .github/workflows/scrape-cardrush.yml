@@ -120,7 +120,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$SCRAPE_OUTPUT_PATH" \
-            one_piece_scripts/cardrush_price_data.json \
+            one_piece_app/public/cardrush_price_data.json \
             one_piece_scripts/unmatched_prices.json
 
           if git diff --cached --quiet; then
