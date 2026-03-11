@@ -87,10 +87,10 @@ const CardTable = ({ data }) => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`${process.env.PUBLIC_URL}/cardrush_price_data.json`, { cache: 'no-store' })
+    fetch(`${process.env.PUBLIC_URL}/cardrush_price_history.json`, { cache: 'no-store' })
       .then(r => r.ok ? r.json() : null)
       .then(d => { if (d && isMounted) setPriceHistory(d); })
-      .catch(err => console.warn('Unable to load cardrush_price_data.json', err));
+      .catch(err => console.warn('Unable to load cardrush_price_history.json', err));
     return () => { isMounted = false; };
   }, []);
 

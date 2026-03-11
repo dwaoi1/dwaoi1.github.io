@@ -8,7 +8,7 @@ Reads:
   one_piece_scripts/one_piece_cards.json               (card list)
 
 Writes:
-  one_piece_app/public/cardrush_price_data.json  -- price history per card (committed by scrape workflow)
+  one_piece_app/public/cardrush_price_history.json  -- price history per card (committed by scrape workflow)
   one_piece_scripts/unmatched_prices.json        -- diagnostic / rarity breakdown (copied to public/ by deploy.yml)
 """
 
@@ -21,7 +21,7 @@ REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
 HTML_DIR = os.path.join(SCRIPT_DIR, 'html_files')
 CARDS_JSON = os.path.join(SCRIPT_DIR, 'one_piece_cards.json')
-PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_data.json')
+PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_history.json')
 UNMATCHED_OUT = os.path.join(SCRIPT_DIR, 'unmatched_prices.json')
 
 
@@ -302,7 +302,7 @@ def main():
 
     unmatched = build_unmatched(history_by_code, price_files, code_to_rarity)
     with open(UNMATCHED_OUT, 'w', encoding='utf-8') as f:
-        json.dump(unmatched, f, ensure_ascii=False)
+        json.dump(unmatched, f, ensure_ascii=False, indent=2)
     print(f'Wrote {UNMATCHED_OUT}')
     print(f'  Multiple prices: {len(unmatched["multiplePrices"])}')
     print(f'  Prices without cards: {len(unmatched["pricesWithoutCards"])}')
