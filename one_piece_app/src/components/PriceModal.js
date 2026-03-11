@@ -61,6 +61,12 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const cardCode = item.cardCode;
   const histData = priceHistory[cardCode];
 
+  // Reset variant toggles whenever a different card is opened
+  useEffect(() => {
+    setShowSealed(true);
+    setShowGoldText(true);
+  }, [cardCode]);
+
   const filteredHistory = useMemo(() => {
     if (!histData || !histData.history.length) return [];
     const cutoff = new Date();
