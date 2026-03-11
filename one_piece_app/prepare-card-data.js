@@ -134,17 +134,61 @@ function buildPriceData() {
     .filter(code => !allPriceCodes.has(code))
     .sort();
 
+  // Series prefix breakdown helper
+  const seriesBreakdown = (codes) => {
+    const counts = {};
+    for (const code of codes) {
+      const m = code.match(/^([A-Z]+\d*)/);
+      const prefix = m ? m[1] : (code.includes('-') ? code.split('-')[0] : code);
+      counts[prefix] = (counts[prefix] || 0) + 1;
+    }
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([series, count]) => ({ series, count }));
+  };
+
+  // Name-pattern breakdown for multi-price cards (common keywords in parentheses)
+  const NAME_PATTERNS = [
+    { key: 'パラレル', label: 'Parallel' },
+    { key: 'illust', label: 'Illust variant' },
+    { key: '未開封', label: 'Sealed' },
+    { key: '漫画', label: 'Manga art' },
+    { key: '金文字', label: 'Gold text' },
+    { key: 'CS', label: 'CS event' },
+    { key: 'アニメ', label: 'Anime art' },
+    { key: 'シリアル', label: 'Serial numbered' },
+    { key: 'SP', label: 'SP variant' },
+    { key: '開封品', label: 'Opened' },
+  ];
+  const namePatternCounts = {};
+  for (const { cardCode, entries } of multiplePrices) {
+    for (const e of entries) {
+      for (const { key, label } of NAME_PATTERNS) {
+        if (e.name.includes(key)) {
+          namePatternCounts[label] = (namePatternCounts[label] || 0) + 1;
+          break;
+        }
+      }
+    }
+  }
+  const multiPricePatterns = Object.entries(namePatternCounts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([pattern, count]) => ({ pattern, count }));
+
   const unmatchedData = {
     asOf: latestDate,
     multiplePrices,
+    multiPricePatterns,
     pricesWithoutCards,
+    pricesWithoutCardsBreakdown: seriesBreakdown(pricesWithoutCards.map(e => e.modelNumber)),
     cardsWithoutPrices,
+    cardsWithoutPricesBreakdown: seriesBreakdown(cardsWithoutPrices),
   };
 
   const unmatchedTarget = path.resolve(__dirname, 'public/unmatched_prices.json');
   fs.writeFileSync(unmatchedTarget, JSON.stringify(unmatchedData), 'utf8');
   console.log(`Wrote unmatched data to ${unmatchedTarget}`);
-  console.log(`  Multiple prices: ${multiplePrices.length}`);
-  console.log(`  Prices without cards: ${pricesWithoutCards.length}`);
-  console.log(`  Cards without prices: ${cardsWithoutPrices.length}`);
+  console.log(`  Multiple prices (latest day): ${multiplePrices.length}`);
+  console.log(`  Prices without cards (all-time codes): ${pricesWithoutCards.length}`);
+  console.log(`  Cards without prices (all-time codes): ${cardsWithoutPrices.length}`);
 }

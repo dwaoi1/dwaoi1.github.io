@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import './CardTable.css';
 import PriceModal from './PriceModal';
 
@@ -102,30 +102,6 @@ const CardTable = ({ data }) => {
       .catch(err => console.warn('Unable to load unmatched_prices.json', err));
     return () => { isMounted = false; };
   }, []);
-
-  const getLatestPrice = useCallback((cardCode) => {
-    const data = priceHistory[cardCode];
-    if (!data || !data.history.length) return null;
-    return data.history[data.history.length - 1];
-  }, [priceHistory]);
-
-  const formatPriceBadge = (pricePoint) => {
-    if (!pricePoint) return null;
-    const v = pricePoint.minPrice;
-    let label;
-    if (v >= 1000000) {
-      const m = v / 1000000;
-      label = `¥${Number.isInteger(m) ? m : m.toFixed(1)}M`;
-    } else if (v >= 10000) {
-      label = `¥${Math.round(v / 1000)}k`;
-    } else if (v >= 1000) {
-      label = `¥${(v / 1000).toFixed(1)}k`;
-    } else {
-      label = `¥${v}`;
-    }
-    return pricePoint.count > 1 ? `${label}+` : label;
-  };
-
 
   const enrichedData = useMemo(() => {
     return data.map((item) => {
@@ -401,8 +377,6 @@ const CardTable = ({ data }) => {
           <div className="card-grid">
             {currentItems.map((item, index) => {
               const isWishlisted = wishlistSet.has(item.cardId);
-              const pricePoint = getLatestPrice(item.cardCode);
-              const priceBadge = formatPriceBadge(pricePoint);
               return (
                 <div key={`${item.Picture}-${index}`} className="card-grid-item">
                   <div className="card-image-shell">
@@ -421,11 +395,6 @@ const CardTable = ({ data }) => {
                         }}
                       />
                     </button>
-                    {priceBadge && (
-                      <span className={`price-badge${pricePoint.count > 1 ? ' price-badge--multi' : ''}`}>
-                        {priceBadge}
-                      </span>
-                    )}
                     <button
                       type="button"
                       className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
@@ -488,7 +457,7 @@ const CardTable = ({ data }) => {
             onClick={() => setShowUnmatched(v => !v)}
             aria-expanded={showUnmatched}
           >
-            {showUnmatched ? '▾' : '▸'} Cards without a single price match
+            {showUnmatched ? '▾' : '▸'} Price match issues
             <span className="unmatched-counts">
               {unmatchedData.multiplePrices.length} multi-price &middot;{' '}
               {unmatchedData.pricesWithoutCards.length} price-only &middot;{' '}
@@ -498,11 +467,23 @@ const CardTable = ({ data }) => {
 
           {showUnmatched && (
             <div className="unmatched-body">
-              <p className="unmatched-date">As of {unmatchedData.asOf}</p>
+              <p className="unmatched-date">
+                As of {unmatchedData.asOf} &mdash; comparison is done both ways:
+                card list vs. price list (cards without prices) and
+                price list vs. card list (prices without cards).
+              </p>
 
               <details className="unmatched-group">
                 <summary>
-                  Cards with multiple prices ({unmatchedData.multiplePrices.length})
+                  Cards with multiple prices on latest day ({unmatchedData.multiplePrices.length})
+                  {unmatchedData.multiPricePatterns && unmatchedData.multiPricePatterns.length > 0 && (
+                    <span className="unmatched-breakdown-inline">
+                      Common reasons:{' '}
+                      {unmatchedData.multiPricePatterns.slice(0, 5).map(({ pattern, count }) => (
+                        <span key={pattern} className="breakdown-chip">{pattern} ×{count}</span>
+                      ))}
+                    </span>
+                  )}
                 </summary>
                 <ul className="unmatched-list">
                   {unmatchedData.multiplePrices.map(({ cardCode, priceCount, entries }) => (
@@ -519,7 +500,15 @@ const CardTable = ({ data }) => {
 
               <details className="unmatched-group">
                 <summary>
-                  Price entries without a matching card ({unmatchedData.pricesWithoutCards.length})
+                  Prices without a matching card — pricelist \ cardlist ({unmatchedData.pricesWithoutCards.length})
+                  {unmatchedData.pricesWithoutCardsBreakdown && unmatchedData.pricesWithoutCardsBreakdown.length > 0 && (
+                    <span className="unmatched-breakdown-inline">
+                      Top series:{' '}
+                      {unmatchedData.pricesWithoutCardsBreakdown.slice(0, 5).map(({ series, count }) => (
+                        <span key={series} className="breakdown-chip">{series} ×{count}</span>
+                      ))}
+                    </span>
+                  )}
                 </summary>
                 <ul className="unmatched-list">
                   {unmatchedData.pricesWithoutCards.map(({ modelNumber, latestEntries }) => (
@@ -535,7 +524,15 @@ const CardTable = ({ data }) => {
 
               <details className="unmatched-group">
                 <summary>
-                  Cards without any price data ({unmatchedData.cardsWithoutPrices.length})
+                  Cards without any price data — cardlist \ pricelist ({unmatchedData.cardsWithoutPrices.length})
+                  {unmatchedData.cardsWithoutPricesBreakdown && unmatchedData.cardsWithoutPricesBreakdown.length > 0 && (
+                    <span className="unmatched-breakdown-inline">
+                      Top series:{' '}
+                      {unmatchedData.cardsWithoutPricesBreakdown.slice(0, 5).map(({ series, count }) => (
+                        <span key={series} className="breakdown-chip">{series} ×{count}</span>
+                      ))}
+                    </span>
+                  )}
                 </summary>
                 <ul className="unmatched-list unmatched-list--codes">
                   {unmatchedData.cardsWithoutPrices.map(code => (
