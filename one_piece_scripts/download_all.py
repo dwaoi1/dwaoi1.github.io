@@ -88,6 +88,14 @@ def scrape_card_data(html_content, base_url):
             name_div = card.select_one('dt .cardName')
             character_name = name_div.get_text(strip=True) if name_div else "Unknown"
 
+            dt = card.find('dt')
+            rarity = "Unknown"
+            if dt:
+                # The dt contains: [card code, rarity, card type] as three <span> elements
+                spans = dt.find_all('span')
+                if len(spans) >= 2:
+                    rarity = spans[1].get_text(strip=True)
+
             color_div = card.select_one('.backCol .color')
             color = "Unknown"
             if color_div:
@@ -116,6 +124,7 @@ def scrape_card_data(html_content, base_url):
 
             cards_data.append({
                 "Character": character_name,
+                "Rarity": rarity,
                 "Color": color,
                 "Picture": picture_url,
             })
