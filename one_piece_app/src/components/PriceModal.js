@@ -49,6 +49,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const [timeRange, setTimeRange] = useState(30);
   const [showSealed, setShowSealed] = useState(true);
   const [showGoldText, setShowGoldText] = useState(true);
+  const [showParallel, setShowParallel] = useState(true);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
@@ -65,6 +66,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   useEffect(() => {
     setShowSealed(true);
     setShowGoldText(true);
+    setShowParallel(true);
   }, [cardCode]);
 
   const filteredHistory = useMemo(() => {
@@ -78,6 +80,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   // Determine which variant types are available in the filtered window
   const hasSealed = useMemo(() => filteredHistory.some(p => p.sealed), [filteredHistory]);
   const hasGoldText = useMemo(() => filteredHistory.some(p => p.goldText), [filteredHistory]);
+  const hasParallel = useMemo(() => filteredHistory.some(p => p.parallel), [filteredHistory]);
 
   // Build effective history from selected variant groups
   const effectiveHistory = useMemo(() => {
@@ -85,6 +88,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
       const allPrices = [p.minPrice, p.maxPrice].filter(v => v != null);
       if (showSealed && p.sealed) allPrices.push(p.sealed.minPrice, p.sealed.maxPrice);
       if (showGoldText && p.goldText) allPrices.push(p.goldText.minPrice, p.goldText.maxPrice);
+      if (showParallel && p.parallel) allPrices.push(p.parallel.minPrice, p.parallel.maxPrice);
       const validPrices = allPrices.filter(v => v != null);
       if (validPrices.length === 0) return null;
       return {
@@ -93,10 +97,11 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         maxPrice: Math.max(...validPrices),
         count: p.count
           + (showSealed && p.sealed ? p.sealed.count : 0)
-          + (showGoldText && p.goldText ? p.goldText.count : 0),
+          + (showGoldText && p.goldText ? p.goldText.count : 0)
+          + (showParallel && p.parallel ? p.parallel.count : 0),
       };
     }).filter(Boolean);
-  }, [filteredHistory, showSealed, showGoldText]);
+  }, [filteredHistory, showSealed, showGoldText, showParallel]);
 
   const chart = useMemo(() => {
     if (effectiveHistory.length === 0) return null;
@@ -186,8 +191,19 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           ))}
         </div>
 
-        {(hasSealed || hasGoldText) && (
+        {(hasSealed || hasGoldText || hasParallel) && (
           <div className="price-modal-variant-filters">
+            {hasParallel && (
+              <label className="variant-filter-label">
+                <input
+                  type="checkbox"
+                  checked={showParallel}
+                  onChange={e => setShowParallel(e.target.checked)}
+                />
+                <span className="variant-filter-dot variant-filter-dot--parallel" />
+                Parallel (パラレル)
+              </label>
+            )}
             {hasSealed && (
               <label className="variant-filter-label">
                 <input

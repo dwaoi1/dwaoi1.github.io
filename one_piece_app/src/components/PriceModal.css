@@ -193,3 +193,7 @@
 .variant-filter-dot--gold {
   background-color: #f6e05e;
 }
+
+.variant-filter-dot--parallel {
+  background-color: #9f7aea;
+}

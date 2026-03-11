@@ -72,11 +72,13 @@ def series_breakdown(codes):
     )
 
 
-def rarity_breakdown(codes, code_to_rarity):
+def rarity_breakdown(codes, code_to_rarities):
+    """Group cards-without-prices by their known rarities (a code may have multiple)."""
     counts = {}
     for code in codes:
-        rarity = code_to_rarity.get(code, 'Unknown')
-        counts[rarity] = counts.get(rarity, 0) + 1
+        rarities = code_to_rarities.get(code, ['Unknown'])
+        for rarity in rarities:
+            counts[rarity] = counts.get(rarity, 0) + 1
     return sorted(
         [{'rarity': r, 'count': c} for r, c in counts.items()],
         key=lambda x: -x['count'],
@@ -114,16 +116,23 @@ def build_price_history(history_by_code):
             if not all_prices:
                 continue
 
-            # Classify into base / sealed (未開封) / gold-text-only (金文字)
-            sealed = [e for e in entries if e.get('name') and '未開封' in e['name']]
+            # Classify into base / sealed (未開封) / gold-text-only (金文字) / parallel (パラレル).
+            # Each entry goes into the first matching category; groups are mutually exclusive.
+            sealed_set = frozenset(
+                id(e) for e in entries if e.get('name') and '未開封' in e['name']
+            )
+            sealed = [e for e in entries if id(e) in sealed_set]
             gold_text = [
                 e for e in entries
-                if e.get('name') and '金文字' in e['name'] and '未開封' not in e['name']
+                if id(e) not in sealed_set and e.get('name') and '金文字' in e['name']
             ]
-            base = [
+            parallel = [
                 e for e in entries
-                if not (e.get('name') and ('未開封' in e['name'] or '金文字' in e['name']))
+                if id(e) not in sealed_set and e.get('name') and 'パラレル' in e['name']
             ]
+            parallel_set = frozenset(id(e) for e in parallel)
+            base = [e for e in entries if id(e) not in sealed_set and id(e) not in parallel_set
+                    and not (e.get('name') and '金文字' in e['name'])]
 
             base_group = price_group(base)
             if base_group:
@@ -134,19 +143,27 @@ def build_price_history(history_by_code):
                     'count': base_group['count'],
                 }
             else:
+                # No pure-base entries: prefer non-parallel prices as fallback so
+                # the chart's main line isn't polluted by parallel-only prices.
+                non_parallel = [e for e in entries if id(e) not in parallel_set]
+                non_parallel_prices = [p for p in (parse_amount(e.get('amount')) for e in non_parallel) if p is not None]
+                fallback_prices = non_parallel_prices or all_prices
                 hist_entry = {
                     'date': date,
-                    'minPrice': min(all_prices),
-                    'maxPrice': max(all_prices),
-                    'count': len(entries),
+                    'minPrice': min(fallback_prices),
+                    'maxPrice': max(fallback_prices),
+                    'count': len(non_parallel) if non_parallel_prices else len(entries),
                 }
 
             sealed_group = price_group(sealed)
             gold_group = price_group(gold_text)
+            parallel_group = price_group(parallel)
             if sealed_group:
                 hist_entry['sealed'] = sealed_group
             if gold_group:
                 hist_entry['goldText'] = gold_group
+            if parallel_group:
+                hist_entry['parallel'] = parallel_group
 
             history.append(hist_entry)
 
@@ -162,20 +179,23 @@ def build_price_history(history_by_code):
 # ---------------------------------------------------------------------------
 
 def build_rarity_map():
-    code_to_rarity = {}
+    """Return a map of card_code -> list of unique rarities seen for that code."""
+    code_to_rarities = {}
     if not os.path.isfile(CARDS_JSON):
-        return code_to_rarity
+        return code_to_rarities
     try:
         with open(CARDS_JSON, encoding='utf-8') as f:
             cards = json.load(f)
         for card in cards:
             code = get_card_code(card.get('Picture', ''))
             rarity = card.get('Rarity', '')
-            if code and rarity and code not in code_to_rarity:
-                code_to_rarity[code] = rarity
+            if code and rarity:
+                seen = code_to_rarities.setdefault(code, [])
+                if rarity not in seen:
+                    seen.append(rarity)
     except (json.JSONDecodeError, OSError) as exc:
         print(f'WARNING: Failed to build rarity map: {exc}')
-    return code_to_rarity
+    return code_to_rarities
 
 
 # ---------------------------------------------------------------------------
@@ -196,7 +216,7 @@ NAME_PATTERNS = [
 ]
 
 
-def build_unmatched(history_by_code, price_files, code_to_rarity):
+def build_unmatched(history_by_code, price_files, code_to_rarities):
     card_codes = set()
     if os.path.isfile(CARDS_JSON):
         try:
@@ -263,7 +283,7 @@ def build_unmatched(history_by_code, price_files, code_to_rarity):
         'pricesWithoutCardsBreakdown': series_breakdown([e['modelNumber'] for e in prices_without_cards]),
         'cardsWithoutPrices': cards_without_prices,
         'cardsWithoutPricesBreakdown': series_breakdown(cards_without_prices),
-        'cardsWithoutPricesRarityBreakdown': rarity_breakdown(cards_without_prices, code_to_rarity),
+        'cardsWithoutPricesRarityBreakdown': rarity_breakdown(cards_without_prices, code_to_rarities),
     }
 
 
@@ -286,10 +306,10 @@ def main():
         json.dump(price_history, f, ensure_ascii=False)
     print(f'Wrote {PRICE_DATA_OUT} ({len(price_history)} card codes)')
 
-    code_to_rarity = build_rarity_map()
-    print(f'Loaded rarity data for {len(code_to_rarity)} card codes')
+    code_to_rarities = build_rarity_map()
+    print(f'Loaded rarity data for {len(code_to_rarities)} card codes')
 
-    unmatched = build_unmatched(history_by_code, price_files, code_to_rarity)
+    unmatched = build_unmatched(history_by_code, price_files, code_to_rarities)
     with open(UNMATCHED_OUT, 'w', encoding='utf-8') as f:
         json.dump(unmatched, f, ensure_ascii=False, indent=2)
     print(f'Wrote {UNMATCHED_OUT}')
