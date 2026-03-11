@@ -1,0 +1,67 @@
+name: Scrape One Piece Card List
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r one_piece_scripts/requirements.txt
+
+      - name: Clear cached HTML files
+        run: rm -f one_piece_scripts/html_files/*.html
+
+      - name: Scrape card list (Japan first, then Asia)
+        run: |
+          python one_piece_scripts/download_all.py \
+            --output-dir one_piece_scripts/html_files \
+            --output-json one_piece_scripts/one_piece_cards.json
+
+      - name: Commit updated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Preflight checks for scraper outputs
+          if [ ! -f "one_piece_scripts/one_piece_cards.json" ]; then
+            echo "Expected output JSON 'one_piece_scripts/one_piece_cards.json' was not created by the scraper."
+            echo "Check the logs for the 'Scrape card list (Japan first, then Asia)' step."
+            exit 1
+          fi
+
+          if [ ! -d "one_piece_scripts/html_files" ]; then
+            echo "Expected directory 'one_piece_scripts/html_files' was not created by the scraper."
+            echo "Check the logs for the 'Scrape card list (Japan first, then Asia)' step."
+            exit 1
+          fi
+
+          if ! ls one_piece_scripts/html_files/*.html >/dev/null 2>&1; then
+            echo "No HTML files were generated in 'one_piece_scripts/html_files'."
+            echo "Check the logs for the 'Scrape card list (Japan first, then Asia)' step."
+            exit 1
+          fi
+          git add one_piece_scripts/html_files/
+          git add one_piece_scripts/one_piece_cards.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore: update one piece card list data"
+          git push origin HEAD:${{ github.ref_name }}
