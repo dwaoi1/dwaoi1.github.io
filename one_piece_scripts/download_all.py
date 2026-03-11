@@ -182,16 +182,16 @@ def download_series():
 
     sources = [
         {
-            "name": "asia_en",
-            "url": ASIA_EN_URL,
-            "series_ids": ASIA_EN_SERIES_IDS,
-            "use_live_series_ids": USE_LIVE_SERIES_IDS,
-        },
-        {
             "name": "japan",
             "url": JAPAN_URL,
             "series_ids": JAPAN_SERIES_IDS,
             "use_live_series_ids": USE_LIVE_JAPAN_SERIES_IDS,
+        },
+        {
+            "name": "asia_en",
+            "url": ASIA_EN_URL,
+            "series_ids": ASIA_EN_SERIES_IDS,
+            "use_live_series_ids": USE_LIVE_SERIES_IDS,
         },
     ]
 
