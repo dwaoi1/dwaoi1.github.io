@@ -15055,304 +15055,6 @@
       ]
     },
     {
-      "modelNumber": "EB04-001",
-      "latestEntries": [
-        {
-          "name": "ジュエリー・ボニー(パラレル/illust:otton)",
-          "rarity": "L/P",
-          "model_number": "EB04-001",
-          "amount": "¥15,000"
-        },
-        {
-          "name": "ジュエリー・ボニー",
-          "rarity": "L",
-          "model_number": "EB04-001",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-002",
-      "latestEntries": [
-        {
-          "name": "ジュエリー・ボニー(パラレル/illust:Sunohara)",
-          "rarity": "R/P",
-          "model_number": "EB04-002",
-          "amount": "¥1,500"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-003",
-      "latestEntries": [
-        {
-          "name": "スモーカー＆たしぎ(パラレル/illust:Bashikou)",
-          "rarity": "SP",
-          "model_number": "EB04-003",
-          "amount": "¥7,000"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-007",
-      "latestEntries": [
-        {
-          "name": "ロロノア・ゾロ(パラレル/illust:Nijihayashi)",
-          "rarity": "SR/P",
-          "model_number": "EB04-007",
-          "amount": "¥8,000"
-        },
-        {
-          "name": "ロロノア・ゾロ",
-          "rarity": "SR",
-          "model_number": "EB04-007",
-          "amount": "¥2,500"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-012",
-      "latestEntries": [
-        {
-          "name": "菊之丞(パラレル/illust:Naruse Uroko)",
-          "rarity": "SR/P",
-          "model_number": "EB04-012",
-          "amount": "¥300"
-        },
-        {
-          "name": "菊之丞",
-          "rarity": "SR",
-          "model_number": "EB04-012",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-013",
-      "latestEntries": [
-        {
-          "name": "キャロット(パラレル/illust:SHIE NANAHARA)",
-          "rarity": "SR/P",
-          "model_number": "EB04-013",
-          "amount": "¥700"
-        },
-        {
-          "name": "キャロット",
-          "rarity": "SR",
-          "model_number": "EB04-013",
-          "amount": "¥30"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-018",
-      "latestEntries": [
-        {
-          "name": "メガロ(パラレル/illust:Ryuda)",
-          "rarity": "R/P",
-          "model_number": "EB04-018",
-          "amount": "¥1,000"
-        },
-        {
-          "name": "メガロ",
-          "rarity": "R",
-          "model_number": "EB04-018",
-          "amount": "¥30"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-022",
-      "latestEntries": [
-        {
-          "name": "イッショウ(パラレル/illust:Hokuyuu)",
-          "rarity": "R/P",
-          "model_number": "EB04-022",
-          "amount": "¥700"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-023",
-      "latestEntries": [
-        {
-          "name": "チャカ＆ペル",
-          "rarity": "R",
-          "model_number": "EB04-023",
-          "amount": "¥30"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-025",
-      "latestEntries": [
-        {
-          "name": "ネフェルタリ・ビビ(パラレル/illust:Yosuke Adachi)",
-          "rarity": "SR/P",
-          "model_number": "EB04-025",
-          "amount": "¥1,700"
-        },
-        {
-          "name": "ネフェルタリ・ビビ",
-          "rarity": "SR",
-          "model_number": "EB04-025",
-          "amount": "¥100"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-031",
-      "latestEntries": [
-        {
-          "name": "キング(パラレル/illust:Akanegumo)",
-          "rarity": "R/P",
-          "model_number": "EB04-031",
-          "amount": "¥400"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-036",
-      "latestEntries": [
-        {
-          "name": "フォクシー(パラレル/illustMatsumoto Akira)",
-          "rarity": "SR/P",
-          "model_number": "EB04-036",
-          "amount": "¥500"
-        },
-        {
-          "name": "フォクシー",
-          "rarity": "SR",
-          "model_number": "EB04-036",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-038",
-      "latestEntries": [
-        {
-          "name": "ロシナンテ＆ロー(パラレル/illust:otton)",
-          "rarity": "SR/P",
-          "model_number": "EB04-038",
-          "amount": "¥2,500"
-        },
-        {
-          "name": "ロシナンテ＆ロー",
-          "rarity": "SR",
-          "model_number": "EB04-038",
-          "amount": "¥150"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-039",
-      "latestEntries": [
-        {
-          "name": "ユースタス・キッド(パラレル/illust:Bashikou)",
-          "rarity": "SP",
-          "model_number": "EB04-039",
-          "amount": "¥5,500"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-043",
-      "latestEntries": [
-        {
-          "name": "カク(パラレル/illust:Morechand)",
-          "rarity": "R/P",
-          "model_number": "EB04-043",
-          "amount": "¥500"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-044",
-      "latestEntries": [
-        {
-          "name": "コビー(パラレル/漫画背景/漫画絵)",
-          "rarity": "SR/SP",
-          "model_number": "EB04-044",
-          "amount": "¥65,000"
-        },
-        {
-          "name": "コビー(パラレル/illust:Koushi Rokushiro)",
-          "rarity": "SR/P",
-          "model_number": "EB04-044",
-          "amount": "¥1,800"
-        },
-        {
-          "name": "コビー",
-          "rarity": "SR",
-          "model_number": "EB04-044",
-          "amount": "¥100"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-048",
-      "latestEntries": [
-        {
-          "name": "ロブ・ルッチ(パラレル/illust:DAI-XT.)",
-          "rarity": "SR/P",
-          "model_number": "EB04-048",
-          "amount": "¥700"
-        },
-        {
-          "name": "ロブ・ルッチ",
-          "rarity": "SR",
-          "model_number": "EB04-048",
-          "amount": "¥30"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-052",
-      "latestEntries": [
-        {
-          "name": "サンジ(パラレル/illust:Yosuke Adachi)",
-          "rarity": "R/P",
-          "model_number": "EB04-052",
-          "amount": "¥700"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-058",
-      "latestEntries": [
-        {
-          "name": "ボルサリーノ(パラレル/illustMatsumoto Akira)",
-          "rarity": "SR/P",
-          "model_number": "EB04-058",
-          "amount": "¥9,000"
-        },
-        {
-          "name": "ボルサリーノ",
-          "rarity": "SR",
-          "model_number": "EB04-058",
-          "amount": "¥4,000"
-        }
-      ]
-    },
-    {
-      "modelNumber": "EB04-061",
-      "latestEntries": [
-        {
-          "name": "モンキー・D・ルフィ(パラレル/illust:Minato Sashima)",
-          "rarity": "SEC/P",
-          "model_number": "EB04-061",
-          "amount": "¥4,000"
-        },
-        {
-          "name": "モンキー・D・ルフィ",
-          "rarity": "SEC",
-          "model_number": "EB04-061",
-          "amount": "¥2,000"
-        }
-      ]
-    },
-    {
       "modelNumber": "OP01-016[OP05]",
       "latestEntries": [
         {
@@ -16033,703 +15735,6 @@
           "rarity": "SP",
           "model_number": "OP13-042[OP15]",
           "amount": "¥7,000"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-001",
-      "latestEntries": [
-        {
-          "name": "クリーク(パラレル/illust:tatsuya)",
-          "rarity": "L/P",
-          "model_number": "OP15-001",
-          "amount": "¥800"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-002",
-      "latestEntries": [
-        {
-          "name": "ルーシー(パラレル/illust:Akanegumo)",
-          "rarity": "L/P",
-          "model_number": "OP15-002",
-          "amount": "¥3,700"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-003",
-      "latestEntries": [
-        {
-          "name": "アルビダ(パラレル/illust:Koushi Rokushiro)",
-          "rarity": "R/P",
-          "model_number": "OP15-003",
-          "amount": "¥900"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-006",
-      "latestEntries": [
-        {
-          "name": "キャベンディッシュ",
-          "rarity": "UC",
-          "model_number": "OP15-006",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-007",
-      "latestEntries": [
-        {
-          "name": "ギン(パラレル/illust:eiji kaneda)",
-          "rarity": "SR/P",
-          "model_number": "OP15-007",
-          "amount": "¥900"
-        },
-        {
-          "name": "ギン",
-          "rarity": "SR",
-          "model_number": "OP15-007",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-008",
-      "latestEntries": [
-        {
-          "name": "クリーク(パラレル/illust:DAI-XT.)",
-          "rarity": "SR/P",
-          "model_number": "OP15-008",
-          "amount": "¥800"
-        },
-        {
-          "name": "クリーク",
-          "rarity": "SR",
-          "model_number": "OP15-008",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-009",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-011",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-014",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-019",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-020",
-      "latestEntries": [
-        {
-          "name": "火拳",
-          "rarity": "R",
-          "model_number": "OP15-020",
-          "amount": "¥30"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-021",
-      "latestEntries": [
-        {
-          "name": "見てろよ!エース!!!",
-          "rarity": "UC",
-          "model_number": "OP15-021",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-022",
-      "latestEntries": [
-        {
-          "name": "ブルック(パラレル/illust:Bashikou)",
-          "rarity": "L/P",
-          "model_number": "OP15-022",
-          "amount": "¥2,300"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-023",
-      "latestEntries": [
-        {
-          "name": "アーロン",
-          "rarity": "R",
-          "model_number": "OP15-023",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-025",
-      "latestEntries": [
-        {
-          "name": "クロ(パラレル/illust:SENNSU)",
-          "rarity": "R/P",
-          "model_number": "OP15-025",
-          "amount": "¥500"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-026",
-      "latestEntries": [
-        {
-          "name": "ジャンゴ",
-          "rarity": "UC",
-          "model_number": "OP15-026",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-027",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-028",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-032",
-      "latestEntries": [
-        {
-          "name": "ブルック(パラレル/illust:Hashimoto Q)",
-          "rarity": "SR/P",
-          "model_number": "OP15-032",
-          "amount": "¥1,000"
-        },
-        {
-          "name": "ブルック",
-          "rarity": "SR",
-          "model_number": "OP15-032",
-          "amount": "¥30"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-035",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-037",
-      "latestEntries": [
-        {
-          "name": "強ェ弱ェは結果が決めるのさ",
-          "rarity": "UC",
-          "model_number": "OP15-037",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-038",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-039",
-      "latestEntries": [
-        {
-          "name": "レベッカ(パラレル/illust:otton)",
-          "rarity": "L/P",
-          "model_number": "OP15-039",
-          "amount": "¥1,200"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-040",
-      "latestEntries": [
-        {
-          "name": "ヴィオラ",
-          "rarity": "R",
-          "model_number": "OP15-040",
-          "amount": "¥50"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-046",
-      "latestEntries": [
-        {
-          "name": "サボ(パラレル/illust:Morechand)",
-          "rarity": "SR/P",
-          "model_number": "OP15-046",
-          "amount": "¥4,000"
-        },
-        {
-          "name": "サボ",
-          "rarity": "SR",
-          "model_number": "OP15-046",
-          "amount": "¥900"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-047",
-      "latestEntries": [
-        {
-          "name": "サンジ(パラレル/illust:Morechand)",
-          "rarity": "R/P",
-          "model_number": "OP15-047",
-          "amount": "¥1,200"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-052",
-      "latestEntries": [
-        {
-          "name": "レオ",
-          "rarity": "UC",
-          "model_number": "OP15-052",
-          "amount": "¥50"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-053",
-      "latestEntries": [
-        {
-          "name": "レベッカ(パラレル/illust:Yosuke Adachi)",
-          "rarity": "SR/P",
-          "model_number": "OP15-053",
-          "amount": "¥3,500"
-        },
-        {
-          "name": "レベッカ",
-          "rarity": "SR",
-          "model_number": "OP15-053",
-          "amount": "¥900"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-054",
-      "latestEntries": [
-        {
-          "name": "誰にも渡さねェよ!あいつの形見だ",
-          "rarity": "C",
-          "model_number": "OP15-054",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-055",
-      "latestEntries": [
-        {
-          "name": "使ってけれ!!ルフィ先輩ィ!!!",
-          "rarity": "R",
-          "model_number": "OP15-055",
-          "amount": "¥30"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-056",
-      "latestEntries": [
-        {
-          "name": "メラメラの実はおれが食っていいか？",
-          "rarity": "C",
-          "model_number": "OP15-056",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-057",
-      "latestEntries": [
-        {
-          "name": "ドレスローザ王国",
-          "rarity": "C",
-          "model_number": "OP15-057",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-058",
-      "latestEntries": [
-        {
-          "name": "エネル(パラレル/illust:Anderson)",
-          "rarity": "L/P",
-          "model_number": "OP15-058",
-          "amount": "¥4,500"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-060",
-      "latestEntries": [
-        {
-          "name": "エネル(パラレル/illust:Matsumoto Akira)",
-          "rarity": "SR/P",
-          "model_number": "OP15-060",
-          "amount": "¥3,800"
-        },
-        {
-          "name": "エネル",
-          "rarity": "SR",
-          "model_number": "OP15-060",
-          "amount": "¥300"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-061",
-      "latestEntries": [
-        {
-          "name": "オーム(パラレル/illust:akagi)",
-          "rarity": "R/P",
-          "model_number": "OP15-061",
-          "amount": "¥1,600"
-        },
-        {
-          "name": "オーム",
-          "rarity": "R",
-          "model_number": "OP15-061",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-063",
-      "latestEntries": [
-        {
-          "name": "ゲダツ",
-          "rarity": "R",
-          "model_number": "OP15-063",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-066",
-      "latestEntries": [
-        {
-          "name": "サトリ",
-          "rarity": "R",
-          "model_number": "OP15-066",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-067",
-      "latestEntries": [
-        {
-          "name": "シュラ",
-          "rarity": "R",
-          "model_number": "OP15-067",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-068",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-069",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-074",
-      "latestEntries": [
-        {
-          "name": "放電",
-          "rarity": "UC",
-          "model_number": "OP15-074",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-075",
-      "latestEntries": [
-        {
-          "name": "神の裁き",
-          "rarity": "UC",
-          "model_number": "OP15-075",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-076",
-      "latestEntries": [
-        {
-          "name": "雷獣",
-          "rarity": "UC",
-          "model_number": "OP15-076",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-077",
-      "latestEntries": [
-        {
-          "name": "雷龍(パラレル/漫画絵)",
-          "rarity": "R/P",
-          "model_number": "OP15-077",
-          "amount": "¥18,000"
-        },
-        {
-          "name": "雷龍",
-          "rarity": "R",
-          "model_number": "OP15-077",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-078",
-      "latestEntries": [
-        {
-          "name": "万雷(パラレル/illust:Hachi Takashi)",
-          "rarity": "SR/P",
-          "model_number": "OP15-078",
-          "amount": "¥2,700"
-        },
-        {
-          "name": "万雷",
-          "rarity": "SR",
-          "model_number": "OP15-078",
-          "amount": "¥400"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-081",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-085",
-      "latestEntries": [
-        {
-          "name": "トニートニー・チョッパー",
-          "rarity": "R",
-          "model_number": "OP15-085",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-086",
-      "latestEntries": [
-        {
-          "name": "ナミ(パラレル/illust:NAKAuMA)",
-          "rarity": "SR/P",
-          "model_number": "OP15-086",
-          "amount": "¥5,000"
-        },
-        {
-          "name": "ナミ",
-          "rarity": "SR",
-          "model_number": "OP15-086",
-          "amount": "¥300"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-088",
-      "latestEntries": [
-        {
-          "name": "パイレーツドッキング6",
-          "rarity": "R",
-          "model_number": "OP15-088",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-090",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-092",
-      "latestEntries": [
-        {
-          "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Matsumoto Akira)",
-          "rarity": "R/P",
-          "model_number": "OP15-092",
-          "amount": "¥1,500"
-        },
-        {
-          "name": "モンキー・Ｄ・ルフィ",
-          "rarity": "R",
-          "model_number": "OP15-092",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-094",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-095",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-096",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-098",
-      "latestEntries": [
-        {
-          "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Minato Sashima)",
-          "rarity": "L/P",
-          "model_number": "OP15-098",
-          "amount": "¥3,300"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-101",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-105",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-108",
-      "latestEntries": [
-        {
-          "name": "ナミ",
-          "rarity": "R",
-          "model_number": "OP15-108",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-109",
-      "latestEntries": [
-        {
-          "name": "ニコ・ロビン(パラレル/illust:Yuu Shimotsuki)",
-          "rarity": "R/P",
-          "model_number": "OP15-109",
-          "amount": "¥1,800"
-        },
-        {
-          "name": "ニコ・ロビン",
-          "rarity": "R",
-          "model_number": "OP15-109",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-113",
-      "latestEntries": [
-        {
-          "name": "ロロノア・ゾロ(パラレル/illust:Shishizaru)",
-          "rarity": "SR/P",
-          "model_number": "OP15-113",
-          "amount": "¥3,300"
-        },
-        {
-          "name": "ロロノア・ゾロ",
-          "rarity": "SR",
-          "model_number": "OP15-113",
-          "amount": "¥400"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-114",
-      "latestEntries": [
-        {
-          "name": "ワイパー(パラレル/illust:Hokuyuu)",
-          "rarity": "SR/P",
-          "model_number": "OP15-114",
-          "amount": "¥1,500"
-        },
-        {
-          "name": "ワイパー",
-          "rarity": "SR",
-          "model_number": "OP15-114",
-          "amount": "¥50"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-116",
-      "latestEntries": [
-        {
-          "name": "ゴムゴムの黄金回転弾(パラレル/漫画絵)",
-          "rarity": "R/P",
-          "model_number": "OP15-116",
-          "amount": "¥15,000"
-        },
-        {
-          "name": "ゴムゴムの黄金回転弾",
-          "rarity": "R",
-          "model_number": "OP15-116",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-117",
-      "latestEntries": []
-    },
-    {
-      "modelNumber": "OP15-118",
-      "latestEntries": [
-        {
-          "name": "エネル(パラレル/漫画背景/漫画絵)",
-          "rarity": "SEC/SP",
-          "model_number": "OP15-118",
-          "amount": "¥110,000"
-        },
-        {
-          "name": "エネル(パラレル/illust:Makitoshi)",
-          "rarity": "SEC/P",
-          "model_number": "OP15-118",
-          "amount": "¥9,000"
-        },
-        {
-          "name": "エネル",
-          "rarity": "SEC",
-          "model_number": "OP15-118",
-          "amount": "¥5,000"
-        }
-      ]
-    },
-    {
-      "modelNumber": "OP15-119",
-      "latestEntries": [
-        {
-          "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Makitoshi)",
-          "rarity": "SEC/P",
-          "model_number": "OP15-119",
-          "amount": "¥7,000"
-        },
-        {
-          "name": "モンキー・Ｄ・ルフィ",
-          "rarity": "SEC",
-          "model_number": "OP15-119",
-          "amount": "¥2,800"
         }
       ]
     },
@@ -18579,14 +17584,6 @@
       "count": 105
     },
     {
-      "series": "OP15",
-      "count": 65
-    },
-    {
-      "series": "EB04",
-      "count": 20
-    },
-    {
       "series": "OP09",
       "count": 9
     },
@@ -18821,6 +17818,47 @@
     "EB03-056",
     "EB03-058",
     "EB03-060",
+    "EB04-004",
+    "EB04-005",
+    "EB04-006",
+    "EB04-008",
+    "EB04-009",
+    "EB04-010",
+    "EB04-011",
+    "EB04-014",
+    "EB04-015",
+    "EB04-016",
+    "EB04-017",
+    "EB04-019",
+    "EB04-020",
+    "EB04-021",
+    "EB04-024",
+    "EB04-026",
+    "EB04-027",
+    "EB04-028",
+    "EB04-029",
+    "EB04-030",
+    "EB04-032",
+    "EB04-033",
+    "EB04-034",
+    "EB04-035",
+    "EB04-037",
+    "EB04-040",
+    "EB04-041",
+    "EB04-042",
+    "EB04-045",
+    "EB04-046",
+    "EB04-047",
+    "EB04-049",
+    "EB04-050",
+    "EB04-051",
+    "EB04-053",
+    "EB04-054",
+    "EB04-055",
+    "EB04-056",
+    "EB04-057",
+    "EB04-059",
+    "EB04-060",
     "OP01-007",
     "OP01-009",
     "OP01-010",
@@ -19867,6 +18905,60 @@
     "OP14-109",
     "OP14-115",
     "OP14-116",
+    "OP15-004",
+    "OP15-005",
+    "OP15-010",
+    "OP15-012",
+    "OP15-013",
+    "OP15-015",
+    "OP15-016",
+    "OP15-017",
+    "OP15-018",
+    "OP15-024",
+    "OP15-029",
+    "OP15-030",
+    "OP15-031",
+    "OP15-033",
+    "OP15-034",
+    "OP15-036",
+    "OP15-041",
+    "OP15-042",
+    "OP15-043",
+    "OP15-044",
+    "OP15-045",
+    "OP15-048",
+    "OP15-049",
+    "OP15-050",
+    "OP15-051",
+    "OP15-059",
+    "OP15-062",
+    "OP15-064",
+    "OP15-065",
+    "OP15-070",
+    "OP15-071",
+    "OP15-072",
+    "OP15-073",
+    "OP15-079",
+    "OP15-080",
+    "OP15-082",
+    "OP15-083",
+    "OP15-084",
+    "OP15-087",
+    "OP15-089",
+    "OP15-091",
+    "OP15-093",
+    "OP15-097",
+    "OP15-099",
+    "OP15-100",
+    "OP15-102",
+    "OP15-103",
+    "OP15-104",
+    "OP15-106",
+    "OP15-107",
+    "OP15-110",
+    "OP15-111",
+    "OP15-112",
+    "OP15-115",
     "ST01-003",
     "ST01-014",
     "ST01-017",
@@ -20086,7 +19178,15 @@
       "count": 67
     },
     {
+      "series": "OP15",
+      "count": 54
+    },
+    {
       "series": "EB03",
+      "count": 41
+    },
+    {
+      "series": "EB04",
       "count": 41
     },
     {
@@ -20213,22 +19313,22 @@
   "cardsWithoutPricesRarityBreakdown": [
     {
       "rarity": "C",
-      "count": 821
+      "count": 893
     },
     {
       "rarity": "UC",
-      "count": 313
+      "count": 323
     },
     {
       "rarity": "R",
-      "count": 176
+      "count": 191
     },
     {
       "rarity": "SR",
-      "count": 12
+      "count": 10
     },
     {
-      "rarity": "SP CARD",
+      "rarity": "SPカード",
       "count": 1
     }
   ]
