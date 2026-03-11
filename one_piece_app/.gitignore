@@ -11,6 +11,9 @@
 # production
 /build
 
+# unmatched_prices.json is copied from one_piece_scripts/ by deploy.yml at build time
+/public/unmatched_prices.json
+
 # misc
 .DS_Store
 .env.local
