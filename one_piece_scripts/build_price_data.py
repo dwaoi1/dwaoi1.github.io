@@ -4,8 +4,7 @@ Build compiled price data from raw Cardrush daily JSON files.
 
 Reads:
   one_piece_scripts/cardrush_buying_prices/**/*.json   (daily price scrapes)
-  one_piece_scripts/html_files/*.html                  (card HTML for rarity info)
-  one_piece_scripts/one_piece_cards.json               (card list)
+  one_piece_app/public/cards.json                      (card list with names and rarities)
 
 Writes:
   one_piece_app/public/cardrush_price_history.json  -- price history per card (committed by scrape workflow)
@@ -19,8 +18,7 @@ import re
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
-HTML_DIR = os.path.join(SCRIPT_DIR, 'html_files')
-CARDS_JSON = os.path.join(SCRIPT_DIR, 'one_piece_cards.json')
+CARDS_JSON = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cards.json')
 PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_history.json')
 UNMATCHED_OUT = os.path.join(SCRIPT_DIR, 'unmatched_prices.json')
 
@@ -160,32 +158,23 @@ def build_price_history(history_by_code):
 
 
 # ---------------------------------------------------------------------------
-# Rarity map (from HTML scraped card pages)
+# Rarity map (from cards.json)
 # ---------------------------------------------------------------------------
 
 def build_rarity_map():
     code_to_rarity = {}
-    if not os.path.isdir(HTML_DIR):
+    if not os.path.isfile(CARDS_JSON):
         return code_to_rarity
-
-    pattern = re.compile(
-        r'<div class="infoCol">\s*<span>([^<]+)</span>\s*\|\s*<span>([^<]+)</span>'
-    )
-    for fn in sorted(os.listdir(HTML_DIR)):
-        if not fn.endswith('.html'):
-            continue
-        file_path = os.path.join(HTML_DIR, fn)
-        try:
-            with open(file_path, encoding='utf-8') as f:
-                content = f.read()
-        except OSError:
-            continue
-        for m in pattern.finditer(content):
-            code = m.group(1).strip()
-            rarity = m.group(2).strip()
-            if code not in code_to_rarity:
+    try:
+        with open(CARDS_JSON, encoding='utf-8') as f:
+            cards = json.load(f)
+        for card in cards:
+            code = get_card_code(card.get('Picture', ''))
+            rarity = card.get('Rarity', '')
+            if code and rarity and code not in code_to_rarity:
                 code_to_rarity[code] = rarity
-
+    except (json.JSONDecodeError, OSError) as exc:
+        print(f'WARNING: Failed to build rarity map: {exc}')
     return code_to_rarity
 
 
