@@ -155,6 +155,9 @@ def parse_downloaded_html(output_dir):
         print(f"No HTML files found to parse in {output_dir}.")
         return
 
+    # Process Japan files first so deduplication prefers Japan records over Asia-EN
+    html_files.sort(key=lambda p: (0 if os.path.basename(p).startswith("japan_") else 1, p))
+
     all_cards = []
     print(f"Parsing {len(html_files)} HTML files...")
 
