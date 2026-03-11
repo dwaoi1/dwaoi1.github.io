@@ -277,3 +277,163 @@
   color: #aab1c0;
   font-size: 0.85rem;
 }
+
+/* Card image button */
+.card-image-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+.card-image-btn:focus-visible {
+  outline: 2px solid #63b3ed;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Price badge */
+.price-badge {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 17, 25, 0.85);
+  color: #68d391;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  border: 1px solid rgba(104, 211, 145, 0.35);
+}
+
+.price-badge--multi {
+  color: #f6e05e;
+  border-color: rgba(246, 224, 94, 0.35);
+}
+
+/* Unmatched cards section */
+.unmatched-section {
+  margin-top: 24px;
+  border: 1px solid #2d3348;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.unmatched-toggle {
+  width: 100%;
+  background: rgba(20, 22, 28, 0.9);
+  border: none;
+  color: #c9d1e0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 16px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.unmatched-toggle:hover {
+  background: rgba(30, 34, 44, 0.95);
+}
+
+.unmatched-counts {
+  margin-left: auto;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #7a849a;
+}
+
+.unmatched-body {
+  background: #13151e;
+  padding: 16px;
+}
+
+.unmatched-date {
+  font-size: 0.8rem;
+  color: #7a849a;
+  margin: 0 0 12px;
+}
+
+.unmatched-group {
+  margin-bottom: 12px;
+  border: 1px solid #252836;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.unmatched-group summary {
+  padding: 10px 14px;
+  background: #1a1d26;
+  color: #a0aec0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.unmatched-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.unmatched-group[open] summary {
+  border-bottom: 1px solid #252836;
+}
+
+.unmatched-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.unmatched-list--codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  max-height: 220px;
+}
+
+.unmatched-item {
+  padding: 5px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-bottom: 1px solid #1e2130;
+  font-size: 0.82rem;
+}
+
+.unmatched-item:last-child {
+  border-bottom: none;
+}
+
+.unmatched-list--codes .unmatched-item {
+  padding: 0;
+  border: none;
+}
+
+.unmatched-code {
+  font-family: monospace;
+  color: #63b3ed;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.unmatched-detail {
+  color: #7a849a;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
