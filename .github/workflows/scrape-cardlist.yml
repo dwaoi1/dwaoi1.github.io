@@ -9,6 +9,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/')
 
     steps:
       - name: Checkout
@@ -63,4 +64,4 @@ jobs:
           fi
 
           git commit -m "chore: update one piece card list data"
-          git push
+          git push origin HEAD:${{ github.ref_name }}
