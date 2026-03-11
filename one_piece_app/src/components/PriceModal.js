@@ -9,8 +9,8 @@ const TIME_RANGES = [
   { label: '180d', days: 180 },
 ];
 
-const CHART_W = 560;
-const CHART_H = 220;
+const CHART_W = 700;
+const CHART_H = 260;
 const MARGIN = { top: 20, right: 20, bottom: 50, left: 72 };
 const PLOT_W = CHART_W - MARGIN.left - MARGIN.right;
 const PLOT_H = CHART_H - MARGIN.top - MARGIN.bottom;
@@ -162,8 +162,16 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         </button>
 
         <div className="price-modal-header">
-          <span className="price-modal-code">{cardCode}</span>
-          <span className="price-modal-character">{item.Character}</span>
+          <img
+            src={item.Picture}
+            alt={item.Character}
+            className="price-modal-card-image"
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
+          <div className="price-modal-header-info">
+            <span className="price-modal-code">{cardCode}</span>
+            <span className="price-modal-character">{item.Character}</span>
+          </div>
         </div>
 
         <div className="price-modal-time-range">
