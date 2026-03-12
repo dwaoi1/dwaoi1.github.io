@@ -89,6 +89,21 @@ def rarity_breakdown(codes, code_to_rarities):
 # Price history
 # ---------------------------------------------------------------------------
 
+def strip_bracket_suffix(model_number):
+    """Strip the set-annotation bracket from model numbers.
+
+    Cardrush uses 'OP05-119[OP11]' to indicate a reprint of card OP05-119 that
+    was included in the OP11 box set.  The bracket suffix is not part of the card
+    code; stripping it lets us index the entry under the canonical code 'OP05-119'
+    so it merges with other entries for that card.
+
+    If the model number does not match the expected 'LETTERS##-###' format (e.g.
+    a promo code like 'P-105'), the original string is returned unchanged.
+    """
+    m = re.match(r'^([A-Z][A-Z0-9]*\d{2}-\d{3})', model_number)
+    return m.group(1) if m else model_number
+
+
 def build_history_by_code(price_files):
     history_by_code = {}
     for file_path in price_files:
@@ -100,9 +115,10 @@ def build_history_by_code(price_files):
             print(f'WARNING: Failed to parse {file_path}: {exc}')
             continue
         for entry in entries:
-            code = entry.get('model_number', '')
-            if not code:
+            raw = entry.get('model_number', '')
+            if not raw:
                 continue
+            code = strip_bracket_suffix(raw)
             history_by_code.setdefault(code, {}).setdefault(date, []).append(entry)
     return history_by_code
 
@@ -116,23 +132,33 @@ def build_price_history(history_by_code):
             if not all_prices:
                 continue
 
-            # Classify into base / sealed (未開封) / gold-text-only (金文字) / parallel (パラレル).
-            # Each entry goes into the first matching category; groups are mutually exclusive.
-            sealed_set = frozenset(
-                id(e) for e in entries if e.get('name') and '未開封' in e['name']
-            )
-            sealed = [e for e in entries if id(e) in sealed_set]
-            gold_text = [
-                e for e in entries
-                if id(e) not in sealed_set and e.get('name') and '金文字' in e['name']
-            ]
-            parallel = [
-                e for e in entries
-                if id(e) not in sealed_set and e.get('name') and 'パラレル' in e['name']
-            ]
-            parallel_set = frozenset(id(e) for e in parallel)
-            base = [e for e in entries if id(e) not in sealed_set and id(e) not in parallel_set
-                    and not (e.get('name') and '金文字' in e['name'])]
+            # Classify entries into mutually-exclusive groups using an index-based
+            # tag so each entry is assigned to exactly one group.
+            #   sealed    – name contains '未開封'
+            #   gold_text – name contains '金文字' (and not sealed)
+            #   sp        – Cardrush rarity exactly 'SP' (maps to SPカード in card list)
+            #   parallel  – name contains 'パラレル' and not in any of the above
+            #   base      – everything else
+            SEALED, GOLD, SP_TAG, PAR, BASE = range(5)
+
+            def classify(e):
+                name = e.get('name') or ''
+                if '未開封' in name:
+                    return SEALED
+                if '金文字' in name:
+                    return GOLD
+                if e.get('rarity') == 'SP':
+                    return SP_TAG
+                if 'パラレル' in name:
+                    return PAR
+                return BASE
+
+            tagged = [(e, classify(e)) for e in entries]
+            sealed    = [e for e, t in tagged if t == SEALED]
+            gold_text = [e for e, t in tagged if t == GOLD]
+            sp        = [e for e, t in tagged if t == SP_TAG]
+            parallel  = [e for e, t in tagged if t == PAR]
+            base      = [e for e, t in tagged if t == BASE]
 
             base_group = price_group(base)
             if base_group:
@@ -143,25 +169,32 @@ def build_price_history(history_by_code):
                     'count': base_group['count'],
                 }
             else:
-                # No pure-base entries: prefer non-parallel prices as fallback so
-                # the chart's main line isn't polluted by parallel-only prices.
-                non_parallel = [e for e in entries if id(e) not in parallel_set]
-                non_parallel_prices = [p for p in (parse_amount(e.get('amount')) for e in non_parallel) if p is not None]
-                fallback_prices = non_parallel_prices or all_prices
+                # No pure-base entries: prefer non-sp, non-parallel prices as fallback so
+                # the chart's main line isn't polluted by SP/parallel-only prices.
+                non_sp_parallel = [e for e, t in tagged if t not in (SP_TAG, PAR)]
+                fallback_prices = [p for p in (parse_amount(e.get('amount')) for e in non_sp_parallel) if p is not None]
+                if not fallback_prices:
+                    fallback_prices = all_prices
+                    fallback_count = len(entries)
+                else:
+                    fallback_count = len(non_sp_parallel)
                 hist_entry = {
                     'date': date,
                     'minPrice': min(fallback_prices),
                     'maxPrice': max(fallback_prices),
-                    'count': len(non_parallel) if non_parallel_prices else len(entries),
+                    'count': fallback_count,
                 }
 
             sealed_group = price_group(sealed)
             gold_group = price_group(gold_text)
+            sp_group = price_group(sp)
             parallel_group = price_group(parallel)
             if sealed_group:
                 hist_entry['sealed'] = sealed_group
             if gold_group:
                 hist_entry['goldText'] = gold_group
+            if sp_group:
+                hist_entry['sp'] = sp_group
             if parallel_group:
                 hist_entry['parallel'] = parallel_group
 
@@ -239,8 +272,10 @@ def build_unmatched(history_by_code, price_files, code_to_rarities):
             with open(latest_file, encoding='utf-8') as f:
                 latest_entries = json.load(f)
             for entry in latest_entries:
-                code = entry.get('model_number', '')
-                latest_by_code.setdefault(code, []).append(entry)
+                raw = entry.get('model_number', '')
+                code = strip_bracket_suffix(raw) if raw else ''
+                if code:
+                    latest_by_code.setdefault(code, []).append(entry)
         except (json.JSONDecodeError, OSError) as exc:
             print(f'WARNING: Failed to parse latest file {latest_file}: {exc}')
 
