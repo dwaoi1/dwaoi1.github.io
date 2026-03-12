@@ -5492,6 +5492,36 @@
       ]
     },
     {
+      "cardCode": "P-105",
+      "priceCount": 4,
+      "entries": [
+        {
+          "name": "サボ(パラレル/SP/悪魔の実模様)",
+          "rarity": "SP",
+          "model_number": "P-105[OP15]",
+          "amount": "¥8,000"
+        },
+        {
+          "name": "サボ(illust:Ryuda)",
+          "rarity": "P",
+          "model_number": "P-105",
+          "amount": "¥200"
+        },
+        {
+          "name": "サボ(未開封/イベント配布パックA)",
+          "rarity": "P",
+          "model_number": "P-105",
+          "amount": "¥30"
+        },
+        {
+          "name": "サボ(illust:Katsuo Tadano)",
+          "rarity": "P",
+          "model_number": "P-105",
+          "amount": "¥10"
+        }
+      ]
+    },
+    {
       "cardCode": "OP06-021",
       "priceCount": 3,
       "entries": [
@@ -13418,30 +13448,6 @@
       ]
     },
     {
-      "cardCode": "P-105",
-      "priceCount": 3,
-      "entries": [
-        {
-          "name": "サボ(illust:Ryuda)",
-          "rarity": "P",
-          "model_number": "P-105",
-          "amount": "¥200"
-        },
-        {
-          "name": "サボ(未開封/イベント配布パックA)",
-          "rarity": "P",
-          "model_number": "P-105",
-          "amount": "¥30"
-        },
-        {
-          "name": "サボ(illust:Katsuo Tadano)",
-          "rarity": "P",
-          "model_number": "P-105",
-          "amount": "¥10"
-        }
-      ]
-    },
-    {
       "cardCode": "OP06-023",
       "priceCount": 2,
       "entries": [
@@ -14141,7 +14147,7 @@
   "multiPricePatterns": [
     {
       "pattern": "Parallel",
-      "count": 591
+      "count": 592
     },
     {
       "pattern": "Illust variant",
@@ -16925,6 +16931,12 @@
       "modelNumber": "P-105",
       "latestEntries": [
         {
+          "name": "サボ(パラレル/SP/悪魔の実模様)",
+          "rarity": "SP",
+          "model_number": "P-105[OP15]",
+          "amount": "¥8,000"
+        },
+        {
           "name": "サボ(illust:Ryuda)",
           "rarity": "P",
           "model_number": "P-105",
@@ -16941,17 +16953,6 @@
           "rarity": "P",
           "model_number": "P-105",
           "amount": "¥10"
-        }
-      ]
-    },
-    {
-      "modelNumber": "P-105[OP15]",
-      "latestEntries": [
-        {
-          "name": "サボ(パラレル/SP/悪魔の実模様)",
-          "rarity": "SP",
-          "model_number": "P-105[OP15]",
-          "amount": "¥8,000"
         }
       ]
     },
@@ -17209,7 +17210,7 @@
   "pricesWithoutCardsBreakdown": [
     {
       "series": "P",
-      "count": 105
+      "count": 104
     },
     {
       "series": "",

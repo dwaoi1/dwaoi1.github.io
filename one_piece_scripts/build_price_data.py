@@ -97,10 +97,15 @@ def strip_bracket_suffix(model_number):
     code; stripping it lets us index the entry under the canonical code 'OP05-119'
     so it merges with other entries for that card.
 
-    If the model number does not match the expected 'LETTERS##-###' format (e.g.
-    a promo code like 'P-105'), the original string is returned unchanged.
+    Recognised formats (letter prefix is 2-3 uppercase letters for set codes,
+    or a single letter for promos):
+      Standard  - 'OP05-119[OP11]'  -> 'OP05-119'  (2-3 letters + 2 digits + dash + 3 digits)
+      Promo     - 'P-105[OP15]'     -> 'P-105'       (single letter + dash + 3 digits)
+
+    If the model number does not match either format, the original string is
+    returned unchanged.
     """
-    m = re.match(r'^([A-Z][A-Z0-9]*\d{2}-\d{3})', model_number)
+    m = re.match(r'^([A-Z]{2,3}\d{2}-\d{3}|[A-Z]-\d{3})', model_number)
     return m.group(1) if m else model_number
 
 
@@ -136,10 +141,19 @@ def build_price_history(history_by_code):
             # tag so each entry is assigned to exactly one group.
             #   sealed    – name contains '未開封'
             #   gold_text – name contains '金文字' (and not sealed)
-            #   sp        – Cardrush rarity exactly 'SP' (maps to SPカード in card list)
+            #   sp        – rarity is 'SP' AND:
+            #                 • only 1 SP entry exists for this code+date  (unambiguous)
+            #                 • OR name contains 'パラレル/SP'              (explicit label)
+            #               This handles cards whose SP version has no 'SP' in the
+            #               name (e.g. illust/washi/wanted-poster variants) while
+            #               still picking the right one when multiple SP entries
+            #               co-exist (gold bg vs silver bg vs tarot, etc.).
             #   parallel  – name contains 'パラレル' and not in any of the above
+            #               (includes gold/silver bg, illust, manga parallels, etc.)
             #   base      – everything else
             SEALED, GOLD, SP_TAG, PAR, BASE = range(5)
+
+            sp_count = sum(1 for e in entries if e.get('rarity') == 'SP')
 
             def classify(e):
                 name = e.get('name') or ''
@@ -147,7 +161,7 @@ def build_price_history(history_by_code):
                     return SEALED
                 if '金文字' in name:
                     return GOLD
-                if e.get('rarity') == 'SP':
+                if e.get('rarity') == 'SP' and (sp_count == 1 or 'パラレル/SP' in name):
                     return SP_TAG
                 if 'パラレル' in name:
                     return PAR
