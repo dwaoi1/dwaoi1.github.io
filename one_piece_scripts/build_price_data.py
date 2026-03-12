@@ -40,6 +40,9 @@ def parse_amount(amount_str):
 def get_card_code(url):
     if not url:
         return ''
+    # Two alternates in the pattern:
+    #   [A-Z]{2,}\d{2,}-\d{3}  – standard set codes, e.g. OP05-119, EB03-026
+    #   [A-Z]-\d{3}             – promo codes,        e.g. P-105
     m = re.search(r'/([A-Z]{2,}\d{2,}-\d{3}|[A-Z]-\d{3})', url)
     return m.group(1) if m else ''
 
