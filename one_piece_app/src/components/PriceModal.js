@@ -9,6 +9,9 @@ const TIME_RANGES = [
   { label: '180d', days: 180 },
 ];
 
+// Cardrush rarity 'SP' maps exclusively to this rarity in the card list.
+const SP_CARD_RARITY = 'SPカード';
+
 const CHART_W = 700;
 const CHART_H = 260;
 const MARGIN = { top: 20, right: 20, bottom: 50, left: 72 };
@@ -60,6 +63,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   }, []);
 
   const cardCode = item.cardCode;
+  const isSPCard = item.Rarity === SP_CARD_RARITY;
   const histData = priceHistory[cardCode];
 
   // Reset variant toggles whenever a different card is opened
@@ -82,8 +86,19 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const hasGoldText = useMemo(() => filteredHistory.some(p => p.goldText), [filteredHistory]);
   const hasParallel = useMemo(() => filteredHistory.some(p => p.parallel), [filteredHistory]);
 
-  // Build effective history from selected variant groups
+  // Build effective history from selected variant groups.
+  // For SPカード: use the sp subgroup as the primary chart data.
   const effectiveHistory = useMemo(() => {
+    if (isSPCard) {
+      return filteredHistory
+        .filter(p => p.sp)
+        .map(p => ({
+          date: p.date,
+          minPrice: p.sp.minPrice,
+          maxPrice: p.sp.maxPrice,
+          count: p.sp.count,
+        }));
+    }
     return filteredHistory.map(p => {
       const allPrices = [p.minPrice, p.maxPrice].filter(v => v != null);
       if (showSealed && p.sealed) allPrices.push(p.sealed.minPrice, p.sealed.maxPrice);
@@ -101,7 +116,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           + (showParallel && p.parallel ? p.parallel.count : 0),
       };
     }).filter(Boolean);
-  }, [filteredHistory, showSealed, showGoldText, showParallel]);
+  }, [filteredHistory, isSPCard, showSealed, showGoldText, showParallel]);
 
   const chart = useMemo(() => {
     if (effectiveHistory.length === 0) return null;
@@ -191,7 +206,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           ))}
         </div>
 
-        {(hasSealed || hasGoldText || hasParallel) && (
+        {!isSPCard && (hasSealed || hasGoldText || hasParallel) && (
           <div className="price-modal-variant-filters">
             {hasParallel && (
               <label className="variant-filter-label">
@@ -233,7 +248,9 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           <div className="price-modal-no-data">
             {!histData
               ? 'No price data available for this card.'
-              : `No price data available in the last ${timeRange} days.`}
+              : isSPCard
+                ? `No SP price data available in the last ${timeRange} days.`
+                : `No price data available in the last ${timeRange} days.`}
           </div>
         ) : (
           <div className="price-chart-container">
