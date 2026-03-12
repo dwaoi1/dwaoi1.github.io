@@ -40,7 +40,7 @@ def parse_amount(amount_str):
 def get_card_code(url):
     if not url:
         return ''
-    m = re.search(r'/([A-Z]+\d{2,}-\d{3})', url)
+    m = re.search(r'/([A-Z]{2,}\d{2,}-\d{3}|[A-Z]-\d{3})', url)
     return m.group(1) if m else ''
 
 
@@ -183,20 +183,14 @@ def build_price_history(history_by_code):
                     'count': base_group['count'],
                 }
             else:
-                # No pure-base entries: prefer non-sp, non-parallel prices as fallback so
-                # the chart's main line isn't polluted by SP/parallel-only prices.
-                non_sp_parallel = [e for e, t in tagged if t not in (SP_TAG, PAR)]
-                fallback_prices = [p for p in (parse_amount(e.get('amount')) for e in non_sp_parallel) if p is not None]
-                if not fallback_prices:
-                    fallback_prices = all_prices
-                    fallback_count = len(entries)
-                else:
-                    fallback_count = len(non_sp_parallel)
+                # No pure-base entries: leave root prices null so the frontend can
+                # rely solely on variant subgroups (sealed/goldText/sp/parallel) for
+                # display, and count=0 ensures no double-counting with subgroup counts.
                 hist_entry = {
                     'date': date,
-                    'minPrice': min(fallback_prices),
-                    'maxPrice': max(fallback_prices),
-                    'count': fallback_count,
+                    'minPrice': None,
+                    'maxPrice': None,
+                    'count': 0,
                 }
 
             sealed_group = price_group(sealed)
