@@ -4,8 +4,7 @@ Build compiled price data from raw Cardrush daily JSON files.
 
 Reads:
   one_piece_scripts/cardrush_buying_prices/**/*.json   (daily price scrapes)
-  one_piece_scripts/html_files/*.html                  (card HTML for rarity info)
-  one_piece_scripts/one_piece_cards.json               (card list)
+  one_piece_scripts/one_piece_cards.json               (card list with names and rarities)
 
 Writes:
   one_piece_app/public/cardrush_price_history.json  -- price history per card (committed by scrape workflow)
@@ -19,7 +18,6 @@ import re
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
-HTML_DIR = os.path.join(SCRIPT_DIR, 'html_files')
 CARDS_JSON = os.path.join(SCRIPT_DIR, 'one_piece_cards.json')
 PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_history.json')
 UNMATCHED_OUT = os.path.join(SCRIPT_DIR, 'unmatched_prices.json')
@@ -42,7 +40,10 @@ def parse_amount(amount_str):
 def get_card_code(url):
     if not url:
         return ''
-    m = re.search(r'/([A-Z]+\d{2,}-\d{3})', url)
+    # Two alternates in the pattern:
+    #   [A-Z]{2,}\d{2,}-\d{3}  – standard set codes, e.g. OP05-119, EB03-026
+    #   [A-Z]-\d{3}             – promo codes,        e.g. P-105
+    m = re.search(r'/([A-Z]{2,}\d{2,}-\d{3}|[A-Z]-\d{3})', url)
     return m.group(1) if m else ''
 
 
@@ -74,11 +75,13 @@ def series_breakdown(codes):
     )
 
 
-def rarity_breakdown(codes, code_to_rarity):
+def rarity_breakdown(codes, code_to_rarities):
+    """Group cards-without-prices by their known rarities (a code may have multiple)."""
     counts = {}
     for code in codes:
-        rarity = code_to_rarity.get(code, 'Unknown')
-        counts[rarity] = counts.get(rarity, 0) + 1
+        rarities = code_to_rarities.get(code, ['Unknown'])
+        for rarity in rarities:
+            counts[rarity] = counts.get(rarity, 0) + 1
     return sorted(
         [{'rarity': r, 'count': c} for r, c in counts.items()],
         key=lambda x: -x['count'],
@@ -88,6 +91,26 @@ def rarity_breakdown(codes, code_to_rarity):
 # ---------------------------------------------------------------------------
 # Price history
 # ---------------------------------------------------------------------------
+
+def strip_bracket_suffix(model_number):
+    """Strip the set-annotation bracket from model numbers.
+
+    Cardrush uses 'OP05-119[OP11]' to indicate a reprint of card OP05-119 that
+    was included in the OP11 box set.  The bracket suffix is not part of the card
+    code; stripping it lets us index the entry under the canonical code 'OP05-119'
+    so it merges with other entries for that card.
+
+    Recognised formats (letter prefix is 2-3 uppercase letters for set codes,
+    or a single letter for promos):
+      Standard  - 'OP05-119[OP11]'  -> 'OP05-119'  (2-3 letters + 2 digits + dash + 3 digits)
+      Promo     - 'P-105[OP15]'     -> 'P-105'       (single letter + dash + 3 digits)
+
+    If the model number does not match either format, the original string is
+    returned unchanged.
+    """
+    m = re.match(r'^([A-Z]{2,3}\d{2}-\d{3}|[A-Z]-\d{3})', model_number)
+    return m.group(1) if m else model_number
+
 
 def build_history_by_code(price_files):
     history_by_code = {}
@@ -100,9 +123,10 @@ def build_history_by_code(price_files):
             print(f'WARNING: Failed to parse {file_path}: {exc}')
             continue
         for entry in entries:
-            code = entry.get('model_number', '')
-            if not code:
+            raw = entry.get('model_number', '')
+            if not raw:
                 continue
+            code = strip_bracket_suffix(raw)
             history_by_code.setdefault(code, {}).setdefault(date, []).append(entry)
     return history_by_code
 
@@ -116,16 +140,42 @@ def build_price_history(history_by_code):
             if not all_prices:
                 continue
 
-            # Classify into base / sealed (未開封) / gold-text-only (金文字)
-            sealed = [e for e in entries if e.get('name') and '未開封' in e['name']]
-            gold_text = [
-                e for e in entries
-                if e.get('name') and '金文字' in e['name'] and '未開封' not in e['name']
-            ]
-            base = [
-                e for e in entries
-                if not (e.get('name') and ('未開封' in e['name'] or '金文字' in e['name']))
-            ]
+            # Classify entries into mutually-exclusive groups using an index-based
+            # tag so each entry is assigned to exactly one group.
+            #   sealed    – name contains '未開封'
+            #   gold_text – name contains '金文字' (and not sealed)
+            #   sp        – rarity is 'SP' AND:
+            #                 • only 1 SP entry exists for this code+date  (unambiguous)
+            #                 • OR name contains 'パラレル/SP'              (explicit label)
+            #               This handles cards whose SP version has no 'SP' in the
+            #               name (e.g. illust/washi/wanted-poster variants) while
+            #               still picking the right one when multiple SP entries
+            #               co-exist (gold bg vs silver bg vs tarot, etc.).
+            #   parallel  – name contains 'パラレル' and not in any of the above
+            #               (includes gold/silver bg, illust, manga parallels, etc.)
+            #   base      – everything else
+            SEALED, GOLD, SP_TAG, PAR, BASE = range(5)
+
+            sp_count = sum(1 for e in entries if e.get('rarity') == 'SP')
+
+            def classify(e):
+                name = e.get('name') or ''
+                if '未開封' in name:
+                    return SEALED
+                if '金文字' in name:
+                    return GOLD
+                if e.get('rarity') == 'SP' and (sp_count == 1 or 'パラレル/SP' in name):
+                    return SP_TAG
+                if 'パラレル' in name:
+                    return PAR
+                return BASE
+
+            tagged = [(e, classify(e)) for e in entries]
+            sealed    = [e for e, t in tagged if t == SEALED]
+            gold_text = [e for e, t in tagged if t == GOLD]
+            sp        = [e for e, t in tagged if t == SP_TAG]
+            parallel  = [e for e, t in tagged if t == PAR]
+            base      = [e for e, t in tagged if t == BASE]
 
             base_group = price_group(base)
             if base_group:
@@ -136,19 +186,28 @@ def build_price_history(history_by_code):
                     'count': base_group['count'],
                 }
             else:
+                # No pure-base entries: leave root prices null so the frontend can
+                # rely solely on variant subgroups (sealed/goldText/sp/parallel) for
+                # display, and count=0 ensures no double-counting with subgroup counts.
                 hist_entry = {
                     'date': date,
-                    'minPrice': min(all_prices),
-                    'maxPrice': max(all_prices),
-                    'count': len(entries),
+                    'minPrice': None,
+                    'maxPrice': None,
+                    'count': 0,
                 }
 
             sealed_group = price_group(sealed)
             gold_group = price_group(gold_text)
+            sp_group = price_group(sp)
+            parallel_group = price_group(parallel)
             if sealed_group:
                 hist_entry['sealed'] = sealed_group
             if gold_group:
                 hist_entry['goldText'] = gold_group
+            if sp_group:
+                hist_entry['sp'] = sp_group
+            if parallel_group:
+                hist_entry['parallel'] = parallel_group
 
             history.append(hist_entry)
 
@@ -160,33 +219,27 @@ def build_price_history(history_by_code):
 
 
 # ---------------------------------------------------------------------------
-# Rarity map (from HTML scraped card pages)
+# Rarity map (from cards.json)
 # ---------------------------------------------------------------------------
 
 def build_rarity_map():
-    code_to_rarity = {}
-    if not os.path.isdir(HTML_DIR):
-        return code_to_rarity
-
-    pattern = re.compile(
-        r'<div class="infoCol">\s*<span>([^<]+)</span>\s*\|\s*<span>([^<]+)</span>'
-    )
-    for fn in sorted(os.listdir(HTML_DIR)):
-        if not fn.endswith('.html'):
-            continue
-        file_path = os.path.join(HTML_DIR, fn)
-        try:
-            with open(file_path, encoding='utf-8') as f:
-                content = f.read()
-        except OSError:
-            continue
-        for m in pattern.finditer(content):
-            code = m.group(1).strip()
-            rarity = m.group(2).strip()
-            if code not in code_to_rarity:
-                code_to_rarity[code] = rarity
-
-    return code_to_rarity
+    """Return a map of card_code -> list of unique rarities seen for that code."""
+    code_to_rarities = {}
+    if not os.path.isfile(CARDS_JSON):
+        return code_to_rarities
+    try:
+        with open(CARDS_JSON, encoding='utf-8') as f:
+            cards = json.load(f)
+        for card in cards:
+            code = get_card_code(card.get('Picture', ''))
+            rarity = card.get('Rarity', '')
+            if code and rarity:
+                seen = code_to_rarities.setdefault(code, [])
+                if rarity not in seen:
+                    seen.append(rarity)
+    except (json.JSONDecodeError, OSError) as exc:
+        print(f'WARNING: Failed to build rarity map: {exc}')
+    return code_to_rarities
 
 
 # ---------------------------------------------------------------------------
@@ -207,7 +260,7 @@ NAME_PATTERNS = [
 ]
 
 
-def build_unmatched(history_by_code, price_files, code_to_rarity):
+def build_unmatched(history_by_code, price_files, code_to_rarities):
     card_codes = set()
     if os.path.isfile(CARDS_JSON):
         try:
@@ -230,8 +283,10 @@ def build_unmatched(history_by_code, price_files, code_to_rarity):
             with open(latest_file, encoding='utf-8') as f:
                 latest_entries = json.load(f)
             for entry in latest_entries:
-                code = entry.get('model_number', '')
-                latest_by_code.setdefault(code, []).append(entry)
+                raw = entry.get('model_number', '')
+                code = strip_bracket_suffix(raw) if raw else ''
+                if code:
+                    latest_by_code.setdefault(code, []).append(entry)
         except (json.JSONDecodeError, OSError) as exc:
             print(f'WARNING: Failed to parse latest file {latest_file}: {exc}')
 
@@ -274,7 +329,7 @@ def build_unmatched(history_by_code, price_files, code_to_rarity):
         'pricesWithoutCardsBreakdown': series_breakdown([e['modelNumber'] for e in prices_without_cards]),
         'cardsWithoutPrices': cards_without_prices,
         'cardsWithoutPricesBreakdown': series_breakdown(cards_without_prices),
-        'cardsWithoutPricesRarityBreakdown': rarity_breakdown(cards_without_prices, code_to_rarity),
+        'cardsWithoutPricesRarityBreakdown': rarity_breakdown(cards_without_prices, code_to_rarities),
     }
 
 
@@ -297,10 +352,10 @@ def main():
         json.dump(price_history, f, ensure_ascii=False)
     print(f'Wrote {PRICE_DATA_OUT} ({len(price_history)} card codes)')
 
-    code_to_rarity = build_rarity_map()
-    print(f'Loaded rarity data for {len(code_to_rarity)} card codes')
+    code_to_rarities = build_rarity_map()
+    print(f'Loaded rarity data for {len(code_to_rarities)} card codes')
 
-    unmatched = build_unmatched(history_by_code, price_files, code_to_rarity)
+    unmatched = build_unmatched(history_by_code, price_files, code_to_rarities)
     with open(UNMATCHED_OUT, 'w', encoding='utf-8') as f:
         json.dump(unmatched, f, ensure_ascii=False, indent=2)
     print(f'Wrote {UNMATCHED_OUT}')
