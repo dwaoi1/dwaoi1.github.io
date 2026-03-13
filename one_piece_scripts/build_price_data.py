@@ -352,6 +352,54 @@ NAME_PATTERNS = [
 ]
 
 
+def is_multiple_prices_matched(item, mappings):
+    """Return True if this multiplePrices entry has been addressed in mappings.
+
+    A card is considered matched once any of its image codes (including the base
+    card code) appears as a key in the manual 'mappings' dict.  Matched entries
+    are moved to the bottom of the multiplePrices list so unhandled cards stay
+    visible at the top.
+    """
+    if item.get('cardCode', '') in mappings:
+        return True
+    for img_code in item.get('imageCodes', []):
+        if img_code in mappings:
+            return True
+    return False
+
+
+def merge_multiple_prices(existing_list, fresh_list, mappings):
+    """Merge the existing multiplePrices list with a freshly-generated one.
+
+    Rules:
+    - Existing entries are updated with the latest scrape data where available,
+      or kept unchanged if the card no longer appears in the latest scrape.
+    - New entries (cards in fresh_list not yet in existing_list) are appended.
+    - After merging, matched entries (any image code present in mappings) are
+      moved to the bottom so unhandled cards remain at the top.
+    - Relative order within the unmatched and matched groups is preserved.
+    """
+    fresh_by_code = {item['cardCode']: item for item in fresh_list}
+    seen_codes = set()
+    merged = []
+
+    # Process existing entries first, updating data from the fresh list
+    for item in existing_list:
+        code = item['cardCode']
+        seen_codes.add(code)
+        merged.append(fresh_by_code.get(code, item))
+
+    # Append brand-new cards not previously in the list
+    for item in fresh_list:
+        if item['cardCode'] not in seen_codes:
+            merged.append(item)
+
+    # Move matched entries to the bottom, preserving relative order in each group
+    unmatched = [item for item in merged if not is_multiple_prices_matched(item, mappings)]
+    matched   = [item for item in merged if     is_multiple_prices_matched(item, mappings)]
+    return unmatched + matched
+
+
 def build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes):
     card_codes = set()
     if os.path.isfile(CARDS_JSON):
@@ -466,21 +514,37 @@ def main():
     # then merge in the freshly-generated diagnostic sections and write it back.
     existing_comment = None
     existing_mappings = {}
+    existing_multiple_prices = []
     if os.path.isfile(PRICE_OVERRIDES_JSON):
         try:
             with open(PRICE_OVERRIDES_JSON, encoding='utf-8') as f:
                 existing = json.load(f)
             existing_comment = existing.get('_comment')
             existing_mappings = existing.get('mappings', {})
+            existing_multiple_prices = existing.get('multiplePrices', [])
         except (json.JSONDecodeError, OSError) as exc:
             print(f'WARNING: Failed to read existing {PRICE_OVERRIDES_JSON}: {exc}')
+
+    # Merge multiplePrices incrementally: add new cards, update existing ones,
+    # and move matched entries (image code present in mappings) to the bottom.
+    merged_multiple_prices = merge_multiple_prices(
+        existing_multiple_prices,
+        unmatched['multiplePrices'],
+        existing_mappings,
+    )
+    newly_matched = sum(
+        1 for item in merged_multiple_prices
+        if is_multiple_prices_matched(item, existing_mappings)
+    )
+    print(f'  Multiple prices (merged): {len(merged_multiple_prices)} total, '
+          f'{newly_matched} matched (moved to bottom)')
 
     combined = {}
     if existing_comment is not None:
         combined['_comment'] = existing_comment
     combined['mappings'] = existing_mappings
     combined['asOf'] = unmatched['asOf']
-    combined['multiplePrices'] = unmatched['multiplePrices']
+    combined['multiplePrices'] = merged_multiple_prices
     combined['multiPricePatterns'] = unmatched['multiPricePatterns']
     combined['pricesWithoutCards'] = unmatched['pricesWithoutCards']
     combined['pricesWithoutCardsBreakdown'] = unmatched['pricesWithoutCardsBreakdown']
@@ -491,7 +555,7 @@ def main():
     with open(PRICE_OVERRIDES_JSON, 'w', encoding='utf-8') as f:
         json.dump(combined, f, ensure_ascii=False, indent=2)
     print(f'Wrote {PRICE_OVERRIDES_JSON}')
-    print(f'  Multiple prices: {len(unmatched["multiplePrices"])}')
+    print(f'  Multiple prices: {len(merged_multiple_prices)} ({newly_matched} matched at bottom)')
     print(f'  Prices without cards: {len(unmatched["pricesWithoutCards"])}')
     print(f'  Cards without prices: {len(unmatched["cardsWithoutPrices"])}')
 
