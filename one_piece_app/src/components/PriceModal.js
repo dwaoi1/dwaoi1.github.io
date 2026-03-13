@@ -9,9 +9,6 @@ const TIME_RANGES = [
   { label: '180d', days: 180 },
 ];
 
-// Cardrush rarity 'SP' maps exclusively to this rarity in the card list.
-const SP_CARD_RARITY = 'SP CARD';
-
 const CHART_W = 700;
 const CHART_H = 390;
 const MARGIN = { top: 20, right: 20, bottom: 50, left: 72 };
@@ -71,12 +68,11 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   }, []);
 
   const cardCode = item.cardCode;
-  const isSPCard = item.Rarity === SP_CARD_RARITY;
 
-  // Detect if this card is a regular parallel (non-SP-CARD, URL has _p suffix).
+  // Detect if this card is a parallel (URL has _p suffix).
   // For parallel cards we show p.parallel as the primary data source.
   const imageCode = getImageCode(item.Picture);
-  const isParallelCard = !isSPCard && /_p\d*$/.test(imageCode);
+  const isParallelCard = /_p\d*$/.test(imageCode);
 
   // Look up price history by image code first (used when per-image overrides were built),
   // then fall back to the shared card code.
@@ -103,23 +99,12 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const hasParallel = useMemo(() => filteredHistory.some(p => p.parallel), [filteredHistory]);
 
   // Build effective history from selected variant groups.
-  // For SP CARD: use the sp subgroup as the primary chart data.
   // For parallel card images (_p suffix) that have parallel subgroup data:
   //   show only p.parallel, since the user wants the parallel-specific price.
   //   Fall back to the regular path if no parallel subgroup exists (e.g. promo
   //   cards whose prices are tracked as a single entry in Cardrush).
   // For base cards: merge selected variant groups with base prices.
   const effectiveHistory = useMemo(() => {
-    if (isSPCard) {
-      return filteredHistory
-        .filter(p => p.sp)
-        .map(p => ({
-          date: p.date,
-          minPrice: p.sp.minPrice,
-          maxPrice: p.sp.maxPrice,
-          count: p.sp.count,
-        }));
-    }
     if (isParallelCard && hasParallel) {
       return filteredHistory
         .filter(p => p.parallel)
@@ -147,7 +132,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           + (showParallel && p.parallel ? p.parallel.count : 0),
       };
     }).filter(Boolean);
-  }, [filteredHistory, isSPCard, isParallelCard, hasParallel, showSealed, showGoldText, showParallel]);
+  }, [filteredHistory, isParallelCard, hasParallel, showSealed, showGoldText, showParallel]);
 
   const chart = useMemo(() => {
     if (effectiveHistory.length === 0) return null;
@@ -242,7 +227,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               ))}
             </div>
 
-            {!isSPCard && !(isParallelCard && hasParallel) && (hasSealed || hasGoldText || hasParallel) && (
+            {!(isParallelCard && hasParallel) && (hasSealed || hasGoldText || hasParallel) && (
               <div className="price-modal-variant-filters">
                 {hasParallel && (
                   <label className="variant-filter-label">
@@ -284,11 +269,9 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               <div className="price-modal-no-data">
                 {!histData
                   ? 'No price data available for this card.'
-                  : isSPCard
-                    ? `No SP price data available in the last ${timeRange} days.`
-                    : (isParallelCard && hasParallel)
-                      ? `No parallel price data available in the last ${timeRange} days.`
-                      : `No price data available in the last ${timeRange} days.`}
+                  : (isParallelCard && hasParallel)
+                    ? `No parallel price data available in the last ${timeRange} days.`
+                    : `No price data available in the last ${timeRange} days.`}
               </div>
             ) : (
               <div className="price-chart-container">

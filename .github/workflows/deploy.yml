@@ -39,8 +39,8 @@ jobs:
           if [ -f one_piece_scripts/one_piece_cards.json ]; then
             cp one_piece_scripts/one_piece_cards.json one_piece_app/public/cards.json
           fi
-          if [ -f one_piece_scripts/unmatched_prices.json ]; then
-            cp one_piece_scripts/unmatched_prices.json one_piece_app/public/unmatched_prices.json
+          if [ -f one_piece_scripts/card_price_overrides.json ]; then
+            cp one_piece_scripts/card_price_overrides.json one_piece_app/public/unmatched_prices.json
           fi
           cd one_piece_app
           if [ "${{ github.event_name }}" = "pull_request" ]; then
