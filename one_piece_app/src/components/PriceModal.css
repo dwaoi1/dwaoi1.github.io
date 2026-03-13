@@ -16,7 +16,7 @@
   border-radius: 12px;
   padding: 24px;
   width: 100%;
-  max-width: 860px;
+  max-width: 960px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
   color: #e2e8f0;
 }
@@ -44,27 +44,40 @@
   color: #e2e8f0;
 }
 
-.price-modal-header {
+/* Title row: code + character name above the two-column body */
+.price-modal-title-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   margin-bottom: 16px;
   padding-right: 32px;
 }
 
-.price-modal-card-image {
-  width: 80px;
-  height: auto;
-  border-radius: 6px;
-  flex-shrink: 0;
-  object-fit: contain;
-  border: 1px solid #3a4055;
+/* Two-column body: card image on left, controls+chart on right */
+.price-modal-body {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
 }
 
-.price-modal-header-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+/* Left panel: card image sized to roughly match chart height */
+.price-modal-card-panel {
+  flex-shrink: 0;
+}
+
+.price-modal-card-image-large {
+  width: 200px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: contain;
+  border: 1px solid #3a4055;
+  display: block;
+}
+
+/* Right panel: time range + optional filters + chart + latest */
+.price-modal-right-panel {
+  flex: 1;
+  min-width: 0;
 }
 
 .price-modal-code {
@@ -196,4 +209,16 @@
 
 .variant-filter-dot--parallel {
   background-color: #9f7aea;
+}
+
+/* Responsive: stack vertically on narrow screens */
+@media (max-width: 600px) {
+  .price-modal-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .price-modal-card-image-large {
+    width: 120px;
+  }
 }
