@@ -10,7 +10,7 @@ const TIME_RANGES = [
 ];
 
 // Cardrush rarity 'SP' maps exclusively to this rarity in the card list.
-const SP_CARD_RARITY = 'SPカード';
+const SP_CARD_RARITY = 'SP CARD';
 
 const CHART_W = 700;
 const CHART_H = 260;
@@ -48,6 +48,14 @@ function niceTicks(minVal, maxVal, count) {
   return ticks.filter(t => t >= 0);
 }
 
+// Extract image code from a card picture URL, e.g. 'OP01-051_p1' from '.../OP01-051_p1.png?...'
+// Handles both standard codes (OP03-001, OP01-051_p2) and promo codes (P-028, P-028_p1).
+function getImageCode(url) {
+  if (!url) return '';
+  const m = url.match(/\/([A-Z]{2,}\d{2,}-\d{3}(?:_p\d*)?|[A-Z]-\d{3}(?:_p\d*)?)\.[^/]+(\?|$)/);
+  return m ? m[1] : '';
+}
+
 const PriceModal = ({ item, priceHistory, onClose }) => {
   const [timeRange, setTimeRange] = useState(30);
   const [showSealed, setShowSealed] = useState(true);
@@ -64,7 +72,15 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
 
   const cardCode = item.cardCode;
   const isSPCard = item.Rarity === SP_CARD_RARITY;
-  const histData = priceHistory[cardCode];
+
+  // Detect if this card is a regular parallel (non-SP-CARD, URL has _p suffix).
+  // For parallel cards we show p.parallel as the primary data source.
+  const imageCode = getImageCode(item.Picture);
+  const isParallelCard = !isSPCard && /_p\d*$/.test(imageCode);
+
+  // Look up price history by image code first (used when per-image overrides were built),
+  // then fall back to the shared card code.
+  const histData = priceHistory[imageCode] || priceHistory[cardCode];
 
   // Reset variant toggles whenever a different card is opened
   useEffect(() => {
@@ -87,7 +103,12 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const hasParallel = useMemo(() => filteredHistory.some(p => p.parallel), [filteredHistory]);
 
   // Build effective history from selected variant groups.
-  // For SPカード: use the sp subgroup as the primary chart data.
+  // For SP CARD: use the sp subgroup as the primary chart data.
+  // For parallel card images (_p suffix) that have parallel subgroup data:
+  //   show only p.parallel, since the user wants the parallel-specific price.
+  //   Fall back to the regular path if no parallel subgroup exists (e.g. promo
+  //   cards whose prices are tracked as a single entry in Cardrush).
+  // For base cards: merge selected variant groups with base prices.
   const effectiveHistory = useMemo(() => {
     if (isSPCard) {
       return filteredHistory
@@ -97,6 +118,16 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           minPrice: p.sp.minPrice,
           maxPrice: p.sp.maxPrice,
           count: p.sp.count,
+        }));
+    }
+    if (isParallelCard && hasParallel) {
+      return filteredHistory
+        .filter(p => p.parallel)
+        .map(p => ({
+          date: p.date,
+          minPrice: p.parallel.minPrice,
+          maxPrice: p.parallel.maxPrice,
+          count: p.parallel.count,
         }));
     }
     return filteredHistory.map(p => {
@@ -116,7 +147,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           + (showParallel && p.parallel ? p.parallel.count : 0),
       };
     }).filter(Boolean);
-  }, [filteredHistory, isSPCard, showSealed, showGoldText, showParallel]);
+  }, [filteredHistory, isSPCard, isParallelCard, hasParallel, showSealed, showGoldText, showParallel]);
 
   const chart = useMemo(() => {
     if (effectiveHistory.length === 0) return null;
@@ -181,194 +212,203 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           ✕
         </button>
 
-        <div className="price-modal-header">
-          <img
-            src={item.Picture}
-            alt={item.Character}
-            className="price-modal-card-image"
-            onError={(e) => { e.target.style.display = 'none'; }}
-          />
-          <div className="price-modal-header-info">
-            <span className="price-modal-code">{cardCode}</span>
-            <span className="price-modal-character">{item.Character}</span>
-          </div>
+        <div className="price-modal-title-row">
+          <span className="price-modal-code">{cardCode}</span>
+          <span className="price-modal-character">{item.Character}</span>
         </div>
 
-        <div className="price-modal-time-range">
-          {TIME_RANGES.map(({ label, days }) => (
-            <button
-              key={label}
-              className={`time-range-btn${timeRange === days ? ' active' : ''}`}
-              onClick={() => setTimeRange(days)}
-            >
-              {label}
-            </button>
-          ))}
+        <div className="price-modal-body">
+          {/* Left panel: card image */}
+          <div className="price-modal-card-panel">
+            <img
+              src={item.Picture}
+              alt={item.Character}
+              className="price-modal-card-image-large"
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
+          </div>
+
+          {/* Right panel: controls + chart */}
+          <div className="price-modal-right-panel">
+            <div className="price-modal-time-range">
+              {TIME_RANGES.map(({ label, days }) => (
+                <button
+                  key={label}
+                  className={`time-range-btn${timeRange === days ? ' active' : ''}`}
+                  onClick={() => setTimeRange(days)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            {!isSPCard && !(isParallelCard && hasParallel) && (hasSealed || hasGoldText || hasParallel) && (
+              <div className="price-modal-variant-filters">
+                {hasParallel && (
+                  <label className="variant-filter-label">
+                    <input
+                      type="checkbox"
+                      checked={showParallel}
+                      onChange={e => setShowParallel(e.target.checked)}
+                    />
+                    <span className="variant-filter-dot variant-filter-dot--parallel" />
+                    Parallel (パラレル)
+                  </label>
+                )}
+                {hasSealed && (
+                  <label className="variant-filter-label">
+                    <input
+                      type="checkbox"
+                      checked={showSealed}
+                      onChange={e => setShowSealed(e.target.checked)}
+                    />
+                    <span className="variant-filter-dot variant-filter-dot--sealed" />
+                    Sealed (未開封)
+                  </label>
+                )}
+                {hasGoldText && (
+                  <label className="variant-filter-label">
+                    <input
+                      type="checkbox"
+                      checked={showGoldText}
+                      onChange={e => setShowGoldText(e.target.checked)}
+                    />
+                    <span className="variant-filter-dot variant-filter-dot--gold" />
+                    Gold text (金文字)
+                  </label>
+                )}
+              </div>
+            )}
+
+            {!histData || effectiveHistory.length === 0 ? (
+              <div className="price-modal-no-data">
+                {!histData
+                  ? 'No price data available for this card.'
+                  : isSPCard
+                    ? `No SP price data available in the last ${timeRange} days.`
+                    : (isParallelCard && hasParallel)
+                      ? `No parallel price data available in the last ${timeRange} days.`
+                      : `No price data available in the last ${timeRange} days.`}
+              </div>
+            ) : (
+              <div className="price-chart-container">
+                <svg
+                  viewBox={`0 0 ${CHART_W} ${CHART_H}`}
+                  className="price-chart-svg"
+                  aria-hidden="true"
+                >
+                  {/* Grid lines */}
+                  {chart.yTicks.map(tick => (
+                    <line
+                      key={tick}
+                      x1={MARGIN.left}
+                      y1={chart.yScale(tick)}
+                      x2={MARGIN.left + PLOT_W}
+                      y2={chart.yScale(tick)}
+                      stroke="#2a2f3f"
+                      strokeWidth="1"
+                    />
+                  ))}
+
+                  {/* Axes */}
+                  <line
+                    x1={MARGIN.left} y1={MARGIN.top}
+                    x2={MARGIN.left} y2={MARGIN.top + PLOT_H}
+                    stroke="#4a5169" strokeWidth="1"
+                  />
+                  <line
+                    x1={MARGIN.left} y1={MARGIN.top + PLOT_H}
+                    x2={MARGIN.left + PLOT_W} y2={MARGIN.top + PLOT_H}
+                    stroke="#4a5169" strokeWidth="1"
+                  />
+
+                  {/* Y axis labels */}
+                  {chart.yTicks.map(tick => (
+                    <text
+                      key={tick}
+                      x={MARGIN.left - 6}
+                      y={chart.yScale(tick) + 4}
+                      textAnchor="end"
+                      fontSize="11"
+                      fill="#9ca4b7"
+                    >
+                      {formatYen(tick)}
+                    </text>
+                  ))}
+
+                  {/* X axis labels */}
+                  {chart.xTickIndices.map(i => (
+                    <text
+                      key={i}
+                      x={chart.xScale(i)}
+                      y={MARGIN.top + PLOT_H + 16}
+                      textAnchor="middle"
+                      fontSize="10"
+                      fill="#9ca4b7"
+                      transform={`rotate(-35,${chart.xScale(i)},${MARGIN.top + PLOT_H + 16})`}
+                    >
+                      {formatDate(effectiveHistory[i].date)}
+                    </text>
+                  ))}
+
+                  {/* Price range shaded area */}
+                  {chart.areaPoints && (
+                    <polygon
+                      points={chart.areaPoints}
+                      fill="rgba(99,179,237,0.12)"
+                    />
+                  )}
+
+                  {/* Price line */}
+                  <polyline
+                    points={chart.minPoints}
+                    fill="none"
+                    stroke="#63b3ed"
+                    strokeWidth="2"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+
+                  {/* Data point dots */}
+                  {effectiveHistory.map((p, i) => (
+                    <circle
+                      key={i}
+                      cx={chart.xScale(i)}
+                      cy={chart.yScale(p.minPrice)}
+                      r="3"
+                      fill="#63b3ed"
+                    >
+                      <title>
+                        {p.date}: {formatYen(p.minPrice)}
+                        {p.count > 1
+                          ? ` – ${formatYen(p.maxPrice)} (${p.count} price entries)`
+                          : ''}
+                      </title>
+                    </circle>
+                  ))}
+                </svg>
+
+                {chart.hasRange && (
+                  <p className="price-chart-note">
+                    Shaded area shows price range across multiple variants. Line shows lowest price.
+                  </p>
+                )}
+              </div>
+            )}
+
+            {latestPoint && (
+              <div className="price-modal-latest">
+                Latest:{' '}
+                <strong>{formatYen(latestPoint.minPrice)}</strong>
+                {latestPoint.count > 1 && (
+                  <span className="price-modal-variants">
+                    {' '}({latestPoint.count} price entries, up to {formatYen(latestPoint.maxPrice)})
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-
-        {!isSPCard && (hasSealed || hasGoldText || hasParallel) && (
-          <div className="price-modal-variant-filters">
-            {hasParallel && (
-              <label className="variant-filter-label">
-                <input
-                  type="checkbox"
-                  checked={showParallel}
-                  onChange={e => setShowParallel(e.target.checked)}
-                />
-                <span className="variant-filter-dot variant-filter-dot--parallel" />
-                Parallel (パラレル)
-              </label>
-            )}
-            {hasSealed && (
-              <label className="variant-filter-label">
-                <input
-                  type="checkbox"
-                  checked={showSealed}
-                  onChange={e => setShowSealed(e.target.checked)}
-                />
-                <span className="variant-filter-dot variant-filter-dot--sealed" />
-                Sealed (未開封)
-              </label>
-            )}
-            {hasGoldText && (
-              <label className="variant-filter-label">
-                <input
-                  type="checkbox"
-                  checked={showGoldText}
-                  onChange={e => setShowGoldText(e.target.checked)}
-                />
-                <span className="variant-filter-dot variant-filter-dot--gold" />
-                Gold text (金文字)
-              </label>
-            )}
-          </div>
-        )}
-
-        {!histData || effectiveHistory.length === 0 ? (
-          <div className="price-modal-no-data">
-            {!histData
-              ? 'No price data available for this card.'
-              : isSPCard
-                ? `No SP price data available in the last ${timeRange} days.`
-                : `No price data available in the last ${timeRange} days.`}
-          </div>
-        ) : (
-          <div className="price-chart-container">
-            <svg
-              viewBox={`0 0 ${CHART_W} ${CHART_H}`}
-              className="price-chart-svg"
-              aria-hidden="true"
-            >
-              {/* Grid lines */}
-              {chart.yTicks.map(tick => (
-                <line
-                  key={tick}
-                  x1={MARGIN.left}
-                  y1={chart.yScale(tick)}
-                  x2={MARGIN.left + PLOT_W}
-                  y2={chart.yScale(tick)}
-                  stroke="#2a2f3f"
-                  strokeWidth="1"
-                />
-              ))}
-
-              {/* Axes */}
-              <line
-                x1={MARGIN.left} y1={MARGIN.top}
-                x2={MARGIN.left} y2={MARGIN.top + PLOT_H}
-                stroke="#4a5169" strokeWidth="1"
-              />
-              <line
-                x1={MARGIN.left} y1={MARGIN.top + PLOT_H}
-                x2={MARGIN.left + PLOT_W} y2={MARGIN.top + PLOT_H}
-                stroke="#4a5169" strokeWidth="1"
-              />
-
-              {/* Y axis labels */}
-              {chart.yTicks.map(tick => (
-                <text
-                  key={tick}
-                  x={MARGIN.left - 6}
-                  y={chart.yScale(tick) + 4}
-                  textAnchor="end"
-                  fontSize="11"
-                  fill="#9ca4b7"
-                >
-                  {formatYen(tick)}
-                </text>
-              ))}
-
-              {/* X axis labels */}
-              {chart.xTickIndices.map(i => (
-                <text
-                  key={i}
-                  x={chart.xScale(i)}
-                  y={MARGIN.top + PLOT_H + 16}
-                  textAnchor="middle"
-                  fontSize="10"
-                  fill="#9ca4b7"
-                  transform={`rotate(-35,${chart.xScale(i)},${MARGIN.top + PLOT_H + 16})`}
-                >
-                  {formatDate(effectiveHistory[i].date)}
-                </text>
-              ))}
-
-              {/* Price range shaded area */}
-              {chart.areaPoints && (
-                <polygon
-                  points={chart.areaPoints}
-                  fill="rgba(99,179,237,0.12)"
-                />
-              )}
-
-              {/* Price line */}
-              <polyline
-                points={chart.minPoints}
-                fill="none"
-                stroke="#63b3ed"
-                strokeWidth="2"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-              />
-
-              {/* Data point dots */}
-              {effectiveHistory.map((p, i) => (
-                <circle
-                  key={i}
-                  cx={chart.xScale(i)}
-                  cy={chart.yScale(p.minPrice)}
-                  r="3"
-                  fill="#63b3ed"
-                >
-                  <title>
-                    {p.date}: {formatYen(p.minPrice)}
-                    {p.count > 1
-                      ? ` – ${formatYen(p.maxPrice)} (${p.count} price entries)`
-                      : ''}
-                  </title>
-                </circle>
-              ))}
-            </svg>
-
-            {chart.hasRange && (
-              <p className="price-chart-note">
-                Shaded area shows price range across multiple variants. Line shows lowest price.
-              </p>
-            )}
-          </div>
-        )}
-
-        {latestPoint && (
-          <div className="price-modal-latest">
-            Latest:{' '}
-            <strong>{formatYen(latestPoint.minPrice)}</strong>
-            {latestPoint.count > 1 && (
-              <span className="price-modal-variants">
-                {' '}({latestPoint.count} price entries, up to {formatYen(latestPoint.maxPrice)})
-              </span>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

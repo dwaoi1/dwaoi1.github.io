@@ -5,6 +5,7 @@ Build compiled price data from raw Cardrush daily JSON files.
 Reads:
   one_piece_scripts/cardrush_buying_prices/**/*.json   (daily price scrapes)
   one_piece_scripts/one_piece_cards.json               (card list with names and rarities)
+  one_piece_scripts/card_price_overrides.json          (manual image-code → name-pattern mappings)
 
 Writes:
   one_piece_app/public/cardrush_price_history.json  -- price history per card (committed by scrape workflow)
@@ -19,6 +20,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
 CARDS_JSON = os.path.join(SCRIPT_DIR, 'one_piece_cards.json')
+PRICE_OVERRIDES_JSON = os.path.join(SCRIPT_DIR, 'card_price_overrides.json')
 PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_history.json')
 UNMATCHED_OUT = os.path.join(SCRIPT_DIR, 'unmatched_prices.json')
 
@@ -45,6 +47,27 @@ def get_card_code(url):
     #   [A-Z]-\d{3}             – promo codes,        e.g. P-105
     m = re.search(r'/([A-Z]{2,}\d{2,}-\d{3}|[A-Z]-\d{3})', url)
     return m.group(1) if m else ''
+
+
+# Matches the base card code (no _p suffix) at the start of a string.
+# Used both to extract base code from image codes and in get_image_code.
+_BASE_CODE_PATTERN = re.compile(r'^([A-Z]{2,}\d{2,}-\d{3}|[A-Z]-\d{3})')
+
+
+def get_image_code(url):
+    """Extract the image filename stem from a card picture URL.
+
+    E.g. 'https://.../card/OP01-051_p1.png?251219' -> 'OP01-051_p1'.
+    The returned value always starts with a valid card code; any _p suffix is
+    preserved.  Falls back to get_card_code() when no matching filename is found.
+    """
+    if not url:
+        return ''
+    # Match a card-code-shaped filename (with optional _p suffix) just before .ext
+    m = re.search(r'/([A-Z]{2,}\d{2,}-\d{3}(?:_p\d*)?|[A-Z]-\d{3}(?:_p\d*)?)\.[^/]+(\?|$)', url)
+    if m:
+        return m.group(1)
+    return get_card_code(url)
 
 
 def find_json_files(directory):
@@ -219,27 +242,109 @@ def build_price_history(history_by_code):
 
 
 # ---------------------------------------------------------------------------
-# Rarity map (from cards.json)
+# Per-image-code price history (from card_price_overrides.json)
 # ---------------------------------------------------------------------------
 
+def load_price_overrides():
+    """Load manual image-code → cardrush-name-pattern mappings.
+
+    Returns a dict mapping image_code (e.g. 'OP01-051_p1') to a name substring
+    (e.g. 'パラレル/illust:S-KINOKO').  Returns an empty dict if the file is
+    missing or malformed.
+    """
+    if not os.path.isfile(PRICE_OVERRIDES_JSON):
+        return {}
+    try:
+        with open(PRICE_OVERRIDES_JSON, encoding='utf-8') as f:
+            data = json.load(f)
+        mappings = data.get('mappings', {})
+        if not isinstance(mappings, dict):
+            print('WARNING: card_price_overrides.json "mappings" is not a dict, skipping')
+            return {}
+        return mappings
+    except (json.JSONDecodeError, OSError) as exc:
+        print(f'WARNING: Failed to load {PRICE_OVERRIDES_JSON}: {exc}')
+        return {}
+
+
+def build_image_code_history(history_by_code, price_files, overrides):
+    """Build price-history entries keyed by image code using manual overrides.
+
+    For each entry in *overrides* (image_code -> name_pattern), finds the
+    matching Cardrush price entries for the base card code on each date and
+    builds a simple per-day history entry with minPrice/maxPrice/count.
+
+    Returns a dict that can be merged directly into the main price_history dict.
+    The image code keys (e.g. 'OP01-051_p1') take precedence over shared card
+    code keys in the frontend lookup.
+    """
+    if not overrides:
+        return {}
+
+    # Build a fast lookup: base_code -> date -> [entries] from the daily files
+    # (this is just history_by_code, already available)
+
+    image_history = {}
+    for image_code, name_pattern in overrides.items():
+        # Derive the base card code from the image code (strip the _p suffix)
+        m = _BASE_CODE_PATTERN.match(image_code)
+        if not m:
+            print(f'WARNING: Could not extract base code from image code "{image_code}", skipping')
+            continue
+        base_code = m.group(1)
+
+        date_map = history_by_code.get(base_code, {})
+        if not date_map:
+            print(f'WARNING: No price data found for base code "{base_code}" (image code "{image_code}")')
+            continue
+
+        history = []
+        for date, entries in date_map.items():
+            matching = [e for e in entries if name_pattern in (e.get('name') or '')]
+            if not matching:
+                continue
+            prices = [p for p in (parse_amount(e.get('amount')) for e in matching) if p is not None]
+            if not prices:
+                continue
+            history.append({
+                'date': date,
+                'minPrice': min(prices),
+                'maxPrice': max(prices),
+                'count': len(matching),
+            })
+
+        history.sort(key=lambda x: x['date'])
+        if history:
+            image_history[image_code] = {'history': history}
+            print(f'  Override: {image_code} -> {len(history)} date entries (pattern: "{name_pattern}")')
+
+    return image_history
+
 def build_rarity_map():
-    """Return a map of card_code -> list of unique rarities seen for that code."""
+    """Return two maps: card_code -> list of rarities, and card_code -> list of image codes."""
     code_to_rarities = {}
+    code_to_image_codes = {}
     if not os.path.isfile(CARDS_JSON):
-        return code_to_rarities
+        return code_to_rarities, code_to_image_codes
     try:
         with open(CARDS_JSON, encoding='utf-8') as f:
             cards = json.load(f)
         for card in cards:
-            code = get_card_code(card.get('Picture', ''))
+            picture = card.get('Picture', '')
+            code = get_card_code(picture)
+            img_code = get_image_code(picture)
             rarity = card.get('Rarity', '')
             if code and rarity:
                 seen = code_to_rarities.setdefault(code, [])
                 if rarity not in seen:
                     seen.append(rarity)
+            if code and img_code:
+                imgs = code_to_image_codes.setdefault(code, [])
+                if img_code not in imgs:
+                    imgs.append(img_code)
     except (json.JSONDecodeError, OSError) as exc:
         print(f'WARNING: Failed to build rarity map: {exc}')
-    return code_to_rarities
+    return code_to_rarities, code_to_image_codes
 
 
 # ---------------------------------------------------------------------------
@@ -260,7 +365,7 @@ NAME_PATTERNS = [
 ]
 
 
-def build_unmatched(history_by_code, price_files, code_to_rarities):
+def build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes):
     card_codes = set()
     if os.path.isfile(CARDS_JSON):
         try:
@@ -291,7 +396,12 @@ def build_unmatched(history_by_code, price_files, code_to_rarities):
             print(f'WARNING: Failed to parse latest file {latest_file}: {exc}')
 
     multiple_prices = [
-        {'cardCode': code, 'priceCount': len(entries), 'entries': entries}
+        {
+            'cardCode': code,
+            'priceCount': len(entries),
+            'imageCodes': code_to_image_codes.get(code, []),
+            'entries': entries,
+        }
         for code, entries in latest_by_code.items()
         if len(entries) > 1
     ]
@@ -348,14 +458,22 @@ def main():
     history_by_code = build_history_by_code(price_files)
     price_history = build_price_history(history_by_code)
 
+    # Apply per-image-code overrides from card_price_overrides.json
+    overrides = load_price_overrides()
+    if overrides:
+        print(f'Loaded {len(overrides)} price override(s), building per-image-code histories...')
+        image_code_history = build_image_code_history(history_by_code, price_files, overrides)
+        price_history.update(image_code_history)
+        print(f'  Added {len(image_code_history)} image-code history entries')
+
     with open(PRICE_DATA_OUT, 'w', encoding='utf-8') as f:
         json.dump(price_history, f, ensure_ascii=False)
     print(f'Wrote {PRICE_DATA_OUT} ({len(price_history)} card codes)')
 
-    code_to_rarities = build_rarity_map()
+    code_to_rarities, code_to_image_codes = build_rarity_map()
     print(f'Loaded rarity data for {len(code_to_rarities)} card codes')
 
-    unmatched = build_unmatched(history_by_code, price_files, code_to_rarities)
+    unmatched = build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes)
     with open(UNMATCHED_OUT, 'w', encoding='utf-8') as f:
         json.dump(unmatched, f, ensure_ascii=False, indent=2)
     print(f'Wrote {UNMATCHED_OUT}')

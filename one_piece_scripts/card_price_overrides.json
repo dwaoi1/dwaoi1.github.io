@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "Maps card image codes (the filename stem from the onepiece-cardgame.com image URL,",
+    "e.g. 'OP01-051_p1' from '.../OP01-051_p1.png') to a Cardrush buying-price entry name",
+    "substring for precise per-variant price tracking.",
+    "",
+    "When a card image has multiple possible Cardrush price entries (visible in the",
+    "'multiplePrices' section of unmatched_prices.json), add an entry here to pin that",
+    "image code to the correct name.  The script will then build a separate price-history",
+    "entry in cardrush_price_history.json keyed by the image code, which the frontend",
+    "looks up before falling back to the shared card code.",
+    "",
+    "Format:",
+    "  \"<image_code>\": \"<cardrush_name_substring>\"",
+    "",
+    "Example:",
+    "  \"OP01-051_p1\": \"パラレル/illust:S-KINOKO\"",
+    "  \"OP02-099_p1\": \"パラレル/illust:Anderson\""
+  ],
+  "mappings": {
+  }
+}
