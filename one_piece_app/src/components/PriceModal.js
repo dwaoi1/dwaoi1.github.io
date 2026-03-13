@@ -9,8 +9,11 @@ const TIME_RANGES = [
   { label: '180d', days: 180 },
 ];
 
-const CHART_W = 560;
-const CHART_H = 220;
+// Cardrush rarity 'SP' maps exclusively to this rarity in the card list.
+const SP_CARD_RARITY = 'SPカード';
+
+const CHART_W = 700;
+const CHART_H = 260;
 const MARGIN = { top: 20, right: 20, bottom: 50, left: 72 };
 const PLOT_W = CHART_W - MARGIN.left - MARGIN.right;
 const PLOT_H = CHART_H - MARGIN.top - MARGIN.bottom;
@@ -49,6 +52,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const [timeRange, setTimeRange] = useState(30);
   const [showSealed, setShowSealed] = useState(true);
   const [showGoldText, setShowGoldText] = useState(true);
+  const [showParallel, setShowParallel] = useState(true);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
@@ -59,12 +63,14 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   }, []);
 
   const cardCode = item.cardCode;
+  const isSPCard = item.Rarity === SP_CARD_RARITY;
   const histData = priceHistory[cardCode];
 
   // Reset variant toggles whenever a different card is opened
   useEffect(() => {
     setShowSealed(true);
     setShowGoldText(true);
+    setShowParallel(true);
   }, [cardCode]);
 
   const filteredHistory = useMemo(() => {
@@ -78,13 +84,26 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   // Determine which variant types are available in the filtered window
   const hasSealed = useMemo(() => filteredHistory.some(p => p.sealed), [filteredHistory]);
   const hasGoldText = useMemo(() => filteredHistory.some(p => p.goldText), [filteredHistory]);
+  const hasParallel = useMemo(() => filteredHistory.some(p => p.parallel), [filteredHistory]);
 
-  // Build effective history from selected variant groups
+  // Build effective history from selected variant groups.
+  // For SPカード: use the sp subgroup as the primary chart data.
   const effectiveHistory = useMemo(() => {
+    if (isSPCard) {
+      return filteredHistory
+        .filter(p => p.sp)
+        .map(p => ({
+          date: p.date,
+          minPrice: p.sp.minPrice,
+          maxPrice: p.sp.maxPrice,
+          count: p.sp.count,
+        }));
+    }
     return filteredHistory.map(p => {
       const allPrices = [p.minPrice, p.maxPrice].filter(v => v != null);
       if (showSealed && p.sealed) allPrices.push(p.sealed.minPrice, p.sealed.maxPrice);
       if (showGoldText && p.goldText) allPrices.push(p.goldText.minPrice, p.goldText.maxPrice);
+      if (showParallel && p.parallel) allPrices.push(p.parallel.minPrice, p.parallel.maxPrice);
       const validPrices = allPrices.filter(v => v != null);
       if (validPrices.length === 0) return null;
       return {
@@ -93,10 +112,11 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         maxPrice: Math.max(...validPrices),
         count: p.count
           + (showSealed && p.sealed ? p.sealed.count : 0)
-          + (showGoldText && p.goldText ? p.goldText.count : 0),
+          + (showGoldText && p.goldText ? p.goldText.count : 0)
+          + (showParallel && p.parallel ? p.parallel.count : 0),
       };
     }).filter(Boolean);
-  }, [filteredHistory, showSealed, showGoldText]);
+  }, [filteredHistory, isSPCard, showSealed, showGoldText, showParallel]);
 
   const chart = useMemo(() => {
     if (effectiveHistory.length === 0) return null;
@@ -162,8 +182,16 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         </button>
 
         <div className="price-modal-header">
-          <span className="price-modal-code">{cardCode}</span>
-          <span className="price-modal-character">{item.Character}</span>
+          <img
+            src={item.Picture}
+            alt={item.Character}
+            className="price-modal-card-image"
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
+          <div className="price-modal-header-info">
+            <span className="price-modal-code">{cardCode}</span>
+            <span className="price-modal-character">{item.Character}</span>
+          </div>
         </div>
 
         <div className="price-modal-time-range">
@@ -178,8 +206,19 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           ))}
         </div>
 
-        {(hasSealed || hasGoldText) && (
+        {!isSPCard && (hasSealed || hasGoldText || hasParallel) && (
           <div className="price-modal-variant-filters">
+            {hasParallel && (
+              <label className="variant-filter-label">
+                <input
+                  type="checkbox"
+                  checked={showParallel}
+                  onChange={e => setShowParallel(e.target.checked)}
+                />
+                <span className="variant-filter-dot variant-filter-dot--parallel" />
+                Parallel (パラレル)
+              </label>
+            )}
             {hasSealed && (
               <label className="variant-filter-label">
                 <input
@@ -209,7 +248,9 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           <div className="price-modal-no-data">
             {!histData
               ? 'No price data available for this card.'
-              : `No price data available in the last ${timeRange} days.`}
+              : isSPCard
+                ? `No SP price data available in the last ${timeRange} days.`
+                : `No price data available in the last ${timeRange} days.`}
           </div>
         ) : (
           <div className="price-chart-container">
