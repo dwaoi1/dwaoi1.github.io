@@ -5,11 +5,14 @@ Build compiled price data from raw Cardrush daily JSON files.
 Reads:
   one_piece_scripts/cardrush_buying_prices/**/*.json   (daily price scrapes)
   one_piece_scripts/one_piece_cards.json               (card list with names and rarities)
-  one_piece_scripts/card_price_overrides.json          (manual image-code → name-pattern mappings)
+  one_piece_scripts/card_price_overrides.json          (manual image-code → name-pattern mappings;
+                                                        also receives auto-generated diagnostic data)
 
 Writes:
   one_piece_app/public/cardrush_price_history.json  -- price history per card (committed by scrape workflow)
-  one_piece_scripts/unmatched_prices.json        -- diagnostic / rarity breakdown (copied to public/ by deploy.yml)
+  one_piece_scripts/card_price_overrides.json       -- updated in-place: preserves 'mappings' and '_comment',
+                                                        overwrites diagnostic sections (multiplePrices, etc.)
+                                                        (copied to public/ as unmatched_prices.json by deploy.yml)
 """
 
 import json
@@ -22,7 +25,6 @@ PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
 CARDS_JSON = os.path.join(SCRIPT_DIR, 'one_piece_cards.json')
 PRICE_OVERRIDES_JSON = os.path.join(SCRIPT_DIR, 'card_price_overrides.json')
 PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_history.json')
-UNMATCHED_OUT = os.path.join(SCRIPT_DIR, 'unmatched_prices.json')
 
 
 # ---------------------------------------------------------------------------
@@ -167,19 +169,10 @@ def build_price_history(history_by_code):
             # tag so each entry is assigned to exactly one group.
             #   sealed    – name contains '未開封'
             #   gold_text – name contains '金文字' (and not sealed)
-            #   sp        – rarity is 'SP' AND:
-            #                 • only 1 SP entry exists for this code+date  (unambiguous)
-            #                 • OR name contains 'パラレル/SP'              (explicit label)
-            #               This handles cards whose SP version has no 'SP' in the
-            #               name (e.g. illust/washi/wanted-poster variants) while
-            #               still picking the right one when multiple SP entries
-            #               co-exist (gold bg vs silver bg vs tarot, etc.).
             #   parallel  – name contains 'パラレル' and not in any of the above
             #               (includes gold/silver bg, illust, manga parallels, etc.)
             #   base      – everything else
-            SEALED, GOLD, SP_TAG, PAR, BASE = range(5)
-
-            sp_count = sum(1 for e in entries if e.get('rarity') == 'SP')
+            SEALED, GOLD, PAR, BASE = range(4)
 
             def classify(e):
                 name = e.get('name') or ''
@@ -187,8 +180,6 @@ def build_price_history(history_by_code):
                     return SEALED
                 if '金文字' in name:
                     return GOLD
-                if e.get('rarity') == 'SP' and (sp_count == 1 or 'パラレル/SP' in name):
-                    return SP_TAG
                 if 'パラレル' in name:
                     return PAR
                 return BASE
@@ -196,7 +187,6 @@ def build_price_history(history_by_code):
             tagged = [(e, classify(e)) for e in entries]
             sealed    = [e for e, t in tagged if t == SEALED]
             gold_text = [e for e, t in tagged if t == GOLD]
-            sp        = [e for e, t in tagged if t == SP_TAG]
             parallel  = [e for e, t in tagged if t == PAR]
             base      = [e for e, t in tagged if t == BASE]
 
@@ -221,14 +211,11 @@ def build_price_history(history_by_code):
 
             sealed_group = price_group(sealed)
             gold_group = price_group(gold_text)
-            sp_group = price_group(sp)
             parallel_group = price_group(parallel)
             if sealed_group:
                 hist_entry['sealed'] = sealed_group
             if gold_group:
                 hist_entry['goldText'] = gold_group
-            if sp_group:
-                hist_entry['sp'] = sp_group
             if parallel_group:
                 hist_entry['parallel'] = parallel_group
 
@@ -474,9 +461,36 @@ def main():
     print(f'Loaded rarity data for {len(code_to_rarities)} card codes')
 
     unmatched = build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes)
-    with open(UNMATCHED_OUT, 'w', encoding='utf-8') as f:
-        json.dump(unmatched, f, ensure_ascii=False, indent=2)
-    print(f'Wrote {UNMATCHED_OUT}')
+
+    # Load the existing card_price_overrides.json to preserve '_comment' and 'mappings',
+    # then merge in the freshly-generated diagnostic sections and write it back.
+    existing_comment = None
+    existing_mappings = {}
+    if os.path.isfile(PRICE_OVERRIDES_JSON):
+        try:
+            with open(PRICE_OVERRIDES_JSON, encoding='utf-8') as f:
+                existing = json.load(f)
+            existing_comment = existing.get('_comment')
+            existing_mappings = existing.get('mappings', {})
+        except (json.JSONDecodeError, OSError) as exc:
+            print(f'WARNING: Failed to read existing {PRICE_OVERRIDES_JSON}: {exc}')
+
+    combined = {}
+    if existing_comment is not None:
+        combined['_comment'] = existing_comment
+    combined['mappings'] = existing_mappings
+    combined['asOf'] = unmatched['asOf']
+    combined['multiplePrices'] = unmatched['multiplePrices']
+    combined['multiPricePatterns'] = unmatched['multiPricePatterns']
+    combined['pricesWithoutCards'] = unmatched['pricesWithoutCards']
+    combined['pricesWithoutCardsBreakdown'] = unmatched['pricesWithoutCardsBreakdown']
+    combined['cardsWithoutPrices'] = unmatched['cardsWithoutPrices']
+    combined['cardsWithoutPricesBreakdown'] = unmatched['cardsWithoutPricesBreakdown']
+    combined['cardsWithoutPricesRarityBreakdown'] = unmatched['cardsWithoutPricesRarityBreakdown']
+
+    with open(PRICE_OVERRIDES_JSON, 'w', encoding='utf-8') as f:
+        json.dump(combined, f, ensure_ascii=False, indent=2)
+    print(f'Wrote {PRICE_OVERRIDES_JSON}')
     print(f'  Multiple prices: {len(unmatched["multiplePrices"])}')
     print(f'  Prices without cards: {len(unmatched["pricesWithoutCards"])}')
     print(f'  Cards without prices: {len(unmatched["cardsWithoutPrices"])}')
