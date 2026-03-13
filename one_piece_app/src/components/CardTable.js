@@ -17,7 +17,7 @@ const CardTable = ({ data }) => {
   const itemsPerPage = 100;
 
   const getCardCode = (url) => {
-    const match = url.match(/\/([A-Z]+\d{2,}-\d{3})/);
+    const match = url.match(/\/([A-Z]{2,}\d{2,}-\d{3}|[A-Z]-\d{3})/);
     return match ? match[1] : '';
   };
 
