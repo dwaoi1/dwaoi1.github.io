@@ -13,7 +13,7 @@ const TIME_RANGES = [
 const SP_CARD_RARITY = 'SP CARD';
 
 const CHART_W = 700;
-const CHART_H = 260;
+const CHART_H = 390;
 const MARGIN = { top: 20, right: 20, bottom: 50, left: 72 };
 const PLOT_W = CHART_W - MARGIN.left - MARGIN.right;
 const PLOT_H = CHART_H - MARGIN.top - MARGIN.bottom;
