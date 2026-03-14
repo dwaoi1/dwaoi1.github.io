@@ -1,52 +1,102 @@
 # One Piece Card Game Indexer
 
-This is a simple tool to index and display One Piece trading cards.
+A web app for browsing, tracking, and pricing One Piece trading cards.
 
-## How to Update the Website (Step-by-Step)
+**Live site:** https://dwaoi1.github.io/
 
-We have two ways to update the cards: **Automatic** (Recommended) or **Manual**.
+## Features
 
-### Option A: Automatic Download (Easiest)
-This script will automatically download all known card sets from the website.
+- **Card browser** — search, filter by character / color / series, and sort your collection
+- **Wishlist** — mark cards with a ❤️ and export / import your list as JSON; a shared wishlist committed to the repo is loaded automatically
+- **Price history** — Cardrush buying-price charts for every card, updated daily via GitHub Actions
+  - Separate price tracking for base, sealed (未開封), gold-text (金文字), and parallel (パラレル) variants
+  - Parallel cards with no buying-price data clearly show "No price data available" instead of the base-card price
+- **PWA-ready** — installable on mobile / desktop
 
-1. Open your terminal.
-2. Navigate to the scripts folder:
+---
+
+## Repository Structure
+
+```
+dwaoi1.github.io/
+├── one_piece_app/          # React front-end (Create React App)
+│   ├── public/
+│   │   ├── cards.json                    # Compiled card list (built from one_piece_cards.json)
+│   │   ├── cardrush_price_history.json   # Daily buying prices per card
+│   │   └── wishlist.json                 # Shared wishlist (committed to repo)
+│   └── src/
+│       ├── App.js
+│       └── components/
+│           ├── CardTable.js    # Card grid with filters, wishlist, and pagination
+│           └── PriceModal.js   # Price-history chart modal
+├── one_piece_scripts/      # Python data-pipeline scripts
+│   ├── download_all.py                   # Downloads card HTML from the official site
+│   ├── scrape_cards.py                   # Parses HTML → one_piece_cards.json
+│   ├── scrape_cardrush_buying_prices.py  # Scrapes daily buying prices from Cardrush
+│   ├── build_price_data.py               # Compiles daily JSONs → cardrush_price_history.json
+│   ├── one_piece_cards.json              # Source card data (Japanese names + image URLs)
+│   └── cardrush_buying_prices/           # Raw daily price snapshots (one file per day)
+└── .github/workflows/      # CI/CD
+    └── scrape-cardrush.yml               # Daily price scrape + site deploy
+```
+
+---
+
+## How to Update the Card List
+
+### Option A: Automatic Download (Recommended)
+
+1. Open your terminal and navigate to the scripts folder:
    ```bash
    cd one_piece_scripts
    ```
-3. Install the requirements (only need to do this once):
+2. Install Python dependencies (only needed once):
    ```bash
    pip install -r requirements.txt
    ```
-4. Run the downloader:
+3. Download all card pages from the official site:
    ```bash
    python3 download_all.py
    ```
-   - This will take a minute to download all the HTML files into a folder named `html_files`.
-5. Run the extractor:
+   HTML files are saved into `html_files/`.
+4. Parse the downloaded pages into the card data file:
    ```bash
    python3 scrape_cards.py
    ```
-   - This reads all the downloaded files and updates `one_piece_scripts/one_piece_cards.json` (used at build time).
+   This updates `one_piece_scripts/one_piece_cards.json`.
 
 ### Option B: Manual Save (If automatic fails)
-If specific cards are missing or you want to save a specific page manually:
 
 1. Go to the [Official One Piece Card List](https://asia-en.onepiece-cardgame.com/cardlist/).
-2. Select the "Series" you want from the dropdown and click Search.
-3. Right-click anywhere on the page and select **"Save As..."**.
-4. Save the file into the `one_piece_scripts` folder.
-5. Run `python3 scrape_cards.py`.
+2. Select the series you want from the dropdown and click **Search**.
+3. Right-click the page and choose **Save As…**, saving into `one_piece_scripts/`.
+4. Run `python3 scrape_cards.py`.
 
-### Final Step: Update the Website
-1. Commit and push your changes to `main`.
-2. GitHub Actions will automatically build and deploy the site to GitHub Pages.
+### Deploying the Updated Site
 
-### Wishlist Export + Shared Wishlist
-The app loads `one_piece_app/public/wishlist.json` first (shared wishlist) and falls back to the
-browser's local wishlist if the shared file is missing. Use the "Download wishlist JSON" button
-to export your local edits, then replace `one_piece_app/public/wishlist.json` with that file and
-commit + push to share the wishlist with everyone.
+Commit and push your changes to `main`.  
+GitHub Actions will automatically build and deploy to GitHub Pages.
 
 ---
-**Website Link:** https://dwaoi1.github.io/
+
+## How to Update Buying Prices (Manual)
+
+```bash
+cd one_piece_scripts
+python3 scrape_cardrush_buying_prices.py   # saves today's prices to cardrush_buying_prices/
+python3 build_price_data.py                # recompiles cardrush_price_history.json
+```
+
+Prices are also updated automatically every day by the `scrape-cardrush` workflow.
+
+---
+
+## Wishlist Export + Shared Wishlist
+
+The app loads `one_piece_app/public/wishlist.json` on startup (shared wishlist) and falls back to
+the browser's local storage if the file is missing.
+
+To share your wishlist with everyone:
+1. Click **Download wishlist JSON** in the app.
+2. Replace `one_piece_app/public/wishlist.json` with the downloaded file.
+3. Commit and push to `main`.
