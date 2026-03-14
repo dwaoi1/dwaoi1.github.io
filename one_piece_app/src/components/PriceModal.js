@@ -58,6 +58,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const [showSealed, setShowSealed] = useState(true);
   const [showGoldText, setShowGoldText] = useState(true);
   const [showParallel, setShowParallel] = useState(true);
+  const [tooltip, setTooltip] = useState(null); // { x, y, text }
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
@@ -353,22 +354,36 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                   />
 
                   {/* Data point dots */}
-                  {effectiveHistory.map((p, i) => (
-                    <circle
-                      key={i}
-                      cx={chart.xScale(i)}
-                      cy={chart.yScale(p.minPrice)}
-                      r="3"
-                      fill="#63b3ed"
-                    >
-                      <title>
-                        {p.date}: {formatYen(p.minPrice)}
-                        {p.count > 1
-                          ? ` – ${formatYen(p.maxPrice)} (${p.count} price entries)`
-                          : ''}
-                      </title>
-                    </circle>
-                  ))}
+                  {effectiveHistory.map((p, i) => {
+                    const label = p.count > 1
+                      ? `${p.date}: ${formatYen(p.minPrice)} – ${formatYen(p.maxPrice)} (${p.count} entries)`
+                      : `${p.date}: ${formatYen(p.minPrice)}`;
+                    return (
+                      <circle
+                        key={i}
+                        cx={chart.xScale(i)}
+                        cy={chart.yScale(p.minPrice)}
+                        r="4"
+                        fill="#63b3ed"
+                        style={{ cursor: 'pointer' }}
+                        onMouseEnter={(e) => {
+                          const svg = e.currentTarget.closest('svg');
+                          const rect = svg.getBoundingClientRect();
+                          const cx = chart.xScale(i);
+                          const cy = chart.yScale(p.minPrice);
+                          // Scale SVG coords to rendered px
+                          const scaleX = rect.width / CHART_W;
+                          const scaleY = rect.height / CHART_H;
+                          setTooltip({
+                            x: rect.left + cx * scaleX,
+                            y: rect.top + cy * scaleY - 12,
+                            text: label,
+                          });
+                        }}
+                        onMouseLeave={() => setTooltip(null)}
+                      />
+                    );
+                  })}
                 </svg>
 
                 {chart.hasRange && (
@@ -393,6 +408,14 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           </div>
         </div>
       </div>
+      {tooltip && (
+        <div
+          className="price-chart-tooltip"
+          style={{ left: tooltip.x, top: tooltip.y }}
+        >
+          {tooltip.text}
+        </div>
+      )}
     </div>
   );
 };

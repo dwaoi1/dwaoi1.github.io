@@ -29,7 +29,33 @@
     "pricesWithoutCards  – Cardrush model numbers with no matching card in the card list.",
     "cardsWithoutPrices  – card codes in the card list with no Cardrush price data."
   ],
-  "mappings": {},
+  "mappings":   {
+    "OP02-099_p1": "サカズキ(パラレル/illust:Anderson)",
+    "OP02-099_p2": "サカズキ(パラレル/illust:DAI-XT.)",
+    "OP02-099_p5": "サカズキ(パラレル/illust:S-KINOKO)",
+    "OP02-099_p4": "サカズキ(未開封/CS2023/illust:Anderson)",
+    "OP13-118": "モンキー・Ｄ・ルフィ(llust:Anderson)",
+    "OP13-118_p1": "モンキー・Ｄ・ルフィ(パラレル/海賊旗背景/漫画絵)",
+    "OP13-118_p2": "モンキー・Ｄ・ルフィ(パラレル/漫画背景/漫画絵)",
+    "OP13-118_p3": "モンキー・Ｄ・ルフィ(レッドパラレル/漫画背景/漫画絵)",
+    "OP13-118_p4": "モンキー・Ｄ・ルフィ(パラレル/手配書)",
+    "OP13-118_p5": "CS25-26/illust:Makitoshi)",
+    "ST01-001": "モンキー・D・ルフィ",
+    "ST01-001_p1": "モンキー・D・ルフィ(アニメイラスト)",
+    "ST01-001_p4": "(金文字)",
+    "ST01-001_p3": "モンキー・D・ルフィ(開封品/シリアル入り)",
+    "OP03-114": "シャーロット・リンリン",
+    "OP03-114_p1": "シャーロット・リンリン(パラレル/illust:Hayaken-sarena)",
+    "OP03-114_p2": "シャーロット・リンリン(パラレル/SP/illust:otton)",
+    "OP09-004": "シャンクス",
+    "OP09-004_p1": "シャンクス(パラレル/illust:mushimaro)",
+    "OP09-004_p2": "シャンクス(パラレル/漫画背景/漫画絵)",
+    "OP09-004_p3": "シャンクス(パラレル/手配書)",
+    "OP09-004_p5": "シャンクス(パラレル/金背景)",
+    "OP09-004_p6": "シャンクス(パラレル/銀背景)",
+    "OP09-004_p7": "シャンクス(illust:Bashikou)",
+    "OP09-004_p4": "CS25-26/illust:Shishizaru"
+  },
   "asOf": "2026-03-14",
   "multiplePrices": [
     {
@@ -37,10 +63,10 @@
       "priceCount": 4,
       "imageCodes": [
         "OP02-099",
-        "OP02-099_p1": "サカズキ(パラレル/illust:Anderson)",
-        "OP02-099_p2": "サカズキ(パラレル/illust:DAI-XT.)",
-        "OP02-099_p5": "サカズキ(パラレル/illust:S-KINOKO)",
-        "OP02-099_p4": "サカズキ(未開封/CS2023/illust:Anderson)"
+        "OP02-099_p1",
+        "OP02-099_p2",
+        "OP02-099_p5",
+        "OP02-099_p4"
       ],
       "entries": [
         {
@@ -73,12 +99,12 @@
       "cardCode": "OP13-118",
       "priceCount": 7,
       "imageCodes": [
-        "OP13-118": "モンキー・Ｄ・ルフィ(llust:Anderson)",
-        "OP13-118_p1": "モンキー・Ｄ・ルフィ(パラレル/海賊旗背景/漫画絵)",
-        "OP13-118_p2": "モンキー・Ｄ・ルフィ(パラレル/漫画背景/漫画絵)",
-        "OP13-118_p3": "モンキー・Ｄ・ルフィ(レッドパラレル/漫画背景/漫画絵)",
-        "OP13-118_p4": "モンキー・Ｄ・ルフィ(パラレル/手配書)",
-        "OP13-118_p5": "CS25-26/illust:Makitoshi)"
+        "OP13-118",
+        "OP13-118_p1",
+        "OP13-118_p2",
+        "OP13-118_p3",
+        "OP13-118_p4",
+        "OP13-118_p5"
       ],
       "entries": [
         {
@@ -129,10 +155,10 @@
       "cardCode": "ST01-001",
       "priceCount": 5,
       "imageCodes": [
-        "ST01-001": "モンキー・D・ルフィ",
-        "ST01-001_p1": "モンキー・D・ルフィ(アニメイラスト)",
-        "ST01-001_p4": "(金文字)",
-        "ST01-001_p3": "モンキー・D・ルフィ(開封品/シリアル入り)"
+        "ST01-001",
+        "ST01-001_p1",
+        "ST01-001_p4",
+        "ST01-001_p3"
       ],
       "entries": [
         {
@@ -171,9 +197,9 @@
       "cardCode": "OP03-114",
       "priceCount": 5,
       "imageCodes": [
-        "OP03-114": "シャーロット・リンリン",
-        "OP03-114_p1": "シャーロット・リンリン(パラレル/illust:Hayaken-sarena)",
-        "OP03-114_p2": "シャーロット・リンリン(パラレル/SP/illust:otton)"
+        "OP03-114",
+        "OP03-114_p1",
+        "OP03-114_p2"
       ],
       "entries": [
         {
@@ -212,14 +238,14 @@
       "cardCode": "OP09-004",
       "priceCount": 9,
       "imageCodes": [
-        "OP09-004": "シャンクス",
-        "OP09-004_p1": "シャンクス(パラレル/illust:mushimaro)",
-        "OP09-004_p2": "シャンクス(パラレル/漫画背景/漫画絵)",
-        "OP09-004_p3": "シャンクス(パラレル/手配書)",
-        "OP09-004_p5": "シャンクス(パラレル/金背景)",
-        "OP09-004_p6": "シャンクス(パラレル/銀背景)",
-        "OP09-004_p7": "シャンクス(illust:Bashikou)",
-        "OP09-004_p4": "(CS25-26/illust:Shishizaru)"
+        "OP09-004",
+        "OP09-004_p1",
+        "OP09-004_p2",
+        "OP09-004_p3",
+        "OP09-004_p5",
+        "OP09-004_p6",
+        "OP09-004_p7",
+        "OP09-004_p4"
       ],
       "entries": [
         {

@@ -222,3 +222,19 @@
     width: 276px;
   }
 }
+
+/* Custom hover tooltip for chart data points */
+.price-chart-tooltip {
+  position: fixed;
+  transform: translate(-50%, -100%);
+  background: #1e2233;
+  border: 1px solid #4a5169;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  color: #e2e8f0;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
