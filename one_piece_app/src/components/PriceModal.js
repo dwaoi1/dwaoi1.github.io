@@ -74,9 +74,15 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const imageCode = getImageCode(item.Picture);
   const isParallelCard = /_p\d*$/.test(imageCode);
 
-  // Look up price history by image code first (used when per-image overrides were built),
-  // then fall back to the shared card code.
-  const histData = priceHistory[imageCode] || priceHistory[cardCode];
+  // Look up price history by image code first (used when per-image overrides were built).
+  // For base (non-parallel) cards also fall back to the shared card code.
+  // Parallel cards (_p suffix) must NOT fall back to the base card's price data — the
+  // base card prices belong to the non-parallel variant, so showing them for a parallel
+  // card would be misleading.  If no parallel-specific entry exists the modal will
+  // display "No price data available" instead.
+  const histData = isParallelCard
+    ? priceHistory[imageCode]
+    : priceHistory[imageCode] || priceHistory[cardCode];
 
   // Reset variant toggles whenever a different card is opened
   useEffect(() => {
