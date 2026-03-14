@@ -57,7 +57,6 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const [timeRange, setTimeRange] = useState(30);
   const [showSealed, setShowSealed] = useState(true);
   const [showGoldText, setShowGoldText] = useState(true);
-  const [showParallel, setShowParallel] = useState(true);
   const [tooltip, setTooltip] = useState(null); // { x, y, text }
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
@@ -83,7 +82,6 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   useEffect(() => {
     setShowSealed(true);
     setShowGoldText(true);
-    setShowParallel(true);
   }, [cardCode]);
 
   const filteredHistory = useMemo(() => {
@@ -104,7 +102,9 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   //   show only p.parallel, since the user wants the parallel-specific price.
   //   Fall back to the regular path if no parallel subgroup exists (e.g. promo
   //   cards whose prices are tracked as a single entry in Cardrush).
-  // For base cards: merge selected variant groups with base prices.
+  // For base cards: merge only base + sealed + goldText prices.
+  //   Parallel prices (p.parallel) are intentionally excluded from base card views
+  //   because those prices belong to _p variant images, not the base card.
   const effectiveHistory = useMemo(() => {
     if (isParallelCard && hasParallel) {
       return filteredHistory
@@ -120,7 +120,6 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
       const allPrices = [p.minPrice, p.maxPrice].filter(v => v != null);
       if (showSealed && p.sealed) allPrices.push(p.sealed.minPrice, p.sealed.maxPrice);
       if (showGoldText && p.goldText) allPrices.push(p.goldText.minPrice, p.goldText.maxPrice);
-      if (showParallel && p.parallel) allPrices.push(p.parallel.minPrice, p.parallel.maxPrice);
       const validPrices = allPrices.filter(v => v != null);
       if (validPrices.length === 0) return null;
       return {
@@ -129,11 +128,10 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         maxPrice: Math.max(...validPrices),
         count: p.count
           + (showSealed && p.sealed ? p.sealed.count : 0)
-          + (showGoldText && p.goldText ? p.goldText.count : 0)
-          + (showParallel && p.parallel ? p.parallel.count : 0),
+          + (showGoldText && p.goldText ? p.goldText.count : 0),
       };
     }).filter(Boolean);
-  }, [filteredHistory, isParallelCard, hasParallel, showSealed, showGoldText, showParallel]);
+  }, [filteredHistory, isParallelCard, hasParallel, showSealed, showGoldText]);
 
   const chart = useMemo(() => {
     if (effectiveHistory.length === 0) return null;
@@ -228,19 +226,8 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               ))}
             </div>
 
-            {!(isParallelCard && hasParallel) && (hasSealed || hasGoldText || hasParallel) && (
+            {!(isParallelCard && hasParallel) && (hasSealed || hasGoldText) && (
               <div className="price-modal-variant-filters">
-                {hasParallel && (
-                  <label className="variant-filter-label">
-                    <input
-                      type="checkbox"
-                      checked={showParallel}
-                      onChange={e => setShowParallel(e.target.checked)}
-                    />
-                    <span className="variant-filter-dot variant-filter-dot--parallel" />
-                    Parallel (パラレル)
-                  </label>
-                )}
                 {hasSealed && (
                   <label className="variant-filter-label">
                     <input
