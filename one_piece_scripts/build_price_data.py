@@ -298,17 +298,38 @@ def build_image_code_history(history_by_code, price_files, overrides):
             print(f'WARNING: No price data found for base code "{base_code}" (image code "{image_code}")')
             continue
 
+        # Determine if this is a base override (image code equals the base card code,
+        # i.e. no _p suffix) or a variant override (_p suffix present).
+        is_base_override = (image_code == base_code)
+
         history = []
         for date, entries in date_map.items():
-            matching = [e for e in entries if name_pattern in (e.get('name') or '')]
-            if not matching:
-                continue
-
-            tagged = [(e, classify(e)) for e in matching]
-            sealed    = [e for e, t in tagged if t == SEALED]
-            gold_text = [e for e, t in tagged if t == GOLD]
-            parallel  = [e for e, t in tagged if t == PAR]
-            base      = [e for e, t in tagged if t == BASE]
+            if is_base_override:
+                # For base overrides: match only the exact entry name for the BASE price
+                # so that parallel/sealed entries with the same root name are not merged
+                # in.  Sealed/goldText/parallel subgroups are derived from ALL entries
+                # under the card code using standard classification.
+                base = []
+                tagged_non_base = []
+                for e in entries:
+                    if (e.get('name') or '') == name_pattern:
+                        base.append(e)
+                    else:
+                        tagged_non_base.append((e, classify(e)))
+                sealed    = [e for e, t in tagged_non_base if t == SEALED]
+                gold_text = [e for e, t in tagged_non_base if t == GOLD]
+                parallel  = [e for e, t in tagged_non_base if t == PAR]
+            else:
+                # For _p (variant) overrides: match only the exact entry name; classify
+                # matching entries into their respective groups normally.
+                matching = [e for e in entries if (e.get('name') or '') == name_pattern]
+                if not matching:
+                    continue
+                tagged = [(e, classify(e)) for e in matching]
+                sealed    = [e for e, t in tagged if t == SEALED]
+                gold_text = [e for e, t in tagged if t == GOLD]
+                parallel  = [e for e, t in tagged if t == PAR]
+                base      = [e for e, t in tagged if t == BASE]
 
             base_group = price_group(base)
             if base_group:
