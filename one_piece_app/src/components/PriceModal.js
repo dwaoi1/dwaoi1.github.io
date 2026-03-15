@@ -75,14 +75,12 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const isParallelCard = /_p\d*$/.test(imageCode);
 
   // Look up price history by image code first (used when per-image overrides were built).
-  // For base (non-parallel) cards also fall back to the shared card code.
-  // Parallel cards (_p suffix) must NOT fall back to the base card's price data — the
-  // base card prices belong to the non-parallel variant, so showing them for a parallel
-  // card would be misleading.  If no parallel-specific entry exists the modal will
-  // display "No price data available" instead.
-  const histData = isParallelCard
-    ? priceHistory[imageCode]
-    : priceHistory[imageCode] || priceHistory[cardCode];
+  // Fall back to the shared card code for both parallel and base cards.
+  // When a parallel card (_p suffix) falls back to the base card's history, the
+  // effectiveHistory computation shows only the 'parallel' subgroup data so that
+  // the base card's (non-parallel) prices are never shown for a parallel variant.
+  const hasImageCodeEntry = Boolean(priceHistory[imageCode]);
+  const histData = priceHistory[imageCode] || priceHistory[cardCode];
 
   // Reset variant toggles whenever a different card is opened
   useEffect(() => {
@@ -106,8 +104,9 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   // Build effective history from selected variant groups.
   // For parallel card images (_p suffix) that have parallel subgroup data:
   //   show only p.parallel, since the user wants the parallel-specific price.
-  //   Fall back to the regular path if no parallel subgroup exists (e.g. promo
-  //   cards whose prices are tracked as a single entry in Cardrush).
+  // For parallel cards falling back to the base card's history without parallel data:
+  //   return nothing rather than displaying the base card's (non-parallel) prices.
+  //   This preserves correctness for override-specific entries (_p with base prices).
   // For base cards: merge only base + sealed + goldText prices.
   //   Parallel prices (p.parallel) are intentionally excluded from base card views
   //   because those prices belong to _p variant images, not the base card.
@@ -121,6 +120,10 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           maxPrice: p.parallel.maxPrice,
           count: p.parallel.count,
         }));
+    }
+    // Parallel card falling back to base code with no parallel subgroup: show nothing.
+    if (isParallelCard && !hasImageCodeEntry) {
+      return [];
     }
     return filteredHistory.map(p => {
       const allPrices = [p.minPrice, p.maxPrice].filter(v => v != null);
@@ -137,7 +140,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           + (showGoldText && p.goldText ? p.goldText.count : 0),
       };
     }).filter(Boolean);
-  }, [filteredHistory, isParallelCard, hasParallel, showSealed, showGoldText]);
+  }, [filteredHistory, isParallelCard, hasParallel, hasImageCodeEntry, showSealed, showGoldText]);
 
   const chart = useMemo(() => {
     if (effectiveHistory.length === 0) return null;
@@ -263,7 +266,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               <div className="price-modal-no-data">
                 {!histData
                   ? 'No price data available for this card.'
-                  : (isParallelCard && hasParallel)
+                  : isParallelCard
                     ? `No parallel price data available in the last ${timeRange} days.`
                     : `No price data available in the last ${timeRange} days.`}
               </div>
