@@ -264,6 +264,12 @@ def build_image_code_history(history_by_code, price_files, overrides):
     build_price_history) so that the frontend can show variant toggles even
     for override-specific price histories.
 
+    *name_pattern* may be a single string or a list of strings.  Every value
+    is matched using exact equality against the Cardrush entry 'name' field,
+    so each string must be the complete, verbatim Cardrush name.  Using a list
+    lets you group multiple Cardrush entries under one image code (e.g. the
+    regular and sealed variants of a Championship card).
+
     Returns a dict that can be merged directly into the main price_history dict.
     The image code keys (e.g. 'OP01-051_p1') take precedence over shared card
     code keys in the frontend lookup.
@@ -298,6 +304,12 @@ def build_image_code_history(history_by_code, price_files, overrides):
             print(f'WARNING: No price data found for base code "{base_code}" (image code "{image_code}")')
             continue
 
+        # Normalize name_pattern (str or list[str]) to a frozenset for O(1) lookup.
+        # Every string is matched with exact equality against the Cardrush 'name' field.
+        name_patterns = frozenset(
+            name_pattern if isinstance(name_pattern, list) else [name_pattern]
+        )
+
         # Determine if this is a base override (image code equals the base card code,
         # i.e. no _p suffix) or a variant override (_p suffix present).
         is_base_override = (image_code == base_code)
@@ -305,14 +317,13 @@ def build_image_code_history(history_by_code, price_files, overrides):
         history = []
         for date, entries in date_map.items():
             if is_base_override:
-                # For base overrides: match only the exact entry name for the BASE price
-                # so that parallel/sealed entries with the same root name are not merged
-                # in.  Sealed/goldText/parallel subgroups are derived from ALL entries
-                # under the card code using standard classification.
+                # For base overrides: entries whose name is in the pattern set go to
+                # BASE price; all other entries are classified for sealed/goldText/parallel
+                # subgroups so variant toggles still work on the base card view.
                 base = []
                 tagged_non_base = []
                 for e in entries:
-                    if (e.get('name') or '') == name_pattern:
+                    if (e.get('name') or '') in name_patterns:
                         base.append(e)
                     else:
                         tagged_non_base.append((e, classify(e)))
@@ -320,9 +331,11 @@ def build_image_code_history(history_by_code, price_files, overrides):
                 gold_text = [e for e, t in tagged_non_base if t == GOLD]
                 parallel  = [e for e, t in tagged_non_base if t == PAR]
             else:
-                # For _p (variant) overrides: match only the exact entry name; classify
-                # matching entries into their respective groups normally.
-                matching = [e for e in entries if (e.get('name') or '') == name_pattern]
+                # For _p (variant) overrides: match entries whose name is in the pattern
+                # set, then classify them normally into sealed/goldText/parallel/base.
+                # Using a list of patterns lets you group multiple Cardrush entries
+                # (e.g. regular + sealed variants of the same CS card) under one image.
+                matching = [e for e in entries if (e.get('name') or '') in name_patterns]
                 if not matching:
                     continue
                 tagged = [(e, classify(e)) for e in matching]
@@ -372,7 +385,9 @@ def build_image_code_history(history_by_code, price_files, overrides):
         history.sort(key=lambda x: x['date'])
         if history:
             image_history[image_code] = {'history': history}
-            print(f'  Override: {image_code} -> {len(history)} date entries (pattern: "{name_pattern}")')
+            pat_display = (name_pattern if isinstance(name_pattern, str)
+                           else f'[{", ".join(repr(p) for p in name_pattern)}]')
+            print(f'  Override: {image_code} -> {len(history)} date entries (patterns: {pat_display})')
 
     return image_history
 
