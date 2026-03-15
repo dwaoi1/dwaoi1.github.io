@@ -147,8 +147,11 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   }, [filteredHistory, isParallelCard, hasParallel, hasImageCodeEntry]);
 
   // Sealed price series – shown as a separate orange line on the chart.
+  // For _p cards falling back to base history (no override entry), exclude the base
+  // card's sealed prices; for _p cards with their own override entry the sealed
+  // subgroup belongs specifically to that card image and should be shown.
   const sealedSeries = useMemo(() => {
-    if (isParallelCard || !showSealed) return [];
+    if ((isParallelCard && !hasImageCodeEntry) || !showSealed) return [];
     return filteredHistory
       .filter(p => p.sealed)
       .map(p => ({
@@ -157,11 +160,12 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         maxPrice: p.sealed.maxPrice,
         count: p.sealed.count,
       }));
-  }, [filteredHistory, isParallelCard, showSealed]);
+  }, [filteredHistory, isParallelCard, hasImageCodeEntry, showSealed]);
 
   // Gold text price series – shown as a separate gold/yellow line on the chart.
+  // Same rule as sealedSeries: suppress for _p fallback cards, show for _p overrides.
   const goldTextSeries = useMemo(() => {
-    if (isParallelCard || !showGoldText) return [];
+    if ((isParallelCard && !hasImageCodeEntry) || !showGoldText) return [];
     return filteredHistory
       .filter(p => p.goldText)
       .map(p => ({
@@ -170,7 +174,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         maxPrice: p.goldText.maxPrice,
         count: p.goldText.count,
       }));
-  }, [filteredHistory, isParallelCard, showGoldText]);
+  }, [filteredHistory, isParallelCard, hasImageCodeEntry, showGoldText]);
 
   const chart = useMemo(() => {
     const n = filteredHistory.length;
