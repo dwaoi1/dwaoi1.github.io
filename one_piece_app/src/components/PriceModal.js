@@ -53,6 +53,15 @@ function getImageCode(url) {
   return m ? m[1] : '';
 }
 
+// Build a human-readable tooltip label for a price data point.
+// prefix: optional context string e.g. '' for base, 'Sealed', 'Gold text'
+function makeTooltipLabel(prefix, p) {
+  const dateStr = [prefix, p.date].filter(Boolean).join(' ');
+  return p.count > 1
+    ? `${dateStr}: ${formatYen(p.minPrice)} – ${formatYen(p.maxPrice)} (${p.count} entries)`
+    : `${dateStr}: ${formatYen(p.minPrice)}`;
+}
+
 const PriceModal = ({ item, priceHistory, onClose }) => {
   const [timeRange, setTimeRange] = useState(30);
   const [showSealed, setShowSealed] = useState(true);
@@ -101,15 +110,16 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const hasGoldText = useMemo(() => filteredHistory.some(p => p.goldText), [filteredHistory]);
   const hasParallel = useMemo(() => filteredHistory.some(p => p.parallel), [filteredHistory]);
 
-  // Build effective history from selected variant groups.
+  // Base price history.
   // For parallel card images (_p suffix) that have parallel subgroup data:
   //   show only p.parallel, since the user wants the parallel-specific price.
   // For parallel cards falling back to the base card's history without parallel data:
   //   return nothing rather than displaying the base card's (non-parallel) prices.
   //   This preserves correctness for override-specific entries (_p with base prices).
-  // For base cards: merge only base + sealed + goldText prices.
-  //   Parallel prices (p.parallel) are intentionally excluded from base card views
-  //   because those prices belong to _p variant images, not the base card.
+  // For base cards: base prices only.
+  //   Sealed/goldText prices are shown as separate coloured lines (see below).
+  //   Parallel prices (p.parallel) are intentionally excluded because those prices
+  //   belong to _p variant images, not the base card.
   const effectiveHistory = useMemo(() => {
     if (isParallelCard && hasParallel) {
       return filteredHistory
@@ -125,56 +135,103 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
     if (isParallelCard && !hasImageCodeEntry) {
       return [];
     }
-    return filteredHistory.map(p => {
-      const allPrices = [p.minPrice, p.maxPrice].filter(v => v != null);
-      if (showSealed && p.sealed) allPrices.push(p.sealed.minPrice, p.sealed.maxPrice);
-      if (showGoldText && p.goldText) allPrices.push(p.goldText.minPrice, p.goldText.maxPrice);
-      const validPrices = allPrices.filter(v => v != null);
-      if (validPrices.length === 0) return null;
-      return {
+    // Base cards: only the root base prices (count > 0 means at least one base entry).
+    return filteredHistory
+      .filter(p => p.minPrice != null && p.count > 0)
+      .map(p => ({
         date: p.date,
-        minPrice: Math.min(...validPrices),
-        maxPrice: Math.max(...validPrices),
-        count: p.count
-          + (showSealed && p.sealed ? p.sealed.count : 0)
-          + (showGoldText && p.goldText ? p.goldText.count : 0),
-      };
-    }).filter(Boolean);
-  }, [filteredHistory, isParallelCard, hasParallel, hasImageCodeEntry, showSealed, showGoldText]);
+        minPrice: p.minPrice,
+        maxPrice: p.maxPrice,
+        count: p.count,
+      }));
+  }, [filteredHistory, isParallelCard, hasParallel, hasImageCodeEntry]);
+
+  // Sealed price series – shown as a separate orange line on the chart.
+  // For _p cards falling back to base history (no override entry), exclude the base
+  // card's sealed prices; for _p cards with their own override entry the sealed
+  // subgroup belongs specifically to that card image and should be shown.
+  const sealedSeries = useMemo(() => {
+    if ((isParallelCard && !hasImageCodeEntry) || !showSealed) return [];
+    return filteredHistory
+      .filter(p => p.sealed)
+      .map(p => ({
+        date: p.date,
+        minPrice: p.sealed.minPrice,
+        maxPrice: p.sealed.maxPrice,
+        count: p.sealed.count,
+      }));
+  }, [filteredHistory, isParallelCard, hasImageCodeEntry, showSealed]);
+
+  // Gold text price series – shown as a separate gold/yellow line on the chart.
+  // Same rule as sealedSeries: suppress for _p fallback cards, show for _p overrides.
+  const goldTextSeries = useMemo(() => {
+    if ((isParallelCard && !hasImageCodeEntry) || !showGoldText) return [];
+    return filteredHistory
+      .filter(p => p.goldText)
+      .map(p => ({
+        date: p.date,
+        minPrice: p.goldText.minPrice,
+        maxPrice: p.goldText.maxPrice,
+        count: p.goldText.count,
+      }));
+  }, [filteredHistory, isParallelCard, hasImageCodeEntry, showGoldText]);
 
   const chart = useMemo(() => {
-    if (effectiveHistory.length === 0) return null;
+    const n = filteredHistory.length;
+    if (n === 0) return null;
 
-    const prices = effectiveHistory.map(p => p.minPrice);
-    const maxPrices = effectiveHistory.map(p => p.maxPrice);
-    const dataMinPrice = Math.min(...prices);
-    const dataMaxPrice = Math.max(...maxPrices);
+    // Collect all prices from every visible series to compute a unified Y scale.
+    const allPrices = [effectiveHistory, sealedSeries, goldTextSeries].flatMap(series =>
+      series.flatMap(p => [p.minPrice, p.maxPrice].filter(v => v != null))
+    );
+    if (allPrices.length === 0) return null;
+
+    // Map each date in filteredHistory to its x-axis index position.
+    const dateToIndex = Object.fromEntries(filteredHistory.map((p, i) => [p.date, i]));
+
+    const dataMinPrice = Math.min(...allPrices);
+    const dataMaxPrice = Math.max(...allPrices);
     const priceRange = dataMaxPrice - dataMinPrice;
 
     const yMin = dataMinPrice - priceRange * 0.1;
     const yMax = dataMaxPrice + priceRange * 0.1;
     const yRange = yMax - yMin || 1;
 
-    const n = effectiveHistory.length;
     const xScale = (i) =>
       MARGIN.left + (n > 1 ? (i / (n - 1)) * PLOT_W : PLOT_W / 2);
     const yScale = (price) =>
       MARGIN.top + PLOT_H - ((price - yMin) / yRange) * PLOT_H;
 
-    const minPoints = effectiveHistory
-      .map((p, i) => `${xScale(i)},${yScale(p.minPrice)}`)
-      .join(' ');
+    // Helper: convert a series to a polyline points string.
+    const toPoints = (series) =>
+      series.map(p => `${xScale(dateToIndex[p.date])},${yScale(p.minPrice)}`).join(' ');
 
+    // Helper: precompute dot positions for a series.
+    const toDots = (series) =>
+      series.map(p => ({
+        ...p,
+        cx: xScale(dateToIndex[p.date]),
+        cy: yScale(p.minPrice),
+      }));
+
+    // Base line
+    const minPoints = effectiveHistory.length > 0 ? toPoints(effectiveHistory) : null;
     const hasRange = effectiveHistory.some(p => p.count > 1 && p.minPrice !== p.maxPrice);
     const areaPoints = hasRange
       ? [
-          ...effectiveHistory.map((p, i) => `${xScale(i)},${yScale(p.maxPrice)}`),
+          ...effectiveHistory.map(p => `${xScale(dateToIndex[p.date])},${yScale(p.maxPrice)}`),
           ...effectiveHistory
             .slice()
             .reverse()
-            .map((p, i, arr) => `${xScale(arr.length - 1 - i)},${yScale(p.minPrice)}`),
+            .map(p => `${xScale(dateToIndex[p.date])},${yScale(p.minPrice)}`),
         ].join(' ')
       : null;
+
+    // Sealed line (orange)
+    const sealedPoints = sealedSeries.length > 0 ? toPoints(sealedSeries) : null;
+
+    // Gold text line (gold/yellow)
+    const goldPoints = goldTextSeries.length > 0 ? toPoints(goldTextSeries) : null;
 
     const yTicks = niceTicks(dataMinPrice, dataMaxPrice, 5);
 
@@ -187,8 +244,15 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
       if (xTickIndices[xTickIndices.length - 1] !== n - 1) xTickIndices.push(n - 1);
     }
 
-    return { minPoints, areaPoints, xScale, yScale, yTicks, xTickIndices, hasRange };
-  }, [effectiveHistory]);
+    return {
+      minPoints, areaPoints, sealedPoints, goldPoints,
+      effectiveDots: toDots(effectiveHistory),
+      sealedDots: toDots(sealedSeries),
+      goldDots: toDots(goldTextSeries),
+      xScale, yScale, yTicks, xTickIndices, hasRange,
+      dates: filteredHistory.map(p => p.date),
+    };
+  }, [filteredHistory, effectiveHistory, sealedSeries, goldTextSeries]);
 
   const latestPoint = effectiveHistory[effectiveHistory.length - 1];
 
@@ -262,7 +326,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               </div>
             )}
 
-            {!histData || effectiveHistory.length === 0 ? (
+            {!histData || !chart ? (
               <div className="price-modal-no-data">
                 {!histData
                   ? 'No price data available for this card.'
@@ -327,11 +391,11 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                       fill="#9ca4b7"
                       transform={`rotate(-35,${chart.xScale(i)},${MARGIN.top + PLOT_H + 16})`}
                     >
-                      {formatDate(effectiveHistory[i].date)}
+                      {formatDate(chart.dates[i])}
                     </text>
                   ))}
 
-                  {/* Price range shaded area */}
+                  {/* Base price range shaded area */}
                   {chart.areaPoints && (
                     <polygon
                       points={chart.areaPoints}
@@ -339,40 +403,115 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                     />
                   )}
 
-                  {/* Price line */}
-                  <polyline
-                    points={chart.minPoints}
-                    fill="none"
-                    stroke="#63b3ed"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                  />
+                  {/* Base price line (blue) */}
+                  {chart.minPoints && (
+                    <polyline
+                      points={chart.minPoints}
+                      fill="none"
+                      stroke="#63b3ed"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                    />
+                  )}
 
-                  {/* Data point dots */}
-                  {effectiveHistory.map((p, i) => {
-                    const label = p.count > 1
-                      ? `${p.date}: ${formatYen(p.minPrice)} – ${formatYen(p.maxPrice)} (${p.count} entries)`
-                      : `${p.date}: ${formatYen(p.minPrice)}`;
+                  {/* Sealed price line (orange) */}
+                  {chart.sealedPoints && (
+                    <polyline
+                      points={chart.sealedPoints}
+                      fill="none"
+                      stroke="#ed8936"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                    />
+                  )}
+
+                  {/* Gold text price line (gold/yellow) */}
+                  {chart.goldPoints && (
+                    <polyline
+                      points={chart.goldPoints}
+                      fill="none"
+                      stroke="#ecc94b"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                    />
+                  )}
+
+                  {/* Base data point dots */}
+                  {chart.effectiveDots.map((p, i) => {
+                    const label = makeTooltipLabel('', p);
                     return (
                       <circle
-                        key={i}
-                        cx={chart.xScale(i)}
-                        cy={chart.yScale(p.minPrice)}
+                        key={`base-${i}`}
+                        cx={p.cx}
+                        cy={p.cy}
                         r="4"
                         fill="#63b3ed"
                         style={{ cursor: 'pointer' }}
                         onMouseEnter={(e) => {
                           const svg = e.currentTarget.closest('svg');
                           const rect = svg.getBoundingClientRect();
-                          const cx = chart.xScale(i);
-                          const cy = chart.yScale(p.minPrice);
-                          // Scale SVG coords to rendered px
                           const scaleX = rect.width / CHART_W;
                           const scaleY = rect.height / CHART_H;
                           setTooltip({
-                            x: rect.left + cx * scaleX,
-                            y: rect.top + cy * scaleY - 12,
+                            x: rect.left + p.cx * scaleX,
+                            y: rect.top + p.cy * scaleY - 12,
+                            text: label,
+                          });
+                        }}
+                        onMouseLeave={() => setTooltip(null)}
+                      />
+                    );
+                  })}
+
+                  {/* Sealed data point dots (orange) */}
+                  {chart.sealedDots.map((p, i) => {
+                    const label = makeTooltipLabel('Sealed', p);
+                    return (
+                      <circle
+                        key={`sealed-${i}`}
+                        cx={p.cx}
+                        cy={p.cy}
+                        r="4"
+                        fill="#ed8936"
+                        style={{ cursor: 'pointer' }}
+                        onMouseEnter={(e) => {
+                          const svg = e.currentTarget.closest('svg');
+                          const rect = svg.getBoundingClientRect();
+                          const scaleX = rect.width / CHART_W;
+                          const scaleY = rect.height / CHART_H;
+                          setTooltip({
+                            x: rect.left + p.cx * scaleX,
+                            y: rect.top + p.cy * scaleY - 12,
+                            text: label,
+                          });
+                        }}
+                        onMouseLeave={() => setTooltip(null)}
+                      />
+                    );
+                  })}
+
+                  {/* Gold text data point dots (gold/yellow) */}
+                  {chart.goldDots.map((p, i) => {
+                    const label = makeTooltipLabel('Gold text', p);
+                    return (
+                      <circle
+                        key={`gold-${i}`}
+                        cx={p.cx}
+                        cy={p.cy}
+                        r="4"
+                        fill="#ecc94b"
+                        style={{ cursor: 'pointer' }}
+                        onMouseEnter={(e) => {
+                          const svg = e.currentTarget.closest('svg');
+                          const rect = svg.getBoundingClientRect();
+                          const scaleX = rect.width / CHART_W;
+                          const scaleY = rect.height / CHART_H;
+                          setTooltip({
+                            x: rect.left + p.cx * scaleX,
+                            y: rect.top + p.cy * scaleY - 12,
                             text: label,
                           });
                         }}
@@ -384,7 +523,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
 
                 {chart.hasRange && (
                   <p className="price-chart-note">
-                    Shaded area shows price range across multiple variants. Line shows lowest price.
+                    Shaded area shows base price range. Line shows lowest price.
                   </p>
                 )}
               </div>
