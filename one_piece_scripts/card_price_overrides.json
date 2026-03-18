@@ -74,7 +74,7 @@
       "シャンクス(未開封/CS25-26/illust:Shishizaru)"
     ]
   },
-  "asOf": "2026-03-17",
+  "asOf": "2026-03-18",
   "multiplePrices": [
     {
       "cardCode": "ST10-006",
@@ -6343,7 +6343,7 @@
           "name": "ボルサリーノ",
           "rarity": "SR",
           "model_number": "EB04-058",
-          "amount": "¥6,000"
+          "amount": "¥6,500"
         }
       ]
     },
@@ -16889,6 +16889,28 @@
       ]
     },
     {
+      "cardCode": "OP10-001",
+      "priceCount": 2,
+      "imageCodes": [
+        "OP10-001",
+        "OP10-001_p1"
+      ],
+      "entries": [
+        {
+          "name": "スモーカー(未開封/金文字/漫画絵)",
+          "rarity": "L",
+          "model_number": "OP10-001",
+          "amount": "¥7,000"
+        },
+        {
+          "name": "スモーカー(パラレル/illust:Zhiguang Liu)",
+          "rarity": "L/P",
+          "model_number": "OP10-001",
+          "amount": "¥700"
+        }
+      ]
+    },
+    {
       "cardCode": "OP02-099",
       "priceCount": 4,
       "imageCodes": [
@@ -17138,7 +17160,7 @@
   "multiPricePatterns": [
     {
       "pattern": "Parallel",
-      "count": 586
+      "count": 587
     },
     {
       "pattern": "Illust variant",
@@ -17150,7 +17172,7 @@
     },
     {
       "pattern": "Sealed",
-      "count": 37
+      "count": 38
     },
     {
       "pattern": "Gold text",
