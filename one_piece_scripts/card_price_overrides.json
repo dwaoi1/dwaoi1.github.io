@@ -74,7 +74,7 @@
       "シャンクス(未開封/CS25-26/illust:Shishizaru)"
     ]
   },
-  "asOf": "2026-03-19",
+  "asOf": "2026-03-20",
   "multiplePrices": [
     {
       "cardCode": "ST10-006",
@@ -3075,7 +3075,7 @@
           "name": "マーシャル・D・ティーチ(パラレル/illust:tatsuya)",
           "rarity": "SR/P",
           "model_number": "OP09-093",
-          "amount": "¥400"
+          "amount": "¥700"
         }
       ]
     },
@@ -4619,7 +4619,7 @@
           "name": "ネフェルタリ・ビビ(パラレル/illust:NIJIMAARC)",
           "rarity": "SR/P",
           "model_number": "EB03-024",
-          "amount": "¥1,400"
+          "amount": "¥1,500"
         },
         {
           "name": "ネフェルタリ・ビビ",
@@ -6343,7 +6343,7 @@
           "name": "ボルサリーノ",
           "rarity": "SR",
           "model_number": "EB04-058",
-          "amount": "¥6,500"
+          "amount": "¥6,000"
         }
       ]
     },
@@ -10700,13 +10700,13 @@
           "name": "光月日和(パラレル/illust:Koushi Rokushiro)",
           "rarity": "SR/P",
           "model_number": "OP06-106",
-          "amount": "¥1,400"
+          "amount": "¥1,600"
         },
         {
           "name": "光月日和(パラレル/illust:SHIE NANAHARA)",
           "rarity": "SR/P",
           "model_number": "OP06-106",
-          "amount": "¥1,000"
+          "amount": "¥1,400"
         },
         {
           "name": "光月日和",
@@ -12504,7 +12504,7 @@
           "name": "火拳",
           "rarity": "R",
           "model_number": "OP05-019",
-          "amount": "¥50"
+          "amount": "¥10"
         }
       ]
     },
@@ -12645,7 +12645,7 @@
     },
     {
       "cardCode": "OP05-082",
-      "priceCount": 3,
+      "priceCount": 2,
       "imageCodes": [
         "OP05-082",
         "OP05-082_p1",
@@ -12664,12 +12664,6 @@
           "rarity": "R",
           "model_number": "OP05-082",
           "amount": "¥100"
-        },
-        {
-          "name": "しらほし",
-          "rarity": "R",
-          "model_number": "OP05-082",
-          "amount": "¥10"
         }
       ]
     },
@@ -14697,13 +14691,13 @@
           "name": "ジンベエ(パラレル/illust:DAI-XT.)",
           "rarity": "SR/P",
           "model_number": "OP07-045",
-          "amount": "¥800"
+          "amount": "¥500"
         },
         {
           "name": "ジンベエ",
           "rarity": "SR",
           "model_number": "OP07-045",
-          "amount": "¥100"
+          "amount": "¥50"
         },
         {
           "name": "ジンベエ(中国版/illust:S-KINOKO)",
