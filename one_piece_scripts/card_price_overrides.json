@@ -74,7 +74,7 @@
       "シャンクス(未開封/CS25-26/illust:Shishizaru)"
     ]
   },
-  "asOf": "2026-03-24",
+  "asOf": "2026-03-25",
   "multiplePrices": [
     {
       "cardCode": "ST10-006",
@@ -676,7 +676,7 @@
           "name": "モンキー・D・ルフィ(パラレル/黒背景)",
           "rarity": "SR/P",
           "model_number": "ST01-012",
-          "amount": "¥3,000"
+          "amount": "¥3,500"
         },
         {
           "name": "モンキー・D・ルフィ(foil/TREASURECRUISE)",
@@ -1679,12 +1679,6 @@
           "amount": "¥600"
         },
         {
-          "name": "ドン!!カード(未開封/NETFLIXロゴ/チョッパー)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥600"
-        },
-        {
           "name": "ドン!!カード(赤文字)",
           "rarity": "-",
           "model_number": "-",
@@ -1734,6 +1728,12 @@
         },
         {
           "name": "ドン!!カード(SDキャラ/ジンベエ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥500"
+        },
+        {
+          "name": "ドン!!カード(未開封/NETFLIXロゴ/チョッパー)",
           "rarity": "-",
           "model_number": "-",
           "amount": "¥500"
@@ -4357,7 +4357,7 @@
           "name": "モンキー・D・ルフィ(未開封/英語版/COLLEGE BASKETBALL US VOYAGE)",
           "rarity": "P",
           "model_number": "P-055",
-          "amount": "¥35,000"
+          "amount": "¥38,000"
         },
         {
           "name": "モンキー・D・ルフィ(フルアート/foil)",
@@ -4458,7 +4458,7 @@
           "name": "シャンクス(未開封/illust:otton)",
           "rarity": "L",
           "model_number": "OP09-001",
-          "amount": "¥28,000"
+          "amount": "¥30,000"
         },
         {
           "name": "シャンクス(未開封/英語版/illust:SENNSU)",
@@ -5115,7 +5115,7 @@
           "name": "モンキー・D・ルフィ(illust:otton)",
           "rarity": "L",
           "model_number": "OP09-061",
-          "amount": "¥12,000"
+          "amount": "¥20,000"
         },
         {
           "name": "モンキー・D・ルフィ(パラレル/漫画絵)",
@@ -6373,7 +6373,7 @@
           "name": "ボルサリーノ",
           "rarity": "SR",
           "model_number": "EB04-058",
-          "amount": "¥6,000"
+          "amount": "¥5,500"
         }
       ]
     },
@@ -6396,13 +6396,13 @@
           "name": "エドワード・ニューゲート(パラレル/illust:akagi)",
           "rarity": "SR/P",
           "model_number": "OP13-042",
-          "amount": "¥1,200"
+          "amount": "¥1,400"
         },
         {
           "name": "エドワード・ニューゲート",
           "rarity": "SR",
           "model_number": "OP13-042",
-          "amount": "¥30"
+          "amount": "¥50"
         }
       ]
     },
@@ -8091,7 +8091,7 @@
           "name": "ポートガス・D・エース(illust:Boichi)",
           "rarity": "P",
           "model_number": "P-028",
-          "amount": "¥1,000"
+          "amount": "¥800"
         },
         {
           "name": "ポートガス・D・エース",
@@ -10340,13 +10340,13 @@
           "name": "クロコダイル(未開封/CS26-27/illust:Akanegumo)",
           "rarity": "SEC",
           "model_number": "OP14-120",
-          "amount": "¥320,000"
+          "amount": "¥350,000"
         },
         {
           "name": "クロコダイル(CS26-27/illust:Akanegumo)",
           "rarity": "SEC",
           "model_number": "OP14-120",
-          "amount": "¥250,000"
+          "amount": "¥300,000"
         },
         {
           "name": "クロコダイル(パラレル/illust:K Akagishi)",
@@ -12625,7 +12625,7 @@
           "name": "ミス・バレンタインミキータ(ノーマル仕様/illust:NAKAuMA)",
           "rarity": "R",
           "model_number": "OP14-087",
-          "amount": "¥100"
+          "amount": "¥50"
         },
         {
           "name": "ミス・バレンタインミキータ",
@@ -13354,7 +13354,7 @@
           "name": "ポルチェ",
           "rarity": "SR",
           "model_number": "OP07-072",
-          "amount": "¥30"
+          "amount": "¥100"
         }
       ]
     },
@@ -13820,7 +13820,7 @@
           "name": "ゴルゴン三姉妹(illust:SHIE NANAHARA)",
           "rarity": "UC",
           "model_number": "OP14-105",
-          "amount": "¥500"
+          "amount": "¥300"
         },
         {
           "name": "ゴルゴン三姉妹",
@@ -16254,7 +16254,7 @@
           "name": "菊之丞(illust:Sunohara)",
           "rarity": "R",
           "model_number": "OP14-023",
-          "amount": "¥100"
+          "amount": "¥50"
         },
         {
           "name": "菊之丞",
@@ -16806,7 +16806,7 @@
           "name": "ナミ(★無し/illust:otton)",
           "rarity": "L",
           "model_number": "OP11-041",
-          "amount": "¥8,000"
+          "amount": "¥8,500"
         },
         {
           "name": "ナミ(パラレル/★有り/illust:otton)",
@@ -16828,13 +16828,13 @@
           "name": "エレクトリカルルナ(illust:Hashimoto Q)",
           "rarity": "R",
           "model_number": "OP08-036",
-          "amount": "¥800"
+          "amount": "¥1,000"
         },
         {
           "name": "エレクトリカルルナ",
           "rarity": "R",
           "model_number": "OP08-036",
-          "amount": "¥50"
+          "amount": "¥100"
         }
       ]
     },
@@ -17058,7 +17058,7 @@
           "name": "ユースタス・キッド(illust:DAI-XT.)",
           "rarity": "R",
           "model_number": "OP14-014",
-          "amount": "¥50"
+          "amount": "¥30"
         },
         {
           "name": "ユースタス・キッド",
@@ -17991,12 +17991,6 @@
           "amount": "¥600"
         },
         {
-          "name": "ドン!!カード(未開封/NETFLIXロゴ/チョッパー)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥600"
-        },
-        {
           "name": "ドン!!カード(赤文字)",
           "rarity": "-",
           "model_number": "-",
@@ -18046,6 +18040,12 @@
         },
         {
           "name": "ドン!!カード(SDキャラ/ジンベエ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥500"
+        },
+        {
+          "name": "ドン!!カード(未開封/NETFLIXロゴ/チョッパー)",
           "rarity": "-",
           "model_number": "-",
           "amount": "¥500"
@@ -20183,7 +20183,6 @@
     "ST08-012",
     "ST08-013",
     "ST08-014",
-    "ST08-015",
     "ST09-002",
     "ST09-003",
     "ST09-004",
@@ -20198,7 +20197,6 @@
     "ST09-015",
     "ST10-007",
     "ST10-009",
-    "ST10-011",
     "ST10-012",
     "ST10-014",
     "ST10-015",
@@ -20375,11 +20373,11 @@
       "count": 11
     },
     {
-      "series": "ST08",
-      "count": 11
+      "series": "ST02",
+      "count": 10
     },
     {
-      "series": "ST02",
+      "series": "ST08",
       "count": 10
     },
     {
@@ -20388,7 +20386,7 @@
     },
     {
       "series": "ST10",
-      "count": 8
+      "count": 7
     },
     {
       "series": "ST03",
@@ -20466,7 +20464,7 @@
   "cardsWithoutPricesRarityBreakdown": [
     {
       "rarity": "C",
-      "count": 886
+      "count": 884
     },
     {
       "rarity": "UC",
