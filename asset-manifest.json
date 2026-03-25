@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.dcda779a.css",
+    "main.js": "/static/js/main.961beac6.js",
+    "static/js/453.22e1b67f.chunk.js": "/static/js/453.22e1b67f.chunk.js",
+    "index.html": "/index.html",
+    "static/media/one-piece-card-game-logo.svg": "/static/media/one-piece-card-game-logo.f0645971b438c61bcd579c3141981543.svg",
+    "main.dcda779a.css.map": "/static/css/main.dcda779a.css.map",
+    "main.961beac6.js.map": "/static/js/main.961beac6.js.map",
+    "453.22e1b67f.chunk.js.map": "/static/js/453.22e1b67f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dcda779a.css",
+    "static/js/main.961beac6.js"
+  ]
+}
