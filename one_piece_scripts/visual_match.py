@@ -105,21 +105,45 @@ def match_worker(off_img_path, cr_entries_with_paths):
             
     return best_inliers, best_confidence, best_cr
 
+def atomic_write_json(file_path, data, **kwargs):
+    """Write data to a temporary file and rename it to file_path to ensure atomicity."""
+    tmp_path = str(file_path) + '.tmp'
+    try:
+        with open(tmp_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, **kwargs)
+        os.replace(tmp_path, file_path)
+    except Exception as exc:
+        print(f'ERROR: Failed to write to {file_path}: {exc}')
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
 def main():
     if not LATEST_PRICES_JSON.exists():
         print("Prices not found. Run scraper first.")
         return
 
+    load_success = True
     with open(LATEST_PRICES_JSON, 'r', encoding='utf-8') as f:
         cr_prices = json.load(f)
     with open(CARDS_JSON, 'r', encoding='utf-8') as f:
         official_cards = json.load(f)
     if PRICE_OVERRIDES_JSON.exists():
-        with open(PRICE_OVERRIDES_JSON, 'r', encoding='utf-8') as f:
-            overrides_data = json.load(f)
+        try:
+            with open(PRICE_OVERRIDES_JSON, 'r', encoding='utf-8') as f:
+                overrides_data = json.load(f)
+        except (json.JSONDecodeError, OSError) as exc:
+            print(f"ERROR: Failed to load {PRICE_OVERRIDES_JSON}: {exc}")
+            overrides_data = {}
+            load_success = False
     else:
         overrides_data = {}
     
+    if not load_success:
+        print(f"SKIPPING write-back to {PRICE_OVERRIDES_JSON} to avoid data loss.")
+        # We can still continue with matching if we want, but we won't save.
+        # However, it's probably better to abort if we can't load the existing mappings.
+        return
+
     mappings = overrides_data.get('mappings', {})
     confidence_mappings = overrides_data.get('confidence_mappings', {})
     
@@ -224,8 +248,7 @@ def main():
     if matched_new > 0:
         overrides_data['mappings'] = mappings
         overrides_data['confidence_mappings'] = confidence_mappings
-        with open(PRICE_OVERRIDES_JSON, 'w', encoding='utf-8') as f:
-            json.dump(overrides_data, f, ensure_ascii=False, indent=2)
+        atomic_write_json(PRICE_OVERRIDES_JSON, overrides_data, indent=2)
         print(f"\nAdded {matched_new} new mappings.")
     else:
         print("\nNo new matches found.")
