@@ -114,8 +114,11 @@ def main():
         cr_prices = json.load(f)
     with open(CARDS_JSON, 'r', encoding='utf-8') as f:
         official_cards = json.load(f)
-    with open(PRICE_OVERRIDES_JSON, 'r', encoding='utf-8') as f:
-        overrides_data = json.load(f)
+    if PRICE_OVERRIDES_JSON.exists():
+        with open(PRICE_OVERRIDES_JSON, 'r', encoding='utf-8') as f:
+            overrides_data = json.load(f)
+    else:
+        overrides_data = {}
     
     mappings = overrides_data.get('mappings', {})
     confidence_mappings = overrides_data.get('confidence_mappings', {})
