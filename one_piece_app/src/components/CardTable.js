@@ -414,12 +414,13 @@ const CardTable = ({ data }) => {
                     >
                       <img
                         src={
-                          (item.Picture.includes('onepiece-cardgame.com') || item.Picture.includes('en.onepiece-cardgame.com'))
-                            ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`
+                          (item.Picture.includes('onepiece-cardgame.com'))
+                            ? `https://images.weserv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`
                             : item.Picture
                         }
                         alt={item.Character}
                         loading="lazy"
+                        crossOrigin="anonymous"
                         referrerPolicy="no-referrer"
                         style={{
                           width: '100%',
@@ -432,16 +433,16 @@ const CardTable = ({ data }) => {
                           // Don't loop if we already hit the final placeholder
                           if (currentSrc.includes('placeholder')) return;
                           
-                          // Fallback chain for official images (trying to be inclusive of all subdomains)
+                          // Fallback chain for official images
                           if (item.Picture.includes('onepiece-cardgame.com')) {
                             const cleanUrl = item.Picture.split('?')[0];
                             const encodedUrl = encodeURIComponent(cleanUrl);
                             
-                            if (currentSrc.includes('wsrv.nl')) {
-                              // If wsrv.nl failed, try images.weserv.nl
-                              e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
-                            } else if (currentSrc.includes('weserv.nl')) {
-                              // If both weserv proxies failed, try a CORS proxy as a last resort
+                            if (currentSrc.includes('images.weserv.nl')) {
+                              // If images.weserv.nl failed, try wsrv.nl (different server/config)
+                              e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
+                            } else if (currentSrc.includes('wsrv.nl')) {
+                              // If both weserv proxies failed, try a CORS proxy
                               e.target.src = `https://corsproxy.io/?${encodedUrl}`;
                             } else {
                               // Default failure
