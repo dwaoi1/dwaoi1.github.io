@@ -162,8 +162,7 @@ def build_price_history(history_by_code, mappings=None):
     price_history = {}
 
     # Pre-process mappings: group all mapped names/URLs by their base card code.
-    # This allows us to exclude these specifically-mapped variant entries from the
-    # shared/aggregate base-card price history to avoid price pollution.
+    # This allows us to exclude variant entries from the base-card history.
     mapped_patterns_by_base = {}
     if mappings:
         for img_code, pattern in mappings.items():
@@ -172,26 +171,45 @@ def build_price_history(history_by_code, mappings=None):
                 continue
             base_code = m.group(1)
             patterns = pattern if isinstance(pattern, list) else [pattern]
-            mapped_patterns_by_base.setdefault(base_code, set()).update(patterns)
+            # Use a list of (image_code, pattern) so we can distinguish base from variant
+            mapped_patterns_by_base.setdefault(base_code, []).extend((img_code, p) for p in patterns)
 
     for code, date_map in history_by_code.items():
         history = []
-        # Patterns to exclude for THIS base code because they are specifically mapped
-        # to a variant image (e.g. OP01-016_p1).
-        exclude_patterns = mapped_patterns_by_base.get(code, set())
+        
+        # Patterns belonging to variants of this code (e.g. OP01-016_p1)
+        # which must be excluded from the base card history.
+        all_mappings = mapped_patterns_by_base.get(code, [])
+        exclude_patterns = [p for ic, p in all_mappings if ic != code]
         exclude_names = frozenset(p for p in exclude_patterns if not p.startswith('http'))
         exclude_images = frozenset(p for p in exclude_patterns if p.startswith('http'))
+        
+        # Patterns belonging specifically to the base card (e.g. OP01-016)
+        # which should be included even if they appear in the exclusion list elsewhere.
+        include_patterns = [p for ic, p in all_mappings if ic == code]
+        include_names = frozenset(p for p in include_patterns if not p.startswith('http'))
+        include_images = frozenset(p for p in include_patterns if p.startswith('http'))
 
         for date, entries in date_map.items():
-            # If we have mapped variants for this code, filter the entries to only include 
-            # those NOT in the exclusion set.
-            current_entries = entries
-            if exclude_patterns:
-                current_entries = [
-                    e for e in entries 
-                    if (e.get('name') or '') not in exclude_names 
-                    and (e.get('image') or '') not in exclude_images
-                ]
+            # Filter entries:
+            # 1. ALWAYS exclude if specifically mapped to a variant (_p1 etc)
+            # 2. ALWAYS include if specifically mapped to the base code
+            # 3. If no mappings exist for this card at all, include everything (default)
+            current_entries = []
+            for e in entries:
+                name = e.get('name') or ''
+                image = e.get('image') or ''
+                
+                # Check if this entry is a known variant
+                is_variant = name in exclude_names or image in exclude_images
+                # Check if this entry is the known base
+                is_base = name in include_names or image in include_images
+                
+                if is_base:
+                    current_entries.append(e)
+                elif not is_variant:
+                    # Not a known variant, so we keep it in the base pool
+                    current_entries.append(e)
 
             if not current_entries:
                 continue
@@ -264,10 +282,10 @@ def build_price_history(history_by_code, mappings=None):
 def load_price_overrides():
     """Load manual image-code → cardrush-name-pattern mappings and confidence scores.
 
-    Returns a tuple of (mappings, confidence_mappings).
+    Returns a tuple of (mappings, confidence_mappings, success).
     """
     if not os.path.isfile(PRICE_OVERRIDES_JSON):
-        return {}, {}
+        return {}, {}, True
     try:
         with open(PRICE_OVERRIDES_JSON, encoding='utf-8') as f:
             data = json.load(f)
@@ -275,11 +293,11 @@ def load_price_overrides():
         confidences = data.get('confidence_mappings', {})
         if not isinstance(mappings, dict):
             print('WARNING: card_price_overrides.json "mappings" is not a dict, skipping')
-            return {}, {}
-        return mappings, confidences
+            return {}, {}, False
+        return mappings, confidences, True
     except (json.JSONDecodeError, OSError) as exc:
-        print(f'WARNING: Failed to load {PRICE_OVERRIDES_JSON}: {exc}')
-        return {}, {}
+        print(f'ERROR: Failed to load {PRICE_OVERRIDES_JSON}: {exc}')
+        return {}, {}, False
 
 
 def build_image_code_history(history_by_code, price_files, overrides, confidence_mappings):
@@ -587,6 +605,19 @@ def build_unmatched(history_by_code, price_files, code_to_rarities, code_to_imag
     }
 
 
+def atomic_write_json(file_path, data, **kwargs):
+    """Write data to a temporary file and rename it to file_path to ensure atomicity."""
+    tmp_path = file_path + '.tmp'
+    try:
+        with open(tmp_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, **kwargs)
+        os.replace(tmp_path, file_path)
+    except Exception as exc:
+        print(f'ERROR: Failed to write to {file_path}: {exc}')
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -604,7 +635,7 @@ def main():
     # Apply per-image-code overrides from card_price_overrides.json.
     # We load them early so that build_price_history can exclude mapped variant names
     # from the shared/aggregate base-card price entries.
-    mappings, confidence_mappings = load_price_overrides()
+    mappings, confidence_mappings, initial_load_success = load_price_overrides()
     price_history = build_price_history(history_by_code, mappings)
 
     if mappings:
@@ -613,8 +644,7 @@ def main():
         price_history.update(image_code_history)
         print(f'  Added {len(image_code_history)} image-code history entries')
 
-    with open(PRICE_DATA_OUT, 'w', encoding='utf-8') as f:
-        json.dump(price_history, f, ensure_ascii=False)
+    atomic_write_json(PRICE_DATA_OUT, price_history)
     print(f'Wrote {PRICE_DATA_OUT} ({len(price_history)} card codes)')
 
     code_to_rarities, code_to_image_codes = build_rarity_map()
@@ -623,9 +653,9 @@ def main():
     unmatched = build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes)
 
     # Load the existing card_price_overrides.json to preserve '_comment' and 'multiplePrices'.
-    # Use the already-validated 'mappings' dict (avoids a second type-check).
     existing_comment = None
     existing_multiple_prices = []
+    reload_success = True
     if os.path.isfile(PRICE_OVERRIDES_JSON):
         try:
             with open(PRICE_OVERRIDES_JSON, encoding='utf-8') as f:
@@ -633,8 +663,24 @@ def main():
             existing_comment = existing.get('_comment')
             raw_multiple_prices = existing.get('multiplePrices', [])
             existing_multiple_prices = raw_multiple_prices if isinstance(raw_multiple_prices, list) else []
+            
+            # RE-LOAD mappings and confidence_mappings from disk to ensure we don't 
+            # overwrite any updates made (e.g. by visual_match.py) while this script 
+            # was processing the price files.
+            disk_mappings = existing.get('mappings', {})
+            if isinstance(disk_mappings, dict):
+                mappings.update(disk_mappings)
+            
+            disk_confidences = existing.get('confidence_mappings', {})
+            if isinstance(disk_confidences, dict):
+                confidence_mappings.update(disk_confidences)
         except (json.JSONDecodeError, OSError) as exc:
-            print(f'WARNING: Failed to read existing {PRICE_OVERRIDES_JSON}: {exc}')
+            print(f'ERROR: Failed to re-load {PRICE_OVERRIDES_JSON}: {exc}')
+            reload_success = False
+
+    if not initial_load_success or not reload_success:
+        print(f'SKIPPING write-back to {PRICE_OVERRIDES_JSON} to avoid potential data loss due to load errors.')
+        return
 
     # 'mappings' is already validated; reuse it here.
     # Merge multiplePrices incrementally: add new cards, update existing ones,
@@ -665,8 +711,7 @@ def main():
     combined['cardsWithoutPricesBreakdown'] = unmatched['cardsWithoutPricesBreakdown']
     combined['cardsWithoutPricesRarityBreakdown'] = unmatched['cardsWithoutPricesRarityBreakdown']
 
-    with open(PRICE_OVERRIDES_JSON, 'w', encoding='utf-8') as f:
-        json.dump(combined, f, ensure_ascii=False, indent=2)
+    atomic_write_json(PRICE_OVERRIDES_JSON, combined, indent=2)
     print(f'Wrote {PRICE_OVERRIDES_JSON}')
     print(f'  Multiple prices: {len(merged_multiple_prices)} ({matched_count} matched at bottom)')
     print(f'  Prices without cards: {len(unmatched["pricesWithoutCards"])}')
