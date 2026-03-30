@@ -420,7 +420,6 @@ const CardTable = ({ data }) => {
                         }
                         alt={item.Character}
                         loading="lazy"
-                        crossOrigin="anonymous"
                         referrerPolicy="no-referrer"
                         style={{
                           width: '100%',
@@ -430,22 +429,31 @@ const CardTable = ({ data }) => {
                         }}
                         onError={(e) => {
                           const currentSrc = e.target.src;
-                          // Don't loop if we already hit the final placeholder
                           if (currentSrc.includes('placeholder')) return;
                           
-                          // Fallback chain for official images
+                          const historyEntry = priceHistory[item.cardId];
+                          const crFallback = historyEntry?.cardrushImage;
+
                           if (item.Picture.includes('onepiece-cardgame.com')) {
                             const cleanUrl = item.Picture.split('?')[0];
                             const encodedUrl = encodeURIComponent(cleanUrl);
                             
                             if (currentSrc.includes('images.weserv.nl')) {
-                              // If images.weserv.nl failed, try wsrv.nl (different server/config)
                               e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
                             } else if (currentSrc.includes('wsrv.nl')) {
-                              // If both weserv proxies failed, try a CORS proxy
-                              e.target.src = `https://corsproxy.io/?${encodedUrl}`;
+                              // If proxies failed, try the Cardrush image if we have it
+                              if (crFallback) {
+                                e.target.src = crFallback;
+                              } else {
+                                e.target.src = `https://corsproxy.io/?${encodedUrl}`;
+                              }
+                            } else if (currentSrc.includes('corsproxy.io')) {
+                               if (crFallback) {
+                                 e.target.src = crFallback;
+                               } else {
+                                 e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                               }
                             } else {
-                              // Default failure
                               e.target.src = 'https://via.placeholder.com/150?text=No+Image';
                             }
                           } else {

@@ -285,12 +285,14 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               }
               alt={item.Character}
               className="price-modal-card-image-large"
-              crossOrigin="anonymous"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 const currentSrc = e.target.src;
                 if (currentSrc.includes('placeholder')) return;
                 
+                const historyEntry = priceHistory[item.cardId];
+                const crFallback = historyEntry?.cardrushImage;
+
                 if (item.Picture.includes('onepiece-cardgame.com')) {
                   const cleanUrl = item.Picture.split('?')[0];
                   const encodedUrl = encodeURIComponent(cleanUrl);
@@ -298,7 +300,17 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                   if (currentSrc.includes('images.weserv.nl')) {
                     e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
                   } else if (currentSrc.includes('wsrv.nl')) {
-                    e.target.src = `https://corsproxy.io/?${encodedUrl}`;
+                    if (crFallback) {
+                      e.target.src = crFallback;
+                    } else {
+                      e.target.src = `https://corsproxy.io/?${encodedUrl}`;
+                    }
+                  } else if (currentSrc.includes('corsproxy.io')) {
+                    if (crFallback) {
+                      e.target.src = crFallback;
+                    } else {
+                      e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                    }
                   } else {
                     e.target.src = 'https://via.placeholder.com/150?text=No+Image';
                   }

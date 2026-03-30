@@ -15,13 +15,30 @@ This document defines the foundational mandates and technical standards for the 
 
 ## Frontend Standards
 
-### Image Proxying
-- **Mandate:** Images sourced from official domains (e.g., `onepiece-cardgame.com` and its subdomains) **MUST** be proxied via `wsrv.nl` (or a similar service) to bypass hotlink protection.
+### Image Proxying & Fallbacks
+- **Mandate:** Images sourced from official domains (e.g., `onepiece-cardgame.com` and its subdomains) **MUST** be proxied via `wsrv.nl` or `images.weserv.nl`.
+- **Mandate:** All card images **MUST** implement a fallback chain that includes the `cardrushImage` field from the price history data if the official/proxied image fails to load.
+- **Mandate:** **DO NOT** use `crossOrigin="anonymous"` on images from official domains, as it can trigger CORS/CORP blocking even through proxies.
 - **Pattern:**
   ```javascript
-  const proxiedUrl = `https://wsrv.nl/?url=${encodeURIComponent(originalUrl.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
+  // Default src uses primary proxy
+  src={`https://images.weserv.nl/?url=${encodeURIComponent(originalUrl.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`}
+  
+  // onError handles fallback to secondary proxy and then Cardrush sample image
+  onError={(e) => {
+    const currentSrc = e.target.src;
+    const crFallback = priceHistory[item.cardId]?.cardrushImage;
+    
+    if (currentSrc.includes('images.weserv.nl')) {
+      e.target.src = `https://wsrv.nl/?url=${encodedUrl}&...`;
+    } else if (currentSrc.includes('wsrv.nl')) {
+      if (crFallback) e.target.src = crFallback;
+      else e.target.src = 'https://corsproxy.io/?...';
+    }
+    // ... continue chain to placeholder
+  }
   ```
-- **Rationale:** Direct requests to official image servers often result in 403 Forbidden or broken images in a web browser environment.
+- **Rationale:** Direct requests to official image servers are frequently blocked by CORP (Cross-Origin Resource Policy) and hotlink protection. Cardrush images provide a reliable community-hosted fallback.
 
 ## Maintenance Guidelines
 
