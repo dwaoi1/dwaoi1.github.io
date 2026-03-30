@@ -413,7 +413,11 @@ const CardTable = ({ data }) => {
                       }}
                     >
                       <img
-                        src={item.Picture}
+                        src={
+                          item.Picture.includes('onepiece-cardgame.com') 
+                            ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`
+                            : item.Picture
+                        }
                         alt={item.Character}
                         loading="lazy"
                         referrerPolicy="no-referrer"
@@ -425,15 +429,7 @@ const CardTable = ({ data }) => {
                         }}
                         onError={(e) => {
                           const currentSrc = e.target.src;
-                          if (currentSrc.includes('placeholder')) return;
-                          
-                          // If it's a direct link to the official site and not already proxied,
-                          // try proxying it via wsrv.nl to bypass hotlink protection.
-                          // We also strip the version token (?...) to avoid potential issues.
-                          if (currentSrc.includes('onepiece-cardgame.com') && !currentSrc.includes('wsrv.nl')) {
-                            const cleanSrc = currentSrc.split('?')[0];
-                            e.target.src = `https://wsrv.nl/?url=${encodeURIComponent(cleanSrc)}&default=https://via.placeholder.com/150?text=No+Image`;
-                          } else if (!currentSrc.includes('placeholder')) {
+                          if (!currentSrc.includes('placeholder')) {
                             e.target.src = 'https://via.placeholder.com/150?text=No+Image';
                           }
                         }}
