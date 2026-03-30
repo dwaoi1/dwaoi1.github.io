@@ -32,6 +32,12 @@ const CardTable = ({ data }) => {
     }
   };
 
+  const getImageCode = (url) => {
+    const filename = getCardFilename(url);
+    if (!filename) return '';
+    return filename.split('.')[0];
+  };
+
   const getSeriesCode = (cardCode) => (cardCode ? cardCode.split('-')[0] : '');
 
   const formatSeriesLabel = (seriesCode) => {
@@ -121,16 +127,22 @@ const CardTable = ({ data }) => {
       const cardCode = getCardCode(item.Picture);
       const seriesCode = getSeriesCode(cardCode);
       const cardId = getCardFilename(item.Picture);
+      const imageCode = getImageCode(item.Picture);
+
+      const historyEntry = priceHistory[imageCode] || priceHistory[cardCode];
+      const confidence = historyEntry ? historyEntry.confidence : undefined;
+
       return {
         ...item,
         cardCode,
         cardId,
         seriesCode,
+        confidence,
         seriesLabel: formatSeriesLabel(seriesCode),
         normalizedCharacter: normalizeCharacter(item.Character),
       };
     });
-  }, [data]);
+  }, [data, priceHistory]);
 
   const wishlistSet = useMemo(() => new Set(wishlist), [wishlist]);
   const cardIdToCharacter = useMemo(() => {
@@ -428,6 +440,11 @@ const CardTable = ({ data }) => {
                         }}
                       />
                     </button>
+                    {item.confidence !== undefined && (
+                      <div className="confidence-badge" title={`Match confidence: ${item.confidence}%`}>
+                        {Math.round(item.confidence)}%
+                      </div>
+                    )}
                     <button
                       type="button"
                       className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}

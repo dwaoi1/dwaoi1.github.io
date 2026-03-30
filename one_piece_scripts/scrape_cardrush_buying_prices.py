@@ -1,111 +1,69 @@
 import argparse
 import json
 import os
-import random
 import sys
 import time
 from typing import Optional
 
-# Import requests from curl_cffi instead of the standard requests library
 from curl_cffi import requests
 from bs4 import BeautifulSoup
 
-BASE_URL = "https://cardrush.media/onepiece/buying_prices?displayMode=リスト&limit=10000&name=&rarity=&model_number=&amount=&page=1&sort%5Bkey%5D=amount&sort%5Border%5D=desc&associations%5B%5D=ocha_product&to_json_option%5Bexcept%5D%5B%5D=original_image_source&to_json_option%5Bexcept%5D%5B%5D=created_at&to_json_option%5Binclude%5D%5Bocha_product%5D%5Bonly%5D%5B%5D=id&to_json_option%5Binclude%5D%5Bocha_product%5D%5Bmethods%5D%5B%5D=image_source&display_category%5B%5D=最新弾&display_category%5B%5D=通常弾"
+# Cardrush uses Next.js, and the data is embedded in a __NEXT_DATA__ script tag.
+# Using displayMode=リスト&limit=10000 ensures we get all prices in one go.
+BASE_URL = "https://cardrush.media/onepiece/buying_prices?displayMode=リスト&limit=10000"
 
 def build_human_like_headers() -> dict[str, str]:
-    # Use exact headers that match Chrome 124 behavior
     return {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
         "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
-        "sec-ch-ua": '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": '"Windows"',
-        "sec-fetch-dest": "document",
-        "sec-fetch-mode": "navigate",
-        "sec-fetch-site": "none",
-        "sec-fetch-user": "?1",
-        "upgrade-insecure-requests": "1"
     }
 
-def parse_price_table_from_html(html_text: str) -> list[dict[str, str]]:
-    soup = BeautifulSoup(html_text, "html.parser")
-    rows = soup.select("table.PriceTable tbody tr")
-    parsed_rows: list[dict[str, str]] = []
+def scrape_cardrush_data(url: str, timeout: int) -> list[dict]:
+    # Use impersonate to bypass potential TLS fingerprinting if needed
+    # If curl_cffi is missing in some environments, fallback to requests
+    try:
+        from curl_cffi import requests as c_requests
+        session = c_requests.Session(impersonate="chrome124")
+    except ImportError:
+        import requests as c_requests
+        session = c_requests.Session()
 
-    for row in rows:
-        name_cell = row.select_one("td.name")
-        rarity_cell = row.select_one("td.rarity")
-        model_number_cell = row.select_one("td.model_number")
-        amount_cell = row.select_one("td.amount")
-
-        if not (name_cell and rarity_cell and model_number_cell and amount_cell):
-            continue
-
-        parsed_rows.append(
-            {
-                "name": name_cell.get_text(strip=True),
-                "rarity": rarity_cell.get_text(strip=True),
-                "model_number": model_number_cell.get_text(strip=True),
-                "amount": amount_cell.get_text(strip=True),
-            }
-        )
-    return parsed_rows
-
-class AccessBlockedError(RuntimeError):
-    pass
-
-def scrape_initial_table(
-    base_url: str,
-    timeout: int,
-    wait_seconds: float,
-) -> list[dict[str, str]]:
-    
-    # Use impersonate="chrome124" to generate the correct TLS fingerprint and HTTP/2 settings
-    session = requests.Session(impersonate="chrome124")
     headers = build_human_like_headers()
     session.headers.update(headers)
-    print(f"Using User-Agent: {headers['User-Agent']}")
-
-    homepage_url = "https://cardrush.media/"
-    try:
-        # Hitting the homepage first helps establish session cookies naturally
-        homepage_response = session.get(homepage_url, timeout=timeout)
-        print(
-            "Prefetch homepage status="
-            f"{homepage_response.status_code} "
-            f"server={homepage_response.headers.get('server', 'unknown')} "
-        )
-    except Exception as exc:
-        raise AccessBlockedError(f"Connection failed: {exc}") from exc
-
-    try:
-        response = session.get(base_url, timeout=timeout)
-    except Exception as exc:
-        raise AccessBlockedError(f"Connection failed: {exc}") from exc
-
-    print(f"Fetch status={response.status_code}")
-
-    if response.status_code == 403:
-        snippet = response.text[:400].replace("\n", " ")
-        raise AccessBlockedError(
-            f"Cardrush returned 403 Forbidden. snippet={snippet}"
-        )
-        
+    
+    # Hit homepage first for cookies
+    session.get("https://cardrush.media/", timeout=timeout)
+    
+    response = session.get(url, timeout=timeout)
     response.raise_for_status()
     
-    if wait_seconds > 0:
-        print(f"Waiting {wait_seconds} seconds before parsing response...")
-        time.sleep(wait_seconds)
+    soup = BeautifulSoup(response.text, "html.parser")
+    script = soup.find("script", id="__NEXT_DATA__")
+    if not script:
+        raise RuntimeError("Could not find __NEXT_DATA__ script tag")
         
-    return parse_price_table_from_html(response.text)
+    data = json.loads(script.string)
+    # The buying prices are typically in props.pageProps.buyingPrices
+    buying_prices = data.get("props", {}).get("pageProps", {}).get("buyingPrices", [])
+    
+    results = []
+    for bp in buying_prices:
+        # Extract the fields we need
+        ocha_product = bp.get("ocha_product", {})
+        results.append({
+            "name": bp.get("name", ""),
+            "rarity": bp.get("rarity", ""),
+            "model_number": bp.get("model_number", ""),
+            "amount": bp.get("amount", ""),
+            "image": ocha_product.get("image_source", "")
+        })
+    return results
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Scrape initial Cardrush One Piece buying prices table")
+    parser = argparse.ArgumentParser(description="Scrape Cardrush One Piece buying prices with images")
     parser.add_argument("--output", default="one_piece_scripts/cardrush_buying_prices.json")
-    parser.add_argument("--base-url", default=BASE_URL)
     parser.add_argument("--timeout", type=int, default=60)
-    parser.add_argument("--wait-seconds", type=float, default=2, help="Seconds to wait after fetch")
     return parser.parse_args()
 
 def main() -> None:
@@ -115,45 +73,13 @@ def main() -> None:
         os.makedirs(output_dir, exist_ok=True)
 
     try:
-        rows = scrape_initial_table(args.base_url, args.timeout, args.wait_seconds)
-    except AccessBlockedError as exc:
-        print(str(exc), file=sys.stderr)
-        raise SystemExit(3) from exc
-
-    with open(args.output, "w", encoding="utf-8") as file_obj:
-        json.dump(rows, file_obj, ensure_ascii=False, indent=2)
-
-    print(f"Saved {len(rows)} rows to {args.output}")
-    target_queries = [
-        "モンキー・D・ルフィ(パラレル/ペンキ背景/漫画絵) OP05-119",
-        "モンキー・D・ルフィ(illust:otton) ST10-006",
-        "ボア・ハンコック(パラレル/illust:PENEKOR) OP14-112",
-        "ボア・ハンコック(illust:Takashi Kojima) OP02-059",
-        "ポートガス・D・エース(パラレル/SP/黒背景/illust:otton) ST13-011[OP12]",
-        "サンジ(illust:Koushi Rokushiro) OP10-005",
-        "ロロノア・ゾロ(修正後/ワノ国/麦わらの一味) P-042"
-    ]
-
-    print("\n--- Specific Cards Preview ---")
-    for query in target_queries:
-        # Remove normal and full-width Japanese spaces for safer matching
-        safe_query = query.replace(" ", "").replace("　", "")
-        
-        found_row = next(
-            (row for row in rows 
-             if row['name'].replace(" ", "").replace("　", "") in safe_query 
-             and row['model_number'] in query), 
-            None
-        )
-        
-        if found_row:
-            print(
-                f"✅ Found: {found_row['name']} | rarity={found_row['rarity']} | "
-                f"model={found_row['model_number']} | amount={found_row['amount']}"
-            )
-        else:
-            print(f"❌ Not found in current prices: {query}")
-
+        rows = scrape_cardrush_data(BASE_URL, args.timeout)
+        with open(args.output, "w", encoding="utf-8") as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+        print(f"Saved {len(rows)} rows to {args.output}")
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
