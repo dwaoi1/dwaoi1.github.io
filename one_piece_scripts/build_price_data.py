@@ -233,46 +233,31 @@ def build_price_history(history_by_code):
 # ---------------------------------------------------------------------------
 
 def load_price_overrides():
-    """Load manual image-code → cardrush-name-pattern mappings.
+    """Load manual image-code → cardrush-name-pattern mappings and confidence scores.
 
-    Returns a dict mapping image_code (e.g. 'OP01-051_p1') to a name substring
-    (e.g. 'パラレル/illust:S-KINOKO').  Returns an empty dict if the file is
-    missing or malformed.
+    Returns a tuple of (mappings, confidence_mappings).
     """
     if not os.path.isfile(PRICE_OVERRIDES_JSON):
-        return {}
+        return {}, {}
     try:
         with open(PRICE_OVERRIDES_JSON, encoding='utf-8') as f:
             data = json.load(f)
         mappings = data.get('mappings', {})
+        confidences = data.get('confidence_mappings', {})
         if not isinstance(mappings, dict):
             print('WARNING: card_price_overrides.json "mappings" is not a dict, skipping')
-            return {}
-        return mappings
+            return {}, {}
+        return mappings, confidences
     except (json.JSONDecodeError, OSError) as exc:
         print(f'WARNING: Failed to load {PRICE_OVERRIDES_JSON}: {exc}')
-        return {}
+        return {}, {}
 
 
-def build_image_code_history(history_by_code, price_files, overrides):
+def build_image_code_history(history_by_code, price_files, overrides, confidence_mappings):
     """Build price-history entries keyed by image code using manual overrides.
 
-    For each entry in *overrides* (image_code -> name_pattern), finds the
-    matching Cardrush price entries for the base card code on each date and
-    builds a per-day history entry.  Matched entries are classified into
-    sealed/goldText/parallel sub-groups (the same logic used in
-    build_price_history) so that the frontend can show variant toggles even
-    for override-specific price histories.
-
-    *name_pattern* may be a single string or a list of strings.  Every value
-    is matched using exact equality against the Cardrush entry 'name' field,
-    so each string must be the complete, verbatim Cardrush name.  Using a list
-    lets you group multiple Cardrush entries under one image code (e.g. the
-    regular and sealed variants of a Championship card).
-
-    Returns a dict that can be merged directly into the main price_history dict.
-    The image code keys (e.g. 'OP01-051_p1') take precedence over shared card
-    code keys in the frontend lookup.
+    Includes the confidence score in the root of each image-code history entry
+    if available in *confidence_mappings*.
     """
     if not overrides:
         return {}
@@ -385,6 +370,8 @@ def build_image_code_history(history_by_code, price_files, overrides):
         history.sort(key=lambda x: x['date'])
         if history:
             image_history[image_code] = {'history': history}
+            if image_code in confidence_mappings:
+                image_history[image_code]['confidence'] = confidence_mappings[image_code]
             pat_display = (name_pattern if isinstance(name_pattern, str)
                            else f'[{", ".join(repr(p) for p in name_pattern)}]')
             print(f'  Override: {image_code} -> {len(history)} date entries (patterns: {pat_display})')
@@ -582,10 +569,10 @@ def main():
     price_history = build_price_history(history_by_code)
 
     # Apply per-image-code overrides from card_price_overrides.json
-    overrides = load_price_overrides()
-    if overrides:
-        print(f'Loaded {len(overrides)} price override(s), building per-image-code histories...')
-        image_code_history = build_image_code_history(history_by_code, price_files, overrides)
+    mappings, confidence_mappings = load_price_overrides()
+    if mappings:
+        print(f'Loaded {len(mappings)} price override(s), building per-image-code histories...')
+        image_code_history = build_image_code_history(history_by_code, price_files, mappings, confidence_mappings)
         price_history.update(image_code_history)
         print(f'  Added {len(image_code_history)} image-code history entries')
 
@@ -599,7 +586,7 @@ def main():
     unmatched = build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes)
 
     # Load the existing card_price_overrides.json to preserve '_comment' and 'multiplePrices'.
-    # Use the already-validated 'overrides' dict for mappings (avoids a second type-check).
+    # Use the already-validated 'mappings' dict (avoids a second type-check).
     existing_comment = None
     existing_multiple_prices = []
     if os.path.isfile(PRICE_OVERRIDES_JSON):
@@ -612,17 +599,17 @@ def main():
         except (json.JSONDecodeError, OSError) as exc:
             print(f'WARNING: Failed to read existing {PRICE_OVERRIDES_JSON}: {exc}')
 
-    # 'overrides' is already validated by load_price_overrides(); reuse it here.
+    # 'mappings' is already validated; reuse it here.
     # Merge multiplePrices incrementally: add new cards, update existing ones,
     # and move matched entries (image code present in mappings) to the bottom.
     merged_multiple_prices = merge_multiple_prices(
         existing_multiple_prices,
         unmatched['multiplePrices'],
-        overrides,
+        mappings,
     )
     matched_count = sum(
         1 for item in merged_multiple_prices
-        if is_multiple_prices_matched(item, overrides)
+        if is_multiple_prices_matched(item, mappings)
     )
     print(f'  Multiple prices (merged): {len(merged_multiple_prices)} total, '
           f'{matched_count} matched (moved to bottom)')
@@ -630,7 +617,8 @@ def main():
     combined = {}
     if existing_comment is not None:
         combined['_comment'] = existing_comment
-    combined['mappings'] = overrides
+    combined['mappings'] = mappings
+    combined['confidence_mappings'] = confidence_mappings
     combined['asOf'] = unmatched['asOf']
     combined['multiplePrices'] = merged_multiple_prices
     combined['multiPricePatterns'] = unmatched['multiPricePatterns']
