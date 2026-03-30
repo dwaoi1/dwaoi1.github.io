@@ -235,6 +235,7 @@ def build_price_history(history_by_code, mappings=None):
                 image = e.get('image') or ''
                 
                 # Check if this entry is a known variant
+                # We check both name and image for maximum compatibility with old/new scrapes
                 is_variant = name in exclude_names or image in exclude_images
                 # Check if this entry is the known base
                 is_base = name in include_names or image in include_images
