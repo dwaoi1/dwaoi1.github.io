@@ -279,7 +279,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           <div className="price-modal-card-panel">
             <img
               src={
-                item.Picture.includes('onepiece-cardgame.com') 
+                (item.Picture.includes('onepiece-cardgame.com') || item.Picture.includes('en.onepiece-cardgame.com'))
                   ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`
                   : item.Picture
               }
