@@ -406,18 +406,25 @@ const CardTable = ({ data }) => {
                         backgroundColor: '#1a1d27',
                         borderRadius: '8px',
                         overflow: 'hidden',
-                        display: 'block'
+                        display: 'block',
+                        padding: 0,
+                        border: 'none'
                       }}
                     >
-                      <div
+                      <img
+                        src={item.Picture}
+                        alt={item.Character}
+                        loading="lazy"
                         style={{
                           width: '100%',
                           height: '100%',
-                          backgroundImage: `url(${item.Picture})`,
-                          backgroundSize: 'contain',
-                          backgroundPosition: 'center',
-                          backgroundRepeat: 'no-repeat',
-                          transition: 'opacity 0.3s ease'
+                          objectFit: 'contain',
+                          display: 'block'
+                        }}
+                        onError={(e) => {
+                          if (!e.target.src.includes('placeholder')) {
+                            e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                          }
                         }}
                       />
                     </button>
