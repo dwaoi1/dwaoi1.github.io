@@ -158,22 +158,49 @@ def build_history_by_code(price_files):
     return history_by_code
 
 
-def build_price_history(history_by_code):
+def build_price_history(history_by_code, mappings=None):
     price_history = {}
+
+    # Pre-process mappings: group all mapped names/URLs by their base card code.
+    # This allows us to exclude these specifically-mapped variant entries from the
+    # shared/aggregate base-card price history to avoid price pollution.
+    mapped_patterns_by_base = {}
+    if mappings:
+        for img_code, pattern in mappings.items():
+            m = _BASE_CODE_PATTERN.match(img_code)
+            if not m:
+                continue
+            base_code = m.group(1)
+            patterns = pattern if isinstance(pattern, list) else [pattern]
+            mapped_patterns_by_base.setdefault(base_code, set()).update(patterns)
+
     for code, date_map in history_by_code.items():
         history = []
+        # Patterns to exclude for THIS base code because they are specifically mapped
+        # to a variant image (e.g. OP01-016_p1).
+        exclude_patterns = mapped_patterns_by_base.get(code, set())
+        exclude_names = frozenset(p for p in exclude_patterns if not p.startswith('http'))
+        exclude_images = frozenset(p for p in exclude_patterns if p.startswith('http'))
+
         for date, entries in date_map.items():
-            all_prices = [p for p in (parse_amount(e.get('amount')) for e in entries) if p is not None]
+            # If we have mapped variants for this code, filter the entries to only include 
+            # those NOT in the exclusion set.
+            current_entries = entries
+            if exclude_patterns:
+                current_entries = [
+                    e for e in entries 
+                    if (e.get('name') or '') not in exclude_names 
+                    and (e.get('image') or '') not in exclude_images
+                ]
+
+            if not current_entries:
+                continue
+
+            all_prices = [p for p in (parse_amount(e.get('amount')) for e in current_entries) if p is not None]
             if not all_prices:
                 continue
 
-            # Classify entries into mutually-exclusive groups using an index-based
-            # tag so each entry is assigned to exactly one group.
-            #   sealed    – name contains '未開封'
-            #   gold_text – name contains '金文字' (and not sealed)
-            #   parallel  – name contains 'パラレル' and not in any of the above
-            #               (includes gold/silver bg, illust, manga parallels, etc.)
-            #   base      – everything else
+            # Classify entries into mutually-exclusive groups ...
             SEALED, GOLD, PAR, BASE = range(4)
 
             def classify(e):
@@ -186,7 +213,7 @@ def build_price_history(history_by_code):
                     return PAR
                 return BASE
 
-            tagged = [(e, classify(e)) for e in entries]
+            tagged = [(e, classify(e)) for e in current_entries]
             sealed    = [e for e, t in tagged if t == SEALED]
             gold_text = [e for e, t in tagged if t == GOLD]
             parallel  = [e for e, t in tagged if t == PAR]
@@ -291,26 +318,33 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
             print(f'WARNING: No price data found for base code "{base_code}" (image code "{image_code}")')
             continue
 
-        # Normalize name_pattern (str or list[str]) to a frozenset for O(1) lookup.
-        # Every string is matched with exact equality against the Cardrush 'name' field.
-        name_patterns = frozenset(
-            name_pattern if isinstance(name_pattern, list) else [name_pattern]
-        )
+        # Normalize name_pattern (str or list[str]) to frozensets for O(1) lookup.
+        # Strings starting with http are matched against the Cardrush 'image' field;
+        # all others are matched with exact equality against the 'name' field.
+        patterns = name_pattern if isinstance(name_pattern, list) else [name_pattern]
+        name_patterns = frozenset(p for p in patterns if not p.startswith('http'))
+        image_patterns = frozenset(p for p in patterns if p.startswith('http'))
 
-        # Determine if this is a base override (image code equals the base card code,
-        # i.e. no _p suffix) or a variant override (_p suffix present).
+        def is_match(e):
+            if (e.get('name') or '') in name_patterns:
+                return True
+            if (e.get('image') or '') in image_patterns:
+                return True
+            return False
+
+        # Determine if this is a base override ...
         is_base_override = (image_code == base_code)
 
         history = []
         for date, entries in date_map.items():
             if is_base_override:
-                # For base overrides: entries whose name is in the pattern set go to
+                # For base overrides: entries whose name/URL is in the pattern set go to
                 # BASE price; all other entries are classified for sealed/goldText/parallel
                 # subgroups so variant toggles still work on the base card view.
                 base = []
                 tagged_non_base = []
                 for e in entries:
-                    if (e.get('name') or '') in name_patterns:
+                    if is_match(e):
                         base.append(e)
                     else:
                         tagged_non_base.append((e, classify(e)))
@@ -318,11 +352,9 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
                 gold_text = [e for e, t in tagged_non_base if t == GOLD]
                 parallel  = [e for e, t in tagged_non_base if t == PAR]
             else:
-                # For _p (variant) overrides: match entries whose name is in the pattern
+                # For _p (variant) overrides: match entries whose name/URL is in the pattern
                 # set, then classify them normally into sealed/goldText/parallel/base.
-                # Using a list of patterns lets you group multiple Cardrush entries
-                # (e.g. regular + sealed variants of the same CS card) under one image.
-                matching = [e for e in entries if (e.get('name') or '') in name_patterns]
+                matching = [e for e in entries if is_match(e)]
                 if not matching:
                     continue
                 tagged = [(e, classify(e)) for e in matching]
@@ -568,10 +600,13 @@ def main():
     print(f'Processing {len(price_files)} price files...')
 
     history_by_code = build_history_by_code(price_files)
-    price_history = build_price_history(history_by_code)
 
-    # Apply per-image-code overrides from card_price_overrides.json
+    # Apply per-image-code overrides from card_price_overrides.json.
+    # We load them early so that build_price_history can exclude mapped variant names
+    # from the shared/aggregate base-card price entries.
     mappings, confidence_mappings = load_price_overrides()
+    price_history = build_price_history(history_by_code, mappings)
+
     if mappings:
         print(f'Loaded {len(mappings)} price override(s), building per-image-code histories...')
         image_code_history = build_image_code_history(history_by_code, price_files, mappings, confidence_mappings)
