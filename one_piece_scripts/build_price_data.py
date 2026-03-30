@@ -411,6 +411,19 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
             image_history[image_code] = {'history': history}
             if image_code in confidence_mappings:
                 image_history[image_code]['confidence'] = confidence_mappings[image_code]
+            
+            # Find a sample Cardrush image URL to use as a fallback in the frontend.
+            # We take the first non-empty 'image' field from any matching entry.
+            sample_image = None
+            for rel_path, entries in rel_path_map.items():
+                for e in entries:
+                    if is_match(e) and e.get('image'):
+                        sample_image = e['image']
+                        break
+                if sample_image: break
+            if sample_image:
+                image_history[image_code]['cardrushImage'] = sample_image
+
             pat_display = (name_pattern if isinstance(name_pattern, str)
                            else f'[{", ".join(repr(p) for p in name_pattern)}]')
             print(f'  Override: {image_code} -> {len(history)} date entries (patterns: {pat_display})')
