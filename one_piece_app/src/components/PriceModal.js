@@ -279,12 +279,13 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           <div className="price-modal-card-panel">
             <img
               src={
-                (item.Picture.includes('onepiece-cardgame.com') || item.Picture.includes('en.onepiece-cardgame.com'))
-                  ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`
+                (item.Picture.includes('onepiece-cardgame.com'))
+                  ? `https://images.weserv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`
                   : item.Picture
               }
               alt={item.Character}
               className="price-modal-card-image-large"
+              crossOrigin="anonymous"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 const currentSrc = e.target.src;
@@ -294,9 +295,9 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                   const cleanUrl = item.Picture.split('?')[0];
                   const encodedUrl = encodeURIComponent(cleanUrl);
                   
-                  if (currentSrc.includes('wsrv.nl')) {
-                    e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
-                  } else if (currentSrc.includes('weserv.nl')) {
+                  if (currentSrc.includes('images.weserv.nl')) {
+                    e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
+                  } else if (currentSrc.includes('wsrv.nl')) {
                     e.target.src = `https://corsproxy.io/?${encodedUrl}`;
                   } else {
                     e.target.src = 'https://via.placeholder.com/150?text=No+Image';
