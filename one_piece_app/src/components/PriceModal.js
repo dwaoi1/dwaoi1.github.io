@@ -282,7 +282,16 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               alt={item.Character}
               className="price-modal-card-image-large"
               referrerPolicy="no-referrer"
-              onError={(e) => { e.target.style.display = 'none'; }}
+              onError={(e) => {
+              const currentSrc = e.target.src;
+              if (currentSrc.includes('placeholder')) return;
+              
+              if (currentSrc.includes('onepiece-cardgame.com') && !currentSrc.includes('images.weserv.nl')) {
+                e.target.src = `https://images.weserv.nl/?url=${encodeURIComponent(currentSrc)}`;
+              } else {
+                e.target.style.display = 'none';
+              }
+            }}
             />
           </div>
 

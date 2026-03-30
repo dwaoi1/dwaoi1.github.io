@@ -424,7 +424,14 @@ const CardTable = ({ data }) => {
                           display: 'block'
                         }}
                         onError={(e) => {
-                          if (!e.target.src.includes('placeholder')) {
+                          const currentSrc = e.target.src;
+                          if (currentSrc.includes('placeholder')) return;
+                          
+                          // If it's a direct link to the official site and not already proxied,
+                          // try proxying it via weserv.nl to bypass hotlink protection.
+                          if (currentSrc.includes('onepiece-cardgame.com') && !currentSrc.includes('images.weserv.nl')) {
+                            e.target.src = `https://images.weserv.nl/?url=${encodeURIComponent(currentSrc)}`;
+                          } else {
                             e.target.src = 'https://via.placeholder.com/150?text=No+Image';
                           }
                         }}
