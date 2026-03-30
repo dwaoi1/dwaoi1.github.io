@@ -32,8 +32,10 @@ PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_pr
 # ---------------------------------------------------------------------------
 
 def parse_amount(amount_str):
-    if not amount_str:
+    if amount_str is None:
         return None
+    if isinstance(amount_str, (int, float)):
+        return float(amount_str)
     cleaned = re.sub(r'[¥,]', '', amount_str)
     try:
         return float(cleaned)
