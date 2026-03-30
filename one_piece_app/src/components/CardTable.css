@@ -176,23 +176,6 @@
   border-color: #ff5c8a;
 }
 
-.confidence-badge {
-  position: absolute;
-  bottom: 6px;
-  left: 6px;
-  background: rgba(13, 17, 23, 0.85);
-  color: #4ade80;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  pointer-events: none;
-  z-index: 2;
-  border: 1px solid rgba(74, 222, 128, 0.4);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
 .no-data {
   text-align: center;
   padding: 40px;
