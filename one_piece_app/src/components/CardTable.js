@@ -21,6 +21,16 @@ const CardTable = ({ data }) => {
     return match ? match[1] : '';
   };
 
+  const getCardFilename = (url) => {
+    if (!url) return '';
+    try {
+      const path = url.split('?')[0];
+      return path.substring(path.lastIndexOf('/') + 1);
+    } catch (e) {
+      return '';
+    }
+  };
+
   const getSeriesCode = (cardCode) => (cardCode ? cardCode.split('-')[0] : '');
 
   const formatSeriesLabel = (seriesCode) => {
@@ -52,10 +62,11 @@ const CardTable = ({ data }) => {
         }
         const data = await response.json();
         if (Array.isArray(data)) {
+          const normalized = data.map(getCardFilename).filter(Boolean);
           if (isMounted) {
-            setWishlist(data);
+            setWishlist(normalized);
           }
-          localStorage.setItem(wishlistStorageKey, JSON.stringify(data));
+          localStorage.setItem(wishlistStorageKey, JSON.stringify(normalized));
           return;
         }
         console.warn('Wishlist data is not an array.');
@@ -65,7 +76,8 @@ const CardTable = ({ data }) => {
           try {
             const parsed = JSON.parse(saved);
             if (Array.isArray(parsed) && isMounted) {
-              setWishlist(parsed);
+              const normalized = parsed.map(getCardFilename).filter(Boolean);
+              setWishlist(normalized);
             }
           } catch (storageError) {
             console.warn('Unable to parse wishlist data.', storageError);
@@ -107,7 +119,7 @@ const CardTable = ({ data }) => {
     return data.map((item) => {
       const cardCode = getCardCode(item.Picture);
       const seriesCode = getSeriesCode(cardCode);
-      const cardId = item.Picture;
+      const cardId = getCardFilename(item.Picture);
       return {
         ...item,
         cardCode,
