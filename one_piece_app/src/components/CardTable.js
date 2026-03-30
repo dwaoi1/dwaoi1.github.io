@@ -389,7 +389,7 @@ const CardTable = ({ data }) => {
       <div className="card-grid-wrapper">
         {currentItems.length > 0 ? (
           <div className="card-grid">
-            {currentItems.map((item, index) => {
+            {currentItems.map((item) => {
               const isWishlisted = wishlistSet.has(item.cardId);
               return (
                 <div key={item.cardId} className="card-grid-item">
@@ -399,16 +399,25 @@ const CardTable = ({ data }) => {
                       className="card-image-btn"
                       onClick={() => setPriceModal(item)}
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
+                      style={{
+                        width: '100%',
+                        aspectRatio: '2/3',
+                        position: 'relative',
+                        backgroundColor: '#1a1d27',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        display: 'block'
+                      }}
                     >
-                      <img
-                        src={item.Picture}
-                        alt={item.Character}
-                        loading="lazy"
-                        style={{ aspectRatio: '2/3', backgroundColor: '#1a1d27' }}
-                        onError={(e) => {
-                          if (!e.target.src.includes('placeholder')) {
-                            e.target.src = 'https://via.placeholder.com/150?text=No+Image';
-                          }
+                      <div
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          backgroundImage: `url(${item.Picture})`,
+                          backgroundSize: 'contain',
+                          backgroundPosition: 'center',
+                          backgroundRepeat: 'no-repeat',
+                          transition: 'opacity 0.3s ease'
                         }}
                       />
                     </button>
