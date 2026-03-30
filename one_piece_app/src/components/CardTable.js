@@ -414,7 +414,7 @@ const CardTable = ({ data }) => {
                     >
                       <img
                         src={
-                          item.Picture.includes('onepiece-cardgame.com') 
+                          (item.Picture.includes('onepiece-cardgame.com') || item.Picture.includes('en.onepiece-cardgame.com'))
                             ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`
                             : item.Picture
                         }
@@ -432,7 +432,7 @@ const CardTable = ({ data }) => {
                           // Don't loop if we already hit the final placeholder
                           if (currentSrc.includes('placeholder')) return;
                           
-                          // Fallback chain for official images
+                          // Fallback chain for official images (trying to be inclusive of all subdomains)
                           if (item.Picture.includes('onepiece-cardgame.com')) {
                             const cleanUrl = item.Picture.split('?')[0];
                             const encodedUrl = encodeURIComponent(cleanUrl);
