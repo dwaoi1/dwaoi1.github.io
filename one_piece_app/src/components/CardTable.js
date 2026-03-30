@@ -17,12 +17,13 @@ const CardTable = ({ data }) => {
   const itemsPerPage = 100;
 
   const getCardCode = (url) => {
+    if (!url || typeof url !== 'string') return '';
     const match = url.match(/\/([A-Z]{2,}\d{2,}-\d{3}|[A-Z]-\d{3})/);
     return match ? match[1] : '';
   };
 
   const getCardFilename = (url) => {
-    if (!url) return '';
+    if (!url || typeof url !== 'string') return '';
     try {
       const path = url.split('?')[0];
       return path.substring(path.lastIndexOf('/') + 1);
@@ -157,9 +158,10 @@ const CardTable = ({ data }) => {
   const characters = useMemo(() => {
     const chars = new Set(enrichedData.map(item => item.normalizedCharacter));
     return Array.from(chars).sort((a, b) => {
-      const favoriteDiff = (favoriteCharacterCounts.get(b) || 0) - (favoriteCharacterCounts.get(a) || 0);
-      if (favoriteDiff !== 0) {
-        return favoriteDiff;
+      const countB = favoriteCharacterCounts.get(b) || 0;
+      const countA = favoriteCharacterCounts.get(a) || 0;
+      if (countB !== countA) {
+        return countB - countA;
       }
       return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
     });
@@ -390,7 +392,7 @@ const CardTable = ({ data }) => {
             {currentItems.map((item, index) => {
               const isWishlisted = wishlistSet.has(item.cardId);
               return (
-                <div key={`${item.Picture}-${index}`} className="card-grid-item">
+                <div key={item.cardId} className="card-grid-item">
                   <div className="card-image-shell">
                     <button
                       type="button"
@@ -402,8 +404,11 @@ const CardTable = ({ data }) => {
                         src={item.Picture}
                         alt={item.Character}
                         loading="lazy"
+                        style={{ aspectRatio: '2/3', backgroundColor: '#1a1d27' }}
                         onError={(e) => {
-                          e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                          if (!e.target.src.includes('placeholder')) {
+                            e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                          }
                         }}
                       />
                     </button>
