@@ -142,6 +142,9 @@ def strip_bracket_suffix(model_number):
 def build_history_by_code(price_files):
     history_by_code = {}
     for file_path in price_files:
+        # Use relative path from PRICE_DIR to avoid collisions (e.g. Feb 2026/2026-02-14.json)
+        # We'll use the filename as the date, but the full path ensures uniqueness in the map.
+        rel_path = os.path.relpath(file_path, PRICE_DIR)
         date = os.path.splitext(os.path.basename(file_path))[0]
         try:
             with open(file_path, encoding='utf-8') as f:
@@ -154,8 +157,32 @@ def build_history_by_code(price_files):
             if not raw:
                 continue
             code = strip_bracket_suffix(raw)
-            history_by_code.setdefault(code, {}).setdefault(date, []).append(entry)
+            # We use rel_path as the key internally to keep all historical points separate,
+            # then flatten them to just the 'date' string in the final output.
+            history_by_code.setdefault(code, {}).setdefault(rel_path, []).append(entry)
     return history_by_code
+
+
+# Detailed classification logic using Cardrush name patterns
+def classify_entry(e):
+    """Classify a Cardrush entry into variant categories based on its name."""
+    name = e.get('name') or ''
+    
+    # Classification order matters!
+    if '未開封' in name:
+        return 'sealed'
+    if '金文字' in name:
+        return 'goldText'
+    
+    # Specific parallel markings
+    # 'パラレル' is the general term for Parallel
+    # '漫画' indicates Manga art (a type of parallel)
+    # 'SP' indicates Special variant
+    # 'シリアル' indicates Serial numbered
+    if any(sig in name for i, sig in enumerate(['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ'])):
+        return 'parallel'
+        
+    return 'base'
 
 
 def build_price_history(history_by_code, mappings=None):
@@ -174,7 +201,7 @@ def build_price_history(history_by_code, mappings=None):
             # Use a list of (image_code, pattern) so we can distinguish base from variant
             mapped_patterns_by_base.setdefault(base_code, []).extend((img_code, p) for p in patterns)
 
-    for code, date_map in history_by_code.items():
+    for code, rel_path_map in history_by_code.items():
         history = []
         
         # Patterns belonging to variants of this code (e.g. OP01-016_p1)
@@ -190,7 +217,14 @@ def build_price_history(history_by_code, mappings=None):
         include_names = frozenset(p for p in include_patterns if not p.startswith('http'))
         include_images = frozenset(p for p in include_patterns if p.startswith('http'))
 
-        for date, entries in date_map.items():
+        # Flatten the rel_path_map which might have multiple entries for the same date 
+        # (though usually one per day). We group by actual date string for the final output.
+        by_date = {}
+        for rel_path, entries in rel_path_map.items():
+            date_str = os.path.splitext(os.path.basename(rel_path))[0]
+            by_date.setdefault(date_str, []).extend(entries)
+
+        for date, entries in by_date.items():
             # Filter entries:
             # 1. ALWAYS exclude if specifically mapped to a variant (_p1 etc)
             # 2. ALWAYS include if specifically mapped to the base code
@@ -214,30 +248,12 @@ def build_price_history(history_by_code, mappings=None):
             if not current_entries:
                 continue
 
-            all_prices = [p for p in (parse_amount(e.get('amount')) for e in current_entries) if p is not None]
-            if not all_prices:
-                continue
+            # Group entries by classification
+            groups = {'sealed': [], 'goldText': [], 'parallel': [], 'base': []}
+            for e in current_entries:
+                groups[classify_entry(e)].append(e)
 
-            # Classify entries into mutually-exclusive groups ...
-            SEALED, GOLD, PAR, BASE = range(4)
-
-            def classify(e):
-                name = e.get('name') or ''
-                if '未開封' in name:
-                    return SEALED
-                if '金文字' in name:
-                    return GOLD
-                if 'パラレル' in name:
-                    return PAR
-                return BASE
-
-            tagged = [(e, classify(e)) for e in current_entries]
-            sealed    = [e for e, t in tagged if t == SEALED]
-            gold_text = [e for e, t in tagged if t == GOLD]
-            parallel  = [e for e, t in tagged if t == PAR]
-            base      = [e for e, t in tagged if t == BASE]
-
-            base_group = price_group(base)
+            base_group = price_group(groups['base'])
             if base_group:
                 hist_entry = {
                     'date': date,
@@ -246,9 +262,6 @@ def build_price_history(history_by_code, mappings=None):
                     'count': base_group['count'],
                 }
             else:
-                # No pure-base entries: leave root prices null so the frontend can
-                # rely solely on variant subgroups (sealed/goldText/sp/parallel) for
-                # display, and count=0 ensures no double-counting with subgroup counts.
                 hist_entry = {
                     'date': date,
                     'minPrice': None,
@@ -256,17 +269,14 @@ def build_price_history(history_by_code, mappings=None):
                     'count': 0,
                 }
 
-            sealed_group = price_group(sealed)
-            gold_group = price_group(gold_text)
-            parallel_group = price_group(parallel)
-            if sealed_group:
-                hist_entry['sealed'] = sealed_group
-            if gold_group:
-                hist_entry['goldText'] = gold_group
-            if parallel_group:
-                hist_entry['parallel'] = parallel_group
+            for key in ['sealed', 'goldText', 'parallel']:
+                g = price_group(groups[key])
+                if g:
+                    hist_entry[key] = g
 
-            history.append(hist_entry)
+            # Only include if there is some price data
+            if any(hist_entry.get(k) is not None for k in ['minPrice', 'sealed', 'goldText', 'parallel']):
+                history.append(hist_entry)
 
         history.sort(key=lambda x: x['date'])
         if history:
@@ -309,19 +319,6 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
     if not overrides:
         return {}
 
-    # Reuse the same variant-classification constants and logic as build_price_history.
-    SEALED, GOLD, PAR, BASE = range(4)
-
-    def classify(e):
-        name = e.get('name') or ''
-        if '未開封' in name:
-            return SEALED
-        if '金文字' in name:
-            return GOLD
-        if 'パラレル' in name:
-            return PAR
-        return BASE
-
     image_history = {}
     for image_code, name_pattern in overrides.items():
         # Derive the base card code from the image code (strip the _p suffix)
@@ -331,10 +328,16 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
             continue
         base_code = m.group(1)
 
-        date_map = history_by_code.get(base_code, {})
-        if not date_map:
+        rel_path_map = history_by_code.get(base_code, {})
+        if not rel_path_map:
             print(f'WARNING: No price data found for base code "{base_code}" (image code "{image_code}")')
             continue
+
+        # Flatten the rel_path_map
+        by_date = {}
+        for rel_path, entries in rel_path_map.items():
+            date_str = os.path.splitext(os.path.basename(rel_path))[0]
+            by_date.setdefault(date_str, []).extend(entries)
 
         # Normalize name_pattern (str or list[str]) to frozensets for O(1) lookup.
         # Strings starting with http are matched against the Cardrush 'image' field;
@@ -354,34 +357,28 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
         is_base_override = (image_code == base_code)
 
         history = []
-        for date, entries in date_map.items():
+        for date, entries in by_date.items():
             if is_base_override:
                 # For base overrides: entries whose name/URL is in the pattern set go to
                 # BASE price; all other entries are classified for sealed/goldText/parallel
                 # subgroups so variant toggles still work on the base card view.
-                base = []
-                tagged_non_base = []
+                groups = {'sealed': [], 'goldText': [], 'parallel': [], 'base': []}
                 for e in entries:
                     if is_match(e):
-                        base.append(e)
+                        groups['base'].append(e)
                     else:
-                        tagged_non_base.append((e, classify(e)))
-                sealed    = [e for e, t in tagged_non_base if t == SEALED]
-                gold_text = [e for e, t in tagged_non_base if t == GOLD]
-                parallel  = [e for e, t in tagged_non_base if t == PAR]
+                        groups[classify_entry(e)].append(e)
             else:
                 # For _p (variant) overrides: match entries whose name/URL is in the pattern
                 # set, then classify them normally into sealed/goldText/parallel/base.
                 matching = [e for e in entries if is_match(e)]
                 if not matching:
                     continue
-                tagged = [(e, classify(e)) for e in matching]
-                sealed    = [e for e, t in tagged if t == SEALED]
-                gold_text = [e for e, t in tagged if t == GOLD]
-                parallel  = [e for e, t in tagged if t == PAR]
-                base      = [e for e, t in tagged if t == BASE]
+                groups = {'sealed': [], 'goldText': [], 'parallel': [], 'base': []}
+                for e in matching:
+                    groups[classify_entry(e)].append(e)
 
-            base_group = price_group(base)
+            base_group = price_group(groups['base'])
             if base_group:
                 hist_entry = {
                     'date': date,
@@ -399,25 +396,14 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
                     'count': 0,
                 }
 
-            sealed_group   = price_group(sealed)
-            gold_group     = price_group(gold_text)
-            parallel_group = price_group(parallel)
-            if sealed_group:
-                hist_entry['sealed'] = sealed_group
-            if gold_group:
-                hist_entry['goldText'] = gold_group
-            if parallel_group:
-                hist_entry['parallel'] = parallel_group
+            for key in ['sealed', 'goldText', 'parallel']:
+                g = price_group(groups[key])
+                if g:
+                    hist_entry[key] = g
 
             # Only include the entry if there is at least one valid price
-            all_prices = [p for p in (
-                hist_entry.get('minPrice'),
-                *(g['minPrice'] for g in [sealed_group, gold_group, parallel_group] if g),
-            ) if p is not None]
-            if not all_prices:
-                continue
-
-            history.append(hist_entry)
+            if any(hist_entry.get(k) is not None for k in ['minPrice', 'sealed', 'goldText', 'parallel']):
+                history.append(hist_entry)
 
         history.sort(key=lambda x: x['date'])
         if history:
