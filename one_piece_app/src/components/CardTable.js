@@ -429,7 +429,25 @@ const CardTable = ({ data }) => {
                         }}
                         onError={(e) => {
                           const currentSrc = e.target.src;
-                          if (!currentSrc.includes('placeholder')) {
+                          // Don't loop if we already hit the final placeholder
+                          if (currentSrc.includes('placeholder')) return;
+                          
+                          // Fallback chain for official images
+                          if (item.Picture.includes('onepiece-cardgame.com')) {
+                            const cleanUrl = item.Picture.split('?')[0];
+                            const encodedUrl = encodeURIComponent(cleanUrl);
+                            
+                            if (currentSrc.includes('wsrv.nl')) {
+                              // If wsrv.nl failed, try images.weserv.nl
+                              e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
+                            } else if (currentSrc.includes('weserv.nl')) {
+                              // If both weserv proxies failed, try a CORS proxy as a last resort
+                              e.target.src = `https://corsproxy.io/?${encodedUrl}`;
+                            } else {
+                              // Default failure
+                              e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                            }
+                          } else {
                             e.target.src = 'https://via.placeholder.com/150?text=No+Image';
                           }
                         }}
