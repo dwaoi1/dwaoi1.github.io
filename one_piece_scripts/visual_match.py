@@ -146,7 +146,28 @@ def main():
     for code, cr_entries in cr_by_code.items():
         if len(cr_entries) <= 1: continue
         off_entries = official_by_code.get(code, [])
-        unmapped_off = [o for o in off_entries if get_image_code(o['Picture']) not in mappings]
+        
+        # Identify cards that need matching: 
+        # - Either they are not in mappings yet
+        # - Or they are mapped to a simple name (not a URL), which might be non-unique
+        unmapped_off = []
+        for off_card in off_entries:
+            img_code = get_image_code(off_card['Picture'])
+            current_mapping = mappings.get(img_code)
+            
+            needs_match = False
+            if not current_mapping:
+                needs_match = True
+            elif isinstance(current_mapping, str) and not current_mapping.startswith('http'):
+                # It's a name mapping. Check if this name is unique among cr_entries.
+                # If multiple cr_entries have the same name, we should try to get a URL mapping instead.
+                name_matches = [cr for cr in cr_entries if cr.get('name') == current_mapping]
+                if len(name_matches) > 1:
+                    needs_match = True
+            
+            if needs_match:
+                unmapped_off.append(off_card)
+        
         if not unmapped_off: continue
         
         for off_card in unmapped_off:
@@ -187,8 +208,12 @@ def main():
             img_code = future.img_code
             
             if inliers >= 20: # Strong threshold
-                print(f"  MATCH: {img_code} -> {best_cr['name']} ({confidence:.1f}%)")
-                mappings[img_code] = best_cr['name']
+                # Store the Cardrush image URL instead of just the name if it's available.
+                # This allows build_price_data.py to uniquely identify the entry even if 
+                # multiple entries have the same name (common for different parallels).
+                mapping_value = best_cr.get('image') or best_cr['name']
+                print(f"  MATCH: {img_code} -> {mapping_value} ({confidence:.1f}%)")
+                mappings[img_code] = mapping_value
                 confidence_mappings[img_code] = round(confidence, 1)
                 matched_new += 1
             else:
