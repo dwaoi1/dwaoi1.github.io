@@ -51,11 +51,25 @@ def scrape_cardrush_data(url: str, timeout: int) -> list[dict]:
     for bp in buying_prices:
         # Extract the fields we need
         ocha_product = bp.get("ocha_product", {})
+        
+        name = bp.get("name", "")
+        extra = bp.get("extra_difference")
+        if extra:
+            name = f"{name}({extra})"
+
+        amount = bp.get("amount")
+        amount_str = ""
+        if amount is not None:
+            try:
+                amount_str = f"¥{int(amount):,}"
+            except (ValueError, TypeError):
+                amount_str = str(amount)
+
         results.append({
-            "name": bp.get("name", ""),
+            "name": name,
             "rarity": bp.get("rarity", ""),
             "model_number": bp.get("model_number", ""),
-            "amount": bp.get("amount", ""),
+            "amount": amount_str,
             "image": ocha_product.get("image_source", "")
         })
     return results
