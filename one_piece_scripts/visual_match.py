@@ -232,10 +232,13 @@ def main():
             img_code = future.img_code
             
             if inliers >= 20: # Strong threshold
-                # Store the Cardrush image URL instead of just the name if it's available.
-                # This allows build_price_data.py to uniquely identify the entry even if 
-                # multiple entries have the same name (common for different parallels).
-                mapping_value = best_cr.get('image') or best_cr['name']
+                # Store both the Cardrush name AND image URL (if available) in a list.
+                # This ensures build_price_data.py can match entries even in older scrapes
+                # that might be missing the 'image' field.
+                mapping_value = [best_cr['name']]
+                if best_cr.get('image'):
+                    mapping_value.append(best_cr['image'])
+                
                 print(f"  MATCH: {img_code} -> {mapping_value} ({confidence:.1f}%)")
                 mappings[img_code] = mapping_value
                 confidence_mappings[img_code] = round(confidence, 1)
