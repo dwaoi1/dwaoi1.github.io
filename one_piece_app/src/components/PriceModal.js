@@ -278,21 +278,33 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           {/* Left panel: card image */}
           <div className="price-modal-card-panel">
             <img
-              src={item.Picture}
+              src={
+                item.Picture.includes('onepiece-cardgame.com') 
+                  ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`
+                  : item.Picture
+              }
               alt={item.Character}
               className="price-modal-card-image-large"
               referrerPolicy="no-referrer"
               onError={(e) => {
-              const currentSrc = e.target.src;
-              if (currentSrc.includes('placeholder')) return;
-              
-              if (currentSrc.includes('onepiece-cardgame.com') && !currentSrc.includes('wsrv.nl')) {
-                const cleanSrc = currentSrc.split('?')[0];
-                e.target.src = `https://wsrv.nl/?url=${encodeURIComponent(cleanSrc)}&default=https://via.placeholder.com/150?text=No+Image`;
-              } else {
-                e.target.src = 'https://via.placeholder.com/150?text=No+Image';
-              }
-            }}
+                const currentSrc = e.target.src;
+                if (currentSrc.includes('placeholder')) return;
+                
+                if (item.Picture.includes('onepiece-cardgame.com')) {
+                  const cleanUrl = item.Picture.split('?')[0];
+                  const encodedUrl = encodeURIComponent(cleanUrl);
+                  
+                  if (currentSrc.includes('wsrv.nl')) {
+                    e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
+                  } else if (currentSrc.includes('weserv.nl')) {
+                    e.target.src = `https://corsproxy.io/?${encodedUrl}`;
+                  } else {
+                    e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                  }
+                } else {
+                  e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                }
+              }}
             />
           </div>
 
