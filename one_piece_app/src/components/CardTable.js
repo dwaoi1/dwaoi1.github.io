@@ -428,10 +428,12 @@ const CardTable = ({ data }) => {
                           if (currentSrc.includes('placeholder')) return;
                           
                           // If it's a direct link to the official site and not already proxied,
-                          // try proxying it via weserv.nl to bypass hotlink protection.
-                          if (currentSrc.includes('onepiece-cardgame.com') && !currentSrc.includes('images.weserv.nl')) {
-                            e.target.src = `https://images.weserv.nl/?url=${encodeURIComponent(currentSrc)}`;
-                          } else {
+                          // try proxying it via wsrv.nl to bypass hotlink protection.
+                          // We also strip the version token (?...) to avoid potential issues.
+                          if (currentSrc.includes('onepiece-cardgame.com') && !currentSrc.includes('wsrv.nl')) {
+                            const cleanSrc = currentSrc.split('?')[0];
+                            e.target.src = `https://wsrv.nl/?url=${encodeURIComponent(cleanSrc)}&default=https://via.placeholder.com/150?text=No+Image`;
+                          } else if (!currentSrc.includes('placeholder')) {
                             e.target.src = 'https://via.placeholder.com/150?text=No+Image';
                           }
                         }}

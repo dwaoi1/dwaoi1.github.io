@@ -286,10 +286,11 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               const currentSrc = e.target.src;
               if (currentSrc.includes('placeholder')) return;
               
-              if (currentSrc.includes('onepiece-cardgame.com') && !currentSrc.includes('images.weserv.nl')) {
-                e.target.src = `https://images.weserv.nl/?url=${encodeURIComponent(currentSrc)}`;
+              if (currentSrc.includes('onepiece-cardgame.com') && !currentSrc.includes('wsrv.nl')) {
+                const cleanSrc = currentSrc.split('?')[0];
+                e.target.src = `https://wsrv.nl/?url=${encodeURIComponent(cleanSrc)}&default=https://via.placeholder.com/150?text=No+Image`;
               } else {
-                e.target.style.display = 'none';
+                e.target.src = 'https://via.placeholder.com/150?text=No+Image';
               }
             }}
             />
