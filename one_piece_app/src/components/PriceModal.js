@@ -281,6 +281,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               src={item.Picture}
               alt={item.Character}
               className="price-modal-card-image-large"
+              referrerPolicy="no-referrer"
               onError={(e) => { e.target.style.display = 'none'; }}
             />
           </div>

@@ -416,6 +416,7 @@ const CardTable = ({ data }) => {
                         src={item.Picture}
                         alt={item.Character}
                         loading="lazy"
+                        referrerPolicy="no-referrer"
                         style={{
                           width: '100%',
                           height: '100%',
