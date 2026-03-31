@@ -3,6 +3,11 @@ import json
 import os
 import sys
 import time
+from datetime import datetime
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
 from typing import Optional
 
 from curl_cffi import requests
@@ -11,6 +16,14 @@ from bs4 import BeautifulSoup
 # Cardrush uses Next.js, and the data is embedded in a __NEXT_DATA__ script tag.
 # Using displayMode=リスト&limit=10000 ensures we get all prices in one go.
 BASE_URL = "https://cardrush.media/onepiece/buying_prices?displayMode=リスト&limit=10000"
+
+def get_default_output_path() -> str:
+    """Generate a dated output path based on Asia/Tokyo time."""
+    tz = zoneinfo.ZoneInfo("Asia/Tokyo")
+    now = datetime.now(tz)
+    month_year = now.strftime("%b %Y") # e.g., "Apr 2026"
+    day_file = now.strftime("%Y-%m-%d.json") # e.g., "2026-04-01.json"
+    return os.path.join("one_piece_scripts", "cardrush_buying_prices", month_year, day_file)
 
 def build_human_like_headers() -> dict[str, str]:
     return {
@@ -76,7 +89,7 @@ def scrape_cardrush_data(url: str, timeout: int) -> list[dict]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Scrape Cardrush One Piece buying prices with images")
-    parser.add_argument("--output", default="one_piece_scripts/cardrush_buying_prices.json")
+    parser.add_argument("--output", default=get_default_output_path())
     parser.add_argument("--timeout", type=int, default=60)
     return parser.parse_args()
 
