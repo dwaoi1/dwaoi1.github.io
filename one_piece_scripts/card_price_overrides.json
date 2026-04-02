@@ -30002,7 +30002,6 @@
     "OP13-061",
     "OP13-062",
     "OP13-067",
-    "OP13-068",
     "OP13-069",
     "OP13-070",
     "OP13-071",
@@ -30086,9 +30085,7 @@
     "OP14-077",
     "OP14-078",
     "OP14-082",
-    "OP14-083",
     "OP14-086",
-    "OP14-088",
     "OP14-089",
     "OP14-092",
     "OP14-093",
@@ -30345,7 +30342,7 @@
     },
     {
       "series": "OP13",
-      "count": 76
+      "count": 75
     },
     {
       "series": "OP02",
@@ -30372,11 +30369,11 @@
       "count": 67
     },
     {
-      "series": "OP14",
-      "count": 66
+      "series": "OP06",
+      "count": 64
     },
     {
-      "series": "OP06",
+      "series": "OP14",
       "count": 64
     },
     {
@@ -30519,11 +30516,11 @@
   "cardsWithoutPricesRarityBreakdown": [
     {
       "rarity": "C",
-      "count": 875
+      "count": 873
     },
     {
       "rarity": "UC",
-      "count": 316
+      "count": 315
     },
     {
       "rarity": "R",
