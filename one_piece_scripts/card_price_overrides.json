@@ -28970,7 +28970,6 @@
     "EB02-016",
     "EB02-018",
     "EB02-020",
-    "EB02-021",
     "EB02-023",
     "EB02-024",
     "EB02-025",
@@ -30044,10 +30043,8 @@
     "OP14-011",
     "OP14-012",
     "OP14-017",
-    "OP14-018",
     "OP14-019",
     "OP14-021",
-    "OP14-022",
     "OP14-024",
     "OP14-025",
     "OP14-026",
@@ -30374,7 +30371,7 @@
     },
     {
       "series": "OP14",
-      "count": 64
+      "count": 62
     },
     {
       "series": "OP15",
@@ -30390,7 +30387,7 @@
     },
     {
       "series": "EB02",
-      "count": 38
+      "count": 37
     },
     {
       "series": "EB01",
@@ -30516,15 +30513,15 @@
   "cardsWithoutPricesRarityBreakdown": [
     {
       "rarity": "C",
-      "count": 873
+      "count": 872
     },
     {
       "rarity": "UC",
-      "count": 315
+      "count": 314
     },
     {
       "rarity": "R",
-      "count": 181
+      "count": 180
     },
     {
       "rarity": "P",
