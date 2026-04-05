@@ -30250,7 +30250,6 @@
     "ST10-009",
     "ST10-012",
     "ST10-014",
-    "ST10-015",
     "ST10-016",
     "ST10-017",
     "ST11-003",
@@ -30435,7 +30434,7 @@
     },
     {
       "series": "ST10",
-      "count": 7
+      "count": 6
     },
     {
       "series": "ST03",
@@ -30513,7 +30512,7 @@
   "cardsWithoutPricesRarityBreakdown": [
     {
       "rarity": "C",
-      "count": 872
+      "count": 871
     },
     {
       "rarity": "UC",
