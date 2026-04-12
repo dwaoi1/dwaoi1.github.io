@@ -114,8 +114,8 @@ def get_ocr_text(img_path):
         if img is None: return ""
         h, w = img.shape[:2]
         
-        # Take only the top 20% of the right 8% edge horizontally
-        re_edge = img[:int(h*0.20), int(w*0.92):]
+        # Take only the top 50% of the right 8% edge horizontally
+        re_edge = img[:int(h*0.50), int(w*0.92):]
         # Rotate clockwise so the text reads left-to-right normally
         re_rot = cv2.rotate(re_edge, cv2.ROTATE_90_CLOCKWISE)
         # Upscale the image to improve OCR accuracy on tiny text
