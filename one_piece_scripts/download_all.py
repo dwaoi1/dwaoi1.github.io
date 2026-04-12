@@ -149,7 +149,31 @@ def deduplicate_by_picture(cards):
     return unique_cards
 
 
-def parse_downloaded_html(output_dir):
+def download_image(picture_url, output_dir):
+    if not picture_url:
+        return
+    filename = picture_filename_key(picture_url)
+    if not filename:
+        return
+    
+    filepath = os.path.join(output_dir, filename)
+    if os.path.exists(filepath):
+        return
+        
+    try:
+        headers = build_human_like_headers()
+        print(f"Downloading image: {filename}")
+        response = requests.get(picture_url, headers=headers, timeout=30)
+        if response.status_code == 200:
+            with open(filepath, 'wb') as f:
+                f.write(response.content)
+            time.sleep(random.uniform(0.1, 0.5))
+        else:
+            print(f"Failed to download {picture_url}: Status {response.status_code}")
+    except Exception as e:
+        print(f"Error downloading {picture_url}: {e}")
+
+def parse_downloaded_html(output_dir, images_dir=None):
     html_files = glob.glob(os.path.join(output_dir, "*.html"))
     if not html_files:
         print(f"No HTML files found to parse in {output_dir}.")
@@ -175,6 +199,13 @@ def parse_downloaded_html(output_dir):
         print(f"Extracted {len(data)} cards from {file_path}")
 
     all_cards = deduplicate_by_picture(all_cards)
+
+    if images_dir:
+        print(f"Downloading images to {images_dir}...")
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
+        for card in all_cards:
+            download_image(card.get("Picture"), images_dir)
 
     try:
         with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
@@ -268,11 +299,17 @@ def parse_args():
         default=OUTPUT_JSON,
         help="Path to write parsed JSON data.",
     )
+    parser.add_argument(
+        "--images-dir",
+        default="",
+        help="Directory to save downloaded card images.",
+    )
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = parse_args()
     OUTPUT_DIR = args.output_dir
     OUTPUT_JSON = args.output_json
+    IMAGES_DIR = args.images_dir
     download_series()
-    parse_downloaded_html(OUTPUT_DIR)
+    parse_downloaded_html(OUTPUT_DIR, IMAGES_DIR)

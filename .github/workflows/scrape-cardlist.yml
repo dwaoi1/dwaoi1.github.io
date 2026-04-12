@@ -30,7 +30,8 @@ jobs:
         run: |
           python one_piece_scripts/download_all.py \
             --output-dir one_piece_scripts/html_files \
-            --output-json one_piece_scripts/one_piece_cards.json
+            --output-json one_piece_scripts/one_piece_cards.json \
+            --images-dir one_piece_app/public/images/cards
 
       - name: Commit updated files
         run: |
@@ -57,11 +58,12 @@ jobs:
           fi
           git add one_piece_scripts/html_files/
           git add one_piece_scripts/one_piece_cards.json
+          git add one_piece_app/public/images/cards/
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
           fi
 
-          git commit -m "chore: update one piece card list data"
+          git commit -m "chore: update one piece card list data and images"
           git push origin HEAD:${{ github.ref_name }}
