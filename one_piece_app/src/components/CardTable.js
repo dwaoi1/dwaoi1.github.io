@@ -401,33 +401,16 @@ const CardTable = ({ data }) => {
                       className="card-image-btn"
                       onClick={() => setPriceModal(item)}
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
-                      style={{
-                        width: '100%',
-                        aspectRatio: '2/3',
-                        position: 'relative',
-                        backgroundColor: '#1a1d27',
-                        borderRadius: '8px',
-                        overflow: 'hidden',
-                        display: 'block',
-                        padding: 0,
-                        border: 'none'
-                      }}
                     >
                       <img
                         src={
                           (item.Picture.includes('onepiece-cardgame.com'))
-                            ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&w=150&output=webp&default=https://placehold.co/150?text=No+Image`
+                            ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&w=200&output=webp&default=https://placehold.co/150?text=No+Image`
                             : item.Picture
                         }
                         alt={item.Character}
                         loading="lazy"
                         referrerPolicy="no-referrer"
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'contain',
-                          display: 'block'
-                        }}
                         onError={(e) => {
                           const currentSrc = e.target.src;
                           if (currentSrc.includes('placehold')) return;
