@@ -288,17 +288,17 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               referrerPolicy="no-referrer"
               onError={(e) => {
                 const currentSrc = e.target.src;
-                if (currentSrc.includes('placeholder')) return;
-                
-                const historyEntry = priceHistory[item.cardId];
+                if (currentSrc.includes('placehold')) return;
+
+                const historyEntry = priceHistory[item.imageCode] || priceHistory[item.cardCode];
                 const crFallback = historyEntry?.cardrushImage;
 
                 if (item.Picture.includes('onepiece-cardgame.com')) {
                   const cleanUrl = item.Picture.split('?')[0];
                   const encodedUrl = encodeURIComponent(cleanUrl);
-                  
+
                   if (currentSrc.includes('images.weserv.nl')) {
-                    e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://via.placeholder.com/150?text=No+Image`;
+                    e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
                   } else if (currentSrc.includes('wsrv.nl')) {
                     if (crFallback) {
                       e.target.src = crFallback;
@@ -309,16 +309,15 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                     if (crFallback) {
                       e.target.src = crFallback;
                     } else {
-                      e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                      e.target.src = 'https://placehold.co/150?text=No+Image';
                     }
                   } else {
-                    e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                    e.target.src = 'https://placehold.co/150?text=No+Image';
                   }
                 } else {
-                  e.target.src = 'https://via.placeholder.com/150?text=No+Image';
+                  e.target.src = 'https://placehold.co/150?text=No+Image';
                 }
-              }}
-            />
+              }}            />
           </div>
 
           {/* Right panel: controls + chart */}

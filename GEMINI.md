@@ -27,10 +27,10 @@ This document defines the foundational mandates and technical standards for the 
   // onError handles fallback to secondary proxy and then Cardrush sample image
   onError={(e) => {
     const currentSrc = e.target.src;
-    const crFallback = priceHistory[item.cardId]?.cardrushImage;
-    
-    if (currentSrc.includes('images.weserv.nl')) {
-      e.target.src = `https://wsrv.nl/?url=${encodedUrl}&...`;
+    const historyEntry = priceHistory[item.imageCode] || priceHistory[item.cardCode];
+    const crFallback = historyEntry?.cardrushImage;
+
+    if (currentSrc.includes('images.weserv.nl')) {      e.target.src = `https://wsrv.nl/?url=${encodedUrl}&...`;
     } else if (currentSrc.includes('wsrv.nl')) {
       if (crFallback) e.target.src = crFallback;
       else e.target.src = 'https://corsproxy.io/?...';

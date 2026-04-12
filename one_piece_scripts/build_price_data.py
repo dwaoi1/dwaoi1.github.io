@@ -282,6 +282,17 @@ def build_price_history(history_by_code, mappings=None):
         history.sort(key=lambda x: x['date'])
         if history:
             price_history[code] = {'history': history}
+            # Find a sample Cardrush image URL to use as a fallback in the frontend.
+            # We take the first non-empty 'image' field from any entry for this card.
+            sample_image = None
+            for rel_path, entries in rel_path_map.items():
+                for e in entries:
+                    if e.get('image'):
+                        sample_image = e['image']
+                        break
+                if sample_image: break
+            if sample_image:
+                price_history[code]['cardrushImage'] = sample_image
 
     return price_history
 
