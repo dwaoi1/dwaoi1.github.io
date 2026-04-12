@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import './CardTable.css';
 import PriceModal from './PriceModal';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
@@ -53,54 +55,43 @@ const CardTable = ({ data }) => {
     return character.replace(/\s*\(parallel\)\s*$/i, '');
   };
 
-  const wishlistStorageKey = 'opcg-wishlist';
-
   useEffect(() => {
-    let isMounted = true;
-    const loadWishlist = async () => {
-      try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/wishlist.json`, {
-          cache: 'no-store',
-        });
-        if (!response.ok) {
-          throw new Error(`Wishlist request failed: ${response.status}`);
+    // Listen for realtime updates to the global wishlist from Firestore
+    const wishlistRef = doc(db, 'wishlists', 'global');
+    const unsubscribe = onSnapshot(wishlistRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (Array.isArray(data.items)) {
+          const normalized = data.items.map(getCardFilename).filter(Boolean);
+          setWishlist(normalized);
         }
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          const normalized = data.map(getCardFilename).filter(Boolean);
-          if (isMounted) {
-            setWishlist(normalized);
-          }
-          localStorage.setItem(wishlistStorageKey, JSON.stringify(normalized));
-          return;
-        }
-        console.warn('Wishlist data is not an array.');
-      } catch (error) {
-        const saved = localStorage.getItem(wishlistStorageKey);
-        if (saved) {
-          try {
-            const parsed = JSON.parse(saved);
-            if (Array.isArray(parsed) && isMounted) {
-              const normalized = parsed.map(getCardFilename).filter(Boolean);
-              setWishlist(normalized);
-            }
-          } catch (storageError) {
-            console.warn('Unable to parse wishlist data.', storageError);
-          }
-        }
+      } else {
+        // If the document doesn't exist yet, we can start with an empty array
+        setWishlist([]);
       }
-    };
+    }, (error) => {
+      console.warn('Error listening to wishlist:', error);
+    });
 
-    loadWishlist();
-
-    return () => {
-      isMounted = false;
-    };
+    return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem(wishlistStorageKey, JSON.stringify(wishlist));
-  }, [wishlist]);
+  const toggleWishlist = async (cardId) => {
+    const newWishlist = wishlist.includes(cardId)
+      ? wishlist.filter((id) => id !== cardId)
+      : [...wishlist, cardId];
+    
+    // Optimistically update local state
+    setWishlist(newWishlist);
+
+    // Save to Firestore
+    try {
+      const wishlistRef = doc(db, 'wishlists', 'global');
+      await setDoc(wishlistRef, { items: newWishlist });
+    } catch (error) {
+      console.error('Error updating wishlist in Firestore:', error);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -276,15 +267,7 @@ const CardTable = ({ data }) => {
     return pageNumbers;
   };
 
-  const toggleWishlist = (cardId) => {
-    setWishlist((prev) => {
-      const isSaved = prev.includes(cardId);
-      if (isSaved) {
-        return prev.filter((id) => id !== cardId);
-      }
-      return [...prev, cardId];
-    });
-  };
+
 
   const handleWishlistExport = () => {
     const data = JSON.stringify(wishlist, null, 2);
