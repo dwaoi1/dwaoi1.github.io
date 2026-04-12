@@ -86,6 +86,17 @@ const PriceMatching = ({ cardData }) => {
     fetchData();
   }, []);
 
+  const getImageCode = (url) => {
+    if (!url || typeof url !== 'string') return '';
+    try {
+      const path = url.split('?')[0];
+      const filename = path.substring(path.lastIndexOf('/') + 1);
+      return filename.split('.')[0];
+    } catch (e) {
+      return '';
+    }
+  };
+
   const confidenceMatches = useMemo(() => {
     if (!priceHistory || !cardData) return [];
     const matches = [];
