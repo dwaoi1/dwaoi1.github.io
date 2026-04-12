@@ -101,8 +101,8 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(5, minmax(128px, 1fr));
+  gap: 16px;
 }
 
 .card-grid-item {
@@ -111,28 +111,39 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  border-radius: 0;
+  border-radius: 8px; /* Ensure rounding for the card area */
   border: none;
   background-color: transparent;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card-grid-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-}
-
-.card-image-shell {
-  position: relative;
-  display: inline-flex;
-  line-height: 0;
+  overflow: hidden; /* Ensure content stays inside */
 }
 
 .card-grid-item img {
   width: 100%;
-  max-width: 250px;
+  max-width: 190px;
   height: auto;
   object-fit: contain;
+  border-radius: 8px;
+}
+
+.wishlist-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  color: #ff5c8a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .card-grid-item a {
