@@ -383,26 +383,23 @@ const CardTable = ({ data }) => {
                     style={{
                       width: '100%',
                       maxWidth: '190px',
-                      aspectRatio: '2/3',
                       position: 'relative',
-                      backgroundColor: '#1a1d27',
-                      borderRadius: '8px',
-                      overflow: 'hidden'
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center'
                     }}
                   >
-                    <div className="heart-wrapper">
-                      <button
-                        className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          toggleWishlist(item.cardId);
-                        }}
-                        aria-pressed={isWishlisted}
-                        aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-                      >
-                        {isWishlisted ? '♥' : '♡'}
-                      </button>
-                    </div>
+                    <button
+                      className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        toggleWishlist(item.cardId);
+                      }}
+                      aria-pressed={isWishlisted}
+                      aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                    >
+                      {isWishlisted ? '♥' : '♡'}
+                    </button>
                     <button
                       type="button"
                       className="card-image-btn"
@@ -416,7 +413,6 @@ const CardTable = ({ data }) => {
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
                       style={{
                         width: '100%',
-                        height: '100%',
                         display: 'block',
                         padding: 0,
                         border: 'none',
@@ -435,9 +431,9 @@ const CardTable = ({ data }) => {
                         referrerPolicy="no-referrer"
                         style={{
                           width: '100%',
-                          height: '100%',
-                          objectFit: 'contain',
-                          display: 'block'
+                          height: 'auto',
+                          display: 'block',
+                          borderRadius: '8px'
                         }}
                         onError={(e) => {
                           const currentSrc = e.target.src;
