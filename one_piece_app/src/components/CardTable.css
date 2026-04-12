@@ -101,8 +101,8 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(128px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  gap: 20px;
 }
 
 .card-grid-item {
@@ -130,7 +130,7 @@
 
 .card-grid-item img {
   width: 100%;
-  max-width: 190px;
+  max-width: 250px;
   height: auto;
   object-fit: contain;
 }
