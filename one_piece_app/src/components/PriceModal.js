@@ -281,7 +281,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
             <img
               src={
                 (item.Picture.includes('onepiece-cardgame.com'))
-                  ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`
+                  ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&w=460&output=webp&default=https://placehold.co/150?text=No+Image`
                   : item.Picture
               }
               alt={item.Character}
