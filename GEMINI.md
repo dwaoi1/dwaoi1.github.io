@@ -19,26 +19,14 @@ This document defines the foundational mandates and technical standards for the 
 - **Mandate:** Images sourced from official domains (e.g., `onepiece-cardgame.com` and its subdomains) **MUST** be proxied via `wsrv.nl` or `images.weserv.nl`.
 - **Mandate:** All card images **MUST** implement a fallback chain that includes the `cardrushImage` field from the price history data if the official/proxied image fails to load.
 - **Mandate:** **DO NOT** use `crossOrigin="anonymous"` on images from official domains, as it can trigger CORS/CORP blocking even through proxies.
-- **Pattern:**
-  ```javascript
-  // Default src uses primary proxy
-  src={`https://images.weserv.nl/?url=${encodeURIComponent(originalUrl.split('?')[0])}&output=webp&default=https://via.placeholder.com/150?text=No+Image`}
-  
-  // onError handles fallback to secondary proxy and then Cardrush sample image
-  onError={(e) => {
-    const currentSrc = e.target.src;
-    const historyEntry = priceHistory[item.imageCode] || priceHistory[item.cardCode];
-    const crFallback = historyEntry?.cardrushImage;
+- **Mandate:** All new components (e.g., modals) displaying images **MUST** re-use established proxy and fallback patterns. Direct image loading from official domains is strictly prohibited.
+- **Mandate:** To optimize performance, images should leverage browser caching by reusing URLs from the main grid in other components like modals, instead of generating new proxied URLs with different parameters.
 
-    if (currentSrc.includes('images.weserv.nl')) {      e.target.src = `https://wsrv.nl/?url=${encodedUrl}&...`;
-    } else if (currentSrc.includes('wsrv.nl')) {
-      if (crFallback) e.target.src = crFallback;
-      else e.target.src = 'https://corsproxy.io/?...';
-    }
-    // ... continue chain to placeholder
-  }
-  ```
-- **Rationale:** Direct requests to official image servers are frequently blocked by CORP (Cross-Origin Resource Policy) and hotlink protection. Cardrush images provide a reliable community-hosted fallback.
+### Frontend Performance Standards
+- **Mandate:** New features must maintain parity with existing performance levels.
+- **Mandate:** Avoid adding heavy state dependencies or excessive re-renders when implementing interactive components like modals or data-analysis grids.
+- **Mandate:** Test image loading after every feature implementation to ensure established proxy and fallback behaviors are not disrupted.
+
 
 ## Maintenance Guidelines
 
