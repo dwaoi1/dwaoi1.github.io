@@ -167,22 +167,21 @@ def build_history_by_code(price_files):
 def classify_entry(e):
     """Classify a Cardrush entry into variant categories based on its name."""
     name = e.get('name') or ''
+    is_asia = 'Asia' in name
     
     # Classification order matters!
     if '未開封' in name:
-        return 'sealed'
+        return 'sealedAsia' if is_asia else 'sealed'
     if '金文字' in name:
         return 'goldText'
     
     # Specific parallel markings
-    # 'パラレル' is the general term for Parallel
-    # '漫画' indicates Manga art (a type of parallel)
-    # 'SP' indicates Special variant
-    # 'シリアル' indicates Serial numbered
-    if any(sig in name for i, sig in enumerate(['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ', 'フルアート/foil'])):
+    if any(sig in name for sig in ['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ', 'フルアート/foil']):
+        if is_asia:
+            return 'parallelAsia'
         return 'parallel'
         
-    return 'base'
+    return 'asia' if is_asia else 'base'
 
 
 def build_price_history(history_by_code, mappings=None):
@@ -250,7 +249,7 @@ def build_price_history(history_by_code, mappings=None):
                 continue
 
             # Group entries by classification
-            groups = {'sealed': [], 'goldText': [], 'parallel': [], 'base': []}
+            groups = {'sealed': [], 'goldText': [], 'parallel': [], 'sealedAsia': [], 'parallelAsia': [], 'asia': [], 'base': []}
             for e in current_entries:
                 groups[classify_entry(e)].append(e)
 
@@ -270,13 +269,13 @@ def build_price_history(history_by_code, mappings=None):
                     'count': 0,
                 }
 
-            for key in ['sealed', 'goldText', 'parallel']:
+            for key in ['sealed', 'goldText', 'parallel', 'sealedAsia', 'parallelAsia', 'asia']:
                 g = price_group(groups[key])
                 if g:
                     hist_entry[key] = g
 
             # Only include if there is some price data
-            if any(hist_entry.get(k) is not None for k in ['minPrice', 'sealed', 'goldText', 'parallel']):
+            if any(hist_entry.get(k) is not None for k in ['minPrice', 'sealed', 'goldText', 'parallel', 'sealedAsia', 'parallelAsia', 'asia']):
                 history.append(hist_entry)
 
         history.sort(key=lambda x: x['date'])
@@ -374,7 +373,7 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
                 # For base overrides: entries whose name/URL is in the pattern set go to
                 # BASE price; all other entries are classified for sealed/goldText/parallel
                 # subgroups so variant toggles still work on the base card view.
-                groups = {'sealed': [], 'goldText': [], 'parallel': [], 'base': []}
+                groups = {'sealed': [], 'goldText': [], 'parallel': [], 'sealedAsia': [], 'parallelAsia': [], 'asia': [], 'base': []}
                 for e in entries:
                     if is_match(e):
                         groups['base'].append(e)
@@ -386,7 +385,7 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
                 matching = [e for e in entries if is_match(e)]
                 if not matching:
                     continue
-                groups = {'sealed': [], 'goldText': [], 'parallel': [], 'base': []}
+                groups = {'sealed': [], 'goldText': [], 'parallel': [], 'sealedAsia': [], 'parallelAsia': [], 'asia': [], 'base': []}
                 for e in matching:
                     groups[classify_entry(e)].append(e)
 
@@ -408,13 +407,13 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
                     'count': 0,
                 }
 
-            for key in ['sealed', 'goldText', 'parallel']:
+            for key in ['sealed', 'goldText', 'parallel', 'sealedAsia', 'parallelAsia', 'asia']:
                 g = price_group(groups[key])
                 if g:
                     hist_entry[key] = g
 
             # Only include the entry if there is at least one valid price
-            if any(hist_entry.get(k) is not None for k in ['minPrice', 'sealed', 'goldText', 'parallel']):
+            if any(hist_entry.get(k) is not None for k in ['minPrice', 'sealed', 'goldText', 'parallel', 'sealedAsia', 'parallelAsia', 'asia']):
                 history.append(hist_entry)
 
         history.sort(key=lambda x: x['date'])

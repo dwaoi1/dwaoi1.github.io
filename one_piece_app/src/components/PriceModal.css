@@ -207,8 +207,12 @@
   background-color: #f6e05e;
 }
 
-.variant-filter-dot--parallel {
+.variant-filter-dot--asia {
   background-color: #9f7aea;
+}
+
+.variant-filter-dot--sealed-asia {
+  background-color: #48bb78;
 }
 
 /* Responsive: stack vertically on narrow screens */
