@@ -399,6 +399,12 @@ const CardTable = ({ data }) => {
                     <button
                       type="button"
                       className="card-image-btn"
+                      onMouseEnter={() => {
+                        if (item.Picture.includes('onepiece-cardgame.com')) {
+                          const img = new Image();
+                          img.src = `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&w=460&output=webp`;
+                        }
+                      }}
                       onClick={() => setPriceModal(item)}
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
                       style={{
