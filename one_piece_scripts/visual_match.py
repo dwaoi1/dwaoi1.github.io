@@ -92,8 +92,40 @@ def find_match_score(img1_path: str, img2_path: str) -> tuple[int, float]:
 
 def is_cr_parallel(cr_entry):
     name = cr_entry.get('name') or ''
-    # Specific markings from build_price_data.py that indicate a variant/parallel
-    return any(sig in name for sig in ['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ'])
+    rarity = cr_entry.get('rarity') or ''
+    # Specific markings that indicate a variant/parallel
+    parallel_signatures = [
+        'パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ', 
+        'フルアート', 'foil', 'ホイル', '白黒版', '★無し'
+    ]
+    return any(sig in name for sig in parallel_signatures) or '/P' in rarity
+
+def has_st_star(img_path):
+    """Detect the presence of a star icon in the bottom-right region of ST cards."""
+    try:
+        img = cv2.imread(img_path)
+        if img is None: return False
+        h, w = img.shape[:2]
+        
+        # Region: 76~95.3% horizontal, 92.4~96.7% vertical
+        x1, x2 = int(w * 0.76), int(w * 0.953)
+        y1, y2 = int(h * 0.924), int(h * 0.967)
+        
+        crop = img[y1:y2, x1:x2]
+        if crop.size == 0: return False
+        
+        # Convert to grayscale and threshold to find bright pixels (the star)
+        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+        _, thresh = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY)
+        
+        white_pixels = cv2.countNonZero(thresh)
+        total_pixels = gray.size
+        ratio = white_pixels / total_pixels
+        
+        # A star in this region usually takes up at least 5% of the area
+        return ratio > 0.05
+    except Exception:
+        return False
 
 def extract_illust_name(cr_name):
     """Extract illustrator name from Cardrush title (e.g. illust:Anderson -> Anderson)."""
@@ -129,13 +161,18 @@ def get_ocr_text(img_path):
         return ""
 
 def match_worker(off_img_path, cr_entries_with_paths, img_code, off_ocr_text):
-    """Worker function for matching, using both SIFT and illustrator name validation."""
+    """Worker function for matching, using SIFT, OCR, and ST-specific star detection."""
     best_inliers = 0
     best_confidence = 0.0
     best_cr = None
     
     is_off_parallel = '_p' in img_code
     
+    # ST-specific star detection to refine parallel status
+    if img_code.startswith('ST') and off_img_path:
+        if has_st_star(off_img_path):
+            is_off_parallel = True
+
     for cr_entry, cr_path in cr_entries_with_paths:
         if not cr_path: continue
         
