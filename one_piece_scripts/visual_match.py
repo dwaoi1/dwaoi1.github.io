@@ -89,20 +89,37 @@ def find_match_score(img1_path: str, img2_path: str) -> tuple[int, float]:
             
     return 0, 0.0
 
-def match_worker(off_img_path, cr_entries_with_paths):
+def is_cr_parallel(cr_entry):
+    name = cr_entry.get('name') or ''
+    # Specific markings from build_price_data.py that indicate a variant/parallel
+    return any(sig in name for sig in ['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ'])
+
+def match_worker(off_img_path, cr_entries_with_paths, img_code):
     """Worker function for parallel matching."""
     best_inliers = 0
     best_confidence = 0.0
     best_cr = None
     
+    is_off_parallel = '_p' in img_code
+    
     for cr_entry, cr_path in cr_entries_with_paths:
         if not cr_path: continue
+        
+        # Filter out obvious mismatches between base cards and parallel variants
+        if is_off_parallel != is_cr_parallel(cr_entry):
+            continue
+            
         inliers, confidence = find_match_score(off_img_path, cr_path)
         if inliers > best_inliers:
             best_inliers = inliers
             best_confidence = confidence
             best_cr = cr_entry
             
+    # If we didn't find any matches because of the strict filtering, 
+    # we could theoretically fallback, but strict filtering saves manual review time.
+    if best_cr is None:
+        return 0, 0.0, None
+        
     return best_inliers, best_confidence, best_cr
 
 def atomic_write_json(file_path, data, **kwargs):
@@ -223,7 +240,7 @@ def main():
             cr_entries_with_paths = [(cr, url_to_path.get(cr.get('image'))) for cr in cr_entries]
             
             img_code = get_image_code(off_card['Picture'])
-            f = executor.submit(match_worker, off_path, cr_entries_with_paths)
+            f = executor.submit(match_worker, off_path, cr_entries_with_paths, img_code)
             f.img_code = img_code
             futures.append(f)
 
