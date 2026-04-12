@@ -39,27 +39,27 @@ const PriceMatching = ({ cardData }) => {
       console.error('Error updating validation in Firestore:', error);
     });
 
-    // Auto-advance to the next unvalidated match
-    const currentIndex = confidenceMatches.findIndex(m => m.code === code);
+    // Auto-advance logic
+    const currentIndex = allIssues.findIndex(m => m.code === code);
     if (currentIndex !== -1) {
       let nextMatch = null;
       // Look forward
-      for (let i = currentIndex + 1; i < confidenceMatches.length; i++) {
-        if (!newValidations[confidenceMatches[i].code]) {
-          nextMatch = confidenceMatches[i];
+      for (let i = currentIndex + 1; i < allIssues.length; i++) {
+        if (!newValidations[allIssues[i].code]) {
+          nextMatch = allIssues[i];
           break;
         }
       }
       // If none found forward, look from the beginning
       if (!nextMatch) {
         for (let i = 0; i < currentIndex; i++) {
-          if (!newValidations[confidenceMatches[i].code]) {
-            nextMatch = confidenceMatches[i];
+          if (!newValidations[allIssues[i].code]) {
+            nextMatch = allIssues[i];
             break;
           }
         }
       }
-      setSelectedMatch(nextMatch); // will be null if all are validated, closing the modal
+      setSelectedMatch(nextMatch);
     }
   };
 
@@ -108,15 +108,17 @@ const PriceMatching = ({ cardData }) => {
     return map;
   }, [cardData]);
 
-  const confidenceMatches = useMemo(() => {
+  const allIssues = useMemo(() => {
     if (!priceHistory || !cardData) return [];
-    const matches = [];
+    const issues = [];
+
+    // 1. Add confidence-based matches
     Object.entries(priceHistory).forEach(([code, data]) => {
-      // Only show matches that haven't been validated yet
       if (data.confidence !== undefined && !matchValidations[code]) {
         const cardMatch = cardLookup.get(code);
-        matches.push({
+        issues.push({
           code,
+          type: 'confidence',
           confidence: data.confidence,
           name: cardMatch?.Character || 'Unknown',
           picture: cardMatch?.Picture || null,
@@ -125,8 +127,36 @@ const PriceMatching = ({ cardData }) => {
         });
       }
     });
-    return matches.sort((a, b) => a.confidence - b.confidence);
-  }, [priceHistory, cardData, matchValidations, cardLookup]);
+
+    // 2. Add cards with multiple prices from unmatchedData
+    if (unmatchedData && unmatchedData.multiplePrices) {
+      unmatchedData.multiplePrices.forEach(item => {
+        // Only show if not already validated and not already in matches
+        if (!matchValidations[item.cardCode] && !issues.some(i => i.code === item.cardCode)) {
+          // Find the first image code associated with this card to show an image
+          const firstImgCode = item.imageCodes && item.imageCodes[0];
+          const cardMatch = cardLookup.get(firstImgCode) || cardData.find(c => c.Picture.includes(item.cardCode));
+          
+          issues.push({
+            code: item.cardCode,
+            type: 'multiple',
+            confidence: 0, // Special value for sorting
+            name: cardMatch?.Character || 'Multiple Prices',
+            picture: cardMatch?.Picture || null,
+            cardrushImage: item.entries[0]?.image || null,
+            entries: item.entries,
+            priceCount: item.priceCount
+          });
+        }
+      });
+    }
+
+    // Sort: Multiple price issues first, then by confidence score
+    return issues.sort((a, b) => {
+      if (a.type !== b.type) return a.type === 'multiple' ? -1 : 1;
+      return a.confidence - b.confidence;
+    });
+  }, [priceHistory, cardData, matchValidations, cardLookup, unmatchedData]);
 
   if (loading) return <div className="price-matching-loading">Loading price matching data...</div>;
 
@@ -134,14 +164,14 @@ const PriceMatching = ({ cardData }) => {
     <div className="price-matching-container">
       <h1>Price Matching Analysis</h1>
       <p className="description">
-        This page shows potential issues with price matching and the confidence scores for automated image-based matches.
+        This page shows potential issues with price matching. Green = Correct, Red = Incorrect.
       </p>
 
       <section className="confidence-section">
-        <h2>Automated Match Confidence</h2>
-        <p className="sub-description">Showing {confidenceMatches.length} automated matches. Lower percentages may indicate incorrect mappings.</p>
+        <h2>Validation Queue</h2>
+        <p className="sub-description">Showing {allIssues.length} items requiring review. Multiple price issues are shown first.</p>
         <div className="confidence-grid">
-          {confidenceMatches.map(match => {
+          {allIssues.map(match => {
             const validationStatus = matchValidations[match.code];
             let statusColor = '';
             if (validationStatus === 'correct') statusColor = '4px solid #4CAF50';
@@ -150,14 +180,18 @@ const PriceMatching = ({ cardData }) => {
             return (
               <div 
                 key={match.code} 
-                className={`confidence-card ${match.confidence < 70 ? 'low' : match.confidence < 85 ? 'medium' : 'high'}`}
+                className={`confidence-card ${match.type === 'multiple' ? 'multiple' : (match.confidence < 70 ? 'low' : match.confidence < 85 ? 'medium' : 'high')}`}
                 onClick={() => setSelectedMatch(match)}
                 style={{ cursor: 'pointer', borderBottom: statusColor }}
               >
-                <div className="confidence-value">{Math.round(match.confidence)}%</div>
+                <div className="confidence-value">
+                  {match.type === 'multiple' ? '!!!' : `${Math.round(match.confidence)}%`}
+                </div>
                 <div className="confidence-details">
                   <div className="match-code">{match.code}</div>
-                  <div className="match-name">{match.name}</div>
+                  <div className="match-name">
+                    {match.type === 'multiple' ? `Ambiguous (${match.priceCount} prices)` : match.name}
+                  </div>
                 </div>
               </div>
             );
@@ -208,11 +242,35 @@ const PriceMatching = ({ cardData }) => {
                 ) : (
                   <div style={{ padding: '40px', background: '#2a2e3d', borderRadius: '8px' }}>No match image available</div>
                 )}
-                <p><strong>Confidence:</strong> {Math.round(selectedMatch.confidence || 0)}%</p>
+                {selectedMatch.type === 'multiple' ? (
+                  <p><strong>Status:</strong> Ambiguous Match ({selectedMatch.priceCount} prices found)</p>
+                ) : (
+                  <p><strong>Confidence:</strong> {Math.round(selectedMatch.confidence || 0)}%</p>
+                )}
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+            {selectedMatch.type === 'multiple' && selectedMatch.entries && (
+              <div style={{ marginTop: '20px', background: '#1a1d26', padding: '15px', borderRadius: '8px', border: '1px solid #3a4055' }}>
+                <strong style={{ display: 'block', marginBottom: '10px', color: '#63b3ed' }}>Found Multiple Price Entries:</strong>
+                <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                  {selectedMatch.entries.map((e, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', padding: '8px', borderBottom: i < selectedMatch.entries.length - 1 ? '1px solid #2d3348' : 'none' }}>
+                      <img src={e.image} alt="" style={{ width: '40px', height: 'auto', borderRadius: '4px' }} />
+                      <div style={{ textAlign: 'left', fontSize: '0.9rem' }}>
+                        <div style={{ color: '#e2e8f0' }}>{e.name}</div>
+                        <div style={{ color: '#68d391', fontWeight: 'bold' }}>{e.amount}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p style={{ fontSize: '0.8rem', color: '#7a849a', marginTop: '10px', fontStyle: 'italic' }}>
+                  Note: Marking "Incorrect" will move this card to the bottom of the list for later manual mapping.
+                </p>
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', margin: '20px 0', flexWrap: 'wrap' }}>
               <button 
                 style={{ 
                   padding: '12px 24px', 

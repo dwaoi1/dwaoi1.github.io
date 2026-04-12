@@ -167,7 +167,7 @@ def build_history_by_code(price_files):
 def classify_entry(e):
     """Classify a Cardrush entry into variant categories based on its name."""
     name = e.get('name') or ''
-    is_asia = 'Asia' in name
+    is_asia = 'asia' in name.lower()
     
     # Classification order matters!
     if '未開封' in name:

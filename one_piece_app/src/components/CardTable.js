@@ -269,28 +269,9 @@ const CardTable = ({ data }) => {
 
 
 
-  const handleWishlistExport = () => {
-    const data = JSON.stringify(wishlist, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'wishlist.json';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="card-table-container">
       <div className="filters">
-        <div className="filter-group">
-          <label>Wishlist export:</label>
-          <button type="button" className="reset-btn" onClick={handleWishlistExport}>
-            Download wishlist JSON
-          </button>
-        </div>
         <div className="filter-group">
           <label htmlFor="search-input">Search:</label>
           <input
