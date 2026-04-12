@@ -128,8 +128,8 @@
 
 .wishlist-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 15px;
+  right: 15px;
   z-index: 10;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid #ddd;
