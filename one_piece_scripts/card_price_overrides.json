@@ -6135,6 +6135,26 @@
     "OP14-014_p1": [
       "https://files.cardrush.media/onepiece/ocha_products/12545.webp",
       "ユースタス・キッド(illust:DAI-XT.)"
+    ],
+    "OP09-093": [
+      "マーシャル・D・ティーチ",
+      "https://files.cardrush.media/onepiece/ocha_products/8325.webp"
+    ],
+    "OP01-035": [
+      "お菊",
+      "https://files.cardrush.media/onepiece/ocha_products/3508.webp"
+    ],
+    "ST11-004": [
+      "新時代",
+      "https://files.cardrush.media/onepiece/ocha_products/2238.webp"
+    ],
+    "ST03-007": [
+      "戦桃丸",
+      "https://files.cardrush.media/onepiece/ocha_products/3509.webp"
+    ],
+    "OP09-013": [
+      "ヤソップ",
+      "https://files.cardrush.media/onepiece/ocha_products/7984.webp"
     ]
   },
   "confidence_mappings": {
@@ -7671,7 +7691,12 @@
     "ST01-005_p1": 95.1,
     "ST01-005_p3": 96.1,
     "OP14-014": 94.9,
-    "OP14-014_p1": 93.9
+    "OP14-014_p1": 93.9,
+    "OP09-093": 75.1,
+    "OP01-035": 61.5,
+    "ST11-004": 54.6,
+    "ST03-007": 75.0,
+    "OP09-013": 57.7
   },
   "asOf": "2026-03-31",
   "multiplePrices": [
