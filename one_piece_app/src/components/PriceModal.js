@@ -2,11 +2,12 @@ import React, { useMemo, useState, useEffect, useRef } from 'react';
 import './PriceModal.css';
 
 const TIME_RANGES = [
-  { label: '14d', days: 14 },
   { label: '30d', days: 30 },
   { label: '60d', days: 60 },
   { label: '90d', days: 90 },
   { label: '180d', days: 180 },
+  { label: '1y', days: 365 },
+  { label: '2y', days: 730 },
 ];
 
 const CHART_W = 700;
@@ -63,7 +64,7 @@ function makeTooltipLabel(prefix, p) {
 }
 
 const PriceModal = ({ item, priceHistory, onClose }) => {
-  const [timeRange, setTimeRange] = useState(30);
+  const [timeRange, setTimeRange] = useState(180);
   const [showSealed, setShowSealed] = useState(true);
   const [showGoldText, setShowGoldText] = useState(true);
   const [tooltip, setTooltip] = useState(null); // { x, y, text }
