@@ -5,6 +5,7 @@ const PriceMatching = ({ cardData }) => {
   const [unmatchedData, setUnmatchedData] = useState(null);
   const [priceHistory, setPriceHistory] = useState({});
   const [loading, setLoading] = useState(true);
+  const [selectedMatch, setSelectedMatch] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,18 +42,21 @@ const PriceMatching = ({ cardData }) => {
   };
 
   const confidenceMatches = useMemo(() => {
+    if (!priceHistory || !cardData) return [];
     const matches = [];
     Object.entries(priceHistory).forEach(([code, data]) => {
       if (data.confidence !== undefined) {
+        const cardMatch = cardData.find(c => getImageCode(c.Picture) === code);
         matches.push({
           code,
           confidence: data.confidence,
-          // Try to find the card name from cardData if possible
-          name: cardData.find(c => getImageCode(c.Picture) === code)?.Character || 'Unknown'
+          name: cardMatch?.Character || 'Unknown',
+          picture: cardMatch?.Picture || null,
+          samples: data.samples || []
         });
       }
     });
-    return matches.sort((a, b) => a.confidence - b.confidence); // Show lower confidence first
+    return matches.sort((a, b) => a.confidence - b.confidence);
   }, [priceHistory, cardData]);
 
   if (loading) return <div className="price-matching-loading">Loading price matching data...</div>;
@@ -69,7 +73,12 @@ const PriceMatching = ({ cardData }) => {
         <p className="sub-description">Showing {confidenceMatches.length} automated matches. Lower percentages may indicate incorrect mappings.</p>
         <div className="confidence-grid">
           {confidenceMatches.map(match => (
-            <div key={match.code} className={`confidence-card ${match.confidence < 70 ? 'low' : match.confidence < 85 ? 'medium' : 'high'}`}>
+            <div 
+              key={match.code} 
+              className={`confidence-card ${match.confidence < 70 ? 'low' : match.confidence < 85 ? 'medium' : 'high'}`}
+              onClick={() => setSelectedMatch(match)}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="confidence-value">{Math.round(match.confidence)}%</div>
               <div className="confidence-details">
                 <div className="match-code">{match.code}</div>
@@ -79,6 +88,35 @@ const PriceMatching = ({ cardData }) => {
           ))}
         </div>
       </section>
+
+      {selectedMatch && (
+        <div className="price-matching-overlay" onClick={() => setSelectedMatch(null)}>
+          <div className="price-matching-modal" onClick={e => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setSelectedMatch(null)}>✕</button>
+            <h2>Match Details: {selectedMatch.code || 'N/A'}</h2>
+            {selectedMatch.picture ? (
+              <img 
+                src={selectedMatch.picture.includes('onepiece-cardgame.com') 
+                  ? `https://wsrv.nl/?url=${encodeURIComponent(selectedMatch.picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`
+                  : selectedMatch.picture
+                } 
+                alt={selectedMatch.name || 'Card image'} 
+                style={{ maxWidth: '100%', marginBottom: '15px' }} 
+              />
+            ) : (
+              <div style={{ padding: '20px', textAlign: 'center', background: '#333' }}>No image available</div>
+            )}
+            <p><strong>Mapped Name:</strong> {selectedMatch.name || 'Unknown'}</p>
+            <p><strong>Confidence:</strong> {Math.round(selectedMatch.confidence || 0)}%</p>
+            {selectedMatch.samples && selectedMatch.samples.length > 0 && (
+              <div>
+                <strong>Mapping Patterns:</strong>
+                <ul>{selectedMatch.samples.map((s, i) => <li key={i}>{s}</li>)}</ul>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {unmatchedData && (
         <section className="unmatched-section">
