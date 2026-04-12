@@ -104,7 +104,7 @@ def extract_illust_name(cr_name):
 
 _ocr_reader = None
 def get_ocr_text(img_path):
-    """Run OCR on bottom-right and right-edge regions to find text (illustrator names)."""
+    """Run OCR on the right-edge region to find text (illustrator names)."""
     global _ocr_reader
     try:
         if _ocr_reader is None:
@@ -114,16 +114,15 @@ def get_ocr_text(img_path):
         if img is None: return ""
         h, w = img.shape[:2]
         
-        # Crop 1: Bottom Right (horizontal)
-        br = img[int(h*0.7):, int(w*0.4):]
-        # Crop 2: Right Edge (vertical, rotate to horizontal)
-        re_edge = img[:, int(w*0.85):]
-        re_rot = cv2.rotate(re_edge, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # Take only the right 8% of the card horizontally
+        re_edge = img[:, int(w*0.92):]
+        # Rotate clockwise so the text reads left-to-right normally
+        re_rot = cv2.rotate(re_edge, cv2.ROTATE_90_CLOCKWISE)
+        # Upscale the image to improve OCR accuracy on tiny text
+        re_up = cv2.resize(re_rot, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
         
-        text = ""
-        for roi in [br, re_rot]:
-            results = _ocr_reader.readtext(roi)
-            text += " " + " ".join([r[1].lower() for r in results])
+        results = _ocr_reader.readtext(re_up)
+        text = " ".join([r[1].lower() for r in results])
         return text
     except Exception as e:
         print(f"OCR Error for {img_path}: {e}")
