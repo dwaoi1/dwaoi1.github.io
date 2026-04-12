@@ -97,13 +97,24 @@ const PriceMatching = ({ cardData }) => {
     }
   };
 
+  // Create a lookup map for card data by image code once
+  const cardLookup = useMemo(() => {
+    if (!cardData) return new Map();
+    const map = new Map();
+    cardData.forEach(card => {
+      const code = getImageCode(card.Picture);
+      if (code) map.set(code, card);
+    });
+    return map;
+  }, [cardData]);
+
   const confidenceMatches = useMemo(() => {
     if (!priceHistory || !cardData) return [];
     const matches = [];
     Object.entries(priceHistory).forEach(([code, data]) => {
       // Only show matches that haven't been validated yet
       if (data.confidence !== undefined && !matchValidations[code]) {
-        const cardMatch = cardData.find(c => getImageCode(c.Picture) === code);
+        const cardMatch = cardLookup.get(code);
         matches.push({
           code,
           confidence: data.confidence,
@@ -115,7 +126,7 @@ const PriceMatching = ({ cardData }) => {
       }
     });
     return matches.sort((a, b) => a.confidence - b.confidence);
-  }, [priceHistory, cardData, matchValidations]);
+  }, [priceHistory, cardData, matchValidations, cardLookup]);
 
   if (loading) return <div className="price-matching-loading">Loading price matching data...</div>;
 
