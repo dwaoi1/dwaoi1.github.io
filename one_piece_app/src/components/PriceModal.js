@@ -67,6 +67,8 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const [timeRange, setTimeRange] = useState(180);
   const [showSealed, setShowSealed] = useState(true);
   const [showGoldText, setShowGoldText] = useState(true);
+  const [showAsia, setShowAsia] = useState(true);
+  const [showSealedAsia, setShowSealedAsia] = useState(true);
   const [tooltip, setTooltip] = useState(null); // { x, y, text }
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
@@ -86,9 +88,6 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
 
   // Look up price history by image code first (used when per-image overrides were built).
   // Fall back to the shared card code for both parallel and base cards.
-  // When a parallel card (_p suffix) falls back to the base card's history, the
-  // effectiveHistory computation shows only the 'parallel' subgroup data so that
-  // the base card's (non-parallel) prices are never shown for a parallel variant.
   const hasImageCodeEntry = Boolean(priceHistory[imageCode]);
   const histData = priceHistory[imageCode] || priceHistory[cardCode];
 
@@ -96,6 +95,8 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   useEffect(() => {
     setShowSealed(true);
     setShowGoldText(true);
+    setShowAsia(true);
+    setShowSealedAsia(true);
   }, [cardCode]);
 
   const filteredHistory = useMemo(() => {
@@ -110,17 +111,12 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   const hasSealed = useMemo(() => filteredHistory.some(p => p.sealed), [filteredHistory]);
   const hasGoldText = useMemo(() => filteredHistory.some(p => p.goldText), [filteredHistory]);
   const hasParallel = useMemo(() => filteredHistory.some(p => p.parallel), [filteredHistory]);
+  const hasAsia = useMemo(() => filteredHistory.some(p => p.asia || p.parallelAsia), [filteredHistory]);
+  const hasSealedAsia = useMemo(() => filteredHistory.some(p => p.sealedAsia), [filteredHistory]);
 
   // Base price history.
   // For parallel card images (_p suffix) that have parallel subgroup data:
   //   show only p.parallel, since the user wants the parallel-specific price.
-  // For parallel cards falling back to the base card's history without parallel data:
-  //   return nothing rather than displaying the base card's (non-parallel) prices.
-  //   This preserves correctness for override-specific entries (_p with base prices).
-  // For base cards: base prices only.
-  //   Sealed/goldText prices are shown as separate coloured lines (see below).
-  //   Parallel prices (p.parallel) are intentionally excluded because those prices
-  //   belong to _p variant images, not the base card.
   const effectiveHistory = useMemo(() => {
     if (isParallelCard && hasParallel) {
       return filteredHistory
@@ -148,9 +144,6 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   }, [filteredHistory, isParallelCard, hasParallel, hasImageCodeEntry]);
 
   // Sealed price series – shown as a separate orange line on the chart.
-  // For _p cards falling back to base history (no override entry), exclude the base
-  // card's sealed prices; for _p cards with their own override entry the sealed
-  // subgroup belongs specifically to that card image and should be shown.
   const sealedSeries = useMemo(() => {
     if ((isParallelCard && !hasImageCodeEntry) || !showSealed) return [];
     return filteredHistory
@@ -164,7 +157,6 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
   }, [filteredHistory, isParallelCard, hasImageCodeEntry, showSealed]);
 
   // Gold text price series – shown as a separate gold/yellow line on the chart.
-  // Same rule as sealedSeries: suppress for _p fallback cards, show for _p overrides.
   const goldTextSeries = useMemo(() => {
     if ((isParallelCard && !hasImageCodeEntry) || !showGoldText) return [];
     return filteredHistory
@@ -177,12 +169,41 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
       }));
   }, [filteredHistory, isParallelCard, hasImageCodeEntry, showGoldText]);
 
+  // Asia (Opened) series – shown as a separate purple line.
+  const asiaSeries = useMemo(() => {
+    if ((isParallelCard && !hasImageCodeEntry) || !showAsia) return [];
+    return filteredHistory
+      .filter(p => p.asia || p.parallelAsia)
+      .map(p => {
+        const d = p.parallelAsia || p.asia;
+        return {
+          date: p.date,
+          minPrice: d.minPrice,
+          maxPrice: d.maxPrice,
+          count: d.count,
+        };
+      });
+  }, [filteredHistory, isParallelCard, hasImageCodeEntry, showAsia]);
+
+  // Asia (Sealed) series – shown as a separate green line.
+  const sealedAsiaSeries = useMemo(() => {
+    if ((isParallelCard && !hasImageCodeEntry) || !showSealedAsia) return [];
+    return filteredHistory
+      .filter(p => p.sealedAsia)
+      .map(p => ({
+        date: p.date,
+        minPrice: p.sealedAsia.minPrice,
+        maxPrice: p.sealedAsia.maxPrice,
+        count: p.sealedAsia.count,
+      }));
+  }, [filteredHistory, isParallelCard, hasImageCodeEntry, showSealedAsia]);
+
   const chart = useMemo(() => {
     const n = filteredHistory.length;
     if (n === 0) return null;
 
     // Collect all prices from every visible series to compute a unified Y scale.
-    const allPrices = [effectiveHistory, sealedSeries, goldTextSeries].flatMap(series =>
+    const allPrices = [effectiveHistory, sealedSeries, goldTextSeries, asiaSeries, sealedAsiaSeries].flatMap(series =>
       series.flatMap(p => [p.minPrice, p.maxPrice].filter(v => v != null))
     );
     if (allPrices.length === 0) return null;
@@ -228,32 +249,27 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         ].join(' ')
       : null;
 
-    // Sealed line (orange)
-    const sealedPoints = sealedSeries.length > 0 ? toPoints(sealedSeries) : null;
-
-    // Gold text line (gold/yellow)
-    const goldPoints = goldTextSeries.length > 0 ? toPoints(goldTextSeries) : null;
-
-    const yTicks = niceTicks(dataMinPrice, dataMaxPrice, 5);
-
-    const xTickIndices = [];
-    if (n <= 8) {
-      for (let i = 0; i < n; i++) xTickIndices.push(i);
-    } else {
-      const step = Math.ceil(n / 7);
-      for (let i = 0; i < n; i += step) xTickIndices.push(i);
-      if (xTickIndices[xTickIndices.length - 1] !== n - 1) xTickIndices.push(n - 1);
-    }
-
     return {
-      minPoints, areaPoints, sealedPoints, goldPoints,
+      minPoints, areaPoints,
+      sealedPoints: sealedSeries.length > 0 ? toPoints(sealedSeries) : null,
+      goldPoints: goldTextSeries.length > 0 ? toPoints(goldTextSeries) : null,
+      asiaPoints: asiaSeries.length > 0 ? toPoints(asiaSeries) : null,
+      sealedAsiaPoints: sealedAsiaSeries.length > 0 ? toPoints(sealedAsiaSeries) : null,
       effectiveDots: toDots(effectiveHistory),
       sealedDots: toDots(sealedSeries),
       goldDots: toDots(goldTextSeries),
-      xScale, yScale, yTicks, xTickIndices, hasRange,
+      asiaDots: toDots(asiaSeries),
+      sealedAsiaDots: toDots(sealedAsiaSeries),
+      xScale, yScale, yTicks: niceTicks(dataMinPrice, dataMaxPrice, 5), xTickIndices: (n <= 8 ? Array.from({length:n}, (_,i)=>i) : (() => {
+        const indices = [];
+        const step = Math.ceil(n / 7);
+        for (let i = 0; i < n; i += step) indices.push(i);
+        if (indices[indices.length - 1] !== n - 1) indices.push(n - 1);
+        return indices;
+      })()), hasRange,
       dates: filteredHistory.map(p => p.date),
     };
-  }, [filteredHistory, effectiveHistory, sealedSeries, goldTextSeries]);
+  }, [filteredHistory, effectiveHistory, sealedSeries, goldTextSeries, asiaSeries, sealedAsiaSeries]);
 
   const latestPoint = effectiveHistory[effectiveHistory.length - 1];
 
@@ -340,7 +356,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
               ))}
             </div>
 
-            {!(isParallelCard && hasParallel) && (hasSealed || hasGoldText) && (
+            {(hasSealed || hasGoldText || hasAsia || hasSealedAsia) && (
               <div className="price-modal-variant-filters">
                 {hasSealed && (
                   <label className="variant-filter-label">
@@ -362,6 +378,28 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                     />
                     <span className="variant-filter-dot variant-filter-dot--gold" />
                     Gold text (金文字)
+                  </label>
+                )}
+                {hasSealedAsia && (
+                  <label className="variant-filter-label">
+                    <input
+                      type="checkbox"
+                      checked={showSealedAsia}
+                      onChange={e => setShowSealedAsia(e.target.checked)}
+                    />
+                    <span className="variant-filter-dot variant-filter-dot--sealed-asia" />
+                    Sealed Asia
+                  </label>
+                )}
+                {hasAsia && (
+                  <label className="variant-filter-label">
+                    <input
+                      type="checkbox"
+                      checked={showAsia}
+                      onChange={e => setShowAsia(e.target.checked)}
+                    />
+                    <span className="variant-filter-dot variant-filter-dot--asia" />
+                    Opened Asia
                   </label>
                 )}
               </div>
@@ -480,6 +518,30 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                     />
                   )}
 
+                  {/* Asia Opened line (purple) */}
+                  {chart.asiaPoints && (
+                    <polyline
+                      points={chart.asiaPoints}
+                      fill="none"
+                      stroke="#9f7aea"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                    />
+                  )}
+
+                  {/* Asia Sealed line (green) */}
+                  {chart.sealedAsiaPoints && (
+                    <polyline
+                      points={chart.sealedAsiaPoints}
+                      fill="none"
+                      stroke="#48bb78"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                    />
+                  )}
+
                   {/* Base data point dots */}
                   {chart.effectiveDots.map((p, i) => {
                     const label = makeTooltipLabel('', p);
@@ -544,6 +606,60 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                         cy={p.cy}
                         r="4"
                         fill="#ecc94b"
+                        style={{ cursor: 'pointer' }}
+                        onMouseEnter={(e) => {
+                          const svg = e.currentTarget.closest('svg');
+                          const rect = svg.getBoundingClientRect();
+                          const scaleX = rect.width / CHART_W;
+                          const scaleY = rect.height / CHART_H;
+                          setTooltip({
+                            x: rect.left + p.cx * scaleX,
+                            y: rect.top + p.cy * scaleY - 12,
+                            text: label,
+                          });
+                        }}
+                        onMouseLeave={() => setTooltip(null)}
+                      />
+                    );
+                  })}
+
+                  {/* Asia Opened data point dots (purple) */}
+                  {chart.asiaDots.map((p, i) => {
+                    const label = makeTooltipLabel('Asia', p);
+                    return (
+                      <circle
+                        key={`asia-${i}`}
+                        cx={p.cx}
+                        cy={p.cy}
+                        r="4"
+                        fill="#9f7aea"
+                        style={{ cursor: 'pointer' }}
+                        onMouseEnter={(e) => {
+                          const svg = e.currentTarget.closest('svg');
+                          const rect = svg.getBoundingClientRect();
+                          const scaleX = rect.width / CHART_W;
+                          const scaleY = rect.height / CHART_H;
+                          setTooltip({
+                            x: rect.left + p.cx * scaleX,
+                            y: rect.top + p.cy * scaleY - 12,
+                            text: label,
+                          });
+                        }}
+                        onMouseLeave={() => setTooltip(null)}
+                      />
+                    );
+                  })}
+
+                  {/* Asia Sealed data point dots (green) */}
+                  {chart.sealedAsiaDots.map((p, i) => {
+                    const label = makeTooltipLabel('Sealed Asia', p);
+                    return (
+                      <circle
+                        key={`sealedAsia-${i}`}
+                        cx={p.cx}
+                        cy={p.cy}
+                        r="4"
+                        fill="#48bb78"
                         style={{ cursor: 'pointer' }}
                         onMouseEnter={(e) => {
                           const svg = e.currentTarget.closest('svg');
