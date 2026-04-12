@@ -146,32 +146,6 @@
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.card-grid-item a {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-}
-
-.wishlist-btn {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ddd;
-  border-radius: 999px;
-  width: 32px;
-  height: 32px;
-  font-size: 1.2rem;
-  color: #ff5c8a;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
 .wishlist-btn:hover {
   transform: scale(1.05);
 }
