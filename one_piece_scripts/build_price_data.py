@@ -165,8 +165,9 @@ def build_history_by_code(price_files):
 
 # Detailed classification logic using Cardrush name patterns
 def classify_entry(e):
-    """Classify a Cardrush entry into variant categories based on its name."""
+    """Classify a Cardrush entry into variant categories based on its name and rarity."""
     name = e.get('name') or ''
+    rarity = e.get('rarity') or ''
     is_asia = 'asia' in name.lower()
     
     # Classification order matters!
@@ -176,7 +177,12 @@ def classify_entry(e):
         return 'goldText'
     
     # Specific parallel markings
-    if any(sig in name for sig in ['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ', 'フルアート/foil']):
+    # Including 'foil' and '白黒版' (black/white) per user feedback
+    parallel_signatures = [
+        'パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ', 
+        'フルアート', 'foil', 'ホイル', '白黒版', '★無し'
+    ]
+    if any(sig in name for sig in parallel_signatures) or '/P' in rarity:
         if is_asia:
             return 'parallelAsia'
         return 'parallel'
