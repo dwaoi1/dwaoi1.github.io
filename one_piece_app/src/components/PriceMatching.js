@@ -29,6 +29,17 @@ const PriceMatching = ({ cardData }) => {
     fetchData();
   }, []);
 
+  const getImageCode = (url) => {
+    if (!url || typeof url !== 'string') return '';
+    try {
+      const path = url.split('?')[0];
+      const filename = path.substring(path.lastIndexOf('/') + 1);
+      return filename.split('.')[0];
+    } catch (e) {
+      return '';
+    }
+  };
+
   const confidenceMatches = useMemo(() => {
     const matches = [];
     Object.entries(priceHistory).forEach(([code, data]) => {
@@ -37,12 +48,7 @@ const PriceMatching = ({ cardData }) => {
           code,
           confidence: data.confidence,
           // Try to find the card name from cardData if possible
-          name: cardData.find(c => {
-             const url = c.Picture || '';
-             const filename = url.split('?')[0].substring(url.lastIndexOf('/') + 1);
-             const imgCode = filename.split('.')[0];
-             return imgCode === code;
-          })?.Character || 'Unknown'
+          name: cardData.find(c => getImageCode(c.Picture) === code)?.Character || 'Unknown'
         });
       }
     });
