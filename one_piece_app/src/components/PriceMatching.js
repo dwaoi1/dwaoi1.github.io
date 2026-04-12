@@ -144,9 +144,17 @@ const PriceMatching = ({ cardData }) => {
                 {selectedMatch.picture ? (
                   <img 
                     src={selectedMatch.picture.includes('onepiece-cardgame.com') 
-                      ? `https://wsrv.nl/?url=${encodeURIComponent(selectedMatch.picture.split('?')[0])}&output=webp&default=https://placehold.co/300x420?text=No+Image`
+                      ? `${process.env.PUBLIC_URL}/images/cards/${selectedMatch.picture.split('?')[0].split('/').pop()}`
                       : selectedMatch.picture
                     } 
+                    onError={(e) => {
+                      const currentSrc = e.target.src;
+                      if (currentSrc.includes('/images/cards/')) {
+                        e.target.src = `https://wsrv.nl/?url=${encodeURIComponent(selectedMatch.picture.split('?')[0])}&output=webp&default=https://placehold.co/300x420?text=No+Image`;
+                      } else if (currentSrc.includes('wsrv.nl')) {
+                        e.target.src = 'https://placehold.co/300x420?text=No+Image';
+                      }
+                    }}
                     alt={selectedMatch.name || 'Card image'} 
                     style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', objectFit: 'contain' }} 
                   />

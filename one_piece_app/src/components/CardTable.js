@@ -385,7 +385,7 @@ const CardTable = ({ data }) => {
                       onMouseEnter={() => {
                         if (item.Picture.includes('onepiece-cardgame.com')) {
                           const img = new Image();
-                          img.src = `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&w=460&output=webp`;
+                          img.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
                         }
                       }}
                       onClick={() => setPriceModal(item)}
@@ -405,7 +405,7 @@ const CardTable = ({ data }) => {
                       <img
                         src={
                           (item.Picture.includes('onepiece-cardgame.com'))
-                            ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`
+                            ? `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`
                             : item.Picture
                         }
                         alt={item.Character}
@@ -428,7 +428,10 @@ const CardTable = ({ data }) => {
                             const cleanUrl = item.Picture.split('?')[0];
                             const encodedUrl = encodeURIComponent(cleanUrl);
                             
-                            if (currentSrc.includes('wsrv.nl')) {
+                            if (currentSrc.includes('/images/cards/')) {
+                              // If local image fails (not downloaded yet), try proxy
+                              e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                            } else if (currentSrc.includes('wsrv.nl')) {
                               // If wsrv.nl failed, try Cardrush immediately as it's often more reliable
                               if (crFallback) {
                                 e.target.src = crFallback;
