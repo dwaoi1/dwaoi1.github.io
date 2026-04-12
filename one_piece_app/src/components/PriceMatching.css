@@ -87,7 +87,40 @@
   text-overflow: ellipsis;
 }
 
-/* Unmatched Section */
+.price-matching-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.price-matching-modal {
+  background: #1a1d27;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  color: #eef1f7;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #a0aec0;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.close-btn:hover { color: #fff; }
 .unmatched-groups {
   display: flex;
   flex-direction: column;
