@@ -1,11 +1,46 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './PriceMatching.css';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const PriceMatching = ({ cardData }) => {
   const [unmatchedData, setUnmatchedData] = useState(null);
   const [priceHistory, setPriceHistory] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedMatch, setSelectedMatch] = useState(null);
+  const [matchValidations, setMatchValidations] = useState({});
+
+  useEffect(() => {
+    // Listen for realtime updates to match validations from Firestore
+    const validationsRef = doc(db, 'price_matches', 'validations');
+    const unsubscribe = onSnapshot(validationsRef, (docSnap) => {
+      if (docSnap.exists()) {
+        setMatchValidations(docSnap.data().matches || {});
+      } else {
+        setMatchValidations({});
+      }
+    }, (error) => {
+      console.warn('Error listening to validations:', error);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleValidation = async (code, isCorrect) => {
+    const status = isCorrect ? 'correct' : 'incorrect';
+    const newValidations = { ...matchValidations, [code]: status };
+    
+    // Optimistically update local state
+    setMatchValidations(newValidations);
+
+    // Save to Firestore
+    try {
+      const validationsRef = doc(db, 'price_matches', 'validations');
+      await setDoc(validationsRef, { matches: newValidations }, { merge: true });
+    } catch (error) {
+      console.error('Error updating validation in Firestore:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +87,7 @@ const PriceMatching = ({ cardData }) => {
           confidence: data.confidence,
           name: cardMatch?.Character || 'Unknown',
           picture: cardMatch?.Picture || null,
+          cardrushImage: data.cardrushImage || null,
           samples: data.samples || []
         });
       }
@@ -72,46 +108,108 @@ const PriceMatching = ({ cardData }) => {
         <h2>Automated Match Confidence</h2>
         <p className="sub-description">Showing {confidenceMatches.length} automated matches. Lower percentages may indicate incorrect mappings.</p>
         <div className="confidence-grid">
-          {confidenceMatches.map(match => (
-            <div 
-              key={match.code} 
-              className={`confidence-card ${match.confidence < 70 ? 'low' : match.confidence < 85 ? 'medium' : 'high'}`}
-              onClick={() => setSelectedMatch(match)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="confidence-value">{Math.round(match.confidence)}%</div>
-              <div className="confidence-details">
-                <div className="match-code">{match.code}</div>
-                <div className="match-name">{match.name}</div>
+          {confidenceMatches.map(match => {
+            const validationStatus = matchValidations[match.code];
+            let statusColor = '';
+            if (validationStatus === 'correct') statusColor = '4px solid #4CAF50';
+            else if (validationStatus === 'incorrect') statusColor = '4px solid #F44336';
+
+            return (
+              <div 
+                key={match.code} 
+                className={`confidence-card ${match.confidence < 70 ? 'low' : match.confidence < 85 ? 'medium' : 'high'}`}
+                onClick={() => setSelectedMatch(match)}
+                style={{ cursor: 'pointer', borderBottom: statusColor }}
+              >
+                <div className="confidence-value">{Math.round(match.confidence)}%</div>
+                <div className="confidence-details">
+                  <div className="match-code">{match.code}</div>
+                  <div className="match-name">{match.name}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
       {selectedMatch && (
         <div className="price-matching-overlay" onClick={() => setSelectedMatch(null)}>
-          <div className="price-matching-modal" onClick={e => e.stopPropagation()}>
+          <div className="price-matching-modal" onClick={e => e.stopPropagation()} style={{ maxWidth: '800px', width: '90%' }}>
             <button className="close-btn" onClick={() => setSelectedMatch(null)}>✕</button>
             <h2>Match Details: {selectedMatch.code || 'N/A'}</h2>
-            {selectedMatch.picture ? (
-              <img 
-                src={selectedMatch.picture.includes('onepiece-cardgame.com') 
-                  ? `https://wsrv.nl/?url=${encodeURIComponent(selectedMatch.picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`
-                  : selectedMatch.picture
-                } 
-                alt={selectedMatch.name || 'Card image'} 
-                style={{ maxWidth: '100%', marginBottom: '15px' }} 
-              />
-            ) : (
-              <div style={{ padding: '20px', textAlign: 'center', background: '#333' }}>No image available</div>
-            )}
-            <p><strong>Mapped Name:</strong> {selectedMatch.name || 'Unknown'}</p>
-            <p><strong>Confidence:</strong> {Math.round(selectedMatch.confidence || 0)}%</p>
+            
+            <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+              <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
+                <h3>Database Card</h3>
+                {selectedMatch.picture ? (
+                  <img 
+                    src={selectedMatch.picture.includes('onepiece-cardgame.com') 
+                      ? `https://wsrv.nl/?url=${encodeURIComponent(selectedMatch.picture.split('?')[0])}&output=webp&default=https://placehold.co/300x420?text=No+Image`
+                      : selectedMatch.picture
+                    } 
+                    alt={selectedMatch.name || 'Card image'} 
+                    style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', objectFit: 'contain' }} 
+                  />
+                ) : (
+                  <div style={{ padding: '40px', background: '#2a2e3d', borderRadius: '8px' }}>No image available</div>
+                )}
+                <p><strong>Mapped Name:</strong> {selectedMatch.name || 'Unknown'}</p>
+              </div>
+              
+              <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
+                <h3>Cardrush Match</h3>
+                {selectedMatch.cardrushImage ? (
+                  <img 
+                    src={selectedMatch.cardrushImage} 
+                    alt="Cardrush Match" 
+                    style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', objectFit: 'contain' }} 
+                  />
+                ) : (
+                  <div style={{ padding: '40px', background: '#2a2e3d', borderRadius: '8px' }}>No match image available</div>
+                )}
+                <p><strong>Confidence:</strong> {Math.round(selectedMatch.confidence || 0)}%</p>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+              <button 
+                style={{ 
+                  padding: '12px 24px', 
+                  background: matchValidations[selectedMatch.code] === 'correct' ? '#4CAF50' : '#2a2e3d', 
+                  color: 'white', 
+                  border: matchValidations[selectedMatch.code] === 'correct' ? '2px solid #81c784' : '2px solid #444', 
+                  borderRadius: '6px', 
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '16px'
+                }}
+                onClick={() => handleValidation(selectedMatch.code, true)}
+              >
+                Yes, this is correct match
+              </button>
+              <button 
+                style={{ 
+                  padding: '12px 24px', 
+                  background: matchValidations[selectedMatch.code] === 'incorrect' ? '#F44336' : '#2a2e3d', 
+                  color: 'white', 
+                  border: matchValidations[selectedMatch.code] === 'incorrect' ? '2px solid #e57373' : '2px solid #444', 
+                  borderRadius: '6px', 
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '16px'
+                }}
+                onClick={() => handleValidation(selectedMatch.code, false)}
+              >
+                No, incorrect match
+              </button>
+            </div>
+
             {selectedMatch.samples && selectedMatch.samples.length > 0 && (
-              <div>
-                <strong>Mapping Patterns:</strong>
-                <ul>{selectedMatch.samples.map((s, i) => <li key={i}>{s}</li>)}</ul>
+              <div style={{ marginTop: '20px', background: '#2a2e3d', padding: '15px', borderRadius: '8px' }}>
+                <strong style={{ display: 'block', marginBottom: '10px' }}>Mapping Patterns:</strong>
+                <ul style={{ margin: 0, paddingLeft: '20px', color: '#ccc' }}>
+                  {selectedMatch.samples.map((s, i) => <li key={i} style={{ marginBottom: '5px' }}>{s}</li>)}
+                </ul>
               </div>
             )}
           </div>
