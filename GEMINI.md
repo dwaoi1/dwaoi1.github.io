@@ -22,10 +22,23 @@ This document defines the foundational mandates and technical standards for the 
 - **Mandate:** All new components (e.g., modals) displaying images **MUST** re-use established proxy and fallback patterns. Direct image loading from official domains is strictly prohibited.
 - **Mandate:** To optimize performance, images should leverage browser caching by reusing URLs from the main grid in other components like modals, instead of generating new proxied URLs with different parameters.
 
-### Frontend Performance Standards
-- **Mandate:** New features must maintain parity with existing performance levels.
-- **Mandate:** Avoid adding heavy state dependencies or excessive re-renders when implementing interactive components like modals or data-analysis grids.
-- **Mandate:** Test image loading after every feature implementation to ensure established proxy and fallback behaviors are not disrupted.
+## Safe UI Component Implementation
+- **Mandate:** When adding new interactive components (modals, dropdowns) with local state, **MUST** use optional chaining and null-safe rendering to prevent runtime crashes.
+- **Mandate:** **NEVER** perform expensive or data-dependent operations (like `find` in arrays) within `useMemo` without checking if the dependencies (`cardData`, `priceHistory`) are fully loaded and defined.
+- **Pattern:**
+  ```javascript
+  // BAD: May crash if data is empty
+  const match = cardData.find(c => ...); 
+  
+  // GOOD: Guarded lookup
+  const match = useMemo(() => {
+    if (!cardData || cardData.length === 0) return null;
+    return cardData.find(c => ...);
+  }, [cardData]);
+  ```
+- **Mandate:** Always verify that state updates do not trigger side effects that could disrupt parent components or global UI navigation.
+- **Mandate:** Use `try-catch` blocks and `finally` blocks for all async data fetching to ensure state is properly initialized and errors are handled gracefully without blocking the rest of the application.
+
 
 
 ## Maintenance Guidelines

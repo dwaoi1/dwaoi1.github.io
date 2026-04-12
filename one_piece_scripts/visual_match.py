@@ -212,6 +212,21 @@ def main():
     confidence_mappings = overrides_data.get('confidence_mappings', {})
     ocr_cache = overrides_data.get('ocr_cache', {})
     
+    mapped_cr_names = set()
+    mapped_cr_images = set()
+    for mapped_vals in mappings.values():
+        if isinstance(mapped_vals, list):
+            for v in mapped_vals:
+                if v.startswith('http'):
+                    mapped_cr_images.add(v)
+                else:
+                    mapped_cr_names.add(v)
+        elif isinstance(mapped_vals, str):
+            if mapped_vals.startswith('http'):
+                mapped_cr_images.add(mapped_vals)
+            else:
+                mapped_cr_names.add(mapped_vals)
+    
     # 1. Group Data
     official_by_code = {}
     for card in official_cards:
@@ -253,12 +268,24 @@ def main():
                 unmapped_off.append(off_card)
         
         if not unmapped_off: continue
+
+        available_cr_entries = []
+        for cr in cr_entries:
+            cr_name = cr.get('name', '')
+            cr_img = cr.get('image', '')
+            is_special = '未開封' in cr_name or '金文字' in cr_name
+            is_mapped = (cr_name and cr_name in mapped_cr_names) or (cr_img and cr_img in mapped_cr_images)
+            if is_mapped and not is_special:
+                continue
+            available_cr_entries.append(cr)
+            
+        if not available_cr_entries: continue
         
         for off_card in unmapped_off:
             urls_to_download.add(off_card['Picture'])
-            for cr in cr_entries:
+            for cr in available_cr_entries:
                 if cr.get('image'): urls_to_download.add(cr['image'])
-            work_items.append((code, off_card, cr_entries))
+            work_items.append((code, off_card, available_cr_entries))
 
     if not work_items:
         print("No unmapped cards with multiple prices found.")

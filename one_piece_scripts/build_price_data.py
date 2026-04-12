@@ -179,7 +179,7 @@ def classify_entry(e):
     # '漫画' indicates Manga art (a type of parallel)
     # 'SP' indicates Special variant
     # 'シリアル' indicates Serial numbered
-    if any(sig in name for i, sig in enumerate(['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ'])):
+    if any(sig in name for i, sig in enumerate(['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ', 'フルアート/foil'])):
         return 'parallel'
         
     return 'base'
