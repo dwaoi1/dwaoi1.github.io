@@ -387,7 +387,7 @@ const CardTable = ({ data }) => {
                       position: 'relative',
                       backgroundColor: '#1a1d27',
                       borderRadius: '8px',
-                      overflow: 'hidden'
+                      overflow: 'visible'
                     }}
                   >
                     <div className="heart-wrapper">
