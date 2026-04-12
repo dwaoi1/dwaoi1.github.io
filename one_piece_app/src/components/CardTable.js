@@ -416,7 +416,7 @@ const CardTable = ({ data }) => {
                       <img
                         src={
                           (item.Picture.includes('onepiece-cardgame.com'))
-                            ? `https://images.weserv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`
+                            ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&w=150&output=webp&default=https://placehold.co/150?text=No+Image`
                             : item.Picture
                         }
                         alt={item.Character}
@@ -439,10 +439,14 @@ const CardTable = ({ data }) => {
                             const cleanUrl = item.Picture.split('?')[0];
                             const encodedUrl = encodeURIComponent(cleanUrl);
                             
-                            if (currentSrc.includes('images.weserv.nl')) {
-                              e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
-                            } else if (currentSrc.includes('wsrv.nl')) {
-                              // If proxies failed, try the Cardrush image if we have it
+                            if (currentSrc.includes('wsrv.nl')) {
+                              // If wsrv.nl failed, try Cardrush immediately as it's often more reliable
+                              if (crFallback) {
+                                e.target.src = crFallback;
+                              } else {
+                                e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                              }
+                            } else if (currentSrc.includes('images.weserv.nl')) {
                               if (crFallback) {
                                 e.target.src = crFallback;
                               } else {
