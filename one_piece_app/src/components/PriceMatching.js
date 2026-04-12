@@ -33,12 +33,33 @@ const PriceMatching = ({ cardData }) => {
     // Optimistically update local state
     setMatchValidations(newValidations);
 
-    // Save to Firestore
-    try {
-      const validationsRef = doc(db, 'price_matches', 'validations');
-      await setDoc(validationsRef, { matches: newValidations }, { merge: true });
-    } catch (error) {
+    // Save to Firestore (not awaited to avoid blocking the UI)
+    const validationsRef = doc(db, 'price_matches', 'validations');
+    setDoc(validationsRef, { matches: newValidations }, { merge: true }).catch(error => {
       console.error('Error updating validation in Firestore:', error);
+    });
+
+    // Auto-advance to the next unvalidated match
+    const currentIndex = confidenceMatches.findIndex(m => m.code === code);
+    if (currentIndex !== -1) {
+      let nextMatch = null;
+      // Look forward
+      for (let i = currentIndex + 1; i < confidenceMatches.length; i++) {
+        if (!newValidations[confidenceMatches[i].code]) {
+          nextMatch = confidenceMatches[i];
+          break;
+        }
+      }
+      // If none found forward, look from the beginning
+      if (!nextMatch) {
+        for (let i = 0; i < currentIndex; i++) {
+          if (!newValidations[confidenceMatches[i].code]) {
+            nextMatch = confidenceMatches[i];
+            break;
+          }
+        }
+      }
+      setSelectedMatch(nextMatch); // will be null if all are validated, closing the modal
     }
   };
 
