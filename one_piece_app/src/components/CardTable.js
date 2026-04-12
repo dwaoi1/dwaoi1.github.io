@@ -379,6 +379,19 @@ const CardTable = ({ data }) => {
               return (
                 <div key={item.cardId} className="card-grid-item">
                   <div className="card-image-shell">
+                    <div className="heart-wrapper">
+                      <button
+                        className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          toggleWishlist(item.cardId);
+                        }}
+                        aria-pressed={isWishlisted}
+                        aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                      >
+                        {isWishlisted ? '♥' : '♡'}
+                      </button>
+                    </div>
                     <button
                       type="button"
                       className="card-image-btn"
@@ -458,18 +471,6 @@ const CardTable = ({ data }) => {
                           }
                         }}
                       />
-                    </button>
-                    <button
-                      type="button"
-                      className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        toggleWishlist(item.cardId);
-                      }}
-                      aria-pressed={isWishlisted}
-                      aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-                    >
-                      {isWishlisted ? '♥' : '♡'}
                     </button>
                   </div>
                 </div>
