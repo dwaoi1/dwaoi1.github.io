@@ -1,13 +1,5 @@
 {
   "mappings": {
-    "OP02-096": [
-      "クザン",
-      "https://files.cardrush.media/onepiece/ocha_products/443.webp"
-    ],
-    "OP02-099": [
-      "サカズキ",
-      "https://files.cardrush.media/onepiece/ocha_products/447.webp"
-    ],
     "OP03-114": [
       "シャーロット・リンリン",
       "https://files.cardrush.media/onepiece/ocha_products/614.webp"
@@ -19,10 +11,6 @@
     "ST01-001": [
       "モンキー・D・ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/1.webp"
-    ],
-    "ST10-010": [
-      "トラファルガー・ロー",
-      "https://files.cardrush.media/onepiece/ocha_products/5016.webp"
     ],
     "OP14-112": [
       "ボア・ハンコック",
@@ -52,10 +40,6 @@
       "ゴール・D・ロジャー",
       "https://files.cardrush.media/onepiece/ocha_products/5766.webp"
     ],
-    "OP12-020": [
-      "ロロノア・ゾロ",
-      "https://files.cardrush.media/onepiece/ocha_products/11081.webp"
-    ],
     "OP08-106": [
       "ナミ",
       "https://files.cardrush.media/onepiece/ocha_products/4386.webp"
@@ -63,10 +47,6 @@
     "OP13-119": [
       "ポートガス・Ｄ・エース",
       "https://files.cardrush.media/onepiece/ocha_products/9476.webp"
-    ],
-    "OP05-086": [
-      "ネフェルタリ・ビビ",
-      "https://files.cardrush.media/onepiece/ocha_products/6108.webp"
     ],
     "OP14-120": [
       "クロコダイル",
@@ -80,14 +60,6 @@
       "ナミ",
       "https://files.cardrush.media/onepiece/ocha_products/9959.webp"
     ],
-    "OP01-004": [
-      "ウソップ",
-      "https://files.cardrush.media/onepiece/ocha_products/959.webp"
-    ],
-    "OP02-114": [
-      "ボルサリーノ",
-      "https://files.cardrush.media/onepiece/ocha_products/465.webp"
-    ],
     "OP07-109": [
       "モンキー・D・ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/3333.webp"
@@ -95,10 +67,6 @@
     "OP13-120": [
       "サボ",
       "https://files.cardrush.media/onepiece/ocha_products/9477.webp"
-    ],
-    "ST10-013": [
-      "ユースタス・キッド",
-      "https://files.cardrush.media/onepiece/ocha_products/6669.webp"
     ],
     "P-112": [
       "ナミ",
@@ -115,14 +83,6 @@
     "OP03-123": [
       "シャーロット・カタクリ",
       "https://files.cardrush.media/onepiece/ocha_products/626.webp"
-    ],
-    "OP03-112": [
-      "シャーロット・プリン",
-      "https://files.cardrush.media/onepiece/ocha_products/4536.webp"
-    ],
-    "EB02-010": [
-      "モンキー・D・ルフィ",
-      "https://files.cardrush.media/onepiece/ocha_products/11044.webp"
     ],
     "OP09-009": [
       "ベン・ベックマン",
@@ -168,10 +128,6 @@
       "そげキング",
       "https://files.cardrush.media/onepiece/ocha_products/622.webp"
     ],
-    "OP09-093": [
-      "マーシャル・D・ティーチ",
-      "https://files.cardrush.media/onepiece/ocha_products/5810.webp"
-    ],
     "OP05-069": [
       "トラファルガー・ロー",
       "https://files.cardrush.media/onepiece/ocha_products/864.webp"
@@ -180,17 +136,9 @@
       "モンキー・D・ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/7533.webp"
     ],
-    "OP09-051": [
-      "バギー",
-      "https://files.cardrush.media/onepiece/ocha_products/5794.webp"
-    ],
     "OP07-051": [
       "ボア・ハンコック",
       "https://files.cardrush.media/onepiece/ocha_products/3275.webp"
-    ],
-    "OP04-083": [
-      "サボ",
-      "https://files.cardrush.media/onepiece/ocha_products/6657.webp"
     ],
     "EB03-061": [
       "ウタ",
@@ -215,14 +163,6 @@
     "OP12-063": [
       "ヴィンスモーク・レイジュ",
       "https://files.cardrush.media/onepiece/ocha_products/8224.webp"
-    ],
-    "OP05-074": [
-      "ユースタス・キッド",
-      "https://files.cardrush.media/onepiece/ocha_products/870.webp"
-    ],
-    "OP09-013": [
-      "ヤソップ",
-      "https://files.cardrush.media/onepiece/ocha_products/7983.webp"
     ],
     "ST21-014": [
       "モンキー・D・ルフィ",
@@ -260,18 +200,6 @@
       "ボア・ハンコック",
       "https://files.cardrush.media/onepiece/ocha_products/7139.webp"
     ],
-    "OP01-070": [
-      "ジュラキュール・ミホーク",
-      "https://files.cardrush.media/onepiece/ocha_products/4828.webp"
-    ],
-    "OP09-001": [
-      "シャンクス",
-      "https://files.cardrush.media/onepiece/ocha_products/5774.webp"
-    ],
-    "OP01-078": [
-      "ボア・ハンコック",
-      "https://files.cardrush.media/onepiece/ocha_products/268.webp"
-    ],
     "OP10-005": [
       "サンジ",
       "https://files.cardrush.media/onepiece/ocha_products/6389.webp"
@@ -279,10 +207,6 @@
     "OP08-105": [
       "ジュエリー・ボニー",
       "https://files.cardrush.media/onepiece/ocha_products/4385.webp"
-    ],
-    "P-055": [
-      "モンキー・D・ルフィ",
-      "https://files.cardrush.media/onepiece/ocha_products/4985.webp"
     ],
     "OP09-002": [
       "ウタ",
@@ -307,10 +231,6 @@
     "OP12-014": [
       "ボア・ハンコック",
       "https://files.cardrush.media/onepiece/ocha_products/8175.webp"
-    ],
-    "OP06-069": [
-      "ヴィンスモーク・レイジュ",
-      "https://files.cardrush.media/onepiece/ocha_products/4964.webp"
     ],
     "ST26-005": [
       "モンキー・Ｄ・ルフィ",
@@ -348,17 +268,9 @@
       "鬼気 九刀流 阿修羅 抜剣 亡者戯",
       "https://files.cardrush.media/onepiece/ocha_products/8198.webp"
     ],
-    "OP09-061": [
-      "モンキー・Ｄ・ルフィ",
-      "https://files.cardrush.media/onepiece/ocha_products/8615.webp"
-    ],
     "OP13-080": [
       "イーザンバロン・V・ナス寿郎聖",
       "https://files.cardrush.media/onepiece/ocha_products/9437.webp"
-    ],
-    "OP05-067": [
-      "ゾロ十郎",
-      "https://files.cardrush.media/onepiece/ocha_products/859.webp"
     ],
     "EB03-045": [
       "ペローナ",
@@ -379,10 +291,6 @@
     "OP13-089": [
       "トップマン・ウォーキュリー聖",
       "https://files.cardrush.media/onepiece/ocha_products/9446.webp"
-    ],
-    "ST01-006": [
-      "トニートニー・チョッパー",
-      "https://files.cardrush.media/onepiece/ocha_products/2277.webp"
     ],
     "OP13-091": [
       "マーカス・マーズ聖",
@@ -468,10 +376,6 @@
       "モンキー・D・ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/6753.webp"
     ],
-    "OP11-041": [
-      "ナミ",
-      "https://files.cardrush.media/onepiece/ocha_products/10814.webp"
-    ],
     "OP06-021": [
       "ペローナ",
       "https://files.cardrush.media/onepiece/ocha_products/7133.webp"
@@ -544,14 +448,6 @@
       "モンキー・Ｄ・ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/12213.webp"
     ],
-    "OP01-017": [
-      "ニコ・ロビン",
-      "https://files.cardrush.media/onepiece/ocha_products/4102.webp"
-    ],
-    "OP10-001": [
-      "スモーカー",
-      "https://files.cardrush.media/onepiece/ocha_products/6533.webp"
-    ],
     "EB04-007": [
       "ロロノア・ゾロ",
       "https://files.cardrush.media/onepiece/ocha_products/11660.webp"
@@ -576,14 +472,6 @@
       "モンキー・Ｄ・ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/10965.webp"
     ],
-    "OP04-092": [
-      "レベッカ",
-      "https://files.cardrush.media/onepiece/ocha_products/6362.webp"
-    ],
-    "OP04-044": [
-      "カイドウ",
-      "https://files.cardrush.media/onepiece/ocha_products/4887.webp"
-    ],
     "EB01-001": [
       "光月おでん",
       "https://files.cardrush.media/onepiece/ocha_products/7062.webp"
@@ -591,10 +479,6 @@
     "OP04-064": [
       "ミス・オールサンデー",
       "https://files.cardrush.media/onepiece/ocha_products/709.webp"
-    ],
-    "OP04-112": [
-      "ヤマト",
-      "https://files.cardrush.media/onepiece/ocha_products/764.webp"
     ],
     "P-080": [
       "モンキー・D・ルフィ",
@@ -611,10 +495,6 @@
     "OP07-079": [
       "ロブ・ルッチ",
       "https://files.cardrush.media/onepiece/ocha_products/7141.webp"
-    ],
-    "OP09-076": [
-      "ロロノア・ゾロ",
-      "https://files.cardrush.media/onepiece/ocha_products/8012.webp"
     ],
     "OP08-098": [
       "カルガラ",
@@ -640,10 +520,6 @@
       "ナミ",
       "https://files.cardrush.media/onepiece/ocha_products/524.webp"
     ],
-    "OP01-047": [
-      "トラファルガー・ロー",
-      "https://files.cardrush.media/onepiece/ocha_products/4824.webp"
-    ],
     "OP06-007": [
       "シャンクス",
       "https://files.cardrush.media/onepiece/ocha_products/2295.webp"
@@ -667,10 +543,6 @@
     "OP05-001": [
       "サボ",
       "https://files.cardrush.media/onepiece/ocha_products/7126.webp"
-    ],
-    "OP02-004": [
-      "エドワード・ニューゲート",
-      "https://files.cardrush.media/onepiece/ocha_products/4832.webp"
     ],
     "OP08-057": [
       "キング",
@@ -708,10 +580,6 @@
       "クザン",
       "https://files.cardrush.media/onepiece/ocha_products/6466.webp"
     ],
-    "OP09-106": [
-      "ニコ・オルビア",
-      "https://files.cardrush.media/onepiece/ocha_products/6984.webp"
-    ],
     "OP05-006": [
       "コアラ",
       "https://files.cardrush.media/onepiece/ocha_products/788.webp"
@@ -735,10 +603,6 @@
     "OP04-024": [
       "シュガー",
       "https://files.cardrush.media/onepiece/ocha_products/659.webp"
-    ],
-    "OP02-098": [
-      "コビー",
-      "https://files.cardrush.media/onepiece/ocha_products/977.webp"
     ],
     "ST22-002": [
       "イゾウ",
@@ -788,10 +652,6 @@
       "サボ",
       "https://files.cardrush.media/onepiece/ocha_products/3342.webp"
     ],
-    "EB01-043": [
-      "スパンダイン",
-      "https://files.cardrush.media/onepiece/ocha_products/6671.webp"
-    ],
     "ST03-009": [
       "ドンキホーテ・ドフラミンゴ",
       "https://files.cardrush.media/onepiece/ocha_products/43.webp"
@@ -824,29 +684,9 @@
       "キャベンディッシュ",
       "https://files.cardrush.media/onepiece/ocha_products/2977.webp"
     ],
-    "OP01-077": [
-      "ペローナ",
-      "https://files.cardrush.media/onepiece/ocha_products/266.webp"
-    ],
-    "OP07-046": [
-      "センゴク",
-      "https://files.cardrush.media/onepiece/ocha_products/10639.webp"
-    ],
-    "OP09-042": [
-      "バギー",
-      "https://files.cardrush.media/onepiece/ocha_products/8606.webp"
-    ],
     "OP07-015": [
       "モンキー・D・ドラゴン",
       "https://files.cardrush.media/onepiece/ocha_products/3239.webp"
-    ],
-    "OP08-067": [
-      "シャーロット・プリン",
-      "https://files.cardrush.media/onepiece/ocha_products/4437.webp"
-    ],
-    "OP09-081": [
-      "マーシャル・Ｄ・ティーチ",
-      "https://files.cardrush.media/onepiece/ocha_products/8623.webp"
     ],
     "ST29-004": [
       "サンジ",
@@ -864,21 +704,9 @@
       "スモーカー",
       "https://files.cardrush.media/onepiece/ocha_products/6414.webp"
     ],
-    "OP01-073": [
-      "ドンキホーテ・ドフラミンゴ",
-      "https://files.cardrush.media/onepiece/ocha_products/261.webp"
-    ],
     "OP01-060": [
       "ドンキホーテ・ドフラミンゴ",
       "https://files.cardrush.media/onepiece/ocha_products/243.webp"
-    ],
-    "ST03-004": [
-      "ゲッコー・モリア",
-      "https://files.cardrush.media/onepiece/ocha_products/8585.webp"
-    ],
-    "OP03-001": [
-      "ポートガス・D・エース",
-      "https://files.cardrush.media/onepiece/ocha_products/477.webp"
     ],
     "OP14-111": [
       "ペローナ",
@@ -892,10 +720,6 @@
       "ルフィは海賊王になる男だ!!!",
       "https://files.cardrush.media/onepiece/ocha_products/8240.webp"
     ],
-    "OP10-042": [
-      "ウソップ",
-      "https://files.cardrush.media/onepiece/ocha_products/8033.webp"
-    ],
     "ST15-005": [
       "ポートガス・D・エース",
       "https://files.cardrush.media/onepiece/ocha_products/4708.webp"
@@ -904,17 +728,9 @@
       "ナミ",
       "https://files.cardrush.media/onepiece/ocha_products/10527.webp"
     ],
-    "ST04-003": [
-      "カイドウ",
-      "https://files.cardrush.media/onepiece/ocha_products/5003.webp"
-    ],
     "OP10-118": [
       "モンキー・D・ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/6502.webp"
-    ],
-    "EB01-023": [
-      "エドワード・ウィーブル",
-      "https://files.cardrush.media/onepiece/ocha_products/8562.webp"
     ],
     "OP10-045": [
       "キャベンディッシュ",
@@ -944,17 +760,9 @@
       "キュロス",
       "https://files.cardrush.media/onepiece/ocha_products/7064.webp"
     ],
-    "OP01-051": [
-      "ユースタス・キッド",
-      "https://files.cardrush.media/onepiece/ocha_products/4825.webp"
-    ],
     "OP07-001": [
       "モンキー・D・ドラゴン",
       "https://files.cardrush.media/onepiece/ocha_products/7137.webp"
-    ],
-    "OP09-037": [
-      "リム",
-      "https://files.cardrush.media/onepiece/ocha_products/5785.webp"
     ],
     "ST22-001": [
       "エース&ニューゲート",
@@ -972,25 +780,9 @@
       "万雷",
       "https://files.cardrush.media/onepiece/ocha_products/12172.webp"
     ],
-    "ST04-005": [
-      "クイーン",
-      "https://files.cardrush.media/onepiece/ocha_products/5005.webp"
-    ],
-    "OP13-001": [
-      "モンキー・Ｄ・ルフィ",
-      "https://files.cardrush.media/onepiece/ocha_products/9498.webp"
-    ],
-    "OP07-053": [
-      "(赤白版)ポートガス・D・エース",
-      "https://files.cardrush.media/onepiece/ocha_products/9569.webp"
-    ],
     "OP15-092": [
       "モンキー・Ｄ・ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/12186.webp"
-    ],
-    "EB01-056": [
-      "シャーロット・フランペ",
-      "https://files.cardrush.media/onepiece/ocha_products/3048.webp"
     ],
     "OP15-060": [
       "エネル",
@@ -1012,14 +804,6 @@
       "ボルサリーノ",
       "https://files.cardrush.media/onepiece/ocha_products/841.webp"
     ],
-    "OP03-003": [
-      "イゾウ",
-      "https://files.cardrush.media/onepiece/ocha_products/4850.webp"
-    ],
-    "ST19-002": [
-      "センゴク",
-      "https://files.cardrush.media/onepiece/ocha_products/7413.webp"
-    ],
     "OP15-109": [
       "ニコ・ロビン",
       "https://files.cardrush.media/onepiece/ocha_products/12203.webp"
@@ -1028,10 +812,6 @@
       "ボア・ハンコック",
       "https://files.cardrush.media/onepiece/ocha_products/8747.webp"
     ],
-    "OP06-047": [
-      "シャーロット・プリン",
-      "https://files.cardrush.media/onepiece/ocha_products/5615.webp"
-    ],
     "OP15-114": [
       "ワイパー",
       "https://files.cardrush.media/onepiece/ocha_products/12208.webp"
@@ -1039,14 +819,6 @@
     "OP12-034": [
       "ペローナ",
       "https://files.cardrush.media/onepiece/ocha_products/8195.webp"
-    ],
-    "OP02-001": [
-      "エドワード・ニューゲート",
-      "https://files.cardrush.media/onepiece/ocha_products/1278.webp"
-    ],
-    "OP07-021": [
-      "ウルージ",
-      "https://files.cardrush.media/onepiece/ocha_products/6541.webp"
     ],
     "OP02-036": [
       "ナミ",
@@ -1063,10 +835,6 @@
     "OP13-007": [
       "エース＆サボ＆ルフィ",
       "https://files.cardrush.media/onepiece/ocha_products/9364.webp"
-    ],
-    "ST03-008": [
-      "トラファルガー・ロー",
-      "https://files.cardrush.media/onepiece/ocha_products/4999.webp"
     ],
     "EB03-062": [
       "トラファルガー・ロー",
@@ -1088,10 +856,6 @@
       "菊之丞",
       "https://files.cardrush.media/onepiece/ocha_products/2392.webp"
     ],
-    "OP01-035": [
-      "お菊",
-      "https://files.cardrush.media/onepiece/ocha_products/968.webp"
-    ],
     "OP11-067": [
       "シャーロット・カタクリ",
       "https://files.cardrush.media/onepiece/ocha_products/7482.webp"
@@ -1103,10 +867,6 @@
     "OP14-084": [
       "ミス・オールサンデー",
       "https://files.cardrush.media/onepiece/ocha_products/10580.webp"
-    ],
-    "OP10-111": [
-      "モンキー・D・ルフィ",
-      "https://files.cardrush.media/onepiece/ocha_products/6527.webp"
     ],
     "OP11-010": [
       "ひばり",
@@ -1143,10 +903,6 @@
     "OP07-064": [
       "サンジ",
       "https://files.cardrush.media/onepiece/ocha_products/3288.webp"
-    ],
-    "OP09-065": [
-      "サンジ",
-      "https://files.cardrush.media/onepiece/ocha_products/5788.webp"
     ],
     "OP13-016": [
       "モンキー・Ｄ・ガープ",
@@ -1216,10 +972,6 @@
       "ドンキホーテ・ドフラミンゴ",
       "https://files.cardrush.media/onepiece/ocha_products/6455.webp"
     ],
-    "OP01-005": [
-      "ウタ",
-      "https://files.cardrush.media/onepiece/ocha_products/960.webp"
-    ],
     "EB04-025": [
       "ネフェルタリ・ビビ",
       "https://files.cardrush.media/onepiece/ocha_products/11678.webp"
@@ -1240,17 +992,9 @@
       "ブルック",
       "https://files.cardrush.media/onepiece/ocha_products/12126.webp"
     ],
-    "OP05-082": [
-      "しらほし",
-      "https://files.cardrush.media/onepiece/ocha_products/4922.webp"
-    ],
     "EB01-048": [
       "ラブーン",
       "https://files.cardrush.media/onepiece/ocha_products/3015.webp"
-    ],
-    "OP02-059": [
-      "ボア・ハンコック",
-      "https://files.cardrush.media/onepiece/ocha_products/2273.webp"
     ],
     "OP13-054": [
       "ヤマト",
@@ -1311,14 +1055,6 @@
     "OP13-027": [
       "サンジ",
       "https://files.cardrush.media/onepiece/ocha_products/9384.webp"
-    ],
-    "ST07-008": [
-      "シャーロット・プリン",
-      "https://files.cardrush.media/onepiece/ocha_products/1219.webp"
-    ],
-    "OP02-029": [
-      "キャロット",
-      "https://files.cardrush.media/onepiece/ocha_products/4162.webp"
     ],
     "OP12-015": [
       "モンキー・Ｄ・ルフィ",
@@ -1428,10 +1164,6 @@
       "カイドウ",
       "https://files.cardrush.media/onepiece/ocha_products/921.webp"
     ],
-    "OP06-086": [
-      "ゲッコー・モリア",
-      "https://files.cardrush.media/onepiece/ocha_products/4968.webp"
-    ],
     "OP12-008": [
       "シャンクス",
       "https://files.cardrush.media/onepiece/ocha_products/8169.webp"
@@ -1439,10 +1171,6 @@
     "OP06-115": [
       "お前が消えろ",
       "https://files.cardrush.media/onepiece/ocha_products/2403.webp"
-    ],
-    "OP05-030": [
-      "ドンキホーテ・ロシナンテ",
-      "https://files.cardrush.media/onepiece/ocha_products/6658.webp"
     ],
     "OP06-058": [
       "重力刀　猛虎",
@@ -1475,14 +1203,6 @@
     "OP03-018": [
       "火拳",
       "https://files.cardrush.media/onepiece/ocha_products/497.webp"
-    ],
-    "OP04-104": [
-      "サンジ",
-      "https://files.cardrush.media/onepiece/ocha_products/755.webp"
-    ],
-    "EB01-015": [
-      "スクラッチメン・アプー",
-      "https://files.cardrush.media/onepiece/ocha_products/6363.webp"
     ],
     "OP02-008": [
       "ジョズ",
@@ -1556,17 +1276,9 @@
       "ポートガス・D・エース",
       "https://files.cardrush.media/onepiece/ocha_products/4760.webp"
     ],
-    "OP10-003": [
-      "シュガー",
-      "https://files.cardrush.media/onepiece/ocha_products/10823.webp"
-    ],
     "OP03-041": [
       "ウソップ",
       "https://files.cardrush.media/onepiece/ocha_products/526.webp"
-    ],
-    "OP05-043": [
-      "うるティ",
-      "https://files.cardrush.media/onepiece/ocha_products/4911.webp"
     ],
     "OP05-088": [
       "マンシェリー",
@@ -1592,10 +1304,6 @@
       "S-スネーク",
       "https://files.cardrush.media/onepiece/ocha_products/4392.webp"
     ],
-    "OP05-081": [
-      "片足の兵隊",
-      "https://files.cardrush.media/onepiece/ocha_products/4919.webp"
-    ],
     "P-042": [
       "ロロノア・ゾロ",
       "https://files.cardrush.media/onepiece/ocha_products/2482.webp"
@@ -1612,21 +1320,9 @@
       "ドクトル・ホグバック",
       "https://files.cardrush.media/onepiece/ocha_products/2378.webp"
     ],
-    "OP07-047": [
-      "トラファルガー・ロー",
-      "https://files.cardrush.media/onepiece/ocha_products/6296.webp"
-    ],
-    "OP06-025": [
-      "ケイミー",
-      "https://files.cardrush.media/onepiece/ocha_products/8007.webp"
-    ],
     "OP10-109": [
       "バジル・ホーキンス",
       "https://files.cardrush.media/onepiece/ocha_products/6493.webp"
-    ],
-    "OP02-015": [
-      "マキノ",
-      "https://files.cardrush.media/onepiece/ocha_products/4834.webp"
     ],
     "P-011": [
       "ウタ",
@@ -1636,33 +1332,9 @@
       "シャーロット・プリン",
       "https://files.cardrush.media/onepiece/ocha_products/8740.webp"
     ],
-    "OP09-034": [
-      "ペローナ",
-      "https://files.cardrush.media/onepiece/ocha_products/5793.webp"
-    ],
-    "P-003": [
-      "ユースタス・キッド",
-      "https://files.cardrush.media/onepiece/ocha_products/994.webp"
-    ],
-    "OP01-006": [
-      "お玉",
-      "https://files.cardrush.media/onepiece/ocha_products/4812.webp"
-    ],
     "P-073": [
       "サボ",
       "https://files.cardrush.media/onepiece/ocha_products/4759.webp"
-    ],
-    "EB02-054": [
-      "サンジ",
-      "https://files.cardrush.media/onepiece/ocha_products/9991.webp"
-    ],
-    "OP05-102": [
-      "ゲダツ",
-      "https://files.cardrush.media/onepiece/ocha_products/8006.webp"
-    ],
-    "OP04-031": [
-      "ドンキホーテ・ドフラミンゴ",
-      "https://files.cardrush.media/onepiece/ocha_products/668.webp"
     ],
     "OP01-040": [
       "錦えもん",
@@ -1692,10 +1364,6 @@
       "アラマキ",
       "https://files.cardrush.media/onepiece/ocha_products/2331.webp"
     ],
-    "OP07-107": [
-      "フランキー",
-      "https://files.cardrush.media/onepiece/ocha_products/3375.webp"
-    ],
     "OP06-009": [
       "シュライヤ",
       "https://files.cardrush.media/onepiece/ocha_products/2297.webp"
@@ -1720,10 +1388,6 @@
       "センゴク",
       "https://files.cardrush.media/onepiece/ocha_products/7108.webp"
     ],
-    "ST03-005": [
-      "ジュラキュール・ミホーク",
-      "https://files.cardrush.media/onepiece/ocha_products/4997.webp"
-    ],
     "OP12-056": [
       "モンキー・Ｄ・ガープ",
       "https://files.cardrush.media/onepiece/ocha_products/8217.webp"
@@ -1740,21 +1404,9 @@
       "ヘルメッポ",
       "https://files.cardrush.media/onepiece/ocha_products/7507.webp"
     ],
-    "OP11-073": [
-      "シャーロット・リンリン",
-      "https://files.cardrush.media/onepiece/ocha_products/7567.webp"
-    ],
-    "ST17-005": [
-      "マーシャル・Ｄ・ティーチ",
-      "https://files.cardrush.media/onepiece/ocha_products/8568.webp"
-    ],
     "OP08-069": [
       "シャーロット・リンリン",
       "https://files.cardrush.media/onepiece/ocha_products/4349.webp"
-    ],
-    "OP01-021": [
-      "フランキー",
-      "https://files.cardrush.media/onepiece/ocha_products/964.webp"
     ],
     "OP12-051": [
       "ヒナ",
@@ -1792,21 +1444,9 @@
       "シャーロット・クラッカー",
       "https://files.cardrush.media/onepiece/ocha_products/604.webp"
     ],
-    "OP02-018": [
-      "マルコ",
-      "https://files.cardrush.media/onepiece/ocha_products/4836.webp"
-    ],
-    "OP03-113": [
-      "シャーロット・ペロスペロー",
-      "https://files.cardrush.media/onepiece/ocha_products/611.webp"
-    ],
     "OP03-066": [
       "パウリー",
       "https://files.cardrush.media/onepiece/ocha_products/554.webp"
-    ],
-    "OP05-007": [
-      "サボ",
-      "https://files.cardrush.media/onepiece/ocha_products/789.webp"
     ],
     "OP04-060": [
       "クロコダイル",
@@ -1815,14 +1455,6 @@
     "OP05-032": [
       "ピーカ",
       "https://files.cardrush.media/onepiece/ocha_products/818.webp"
-    ],
-    "OP05-105": [
-      "サトリ",
-      "https://files.cardrush.media/onepiece/ocha_products/4925.webp"
-    ],
-    "OP08-110": [
-      "ワイパー",
-      "https://files.cardrush.media/onepiece/ocha_products/6364.webp"
     ],
     "OP04-056": [
       "ゴムゴムの業火拳銃",
@@ -1836,25 +1468,9 @@
       "ミス・ウェンズデー",
       "https://files.cardrush.media/onepiece/ocha_products/3000.webp"
     ],
-    "OP06-036": [
-      "リューマ",
-      "https://files.cardrush.media/onepiece/ocha_products/4944.webp"
-    ],
     "OP03-057": [
       "三・千・世・界",
       "https://files.cardrush.media/onepiece/ocha_products/4858.webp"
-    ],
-    "OP06-068": [
-      "ヴィンスモーク・レイジュ",
-      "https://files.cardrush.media/onepiece/ocha_products/4963.webp"
-    ],
-    "P-017": [
-      "トラファルガー・ロー",
-      "https://files.cardrush.media/onepiece/ocha_products/3515.webp"
-    ],
-    "OP04-100": [
-      "カポネ・ベッジ",
-      "https://files.cardrush.media/onepiece/ocha_products/4897.webp"
     ],
     "OP06-091": [
       "ビクトリア・シンドリー",
@@ -1864,10 +1480,6 @@
       "シュラ",
       "https://files.cardrush.media/onepiece/ocha_products/909.webp"
     ],
-    "ST01-008": [
-      "ニコ・ロビン",
-      "https://files.cardrush.media/onepiece/ocha_products/2275.webp"
-    ],
     "P-078": [
       "アディオ",
       "https://files.cardrush.media/onepiece/ocha_products/5118.webp"
@@ -1876,17 +1488,9 @@
       "ウタ",
       "https://files.cardrush.media/onepiece/ocha_products/121.webp"
     ],
-    "EB02-019": [
-      "ロロノア・ゾロ",
-      "https://files.cardrush.media/onepiece/ocha_products/7411.webp"
-    ],
     "EB02-045": [
       "トラファルガー・ロー",
       "https://files.cardrush.media/onepiece/ocha_products/7109.webp"
-    ],
-    "ST01-004": [
-      "サンジ",
-      "https://files.cardrush.media/onepiece/ocha_products/1046.webp"
     ],
     "EB02-056": [
       "ベガパンク",
@@ -1916,18 +1520,6 @@
       "ミス・バレンタインミキータ",
       "https://files.cardrush.media/onepiece/ocha_products/10583.webp"
     ],
-    "OP06-065": [
-      "ヴィンスモーク・ニジ",
-      "https://files.cardrush.media/onepiece/ocha_products/4955.webp"
-    ],
-    "OP06-067": [
-      "ヴィンスモーク・ヨンジ",
-      "https://files.cardrush.media/onepiece/ocha_products/4960.webp"
-    ],
-    "OP04-089": [
-      "バルトロメオ",
-      "https://files.cardrush.media/onepiece/ocha_products/4892.webp"
-    ],
     "OP03-110": [
       "シャーロット・スムージー",
       "https://files.cardrush.media/onepiece/ocha_products/4871.webp"
@@ -1940,21 +1532,9 @@
       "地獄の審判",
       "https://files.cardrush.media/onepiece/ocha_products/4839.webp"
     ],
-    "OP01-041": [
-      "光月モモの助",
-      "https://files.cardrush.media/onepiece/ocha_products/4822.webp"
-    ],
-    "OP01-033": [
-      "イゾウ",
-      "https://files.cardrush.media/onepiece/ocha_products/4819.webp"
-    ],
     "P-113": [
       "ジュエリー・ボニー",
       "https://files.cardrush.media/onepiece/ocha_products/10088.webp"
-    ],
-    "ST13-012": [
-      "マキノ",
-      "https://files.cardrush.media/onepiece/ocha_products/2746.webp"
     ],
     "ST04-016": [
       "熱息",
@@ -1972,10 +1552,6 @@
       "Mr.3 ギャルディーノ",
       "https://files.cardrush.media/onepiece/ocha_products/8739.webp"
     ],
-    "ST17-003": [
-      "バギー",
-      "https://files.cardrush.media/onepiece/ocha_products/8567.webp"
-    ],
     "PRB02-011": [
       "ドンキホーテ・ドフラミンゴ",
       "https://files.cardrush.media/onepiece/ocha_products/8741.webp"
@@ -1983,10 +1559,6 @@
     "PRB02-007": [
       "ジンベエ",
       "https://files.cardrush.media/onepiece/ocha_products/8737.webp"
-    ],
-    "ST04-011": [
-      "ブラックマリア",
-      "https://files.cardrush.media/onepiece/ocha_products/1071.webp"
     ],
     "P-088": [
       "トラファルガー・ロー",
@@ -2004,29 +1576,13 @@
       "ラッキー・ルウ",
       "https://files.cardrush.media/onepiece/ocha_products/8733.webp"
     ],
-    "ST02-004": [
-      "カポネ・ベッジ",
-      "https://files.cardrush.media/onepiece/ocha_products/4994.webp"
-    ],
     "OP03-056": [
       "サンジのピラフ",
       "https://files.cardrush.media/onepiece/ocha_products/4855.webp"
     ],
-    "OP06-023": [
-      "アーロン",
-      "https://files.cardrush.media/onepiece/ocha_products/4940.webp"
-    ],
     "ST11-001": [
       "ウタ",
       "https://files.cardrush.media/onepiece/ocha_products/1194.webp"
-    ],
-    "ST11-004": [
-      "新時代",
-      "https://files.cardrush.media/onepiece/ocha_products/2184.webp"
-    ],
-    "ST01-011": [
-      "ブルック",
-      "https://files.cardrush.media/onepiece/ocha_products/1054.webp"
     ],
     "OP06-038": [
       "一大・三千・大千・世界",
@@ -2052,18 +1608,6 @@
       "クロコダイル",
       "https://files.cardrush.media/onepiece/ocha_products/35.webp"
     ],
-    "ST01-010": [
-      "フランキー",
-      "https://files.cardrush.media/onepiece/ocha_products/956.webp"
-    ],
-    "ST22-003": [
-      "エドワード・ニューゲート",
-      "https://files.cardrush.media/onepiece/ocha_products/7947.webp"
-    ],
-    "OP05-011": [
-      "バーソロミュー・くま",
-      "https://files.cardrush.media/onepiece/ocha_products/8561.webp"
-    ],
     "OP01-057": [
       "桃源白滝",
       "https://files.cardrush.media/onepiece/ocha_products/239.webp"
@@ -2084,17 +1628,9 @@
       "ベポ",
       "https://files.cardrush.media/onepiece/ocha_products/1011.webp"
     ],
-    "OP02-106": [
-      "つる",
-      "https://files.cardrush.media/onepiece/ocha_products/4844.webp"
-    ],
     "P-014": [
       "コビー",
       "https://files.cardrush.media/onepiece/ocha_products/1005.webp"
-    ],
-    "OP02-105": [
-      "たしぎ",
-      "https://files.cardrush.media/onepiece/ocha_products/454.webp"
     ],
     "P-051": [
       "シャンクス",
@@ -2104,29 +1640,13 @@
       "アーロン",
       "https://files.cardrush.media/onepiece/ocha_products/1200.webp"
     ],
-    "OP03-102": [
-      "サンジ",
-      "https://files.cardrush.media/onepiece/ocha_products/985.webp"
-    ],
     "OP05-114": [
       "神の裁き",
       "https://files.cardrush.media/onepiece/ocha_products/4928.webp"
     ],
-    "OP07-044": [
-      "ジュラキュール・ミホーク",
-      "https://files.cardrush.media/onepiece/ocha_products/8564.webp"
-    ],
     "OP12-093": [
       "モーリー",
       "https://files.cardrush.media/onepiece/ocha_products/8254.webp"
-    ],
-    "OP07-048": [
-      "ドンキホーテ・ドフラミンゴ",
-      "https://files.cardrush.media/onepiece/ocha_products/8566.webp"
-    ],
-    "OP12-028": [
-      "光月日和",
-      "https://files.cardrush.media/onepiece/ocha_products/9736.webp"
     ],
     "OP05-021": [
       "革命軍総本部",
@@ -2148,10 +1668,6 @@
       "虜の矢",
       "https://files.cardrush.media/onepiece/ocha_products/3280.webp"
     ],
-    "OP07-040": [
-      "クロコダイル",
-      "https://files.cardrush.media/onepiece/ocha_products/8563.webp"
-    ],
     "OP07-076": [
       "ノロノロビームソード",
       "https://files.cardrush.media/onepiece/ocha_products/3300.webp"
@@ -2159,10 +1675,6 @@
     "OP03-048": [
       "ノジコ",
       "https://files.cardrush.media/onepiece/ocha_products/534.webp"
-    ],
-    "ST03-007": [
-      "戦桃丸",
-      "https://files.cardrush.media/onepiece/ocha_products/1063.webp"
     ],
     "OP14-107": [
       "シャクヤク",
@@ -2172,10 +1684,6 @@
       "ハック",
       "https://files.cardrush.media/onepiece/ocha_products/8250.webp"
     ],
-    "OP01-014": [
-      "ジンベエ",
-      "https://files.cardrush.media/onepiece/ocha_products/961.webp"
-    ],
     "P-030": [
       "ジンベエ",
       "https://files.cardrush.media/onepiece/ocha_products/3503.webp"
@@ -2183,10 +1691,6 @@
     "ST01-002": [
       "ウソップ",
       "https://files.cardrush.media/onepiece/ocha_products/949.webp"
-    ],
-    "ST01-005": [
-      "ジンベエ",
-      "https://files.cardrush.media/onepiece/ocha_products/951.webp"
     ],
     "OP09-108": [
       "バーソロミュー・くま",
@@ -2202,12 +1706,9 @@
     ]
   },
   "confidence_mappings": {
-    "OP02-096": 78.6,
-    "OP02-099": 87.0,
     "OP03-114": 92.8,
     "ST01-013": 95.8,
     "ST01-001": 94.8,
-    "ST10-010": 78.7,
     "OP14-112": 93.8,
     "OP05-091": 89.4,
     "ST10-006": 88.8,
@@ -2215,24 +1716,17 @@
     "OP09-004": 93.3,
     "OP05-119": 96.3,
     "OP09-118": 95.4,
-    "OP12-020": 77.1,
     "OP08-106": 92.5,
     "OP13-119": 87.6,
-    "OP05-086": 63.9,
     "OP14-120": 88.5,
     "ST01-012": 95.1,
     "OP01-016": 92.0,
-    "OP01-004": 64.8,
-    "OP02-114": 78.2,
     "OP07-109": 94.4,
     "OP13-120": 97.6,
-    "ST10-013": 78.0,
     "P-112": 92.5,
     "EB02-061": 85.4,
     "OP01-120": 83.0,
     "OP03-123": 91.8,
-    "OP03-112": 88.1,
-    "EB02-010": 84.5,
     "OP09-009": 92.1,
     "OP03-116": 93.9,
     "OP07-119": 92.1,
@@ -2244,20 +1738,15 @@
     "OP01-025": 92.9,
     "OP02-013": 86.6,
     "OP03-122": 91.4,
-    "OP09-093": 70.6,
     "OP05-069": 92.6,
     "OP11-118": 91.9,
-    "OP09-051": 75.1,
     "OP07-051": 93.6,
-    "OP04-083": 76.7,
     "EB03-061": 83.2,
     "EB04-044": 89.2,
     "EB03-026": 86.5,
     "OP14-119": 93.1,
     "ST17-004": 94.7,
     "OP12-063": 90.5,
-    "OP05-074": 77.4,
-    "OP09-013": 60.4,
     "ST21-014": 89.2,
     "OP08-118": 90.0,
     "OP12-118": 96.9,
@@ -2267,19 +1756,14 @@
     "EB03-053": 90.5,
     "OP10-119": 92.0,
     "OP07-038": 85.5,
-    "OP01-070": 78.5,
-    "OP09-001": 70.8,
-    "OP01-078": 77.0,
     "OP10-005": 95.1,
     "OP08-105": 93.7,
-    "P-055": 79.2,
     "OP09-002": 92.9,
     "PRB02-006": 80.6,
     "ST13-003": 92.3,
     "OP05-060": 92.6,
     "ST16-001": 95.2,
     "OP12-014": 93.5,
-    "OP06-069": 76.9,
     "ST26-005": 83.8,
     "OP09-050": 88.5,
     "EB03-003": 94.2,
@@ -2289,15 +1773,12 @@
     "OP01-003": 92.5,
     "OP09-069": 94.1,
     "OP12-037": 84.0,
-    "OP09-061": 72.1,
     "OP13-080": 90.1,
-    "OP05-067": 85.5,
     "EB03-045": 93.1,
     "ST03-013": 89.8,
     "OP13-083": 92.6,
     "OP13-084": 89.0,
     "OP13-089": 92.5,
-    "ST01-006": 76.1,
     "OP13-091": 84.1,
     "EB03-031": 96.9,
     "OP15-116": 91.3,
@@ -2319,7 +1800,6 @@
     "ST13-015": 89.8,
     "OP13-042": 94.4,
     "ST21-001": 93.1,
-    "OP11-041": 82.3,
     "OP06-021": 48.6,
     "OP12-060": 91.1,
     "OP07-085": 90.4,
@@ -2338,38 +1818,30 @@
     "ST16-004": 95.7,
     "OP12-030": 80.7,
     "OP15-119": 91.5,
-    "OP01-017": 53.7,
-    "OP10-001": 82.2,
     "EB04-007": 86.5,
     "OP06-042": 70.7,
     "P-105": 95.4,
     "OP05-041": 95.8,
     "OP06-022": 78.6,
     "ST29-001": 92.8,
-    "OP04-092": 87.5,
-    "OP04-044": 75.1,
     "EB01-001": 74.2,
     "OP04-064": 92.3,
-    "OP04-112": 73.0,
     "P-080": 93.1,
     "OP06-093": 85.5,
     "EB01-057": 94.7,
     "OP07-079": 94.7,
-    "OP09-076": 72.7,
     "OP08-098": 81.5,
     "ST18-001": 95.2,
     "OP01-002": 87.8,
     "P-075": 89.9,
     "ST13-011": 83.6,
     "OP03-040": 90.1,
-    "OP01-047": 78.0,
     "OP06-007": 98.0,
     "OP12-039": 93.0,
     "OP05-022": 85.3,
     "OP08-021": 90.1,
     "EB01-046": 95.2,
     "OP05-001": 81.7,
-    "OP02-004": 79.0,
     "OP08-057": 85.9,
     "OP05-002": 85.7,
     "ST06-006": 91.2,
@@ -2379,14 +1851,12 @@
     "OP15-086": 93.0,
     "OP11-054": 93.7,
     "OP10-082": 91.2,
-    "OP09-106": 76.8,
     "OP05-006": 88.8,
     "ST14-003": 90.1,
     "EB04-061": 90.5,
     "EB01-003": 94.3,
     "P-041": 97.9,
     "OP04-024": 81.1,
-    "OP02-098": 80.8,
     "ST22-002": 95.3,
     "OP04-119": 91.6,
     "OP13-076": 90.5,
@@ -2399,7 +1869,6 @@
     "OP15-053": 96.0,
     "OP15-002": 90.9,
     "OP07-118": 95.2,
-    "EB01-043": 78.3,
     "ST03-009": 95.5,
     "OP08-002": 84.7,
     "ST07-010": 93.4,
@@ -2408,29 +1877,18 @@
     "OP06-080": 41.7,
     "OP03-092": 92.3,
     "EB01-012": 92.8,
-    "OP01-077": 59.1,
-    "OP07-046": 81.1,
-    "OP09-042": 84.6,
     "OP07-015": 95.1,
-    "OP08-067": 77.6,
-    "OP09-081": 72.4,
     "ST29-004": 91.5,
     "OP14-104": 94.3,
     "OP07-111": 96.5,
     "OP10-030": 93.3,
-    "OP01-073": 83.4,
     "OP01-060": 92.7,
-    "ST03-004": 83.5,
-    "OP03-001": 80.0,
     "OP14-111": 94.2,
     "OP07-059": 81.8,
     "OP12-079": 93.4,
-    "OP10-042": 70.2,
     "ST15-005": 94.6,
     "OP14-031": 89.7,
-    "ST04-003": 74.0,
     "OP10-118": 96.0,
-    "EB01-023": 46.9,
     "OP10-045": 90.3,
     "ST21-003": 91.6,
     "OP10-049": 89.4,
@@ -2438,47 +1896,33 @@
     "EB01-061": 93.9,
     "OP03-099": 90.7,
     "EB01-040": 87.5,
-    "OP01-051": 80.4,
     "OP07-001": 80.9,
-    "OP09-037": 87.7,
     "ST22-001": 89.6,
     "OP13-108": 89.7,
     "P-028": 93.4,
     "OP15-078": 96.4,
-    "ST04-005": 69.5,
-    "OP13-001": 61.0,
-    "OP07-053": 83.6,
     "OP15-092": 89.1,
-    "EB01-056": 73.5,
     "OP15-060": 91.5,
     "EB01-021": 91.2,
     "OP02-085": 88.7,
     "OP06-020": 68.3,
     "OP05-051": 94.9,
-    "OP03-003": 65.4,
-    "ST19-002": 80.9,
     "OP15-109": 90.2,
     "PRB02-017": 93.7,
-    "OP06-047": 71.4,
     "OP15-114": 92.0,
     "OP12-034": 93.0,
-    "OP02-001": 77.1,
-    "OP07-021": 74.1,
     "OP02-036": 92.5,
     "OP06-106": 90.8,
     "OP08-084": 90.6,
     "OP13-007": 94.5,
-    "ST03-008": 84.4,
     "EB03-062": 95.3,
     "OP15-108": 84.8,
     "OP12-031": 92.0,
     "OP03-078": 96.0,
     "OP06-104": 94.7,
-    "OP01-035": 74.5,
     "OP11-067": 92.3,
     "PRB02-012": 96.0,
     "OP14-084": 93.1,
-    "OP10-111": 79.8,
     "OP11-010": 94.2,
     "EB04-038": 93.2,
     "OP15-061": 92.8,
@@ -2488,7 +1932,6 @@
     "OP07-072": 89.0,
     "P-111": 94.1,
     "OP07-064": 90.8,
-    "OP09-065": 86.6,
     "OP13-016": 92.4,
     "OP01-013": 89.7,
     "ST13-002": 93.8,
@@ -2506,15 +1949,12 @@
     "P-022": 88.4,
     "OP13-043": 90.0,
     "OP10-071": 92.4,
-    "OP01-005": 79.0,
     "EB04-025": 90.6,
     "OP14-069": 92.8,
     "OP04-118": 91.3,
     "OP10-112": 88.7,
     "OP15-032": 87.1,
-    "OP05-082": 65.5,
     "EB01-048": 87.1,
-    "OP02-059": 69.6,
     "OP13-054": 92.6,
     "OP12-071": 95.2,
     "EB02-026": 91.9,
@@ -2530,8 +1970,6 @@
     "OP12-094": 90.5,
     "OP14-061": 91.9,
     "OP13-027": 92.5,
-    "ST07-008": 77.2,
-    "OP02-029": 77.4,
     "OP12-015": 88.6,
     "OP13-064": 90.6,
     "OP02-117": 86.1,
@@ -2559,10 +1997,8 @@
     "ST13-013": 95.8,
     "ST03-017": 95.1,
     "OP05-118": 90.7,
-    "OP06-086": 75.6,
     "OP12-008": 93.5,
     "OP06-115": 91.6,
-    "OP05-030": 72.5,
     "OP06-058": 96.0,
     "OP11-070": 95.0,
     "PRB02-001": 88.4,
@@ -2571,8 +2007,6 @@
     "OP13-066": 87.6,
     "OP01-067": 91.6,
     "OP03-018": 92.2,
-    "OP04-104": 81.4,
-    "EB01-015": 83.6,
     "OP02-008": 95.9,
     "OP12-073": 94.5,
     "OP12-108": 90.0,
@@ -2591,33 +2025,21 @@
     "OP13-037": 91.2,
     "OP14-099": 92.3,
     "P-074": 91.0,
-    "OP10-003": 73.1,
     "OP03-041": 94.6,
-    "OP05-043": 81.7,
     "OP05-088": 90.0,
     "OP02-121": 95.1,
     "OP05-034": 92.1,
     "EB01-052": 88.9,
     "OP08-079": 94.9,
     "OP08-112": 94.2,
-    "OP05-081": 77.2,
     "P-042": 93.5,
     "OP07-045": 93.5,
     "ST05-004": 87.0,
     "OP06-090": 92.2,
-    "OP07-047": 81.3,
-    "OP06-025": 82.7,
     "OP10-109": 93.0,
-    "OP02-015": 76.4,
     "P-011": 97.4,
     "PRB02-010": 93.8,
-    "OP09-034": 70.4,
-    "P-003": 68.8,
-    "OP01-006": 63.9,
     "P-073": 90.7,
-    "EB02-054": 65.9,
-    "OP05-102": 71.7,
-    "OP04-031": 75.6,
     "OP01-040": 89.4,
     "EB04-013": 92.1,
     "OP10-016": 92.1,
@@ -2625,22 +2047,17 @@
     "OP06-062": 92.0,
     "OP10-032": 94.8,
     "OP06-043": 91.6,
-    "OP07-107": 81.1,
     "OP06-009": 90.0,
     "OP08-119": 95.3,
     "OP08-043": 91.0,
     "P-031": 96.9,
     "P-047": 90.0,
     "EB02-044": 96.6,
-    "ST03-005": 73.0,
     "OP12-056": 93.5,
     "EB02-015": 93.9,
     "OP11-004": 93.1,
     "OP11-092": 89.7,
-    "OP11-073": 82.2,
-    "ST17-005": 78.3,
     "OP08-069": 91.4,
-    "OP01-021": 59.3,
     "OP12-051": 91.7,
     "PRB02-004": 90.0,
     "OP13-040": 91.3,
@@ -2650,30 +2067,18 @@
     "OP03-025": 95.4,
     "OP02-030": 97.4,
     "OP03-108": 87.1,
-    "OP02-018": 84.9,
-    "OP03-113": 86.9,
     "OP03-066": 83.5,
-    "OP05-007": 78.9,
     "OP04-060": 91.1,
     "OP05-032": 94.0,
-    "OP05-105": 78.9,
-    "OP08-110": 74.3,
     "OP04-056": 95.3,
     "EB01-022": 93.9,
     "EB01-034": 87.6,
-    "OP06-036": 69.9,
     "OP03-057": 92.8,
-    "OP06-068": 74.3,
-    "P-017": 78.6,
-    "OP04-100": 59.6,
     "OP06-091": 94.8,
     "OP05-106": 95.3,
-    "ST01-008": 71.6,
     "P-078": 96.1,
     "ST08-002": 90.7,
-    "EB02-019": 78.0,
     "EB02-045": 91.3,
-    "ST01-004": 80.3,
     "EB02-056": 89.0,
     "ST17-002": 94.4,
     "EB02-011": 94.3,
@@ -2681,74 +2086,49 @@
     "EB04-036": 92.5,
     "OP14-105": 93.7,
     "OP14-087": 86.9,
-    "OP06-065": 80.2,
-    "OP06-067": 86.0,
-    "OP04-089": 62.9,
     "OP03-110": 89.8,
     "OP03-089": 87.8,
     "OP02-089": 95.2,
-    "OP01-041": 86.6,
-    "OP01-033": 63.8,
     "P-113": 95.3,
-    "ST13-012": 84.8,
     "ST04-016": 90.3,
     "P-016": 95.5,
     "OP05-037": 90.7,
     "PRB02-009": 91.2,
-    "ST17-003": 61.0,
     "PRB02-011": 92.5,
     "PRB02-007": 90.7,
-    "ST04-011": 79.6,
     "P-088": 92.3,
     "OP13-086": 91.3,
     "ST21-017": 90.0,
     "PRB02-003": 93.1,
-    "ST02-004": 52.8,
     "OP03-056": 89.1,
-    "OP06-023": 51.3,
     "ST11-001": 94.4,
-    "ST11-004": 47.7,
-    "ST01-011": 84.5,
     "OP06-038": 92.9,
     "P-101": 92.4,
     "OP08-040": 90.0,
     "OP01-029": 89.2,
     "ST02-001": 86.9,
     "ST03-001": 94.3,
-    "ST01-010": 62.7,
-    "ST22-003": 85.4,
-    "OP05-011": 78.1,
     "OP01-057": 94.2,
     "P-102": 95.8,
     "OP07-116": 91.4,
     "EB04-023": 94.1,
     "P-019": 93.1,
-    "OP02-106": 75.9,
     "P-014": 94.6,
-    "OP02-105": 48.5,
     "P-051": 94.8,
     "P-048": 96.0,
-    "OP03-102": 79.7,
     "OP05-114": 89.7,
-    "OP07-044": 63.1,
     "OP12-093": 96.2,
-    "OP07-048": 76.6,
-    "OP12-028": 87.3,
     "OP05-021": 95.2,
     "OP12-098": 90.9,
     "OP14-023": 97.8,
     "OP03-033": 94.2,
     "OP07-056": 94.3,
-    "OP07-040": 79.3,
     "OP07-076": 88.5,
     "OP03-048": 95.6,
-    "ST03-007": 81.5,
     "OP14-107": 83.7,
     "OP12-089": 92.7,
-    "OP01-014": 54.4,
     "P-030": 96.7,
     "ST01-002": 88.4,
-    "ST01-005": 78.5,
     "OP09-108": 96.3,
     "OP08-076": 92.0,
     "OP14-014": 93.3
