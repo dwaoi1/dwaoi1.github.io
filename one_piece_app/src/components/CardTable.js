@@ -378,7 +378,18 @@ const CardTable = ({ data }) => {
               const isWishlisted = wishlistSet.has(item.cardId);
               return (
                 <div key={item.cardId} className="card-grid-item">
-                  <div className="card-image-shell">
+                  <div 
+                    className="card-image-shell"
+                    style={{
+                      width: '100%',
+                      maxWidth: '190px',
+                      aspectRatio: '2/3',
+                      position: 'relative',
+                      backgroundColor: '#1a1d27',
+                      borderRadius: '8px',
+                      overflow: 'hidden'
+                    }}
+                  >
                     <div className="heart-wrapper">
                       <button
                         className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
@@ -405,14 +416,12 @@ const CardTable = ({ data }) => {
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
                       style={{
                         width: '100%',
-                        aspectRatio: '2/3',
-                        position: 'relative',
-                        backgroundColor: '#1a1d27',
-                        borderRadius: '8px',
-                        overflow: 'hidden',
+                        height: '100%',
                         display: 'block',
                         padding: 0,
-                        border: 'none'
+                        border: 'none',
+                        background: 'transparent',
+                        cursor: 'pointer'
                       }}
                     >
                       <img
