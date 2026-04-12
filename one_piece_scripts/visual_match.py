@@ -4,6 +4,7 @@ import re
 import requests
 import cv2
 import numpy as np
+import easyocr
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, as_completed
@@ -94,8 +95,42 @@ def is_cr_parallel(cr_entry):
     # Specific markings from build_price_data.py that indicate a variant/parallel
     return any(sig in name for sig in ['パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ'])
 
-def match_worker(off_img_path, cr_entries_with_paths, img_code):
-    """Worker function for parallel matching."""
+def extract_illust_name(cr_name):
+    """Extract illustrator name from Cardrush title (e.g. illust:Anderson -> Anderson)."""
+    m = re.search(r'illust:([^/\)]+)', cr_name)
+    if m:
+        return m.group(1).strip().lower()
+    return None
+
+_ocr_reader = None
+def get_ocr_text(img_path):
+    """Run OCR on bottom-right and right-edge regions to find text (illustrator names)."""
+    global _ocr_reader
+    try:
+        if _ocr_reader is None:
+            _ocr_reader = easyocr.Reader(['en'], gpu=False)
+            
+        img = cv2.imread(img_path)
+        if img is None: return ""
+        h, w = img.shape[:2]
+        
+        # Crop 1: Bottom Right (horizontal)
+        br = img[int(h*0.7):, int(w*0.4):]
+        # Crop 2: Right Edge (vertical, rotate to horizontal)
+        re_edge = img[:, int(w*0.85):]
+        re_rot = cv2.rotate(re_edge, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        
+        text = ""
+        for roi in [br, re_rot]:
+            results = _ocr_reader.readtext(roi)
+            text += " " + " ".join([r[1].lower() for r in results])
+        return text
+    except Exception as e:
+        print(f"OCR Error for {img_path}: {e}")
+        return ""
+
+def match_worker(off_img_path, cr_entries_with_paths, img_code, off_ocr_text):
+    """Worker function for matching, using both SIFT and illustrator name validation."""
     best_inliers = 0
     best_confidence = 0.0
     best_cr = None
@@ -105,18 +140,32 @@ def match_worker(off_img_path, cr_entries_with_paths, img_code):
     for cr_entry, cr_path in cr_entries_with_paths:
         if not cr_path: continue
         
-        # Filter out obvious mismatches between base cards and parallel variants
+        # 1. Filter by parallel status
         if is_off_parallel != is_cr_parallel(cr_entry):
             continue
             
+        # 2. Check Illustrator match (Primary weight)
+        illust_name = extract_illust_name(cr_entry.get('name', ''))
+        illustrator_matched = False
+        if illust_name and off_ocr_text:
+            # Check if the extracted illustrator name exists in the image OCR text
+            # We check both exact match and stripped match (no spaces) to be safe
+            if illust_name in off_ocr_text or illust_name.replace(' ', '') in off_ocr_text.replace(' ', ''):
+                illustrator_matched = True
+
+        # 3. Calculate Visual Similarity
         inliers, confidence = find_match_score(off_img_path, cr_path)
+        
+        # If illustrator matches, we give a massive boost to confidence and inliers
+        if illustrator_matched:
+            inliers += 100
+            confidence = max(confidence, 99.0)
+            
         if inliers > best_inliers:
             best_inliers = inliers
             best_confidence = confidence
             best_cr = cr_entry
             
-    # If we didn't find any matches because of the strict filtering, 
-    # we could theoretically fallback, but strict filtering saves manual review time.
     if best_cr is None:
         return 0, 0.0, None
         
@@ -157,12 +206,11 @@ def main():
     
     if not load_success:
         print(f"SKIPPING write-back to {PRICE_OVERRIDES_JSON} to avoid data loss.")
-        # We can still continue with matching if we want, but we won't save.
-        # However, it's probably better to abort if we can't load the existing mappings.
         return
 
     mappings = overrides_data.get('mappings', {})
     confidence_mappings = overrides_data.get('confidence_mappings', {})
+    ocr_cache = overrides_data.get('ocr_cache', {})
     
     # 1. Group Data
     official_by_code = {}
@@ -188,9 +236,6 @@ def main():
         if len(cr_entries) <= 1: continue
         off_entries = official_by_code.get(code, [])
         
-        # Identify cards that need matching: 
-        # - Either they are not in mappings yet
-        # - Or they are mapped to a simple name (not a URL), which might be non-unique
         unmapped_off = []
         for off_card in off_entries:
             img_code = get_image_code(off_card['Picture'])
@@ -200,8 +245,6 @@ def main():
             if not current_mapping:
                 needs_match = True
             elif isinstance(current_mapping, str) and not current_mapping.startswith('http'):
-                # It's a name mapping. Check if this name is unique among cr_entries.
-                # If multiple cr_entries have the same name, we should try to get a URL mapping instead.
                 name_matches = [cr for cr in cr_entries if cr.get('name') == current_mapping]
                 if len(name_matches) > 1:
                     needs_match = True
@@ -228,7 +271,17 @@ def main():
         for future in tqdm(as_completed(future_to_url), total=len(urls_to_download), desc="Downloading images"):
             url_to_path[future_to_url[future]] = future.result()
 
-    # 3. Parallel Matching
+    # 3. Pre-run OCR on Official Images
+    print("Running OCR on official images to detect illustrator names...")
+    unique_off_pictures = set(item[1]['Picture'] for item in work_items)
+    for pic_url in tqdm(unique_off_pictures, desc="OCR Analysis"):
+        img_code = get_image_code(pic_url)
+        if img_code not in ocr_cache:
+            img_path = url_to_path.get(pic_url)
+            if img_path:
+                ocr_cache[img_code] = get_ocr_text(img_path)
+
+    # 4. Parallel Matching
     print(f"Starting parallel matching for {len(work_items)} cards...")
     matched_new = 0
     
@@ -240,7 +293,9 @@ def main():
             cr_entries_with_paths = [(cr, url_to_path.get(cr.get('image'))) for cr in cr_entries]
             
             img_code = get_image_code(off_card['Picture'])
-            f = executor.submit(match_worker, off_path, cr_entries_with_paths, img_code)
+            off_ocr_text = ocr_cache.get(img_code, "")
+            
+            f = executor.submit(match_worker, off_path, cr_entries_with_paths, img_code, off_ocr_text)
             f.img_code = img_code
             futures.append(f)
 
@@ -249,9 +304,6 @@ def main():
             img_code = future.img_code
             
             if inliers >= 20: # Strong threshold
-                # Store both the Cardrush name AND image URL (if available) in a list.
-                # This ensures build_price_data.py can match entries even in older scrapes
-                # that might be missing the 'image' field.
                 mapping_value = [best_cr['name']]
                 if best_cr.get('image'):
                     mapping_value.append(best_cr['image'])
@@ -261,13 +313,13 @@ def main():
                 confidence_mappings[img_code] = round(confidence, 1)
                 matched_new += 1
             else:
-                # Optional: log if points were close
                 if inliers > 5:
                     print(f"  Low confidence for {img_code} (Best: {confidence:.1f}%)")
 
-    if matched_new > 0:
+    if matched_new > 0 or ocr_cache:
         overrides_data['mappings'] = mappings
         overrides_data['confidence_mappings'] = confidence_mappings
+        overrides_data['ocr_cache'] = ocr_cache
         atomic_write_json(PRICE_OVERRIDES_JSON, overrides_data, indent=2)
         print(f"\nAdded {matched_new} new mappings.")
     else:
