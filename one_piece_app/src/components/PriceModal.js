@@ -295,11 +295,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           {/* Left panel: card image */}
           <div className="price-modal-card-panel">
             <img
-              src={
-                (item.Picture.includes('onepiece-cardgame.com'))
-                  ? `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&w=460&output=webp&default=https://placehold.co/150?text=No+Image`
-                  : item.Picture
-              }
+              src={`${process.env.PUBLIC_URL}/images/cards/${item.cardId}`}
               alt={item.Character}
               className="price-modal-card-image-large"
               referrerPolicy="no-referrer"
@@ -309,37 +305,31 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
 
                 const historyEntry = priceHistory[item.imageCode] || priceHistory[item.cardCode];
                 const crFallback = historyEntry?.cardrushImage;
+                const cleanUrl = item.Picture.split('?')[0];
+                const encodedUrl = encodeURIComponent(cleanUrl);
 
-                if (item.Picture.includes('onepiece-cardgame.com')) {
-                  const cleanUrl = item.Picture.split('?')[0];
-                  const encodedUrl = encodeURIComponent(cleanUrl);
-
-                  if (currentSrc.includes('wsrv.nl')) {
-                    // If wsrv.nl failed, try Cardrush immediately as it's often more reliable than a second proxy
-                    if (crFallback) {
-                      e.target.src = crFallback;
-                    } else {
-                      e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
-                    }
-                  } else if (currentSrc.includes('images.weserv.nl')) {
-                    if (crFallback) {
-                      e.target.src = crFallback;
-                    } else {
-                      e.target.src = `https://corsproxy.io/?${encodedUrl}`;
-                    }
-                  } else if (currentSrc.includes('corsproxy.io')) {
-                    if (crFallback) {
-                      e.target.src = crFallback;
-                    } else {
-                      e.target.src = 'https://placehold.co/150?text=No+Image';
-                    }
+                if (currentSrc.includes('/images/cards/')) {
+                  // Local failed, try primary proxy
+                  e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                } else if (currentSrc.includes('wsrv.nl')) {
+                  // Primary proxy failed, try Cardrush fallback
+                  if (crFallback) {
+                    e.target.src = crFallback;
                   } else {
-                    e.target.src = 'https://placehold.co/150?text=No+Image';
+                    e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                  }
+                } else if (currentSrc.includes('images.weserv.nl')) {
+                  // Secondary proxy failed, try corsproxy or final placeholder
+                  if (crFallback) {
+                    e.target.src = crFallback;
+                  } else {
+                    e.target.src = `https://corsproxy.io/?${encodedUrl}`;
                   }
                 } else {
                   e.target.src = 'https://placehold.co/150?text=No+Image';
                 }
-              }}            />
+              }}
+            />
           </div>
 
           {/* Right panel: controls + chart */}
