@@ -97,7 +97,7 @@ def get_cr_parallel_type(cr_entry):
     
     # Strict parallels: Alt-arts, Manga, SP, etc. These almost always have a star.
     strict_signatures = [
-        'パラレル', '漫画', 'SP', 'シリアル', 'CS', 'アニメ', 'フルアート'
+        'パラレル', '漫画', 'SP', 'シリアル', 'CS', 'アニメ', 'フルアート', '金文字'
     ]
     if any(sig in name for sig in strict_signatures) or '/P' in rarity:
         return 'strict'
