@@ -173,7 +173,7 @@ def get_ocr_text(img_path):
     global _ocr_reader
     try:
         if _ocr_reader is None:
-            _ocr_reader = easyocr.Reader(['en'], gpu=False)
+            _ocr_reader = easyocr.Reader(['en'], gpu=True)
             
         img = cv2.imread(img_path)
         if img is None: return ""
