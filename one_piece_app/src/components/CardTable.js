@@ -388,16 +388,14 @@ const CardTable = ({ data }) => {
                       type="button"
                       className="card-image-btn"
                       onMouseEnter={() => {
-                        if (item.Picture.includes('onepiece-cardgame.com')) {
-                          const img = new Image();
-                          img.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
-                        }
+                        // Preload proxied image
+                        const img = new Image();
+                        img.src = `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`;
                       }}
                       onClick={() => setPriceModal(item)}
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
                       style={{
                         width: '100%',
-                        height: '100%',
                         display: 'block',
                         padding: 0,
                         border: 'none',
@@ -406,63 +404,50 @@ const CardTable = ({ data }) => {
                       }}
                     >
                       <img
-                        src={
-                          (item.Picture.includes('onepiece-cardgame.com'))
-                            ? `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`
-                            : item.Picture
-                        }
+                        src={`https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`}
                         alt={item.Character}
                         loading="lazy"
                         referrerPolicy="no-referrer"
                         style={{
                           width: '100%',
-                          height: '100%',
-                          objectFit: 'contain',
-                          display: 'block'
+                          height: 'auto',
+                          display: 'block',
+                          borderRadius: '8px',
+                          minHeight: '100px'
                         }}
                         onError={(e) => {
                           const currentSrc = e.target.src;
                           if (currentSrc.includes('placehold')) return;
-                          
+
                           const historyEntry = priceHistory[item.imageCode] || priceHistory[item.cardCode];
                           const crFallback = historyEntry?.cardrushImage;
+                          const cleanUrl = item.Picture.split('?')[0];
+                          const encodedUrl = encodeURIComponent(cleanUrl);
 
-                          if (item.Picture.includes('onepiece-cardgame.com')) {
-                            const cleanUrl = item.Picture.split('?')[0];
-                            const encodedUrl = encodeURIComponent(cleanUrl);
-                            
-                            if (currentSrc.includes('/images/cards/')) {
-                              // If local image fails (not downloaded yet), try proxy
-                              e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
-                            } else if (currentSrc.includes('wsrv.nl')) {
-                              // If wsrv.nl failed, try Cardrush immediately as it's often more reliable
-                              if (crFallback) {
-                                e.target.src = crFallback;
-                              } else {
-                                e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
-                              }
-                            } else if (currentSrc.includes('images.weserv.nl')) {
-                              if (crFallback) {
-                                e.target.src = crFallback;
-                              } else {
-                                e.target.src = `https://corsproxy.io/?${encodedUrl}`;
-                              }
-                            } else if (currentSrc.includes('corsproxy.io')) {
-                               if (crFallback) {
-                                 e.target.src = crFallback;
-                               } else {
-                                 e.target.src = 'https://placehold.co/150?text=No+Image';
-                               }
+                          // Fallback Chain: Proxy (wsrv.nl) -> Local -> Cardrush -> Proxy (weserv) -> Corsproxy -> Placeholder
+                          if (currentSrc.includes('wsrv.nl')) {
+                            // Primary proxy failed, try local image
+                            e.target.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
+                          } else if (currentSrc.includes('/images/cards/')) {
+                            // Local failed, try Cardrush fallback
+                            if (crFallback) {
+                              e.target.src = crFallback;
                             } else {
-                              e.target.src = 'https://placehold.co/150?text=No+Image';
+                              e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                            }
+                          } else if (currentSrc.includes('images.weserv.nl')) {
+                            // Secondary proxy failed, try corsproxy or final placeholder
+                            if (crFallback) {
+                              e.target.src = crFallback;
+                            } else {
+                              e.target.src = `https://corsproxy.io/?${encodedUrl}`;
                             }
                           } else {
                             e.target.src = 'https://placehold.co/150?text=No+Image';
                           }
                         }}
                       />
-                    </button>
-                  </div>
+                    </button>                  </div>
                 </div>
               );
             })}

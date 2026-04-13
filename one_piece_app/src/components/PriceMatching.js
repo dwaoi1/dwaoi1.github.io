@@ -210,15 +210,22 @@ const PriceMatching = ({ cardData }) => {
                 <h3>Database Card</h3>
                 {selectedMatch.picture ? (
                   <img 
-                    src={selectedMatch.picture.includes('onepiece-cardgame.com') 
-                      ? `${process.env.PUBLIC_URL}/images/cards/${selectedMatch.picture.split('?')[0].split('/').pop()}`
-                      : selectedMatch.picture
-                    } 
+                    src={`https://wsrv.nl/?url=${encodeURIComponent(selectedMatch.picture.split('?')[0])}&output=webp&default=https://placehold.co/300x420?text=No+Image`} 
                     onError={(e) => {
                       const currentSrc = e.target.src;
-                      if (currentSrc.includes('/images/cards/')) {
-                        e.target.src = `https://wsrv.nl/?url=${encodeURIComponent(selectedMatch.picture.split('?')[0])}&output=webp&default=https://placehold.co/300x420?text=No+Image`;
-                      } else if (currentSrc.includes('wsrv.nl')) {
+                      if (currentSrc.includes('placehold')) return;
+                      
+                      const filename = selectedMatch.picture.split('?')[0].split('/').pop();
+                      const cleanUrl = selectedMatch.picture.split('?')[0];
+                      const encodedUrl = encodeURIComponent(cleanUrl);
+
+                      if (currentSrc.includes('wsrv.nl')) {
+                        // Proxy failed, try local
+                        e.target.src = `${process.env.PUBLIC_URL}/images/cards/${filename}`;
+                      } else if (currentSrc.includes('/images/cards/')) {
+                        // Local failed, try secondary proxy
+                        e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/300x420?text=No+Image`;
+                      } else {
                         e.target.src = 'https://placehold.co/300x420?text=No+Image';
                       }
                     }}
