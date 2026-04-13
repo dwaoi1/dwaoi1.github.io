@@ -351,9 +351,15 @@ def main():
         for cr in cr_entries:
             cr_name = cr.get('name', '')
             cr_img = cr.get('image', '')
-            is_special = '未開封' in cr_name or '金文字' in cr_name
+            
+            # Skip "Special" entries (Sealed/Gold) for automated matching.
+            # These are variants that build_price_data.py handles automatically
+            # based on the primary artwork match.
+            if '未開封' in cr_name or '金文字' in cr_name:
+                continue
+                
             is_mapped = (cr_name and cr_name in mapped_cr_names) or (cr_img and cr_img in mapped_cr_images)
-            if is_mapped and not is_special:
+            if is_mapped:
                 continue
             available_cr_entries.append(cr)
             
