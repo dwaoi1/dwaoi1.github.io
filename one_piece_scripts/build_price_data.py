@@ -179,7 +179,7 @@ def classify_entry(e):
     # Specific parallel markings
     # Including 'foil' and '白黒版' (black/white) per user feedback
     parallel_signatures = [
-        'パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ', 
+        'パラレル', '漫画', 'SP', 'シリアル', 'CS', 'アニメ', 
         'フルアート', 'foil', 'ホイル', '白黒版', '★無し'
     ]
     if any(sig in name for sig in parallel_signatures) or '/P' in rarity:
