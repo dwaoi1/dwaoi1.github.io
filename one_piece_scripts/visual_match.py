@@ -95,35 +95,51 @@ def is_cr_parallel(cr_entry):
     rarity = cr_entry.get('rarity') or ''
     # Specific markings that indicate a variant/parallel
     parallel_signatures = [
-        'パラレル', '漫画', 'SP', 'シリアル', 'illust', 'CS', 'アニメ', 
+        'パラレル', '漫画', 'SP', 'シリアル', 'CS', 'アニメ', 
         'フルアート', 'foil', 'ホイル', '白黒版', '★無し'
     ]
     return any(sig in name for sig in parallel_signatures) or '/P' in rarity
 
 def has_parallel_star(img_path):
-    """Detect the presence of a star icon in the bottom-right region of cards, indicating a parallel."""
+    """Detect the presence of a star icon in the bottom-right region of cards, indicating a parallel.
+    Uses connected component analysis to distinguish the star blob from the rarity text.
+    """
     try:
         img = cv2.imread(img_path)
         if img is None: return False
         h, w = img.shape[:2]
         
-        # Region: 76~95.3% horizontal, 92.4~96.7% vertical
+        # Region provided by user: 76~95.3% horizontal, 92.4~96.7% vertical
         x1, x2 = int(w * 0.76), int(w * 0.953)
         y1, y2 = int(h * 0.924), int(h * 0.967)
         
         crop = img[y1:y2, x1:x2]
         if crop.size == 0: return False
         
-        # Convert to grayscale and threshold to find bright pixels (the star)
         gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-        _, thresh = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY)
+        # Use a high threshold to isolate bright objects (star/rarity text)
+        _, thresh = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY)
         
-        white_pixels = cv2.countNonZero(thresh)
-        total_pixels = gray.size
-        ratio = white_pixels / total_pixels
+        num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(thresh, connectivity=8)
         
-        # A star in this region usually takes up at least 5% of the area
-        return ratio > 0.05
+        for i in range(1, num_labels):
+            area = stats[i, cv2.CC_STAT_AREA]
+            top = stats[i, cv2.CC_STAT_TOP]
+            width = stats[i, cv2.CC_STAT_WIDTH]
+            height = stats[i, cv2.CC_STAT_HEIGHT]
+            
+            # Star blob heuristics (determined via testing on OP06-038):
+            # 1. Area is usually small but significant (5 to 100 pixels)
+            # 2. Aspect ratio is close to 1:1 (distinguishes from wide text)
+            # 3. It appears in the TOP half of the user-provided box (above rarity)
+            aspect_ratio = width / height if height > 0 else 0
+            is_square = 0.5 < aspect_ratio < 2.0
+            is_top = top < (y2 - y1) / 2
+            
+            if 5 < area < 100 and is_square and is_top:
+                return True
+                
+        return False
     except Exception:
         return False
 
