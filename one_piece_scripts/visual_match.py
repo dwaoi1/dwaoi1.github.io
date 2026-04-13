@@ -90,15 +90,32 @@ def find_match_score(img1_path: str, img2_path: str) -> tuple[int, float]:
             
     return 0, 0.0
 
-def is_cr_parallel(cr_entry):
+def get_cr_parallel_type(cr_entry):
+    """Categorize Cardrush entries by their parallel signature strength."""
     name = cr_entry.get('name') or ''
     rarity = cr_entry.get('rarity') or ''
-    # Specific markings that indicate a variant/parallel
-    parallel_signatures = [
-        'パラレル', '漫画', 'SP', 'シリアル', 'CS', 'アニメ', 
-        'フルアート', 'foil', 'ホイル', '白黒版', '★無し'
+    
+    # Strict parallels: Alt-arts, Manga, SP, etc. These almost always have a star.
+    strict_signatures = [
+        'パラレル', '漫画', 'SP', 'シリアル', 'CS', 'アニメ', 'フルアート'
     ]
-    return any(sig in name for sig in parallel_signatures) or '/P' in rarity
+    if any(sig in name for sig in strict_signatures) or '/P' in rarity:
+        return 'strict'
+        
+    # Soft parallels: Foil versions of standard art. May or may not have a star.
+    # We include '白黒版' (black/white) here as well per user hint.
+    if any(sig in name for sig in ['foil', 'ホイル', '白黒版']):
+        return 'soft'
+        
+    # Specifically check for 'no star' markings
+    if '★無し' in name:
+        return 'nostar'
+        
+    return 'none'
+
+def is_cr_parallel(cr_entry):
+    """Legacy helper for backward compatibility."""
+    return get_cr_parallel_type(cr_entry) not in ['none', 'nostar']
 
 def has_parallel_star(img_path):
     """Detect the presence of a star icon in the bottom-right region of cards, indicating a parallel.
@@ -177,23 +194,33 @@ def get_ocr_text(img_path):
         return ""
 
 def match_worker(off_img_path, cr_entries_with_paths, img_code, off_ocr_text):
-    """Worker function for matching, using SIFT, OCR, and star detection."""
+    """Worker function for matching, using SIFT, OCR, and refined star/parallel logic."""
     best_inliers = 0
     best_confidence = 0.0
     best_cr = None
     
-    is_off_parallel = '_p' in img_code
-    
-    # Star detection to refine parallel status for all cards
+    has_star = False
     if off_img_path and has_parallel_star(off_img_path):
-        is_off_parallel = True
+        has_star = True
+        
+    is_off_parallel = has_star or '_p' in img_code
 
     for cr_entry, cr_path in cr_entries_with_paths:
         if not cr_path: continue
         
-        # 1. Filter by parallel status
-        if is_off_parallel != is_cr_parallel(cr_entry):
-            continue
+        cr_par_type = get_cr_parallel_type(cr_entry)
+        
+        # 1. Refined Parallel Filtering
+        if is_off_parallel:
+            # If the official image HAS a star (or _p code), it MUST match a parallel entry.
+            # We exclude 'none' (standard) and 'nostar' (explicitly no-star entries).
+            if cr_par_type in ['none', 'nostar']:
+                continue
+        else:
+            # If the official image HAS NO star, it cannot match a "strict" parallel (Alt Art)
+            # but it CAN match a "soft" parallel (foil) or a standard entry.
+            if cr_par_type == 'strict':
+                continue
             
         # 2. Check Illustrator match (Primary weight)
         illust_name = extract_illust_name(cr_entry.get('name', ''))
