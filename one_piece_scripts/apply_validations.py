@@ -31,19 +31,22 @@ def main():
         
     data = response.json()
     
-    # Firestore REST API wraps maps in this specific structure
-    matches = data.get('fields', {}).get('matches', {}).get('mapValue', {}).get('fields', {})
+    # Firestore REST API structure for maps
+    matches_fields = data.get('fields', {}).get('matches', {}).get('mapValue', {}).get('fields', {})
     
     incorrect_codes = []
-    for code, value_obj in matches.items():
+    correct_matches = {} # code -> status (we might want the actual match data if it was there, but for now we just know it's correct)
+    
+    # We also need to fetch the actual match data if we want to "harden" correct ones.
+    # However, the 'validations' doc only stores the status. 
+    # To truly sync 'correct' matches into overrides, we'd need the match info.
+    # For now, let's focus on the user's immediate need and prune incorrect ones.
+    
+    for code, value_obj in matches_fields.items():
         status = value_obj.get('stringValue')
         if status == 'incorrect':
             incorrect_codes.append(code)
             
-    if not incorrect_codes:
-        print("No incorrect matches found to remove.")
-        return
-        
     print(f"Found {len(incorrect_codes)} cards marked as 'incorrect' in Firestore.")
     
     if not os.path.exists(OVERRIDES_JSON):
@@ -68,11 +71,10 @@ def main():
     if removed_count > 0:
         overrides['mappings'] = mappings
         overrides['confidence_mappings'] = confidence_mappings
-        # Use atomic writes as required by the project's GEMINI.md mandate
         atomic_write_json(OVERRIDES_JSON, overrides, indent=2)
-        print(f"\nSuccessfully removed {removed_count} incorrect mappings from card_price_overrides.json.")
+        print(f"\nSuccessfully updated card_price_overrides.json.")
     else:
-        print("\nAll incorrect mappings were already removed from the local overrides file.")
+        print("\nNo local changes needed based on Firestore data.")
 
 if __name__ == '__main__':
     main()

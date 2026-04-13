@@ -364,7 +364,8 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
         image_patterns = frozenset(p for p in patterns if p.startswith('http'))
 
         def is_match(e):
-            if (e.get('name') or '') in name_patterns:
+            name = e.get('name') or ''
+            if any(np in name for np in name_patterns):
                 return True
             if (e.get('image') or '') in image_patterns:
                 return True
