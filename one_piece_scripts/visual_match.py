@@ -100,8 +100,8 @@ def is_cr_parallel(cr_entry):
     ]
     return any(sig in name for sig in parallel_signatures) or '/P' in rarity
 
-def has_st_star(img_path):
-    """Detect the presence of a star icon in the bottom-right region of ST cards."""
+def has_parallel_star(img_path):
+    """Detect the presence of a star icon in the bottom-right region of cards, indicating a parallel."""
     try:
         img = cv2.imread(img_path)
         if img is None: return False
@@ -161,17 +161,16 @@ def get_ocr_text(img_path):
         return ""
 
 def match_worker(off_img_path, cr_entries_with_paths, img_code, off_ocr_text):
-    """Worker function for matching, using SIFT, OCR, and ST-specific star detection."""
+    """Worker function for matching, using SIFT, OCR, and star detection."""
     best_inliers = 0
     best_confidence = 0.0
     best_cr = None
     
     is_off_parallel = '_p' in img_code
     
-    # ST-specific star detection to refine parallel status
-    if img_code.startswith('ST') and off_img_path:
-        if has_st_star(off_img_path):
-            is_off_parallel = True
+    # Star detection to refine parallel status for all cards
+    if off_img_path and has_parallel_star(off_img_path):
+        is_off_parallel = True
 
     for cr_entry, cr_path in cr_entries_with_paths:
         if not cr_path: continue
