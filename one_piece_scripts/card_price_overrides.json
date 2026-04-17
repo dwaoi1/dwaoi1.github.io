@@ -24171,9 +24171,7 @@
     "OP10-080",
     "OP10-081",
     "OP10-083",
-    "OP10-084",
     "OP10-085",
-    "OP10-086",
     "OP10-087",
     "OP10-088",
     "OP10-089",
@@ -24717,7 +24715,7 @@
     },
     {
       "series": "OP10",
-      "count": 77
+      "count": 75
     },
     {
       "series": "OP13",
@@ -24895,7 +24893,7 @@
   "cardsWithoutPricesRarityBreakdown": [
     {
       "rarity": "C",
-      "count": 870
+      "count": 869
     },
     {
       "rarity": "UC",
@@ -24903,7 +24901,7 @@
     },
     {
       "rarity": "R",
-      "count": 177
+      "count": 176
     },
     {
       "rarity": "P",
