@@ -54,6 +54,6 @@ This document defines the foundational mandates and technical standards for the 
 - **Mandate:** **DO NOT** change the heart icon's position to `absolute` inside the wrapper. Use `padding` or `margin` on the wrapper or flex alignment to adjust its height, preserving its adaptive behavior. (Current preferred top padding: `6px`).
 
 ### Date Handling & Scraper Structure
-- **Storage:** Cardrush buying price JSON files are stored in `one_piece_scripts/cardrush_buying_prices/YYYY/MM/YYYY-MM-DD.json`.
+- **Storage:** Cardrush buying price JSON files are stored in `one_piece_scripts/cardrush_buying_prices/YYYY-MM/YYYY-MM-DD.json`.
 - **Formatting:** Dates displayed in the UI (charts, as-of labels) **MUST** use the numeric `YYYY/MM/DD` format (no month names like "Jan" or "Feb").
 - **Sorting Mandate:** The `build_price_data.py` script **MUST** sort price files by their **basename** (filename) rather than their full path to ensure chronological processing across year/month folder boundaries.
