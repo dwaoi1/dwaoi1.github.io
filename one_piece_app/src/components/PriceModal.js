@@ -26,8 +26,13 @@ function formatYen(value) {
   return `¥${value}`;
 }
 
-function formatDate(dateStr) {
+function formatFullDate(dateStr) {
   return dateStr.replace(/-/g, '/');
+}
+
+function formatAxisDate(dateStr) {
+  const parts = dateStr.split('-');
+  return `${parts[1]}/${parts[2]}`;
 }
 
 function niceTicks(minVal, maxVal, count) {
@@ -56,7 +61,7 @@ function getImageCode(url) {
 // Build a human-readable tooltip label for a price data point.
 // prefix: optional context string e.g. '' for base, 'Sealed', 'Gold text'
 function makeTooltipLabel(prefix, p) {
-  const dateStr = [prefix, p.date].filter(Boolean).join(' ');
+  const dateStr = [prefix, formatFullDate(p.date)].filter(Boolean).join(' ');
   return p.count > 1
     ? `${dateStr}: ${formatYen(p.minPrice)} – ${formatYen(p.maxPrice)} (${p.count} entries)`
     : `${dateStr}: ${formatYen(p.minPrice)}`;
@@ -459,7 +464,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                       fill="#9ca4b7"
                       transform={`rotate(-35,${chart.xScale(i)},${MARGIN.top + PLOT_H + 16})`}
                     >
-                      {formatDate(chart.dates[i])}
+                      {formatAxisDate(chart.dates[i])}
                     </text>
                   ))}
 
