@@ -47,3 +47,13 @@ This document defines the foundational mandates and technical standards for the 
 - `one_piece_scripts/card_price_overrides.json` is a hybrid file containing both manual mappings (critical) and auto-generated diagnostics (rebuildable).
 - Always verify the integrity of the `mappings` section before committing changes.
 - Avoid manual edits to the `multiplePrices` or `pricesWithoutCards` sections, as these are overwritten by `build_price_data.py`.
+
+### UI Layout: Heart Icon
+- **Location:** The wishlist heart icon is contained within `.heart-wrapper` in `CardTable.js` and styled in `CardTable.css`.
+- **Adaptiveness:** The icon uses **flexbox-based relative positioning** (`justify-content: flex-end` and `padding-top`) inside an absolutely positioned wrapper to ensure it stays anchored to the top-right of the card image across all screen sizes.
+- **Mandate:** **DO NOT** change the heart icon's position to `absolute` inside the wrapper. Use `padding` or `margin` on the wrapper or flex alignment to adjust its height, preserving its adaptive behavior. (Current preferred top padding: `6px`).
+
+### Date Handling & Scraper Structure
+- **Storage:** Cardrush buying price JSON files are stored in `one_piece_scripts/cardrush_buying_prices/YYYY/MM/YYYY-MM-DD.json`.
+- **Formatting:** Dates displayed in the UI (charts, as-of labels) **MUST** use the numeric `YYYY/MM/DD` format (no month names like "Jan" or "Feb").
+- **Sorting Mandate:** The `build_price_data.py` script **MUST** sort price files by their **basename** (filename) rather than their full path to ensure chronological processing across year/month folder boundaries.

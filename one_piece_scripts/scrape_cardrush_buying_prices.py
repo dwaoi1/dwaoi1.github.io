@@ -21,9 +21,10 @@ def get_default_output_path() -> str:
     """Generate a dated output path based on Asia/Tokyo time."""
     tz = zoneinfo.ZoneInfo("Asia/Tokyo")
     now = datetime.now(tz)
-    month_year = now.strftime("%b %Y") # e.g., "Apr 2026"
+    year_str = now.strftime("%Y") # e.g., "2026"
+    month_str = now.strftime("%m") # e.g., "04"
     day_file = now.strftime("%Y-%m-%d.json") # e.g., "2026-04-01.json"
-    return os.path.join("one_piece_scripts", "cardrush_buying_prices", month_year, day_file)
+    return os.path.join("one_piece_scripts", "cardrush_buying_prices", year_str, month_str, day_file)
 
 def build_human_like_headers() -> dict[str, str]:
     return {
