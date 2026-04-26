@@ -19,6 +19,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: 'pip'
+          cache-dependency-path: 'one_piece_scripts/requirements.txt'
 
       - name: Install dependencies
         run: pip install -r one_piece_scripts/requirements.txt
