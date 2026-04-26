@@ -113,11 +113,21 @@ const CardTable = ({ data }) => {
   }, []);
 
   const enrichedData = useMemo(() => {
-    return data.map((item) => {
+    // 1. First pass: extract basic info and build mapping of cardCode -> Set of names
+    const codeToNames = new Map();
+    const baseData = data.map((item) => {
       const cardCode = getCardCode(item.Picture);
       const seriesCode = getSeriesCode(cardCode);
       const cardId = getCardFilename(item.Picture);
       const imageCode = getImageCode(item.Picture);
+      const normalizedName = normalizeCharacter(item.Character);
+
+      if (cardCode && normalizedName) {
+        if (!codeToNames.has(cardCode)) {
+          codeToNames.set(cardCode, new Set());
+        }
+        codeToNames.get(cardCode).add(normalizedName);
+      }
 
       const historyEntry = priceHistory[imageCode] || priceHistory[cardCode];
       const confidence = historyEntry ? historyEntry.confidence : undefined;
@@ -130,9 +140,48 @@ const CardTable = ({ data }) => {
         seriesCode,
         confidence,
         seriesLabel: formatSeriesLabel(seriesCode),
-        normalizedCharacter: normalizeCharacter(item.Character),
+        normalizedCharacter: normalizedName,
       };
     });
+
+    // 2. Second pass: Build a character name synonym map (DSU-like grouping)
+    // If multiple names share the same card code, they are synonyms.
+    const nameToCanonical = new Map();
+    const nameGroups = []; // List of Sets
+
+    codeToNames.forEach((names) => {
+      let targetGroup = null;
+      for (const name of names) {
+        for (const group of nameGroups) {
+          if (group.has(name)) {
+            targetGroup = group;
+            break;
+          }
+        }
+        if (targetGroup) break;
+      }
+
+      if (!targetGroup) {
+        targetGroup = new Set();
+        nameGroups.push(targetGroup);
+      }
+
+      names.forEach(n => targetGroup.add(n));
+    });
+
+    // Simplify canonical mapping: prefer Japanese name if multiple exist
+    nameGroups.forEach((group) => {
+      const namesArray = Array.from(group);
+      // Heuristic: Japanese names usually have katakana/hiragana/kanji
+      const canonical = namesArray.find(n => /[^\x00-\x7F]/.test(n)) || namesArray[0];
+      group.forEach(n => nameToCanonical.set(n, canonical));
+    });
+
+    // 3. Final pass: apply canonical names
+    return baseData.map(item => ({
+      ...item,
+      canonicalCharacter: nameToCanonical.get(item.normalizedCharacter) || item.normalizedCharacter
+    }));
   }, [data, priceHistory, getImageCode]);
 
   const wishlistSet = useMemo(() => new Set(wishlist), [wishlist]);
@@ -140,7 +189,7 @@ const CardTable = ({ data }) => {
     const map = new Map();
     enrichedData.forEach((item) => {
       if (!map.has(item.cardId)) {
-        map.set(item.cardId, item.normalizedCharacter);
+        map.set(item.cardId, item.canonicalCharacter);
       }
     });
     return map;
@@ -159,7 +208,7 @@ const CardTable = ({ data }) => {
 
   // Extract unique values for dropdowns
   const characters = useMemo(() => {
-    const chars = new Set(enrichedData.map(item => item.normalizedCharacter));
+    const chars = new Set(enrichedData.map(item => item.canonicalCharacter));
     return Array.from(chars).sort((a, b) => {
       const countB = favoriteCharacterCounts.get(b) || 0;
       const countA = favoriteCharacterCounts.get(a) || 0;
@@ -184,15 +233,17 @@ const CardTable = ({ data }) => {
     const seriesSelected = sortBy !== 'character';
     const normalizedQuery = searchQuery.trim().toLowerCase();
     return enrichedData.filter(item => {
-      const charMatch = selectedCharacter ? item.normalizedCharacter === selectedCharacter : true;
+      const charMatch = selectedCharacter ? item.canonicalCharacter === selectedCharacter : true;
       const colorMatch = selectedColor ? item.Color === selectedColor : true;
       const wishlistMatch = wishlistOnly ? wishlistSet.has(item.cardId) : true;
       const seriesMatch = seriesSelected ? item.seriesLabel === sortBy : true;
       const characterLabel = item.Character || '';
       const normalizedCharacterLabel = item.normalizedCharacter || '';
+      const canonicalLabel = item.canonicalCharacter || '';
       const searchMatch = normalizedQuery
         ? characterLabel.toLowerCase().includes(normalizedQuery)
           || normalizedCharacterLabel.toLowerCase().includes(normalizedQuery)
+          || canonicalLabel.toLowerCase().includes(normalizedQuery)
           || item.cardCode.toLowerCase().includes(normalizedQuery)
         : true;
       return charMatch && colorMatch && wishlistMatch && seriesMatch && searchMatch;
@@ -209,13 +260,13 @@ const CardTable = ({ data }) => {
       }
 
       // 2. Secondary: Group by character favorite count (popular characters first in both tiers)
-      const favoriteDiff = (favoriteCharacterCounts.get(b.normalizedCharacter) || 0) - (favoriteCharacterCounts.get(a.normalizedCharacter) || 0);
+      const favoriteDiff = (favoriteCharacterCounts.get(b.canonicalCharacter) || 0) - (favoriteCharacterCounts.get(a.canonicalCharacter) || 0);
       if (favoriteDiff !== 0) {
         return favoriteDiff;
       }
 
       // 3. Tertiary: Group by character name to keep cards of the same character together
-      const charDiff = a.normalizedCharacter.localeCompare(b.normalizedCharacter, undefined, { numeric: true, sensitivity: 'base' });
+      const charDiff = a.canonicalCharacter.localeCompare(b.canonicalCharacter, undefined, { numeric: true, sensitivity: 'base' });
       if (charDiff !== 0) {
         return charDiff;
       }
