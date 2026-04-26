@@ -39,7 +39,7 @@ jobs:
         env:
           TZ: Asia/Tokyo
         run: |
-          month_year_dir=$(date +"%b %Y")
+          month_year_dir=$(date +"%Y-%m")
           dated_json=$(date +"%Y-%m-%d.json")
           output_dir="one_piece_scripts/cardrush_buying_prices/${month_year_dir}"
           output_path="${output_dir}/${dated_json}"
