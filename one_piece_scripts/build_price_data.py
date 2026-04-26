@@ -25,6 +25,7 @@ PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
 CARDS_JSON = os.path.join(SCRIPT_DIR, 'one_piece_cards.json')
 PRICE_OVERRIDES_JSON = os.path.join(SCRIPT_DIR, 'card_price_overrides.json')
 PRICE_DATA_OUT = os.path.join(REPO_ROOT, 'one_piece_app', 'public', 'cardrush_price_history.json')
+PRICE_DATA_ROOT = os.path.join(REPO_ROOT, 'cardrush_price_history.json')
 
 
 # ---------------------------------------------------------------------------
@@ -665,6 +666,9 @@ def main():
 
     atomic_write_json(PRICE_DATA_OUT, price_history)
     print(f'Wrote {PRICE_DATA_OUT} ({len(price_history)} card codes)')
+
+    atomic_write_json(PRICE_DATA_ROOT, price_history)
+    print(f'Wrote {PRICE_DATA_ROOT} ({len(price_history)} card codes)')
 
     code_to_rarities, code_to_image_codes = build_rarity_map()
     print(f'Loaded rarity data for {len(code_to_rarities)} card codes')
