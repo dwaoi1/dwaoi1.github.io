@@ -228,6 +228,11 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
     const yScale = (price) =>
       MARGIN.top + PLOT_H - ((price - yMin) / yRange) * PLOT_H;
 
+    // Filter yTicks to ensure grid lines only appear within the plot area
+    const yTicks = niceTicks(dataMinPrice, dataMaxPrice, 5).filter(
+      t => yScale(t) >= MARGIN.top && yScale(t) <= MARGIN.top + PLOT_H
+    );
+
     // Helper: convert a series to a polyline points string.
     const toPoints = (series) =>
       series.map(p => `${xScale(dateToIndex[p.date])},${yScale(p.minPrice)}`).join(' ');
@@ -264,7 +269,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
       goldDots: toDots(goldTextSeries),
       asiaDots: toDots(asiaSeries),
       sealedAsiaDots: toDots(sealedAsiaSeries),
-      xScale, yScale, yTicks: niceTicks(dataMinPrice, dataMaxPrice, 5), xTickIndices: (n <= 8 ? Array.from({length:n}, (_,i)=>i) : (() => {
+      xScale, yScale, yTicks, xTickIndices: (n <= 8 ? Array.from({length:n}, (_,i)=>i) : (() => {
         const indices = [];
         const step = Math.ceil(n / 7);
         for (let i = 0; i < n; i += step) indices.push(i);
