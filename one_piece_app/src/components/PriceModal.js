@@ -27,8 +27,7 @@ function formatYen(value) {
 }
 
 function formatDate(dateStr) {
-  const parts = dateStr.split('-');
-  return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
+  return dateStr.replace(/-/g, '/');
 }
 
 function niceTicks(minVal, maxVal, count) {

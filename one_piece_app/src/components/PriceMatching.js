@@ -325,7 +325,7 @@ const PriceMatching = ({ cardData }) => {
       {unmatchedData && (
         <section className="unmatched-section">
           <h2>Data Mismatches</h2>
-          <p className="as-of">As of {unmatchedData.asOf}</p>
+          <p className="as-of">As of {unmatchedData.asOf.replace(/-/g, '/')}</p>
 
           <div className="unmatched-groups">
             <details className="unmatched-group" open>
