@@ -52,7 +52,17 @@ const CardTable = ({ data }) => {
     if (!character) {
       return '';
     }
-    return character.replace(/\s*\(parallel\)\s*$/i, '');
+    // 1. Remove (parallel) suffix
+    let normalized = character.replace(/\s*\(parallel\)\s*$/i, '');
+    
+    // 2. Systematic normalization of characters
+    // Convert full-width Ｄ to half-width D (common in One Piece card names)
+    normalized = normalized.replace(/Ｄ/g, 'D');
+    
+    // 3. Optional: normalize other common punctuation if needed
+    // normalized = normalized.replace(/・/g, '.'); // keeping katakana middle dot for now as it's standard
+    
+    return normalized.trim();
   };
 
   useEffect(() => {
@@ -192,16 +202,26 @@ const CardTable = ({ data }) => {
   const sortedData = useMemo(() => {
     const sorted = [...filteredData];
     sorted.sort((a, b) => {
+      // 1. Primary: Put all wishlisted cards at the very top
       const wishlistDiff = Number(wishlistSet.has(b.cardId)) - Number(wishlistSet.has(a.cardId));
       if (wishlistDiff !== 0) {
         return wishlistDiff;
       }
 
+      // 2. Secondary: Group by character favorite count (popular characters first in both tiers)
       const favoriteDiff = (favoriteCharacterCounts.get(b.normalizedCharacter) || 0) - (favoriteCharacterCounts.get(a.normalizedCharacter) || 0);
       if (favoriteDiff !== 0) {
         return favoriteDiff;
       }
-      return a.normalizedCharacter.localeCompare(b.normalizedCharacter, undefined, { numeric: true, sensitivity: 'base' });
+
+      // 3. Tertiary: Group by character name to keep cards of the same character together
+      const charDiff = a.normalizedCharacter.localeCompare(b.normalizedCharacter, undefined, { numeric: true, sensitivity: 'base' });
+      if (charDiff !== 0) {
+        return charDiff;
+      }
+
+      // 4. Finally, sort by card code for a stable order
+      return a.cardCode.localeCompare(b.cardCode, undefined, { numeric: true, sensitivity: 'base' });
     });
     return sorted;
   }, [filteredData, favoriteCharacterCounts, wishlistSet]);
