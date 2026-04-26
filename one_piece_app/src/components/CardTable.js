@@ -172,8 +172,8 @@ const CardTable = ({ data }) => {
     // Simplify canonical mapping: prefer Japanese name if multiple exist
     nameGroups.forEach((group) => {
       const namesArray = Array.from(group);
-      // Heuristic: Japanese names usually have katakana/hiragana/kanji
-      const canonical = namesArray.find(n => /[^\x00-\x7F]/.test(n)) || namesArray[0];
+      // Heuristic: Japanese names usually have katakana/hiragana/kanji (non-ASCII)
+      const canonical = namesArray.find(n => /[^\x20-\x7E]/.test(n)) || namesArray[0];
       group.forEach(n => nameToCanonical.set(n, canonical));
     });
 
