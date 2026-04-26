@@ -77,10 +77,11 @@ def get_image_code(url):
 def find_json_files(directory):
     files = []
     for dirpath, _dirs, filenames in os.walk(directory):
-        for fn in sorted(filenames):
+        for fn in filenames:
             if fn.endswith('.json'):
                 files.append(os.path.join(dirpath, fn))
-    return sorted(files)
+    # Sort files chronologically by filename (which is YYYY-MM-DD.json)
+    return sorted(files, key=lambda x: os.path.basename(x))
 
 
 def price_group(entries):
@@ -236,8 +237,8 @@ def build_price_history(history_by_code, mappings=None):
             # 3. If no mappings exist for this card at all, include everything (default)
             current_entries = []
             for e in entries:
-                name = e.get('name') or ''
-                image = e.get('image') or ''
+                name = (e.get('name') or '').strip()
+                image = (e.get('image') or '').strip()
                 
                 # Check if this entry is a known variant
                 # We check both name and image for maximum compatibility with old/new scrapes
@@ -364,10 +365,11 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
         image_patterns = frozenset(p for p in patterns if p.startswith('http'))
 
         def is_match(e):
-            name = e.get('name') or ''
-            if any(np in name for np in name_patterns):
+            name = (e.get('name') or '').strip()
+            if name in name_patterns:
                 return True
-            if (e.get('image') or '') in image_patterns:
+            image = (e.get('image') or '').strip()
+            if image in image_patterns:
                 return True
             return False
 
