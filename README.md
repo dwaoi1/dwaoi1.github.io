@@ -1,54 +1,55 @@
-# One Piece Card Game Indexer
+# One Piece Card Game Tracker
 
-A web app for browsing, tracking, and pricing One Piece trading cards.
+A comprehensive web application for browsing, tracking, and analyzing One Piece trading card prices.
 
-**Live site:** https://dwaoi1.github.io/
+**Live Site:** [https://dwaoi1.github.io/](https://dwaoi1.github.io/)
 
-## Features
+## Key Features
 
-- **Card browser** — search, filter by character / color / series, and sort your collection
-- **Wishlist** — mark cards with a ❤️ and export / import your list as JSON; a shared wishlist committed to the repo is loaded automatically
-- **Price history** — Cardrush buying-price charts for every card, updated daily via GitHub Actions
-  - Separate price tracking for base, sealed (未開封), gold-text (金文字), and parallel (パラレル) variants
-  - Parallel cards with no buying-price data clearly show "No price data available" instead of the base-card price
-- **PWA-ready** — installable on mobile / desktop
-
----
+- **Advanced Card Browser:** Search and filter the entire card catalog by character, color, series, and rarity.
+- **Real-time Shared Wishlist:** A global wishlist synchronized via Firebase Firestore. Track high-value cards collectively across devices.
+- **Market Price History:** Detailed daily buying-price charts from Cardrush, updated every 3 hours.
+  - Distinct tracking for base, sealed (未開封), gold-text (金文字), and parallel (パラレル) variants.
+  - Clear "No price data" indicators for variants without active market listings.
+- **Data Accuracy:** High-precision mapping using a hybrid of manual overrides and computer-vision (SIFT/OCR) matching.
+- **PWA Support:** Installable on mobile and desktop for quick access.
 
 ## Repository Structure
 
-```
+```text
 dwaoi1.github.io/
-├── one_piece_app/          # React front-end (Create React App)
-│   ├── public/
-│   │   ├── cards.json                    # Compiled card list (built from one_piece_cards.json)
-│   │   ├── cardrush_price_history.json   # Daily buying prices per card
-│   │   └── wishlist.json                 # Shared wishlist (committed to repo)
-│   └── src/
-│       ├── App.js
-│       └── components/
-│           ├── CardTable.js    # Card grid with filters, wishlist, and pagination
-│           └── PriceModal.js   # Price-history chart modal
-├── one_piece_scripts/      # Python data-pipeline scripts
-│   ├── download_all.py                   # Downloads card HTML from the official site
-│   ├── scrape_cards.py                   # Parses HTML → one_piece_cards.json
-│   ├── scrape_cardrush_buying_prices.py  # Scrapes daily buying prices from Cardrush
-│   ├── build_price_data.py               # Compiles daily JSONs → cardrush_price_history.json
-│   ├── one_piece_cards.json              # Source card data (Japanese names + image URLs)
-│   └── cardrush_buying_prices/           # Raw daily price snapshots (one file per day)
-└── .github/workflows/      # CI/CD
-    └── scrape-cardrush.yml               # Daily price scrape + site deploy
+├── one_piece_app/          # React 19 Frontend
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── CardTable.js    # Main grid & Firestore wishlist logic
+│   │   │   ├── PriceModal.js   # SVG-based price history charts
+│   │   │   └── PriceMatching.js # Match validation interface
+│   │   └── firebase.js         # Firebase/Firestore configuration
+│   └── public/                 # Static assets and build targets
+├── one_piece_scripts/      # Python Data Pipeline
+│   ├── download_all.py         # Official card list scraper
+│   ├── scrape_cardrush_buying_prices.py # Daily price scraper
+│   ├── build_price_data.py     # Aggregator & core processing logic
+│   ├── visual_match.py         # CV-based automated card mapping
+│   └── apply_validations.py    # Syncs human validations from Firestore
+├── .github/workflows/      # CI/CD & Automation
+│   ├── scrape-cardrush.yml     # 3-hourly scraping & update job
+│   └── deploy.yml              # Frontend build & deployment
+├── cards.json              # Canonical card metadata
+└── cardrush_price_history.json # Compiled historical price data
 ```
 
----
+## Data Lifecycle
 
+1. **Ingestion:** Prices are scraped from Cardrush every 3 hours using `curl_cffi` to ensure reliable access.
+2. **Metadata:** Official card data and images are sourced directly from onepiece-cardgame.com.
+3. **Processing:** `build_price_data.py` aggregates snapshots into a chronological history, applying `card_price_overrides.json` to resolve ambiguous listings.
+4. **Validation:** New cards are automatically mapped via visual similarity; discrepancies can be corrected via the `PriceMatching` interface in the app, which feeds back into the pipeline via Firestore.
+5. **Deployment:** Validated data is committed back to the repository and deployed to GitHub Pages.
 
-## Wishlist Export + Shared Wishlist
+## Mandates & Standards
 
-The app loads `one_piece_app/public/wishlist.json` on startup (shared wishlist) and falls back to
-the browser's local storage if the file is missing.
-
-To share your wishlist with everyone:
-1. Click **Download wishlist JSON** in the app.
-2. Replace `one_piece_app/public/wishlist.json` with the downloaded file.
-3. Commit and push to `main`.
+This project adheres to strict data integrity and performance mandates (see `GEMINI.md` for full details):
+- **Atomic Writes:** All data updates use a safe write-then-replace pattern to prevent corruption.
+- **Image Proxying:** Official images are proxied via `wsrv.nl` with robust fallback chains to ensure availability.
+- **Safe UI:** Optional chaining and null-safe rendering are mandatory for all data-driven components.
