@@ -667,8 +667,7 @@ def main():
     atomic_write_json(PRICE_DATA_OUT, price_history)
     print(f'Wrote {PRICE_DATA_OUT} ({len(price_history)} card codes)')
 
-    atomic_write_json(PRICE_DATA_ROOT, price_history)
-    print(f'Wrote {PRICE_DATA_ROOT} ({len(price_history)} card codes)')
+
 
     code_to_rarities, code_to_image_codes = build_rarity_map()
     print(f'Loaded rarity data for {len(code_to_rarities)} card codes')
