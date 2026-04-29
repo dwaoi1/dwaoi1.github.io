@@ -57,9 +57,11 @@ jobs:
               cp "gh-pages/${asset}" "one_piece_app/public/${asset}"
             fi
           done
+          if [ -d "gh-pages/images" ]; then
+            cp -r "gh-pages/images" "one_piece_app/public/"
+          fi
           if [ -f one_piece_scripts/one_piece_cards.json ]; then
             cp one_piece_scripts/one_piece_cards.json one_piece_app/public/cards.json
-            cp one_piece_scripts/one_piece_cards.json ./cards.json
           fi
           if [ -f one_piece_scripts/card_price_overrides.json ]; then
             cp one_piece_scripts/card_price_overrides.json one_piece_app/public/unmatched_prices.json
