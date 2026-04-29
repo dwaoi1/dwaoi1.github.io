@@ -2638,7 +2638,7 @@
     "ST04-005": 79.9,
     "ST11-004": 54.3
   },
-  "asOf": "2026-04-29",
+  "asOf": "2026-04-30",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -4625,21 +4625,21 @@
           "name": "モンキー・D・ルフィ(未開封/英語版/ドジャース)",
           "rarity": "L",
           "model_number": "EB02-010",
-          "amount": "¥250,000",
+          "amount": "¥270,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/8553.webp"
         },
         {
           "name": "モンキー・D・ルフィ(英語版/ドジャース)",
           "rarity": "L",
           "model_number": "EB02-010",
-          "amount": "¥220,000",
+          "amount": "¥230,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/8554.webp"
         },
         {
           "name": "モンキー・D・ルフィ(パラレル/illust:Katsumi Ishizuka)",
           "rarity": "L/P",
           "model_number": "EB02-010",
-          "amount": "¥23,000",
+          "amount": "¥25,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/7149.webp"
         },
         {
@@ -4957,7 +4957,7 @@
           "name": "ボア・ハンコック(パラレル/illust:Sunohara)",
           "rarity": "SP",
           "model_number": "OP01-078[OP04]",
-          "amount": "¥45,000",
+          "amount": "¥55,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/776.webp"
         },
         {
@@ -5020,6 +5020,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/7002.webp"
         },
         {
+          "name": "トニートニー・チョッパー(甲冑/漫画背景)",
+          "rarity": "C",
+          "model_number": "ST01-006",
+          "amount": "¥800",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/952.webp"
+        },
+        {
           "name": "トニートニー・チョッパー(パラレル/手に瓶/illust:TAPIOCA)",
           "rarity": "C/P",
           "model_number": "ST01-006",
@@ -5032,13 +5039,6 @@
           "model_number": "ST01-006",
           "amount": "¥600",
           "image": "https://files.cardrush.media/onepiece/ocha_products/953.webp"
-        },
-        {
-          "name": "トニートニー・チョッパー(甲冑/漫画背景)",
-          "rarity": "C",
-          "model_number": "ST01-006",
-          "amount": "¥600",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/952.webp"
         },
         {
           "name": "トニートニー・チョッパー(フルアート/foil)",
@@ -5084,7 +5084,7 @@
           "name": "モンキー・Ｄ・ルフィ(illust:DAI-XT.)",
           "rarity": "L",
           "model_number": "OP09-061",
-          "amount": "¥700",
+          "amount": "¥500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/8615.webp"
         }
       ]
@@ -5416,7 +5416,7 @@
           "name": "エドワード・ニューゲート(パラレル/illust:Anderson)",
           "rarity": "SR/P",
           "model_number": "OP02-004",
-          "amount": "¥200",
+          "amount": "¥300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/4832.webp"
         }
       ]
@@ -5606,7 +5606,7 @@
           "name": "カイドウ(パラレル/手配書)",
           "rarity": "SP",
           "model_number": "ST04-003[OP03]",
-          "amount": "¥3,500",
+          "amount": "¥4,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/630.webp"
         },
         {
@@ -5730,7 +5730,7 @@
           "name": "ユースタス・キッド(パラレル/手配書)",
           "rarity": "SP",
           "model_number": "OP01-051[OP03]",
-          "amount": "¥3,500",
+          "amount": "¥4,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/627.webp"
         },
         {
@@ -6593,7 +6593,7 @@
           "name": "マルコ(パラレル/illust:Nakano Haito)",
           "rarity": "R/P",
           "model_number": "OP02-018",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/347.webp"
         },
         {
@@ -7428,7 +7428,7 @@
           "name": "ロブ・ルッチ(パラレル/illust:Anderson)",
           "rarity": "L/P",
           "model_number": "OP03-076",
-          "amount": "¥1,000",
+          "amount": "¥900",
           "image": "https://files.cardrush.media/onepiece/ocha_products/564.webp"
         },
         {
@@ -7612,6 +7612,61 @@
       ]
     },
     {
+      "cardCode": "OP13-002",
+      "priceCount": 3,
+      "imageCodes": [
+        "OP13-002",
+        "OP13-002_p1"
+      ],
+      "entries": [
+        {
+          "name": "ポートガス・D・エース(未開封/illust:Hokuyuu)",
+          "rarity": "L",
+          "model_number": "OP13-002",
+          "amount": "¥8,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/12633.webp"
+        },
+        {
+          "name": "ポートガス・D・エース(illust:Hokuyuu)",
+          "rarity": "L",
+          "model_number": "OP13-002",
+          "amount": "¥5,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/12634.webp"
+        },
+        {
+          "name": "ポートガス・Ｄ・エース(パラレル/漫画絵)",
+          "rarity": "L/P",
+          "model_number": "OP13-002",
+          "amount": "¥1,800",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/9499.webp"
+        }
+      ]
+    },
+    {
+      "cardCode": "OP13-004",
+      "priceCount": 2,
+      "imageCodes": [
+        "OP13-004",
+        "OP13-004_p1"
+      ],
+      "entries": [
+        {
+          "name": "サボ(illust:Hokuyuu)",
+          "rarity": "L",
+          "model_number": "OP13-004",
+          "amount": "¥3,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/12635.webp"
+        },
+        {
+          "name": "サボ(パラレル/漫画絵)",
+          "rarity": "L/P",
+          "model_number": "OP13-004",
+          "amount": "¥1,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/9501.webp"
+        }
+      ]
+    },
+    {
       "cardCode": "ST04-005",
       "priceCount": 3,
       "imageCodes": [
@@ -7732,7 +7787,7 @@
           "name": "マーシャル・D・ティーチ(パラレル/手配書)",
           "rarity": "SR/P",
           "model_number": "OP09-093",
-          "amount": "¥8,000",
+          "amount": "¥9,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5799.webp"
         },
         {
@@ -7796,7 +7851,7 @@
           "name": "バギー(パラレル/手配書)",
           "rarity": "R/P",
           "model_number": "OP09-051",
-          "amount": "¥8,000",
+          "amount": "¥9,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5800.webp"
         },
         {
@@ -8161,18 +8216,18 @@
       ],
       "entries": [
         {
+          "name": "うるティ(パラレル/illust:NIJIMAARC)",
+          "rarity": "SR/P",
+          "model_number": "OP05-043",
+          "amount": "¥400",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/4911.webp"
+        },
+        {
           "name": "うるティ(パラレル/illust:Akira Kano)",
           "rarity": "SR/P",
           "model_number": "OP05-043",
           "amount": "¥300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/831.webp"
-        },
-        {
-          "name": "うるティ(パラレル/illust:NIJIMAARC)",
-          "rarity": "SR/P",
-          "model_number": "OP05-043",
-          "amount": "¥200",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/4911.webp"
         }
       ]
     },
@@ -8390,7 +8445,7 @@
           "name": "シャーロット・ペロスペロー(パラレル/illust:BISAI)",
           "rarity": "SR/P",
           "model_number": "OP03-113",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/611.webp"
         },
         {
@@ -8418,7 +8473,7 @@
           "name": "カポネ・ベッジ(パラレル/illust:Hayaken-sarena)",
           "rarity": "R/P",
           "model_number": "OP04-100",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/750.webp"
         },
         {
@@ -8743,7 +8798,7 @@
           "name": "シャンクス(パラレル/手配書)",
           "rarity": "SR/P",
           "model_number": "OP09-004",
-          "amount": "¥10,000",
+          "amount": "¥13,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5798.webp"
         },
         {
@@ -8901,7 +8956,7 @@
           "name": "ナミ(パラレル/和柄/illust:S-KINOKO)",
           "rarity": "SP",
           "model_number": "OP01-016[OP05]",
-          "amount": "¥17,000",
+          "amount": "¥18,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/928.webp"
         },
         {
@@ -8915,7 +8970,7 @@
           "name": "ナミ(illust:Ai Nina)",
           "rarity": "R",
           "model_number": "OP01-016",
-          "amount": "¥8,500",
+          "amount": "¥9,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/1222.webp"
         },
         {
@@ -9117,14 +9172,14 @@
           "name": "モンキー・D・ルフィ(パラレル/手配書)",
           "rarity": "SEC/P",
           "model_number": "OP05-119[OP09]",
-          "amount": "¥35,000",
+          "amount": "¥37,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5797.webp"
         },
         {
           "name": "モンキー・D・ルフィ(パラレル/ペンキ背景/漫画絵)",
           "rarity": "SEC/P",
           "model_number": "OP05-119",
-          "amount": "¥20,000",
+          "amount": "¥25,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/923.webp"
         },
         {
@@ -9469,7 +9524,7 @@
           "name": "モンキー・D・ルフィ(パラレル/手配書)",
           "rarity": "SP",
           "model_number": "ST01-012[OP03]",
-          "amount": "¥17,000",
+          "amount": "¥18,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/628.webp"
         },
         {
@@ -9483,14 +9538,14 @@
           "name": "モンキー・D・ルフィ(パラレル/黒背景)",
           "rarity": "SR/P",
           "model_number": "ST01-012",
-          "amount": "¥7,000",
+          "amount": "¥8,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/926.webp"
         },
         {
           "name": "モンキー・D・ルフィ(foil/TREASURECRUISE)",
           "rarity": "SR",
           "model_number": "ST01-012",
-          "amount": "¥2,500",
+          "amount": "¥2,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/1212.webp"
         },
         {
@@ -10486,7 +10541,7 @@
           "name": "そげキング",
           "rarity": "SEC",
           "model_number": "OP03-122",
-          "amount": "¥100",
+          "amount": "¥200",
           "image": "https://files.cardrush.media/onepiece/ocha_products/622.webp"
         }
       ]
@@ -11006,7 +11061,7 @@
           "name": "モンキー・D・ルフィ(金文字/アニメイラスト)",
           "rarity": "L",
           "model_number": "OP05-060",
-          "amount": "¥120,000",
+          "amount": "¥130,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/7129.webp"
         },
         {
@@ -11027,7 +11082,7 @@
           "name": "モンキー・D・ルフィ(パラレル/漫画絵)",
           "rarity": "L/P",
           "model_number": "OP05-060",
-          "amount": "¥3,500",
+          "amount": "¥4,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/852.webp"
         },
         {
@@ -11727,7 +11782,7 @@
           "name": "モンキー・D・ルフィ(パラレル/漫画絵)",
           "rarity": "L/P",
           "model_number": "OP01-003",
-          "amount": "¥25,000",
+          "amount": "¥27,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/173.webp"
         },
         {
@@ -12680,7 +12735,7 @@
           "name": "モンキー・D・ルフィ(パラレル/白黒版)",
           "rarity": "SR/P",
           "model_number": "ST13-015",
-          "amount": "¥1,800",
+          "amount": "¥2,300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/2752.webp"
         },
         {
@@ -13036,7 +13091,7 @@
           "name": "ウタ(パラレル/illust:Demizu Posuka)",
           "rarity": "SEC/P",
           "model_number": "OP02-120",
-          "amount": "¥1,500",
+          "amount": "¥1,700",
           "image": "https://files.cardrush.media/onepiece/ocha_products/473.webp"
         },
         {
@@ -14199,7 +14254,7 @@
           "name": "モンキー・D・ルフィ(illust:K Akagishi)",
           "rarity": "P",
           "model_number": "P-041",
-          "amount": "¥200",
+          "amount": "¥300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/1035.webp"
         }
       ]
@@ -15582,7 +15637,7 @@
           "name": "モンキー・D・ルフィ(パラレル/illust:K Akagishi)",
           "rarity": "SR/P",
           "model_number": "OP01-024",
-          "amount": "¥4,000",
+          "amount": "¥4,500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/198.webp"
         },
         {
@@ -15596,7 +15651,7 @@
           "name": "モンキー・D・ルフィ",
           "rarity": "SR",
           "model_number": "OP01-024",
-          "amount": "¥30",
+          "amount": "¥50",
           "image": "https://files.cardrush.media/onepiece/ocha_products/199.webp"
         }
       ]
@@ -16347,7 +16402,7 @@
           "name": "ポートガス・D・エース(パラレル/白黒版)",
           "rarity": "L/P",
           "model_number": "ST13-002",
-          "amount": "¥2,200",
+          "amount": "¥2,300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/2726.webp"
         },
         {
@@ -16476,7 +16531,7 @@
           "name": "エース＆サボ＆ルフィ(パラレル/illust:otton)",
           "rarity": "SR/P",
           "model_number": "OP13-007",
-          "amount": "¥1,700",
+          "amount": "¥1,800",
           "image": "https://files.cardrush.media/onepiece/ocha_products/9503.webp"
         },
         {
@@ -17187,7 +17242,7 @@
           "name": "モンキー・D・ルフィ(パラレル/illust:Hokuyuu)",
           "rarity": "SR/P",
           "model_number": "OP04-090",
-          "amount": "¥1,000",
+          "amount": "¥1,300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/739.webp"
         },
         {
@@ -18558,7 +18613,7 @@
           "name": "アッパーヤード(パラレル/illust:KISUKE)",
           "rarity": "UC/P",
           "model_number": "OP05-117",
-          "amount": "¥700",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/4934.webp"
         },
         {
@@ -20246,7 +20301,7 @@
           "name": "光月おでん(パラレル/illust:TAPIOCA)",
           "rarity": "SR/P",
           "model_number": "OP02-030",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/362.webp"
         },
         {
@@ -20270,7 +20325,7 @@
           "name": "クリーク(パラレル/illust:Studio Vigor Co.Ltd)",
           "rarity": "SR/P",
           "model_number": "OP03-025",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/507.webp"
         },
         {
@@ -20294,7 +20349,7 @@
           "name": "パウリー(パラレル/illust:BISAI)",
           "rarity": "SR/P",
           "model_number": "OP03-066",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/553.webp"
         },
         {
@@ -20318,7 +20373,7 @@
           "name": "カク(パラレル/illust:Studio Vigor Co.Ltd)",
           "rarity": "SR/P",
           "model_number": "OP03-080",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/571.webp"
         },
         {
@@ -20367,7 +20422,7 @@
           "name": "シャーロット・クラッカー(パラレル/illust:Koushi Rokushiro)",
           "rarity": "SR/P",
           "model_number": "OP03-108",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/604.webp"
         },
         {
@@ -20391,7 +20446,7 @@
           "name": "クロコダイル(パラレル/illust:tatsuya)",
           "rarity": "SR/P",
           "model_number": "OP04-060",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/703.webp"
         },
         {
@@ -20489,7 +20544,7 @@
           "name": "ゴムゴムの業火拳銃(パラレル/illust:Tacchan)",
           "rarity": "R/P",
           "model_number": "OP04-056",
-          "amount": "¥700",
+          "amount": "¥800",
           "image": "https://files.cardrush.media/onepiece/ocha_products/4890.webp"
         },
         {
@@ -20515,7 +20570,7 @@
           "name": "三・千・世・界(パラレル/illust:Studio Vigor Co.Ltd)",
           "rarity": "R/P",
           "model_number": "OP03-057",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/4859.webp"
         },
         {
@@ -21986,11 +22041,11 @@
   "multiPricePatterns": [
     {
       "pattern": "Parallel",
-      "count": 597
+      "count": 599
     },
     {
       "pattern": "Illust variant",
-      "count": 439
+      "count": 442
     },
     {
       "pattern": "Manga art",
