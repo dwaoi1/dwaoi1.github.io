@@ -556,7 +556,7 @@ const CardTable = ({ data }) => {
       <p className="filters-note">
         Series selection uses the card code embedded in the image URL (for example, OP-01 or ST-01).
         Alternate art cards are treated as separate entries in the wishlist.
-        The wishlist loads from the published wishlist.json file and can be edited locally and exported as JSON.
+        The wishlist is synchronized in real-time via Firestore and shared across all users.
         Click any card image to view its Cardrush buying price history.
       </p>
 
