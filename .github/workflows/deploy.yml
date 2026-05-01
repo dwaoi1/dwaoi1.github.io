@@ -19,9 +19,18 @@ on:
       - 'gh-pages/**'
       - '.github/workflows/deploy.yml'
       - '!one_piece_scripts/cardrush_buying_prices/**'
+  # Trigger deployment after a successful scrape
+  workflow_run:
+    workflows: ["Scrape Cardrush Buying Prices"]
+    types:
+      - completed
+    branches:
+      - main
+  # Allow manual deployment from the Actions tab
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -32,6 +41,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Run if it's a push, a manual trigger, OR a SUCCESSFUL workflow_run
+    if: >
+      github.event_name != 'workflow_run' || 
+      github.event.workflow_run.conclusion == 'success'
 
     steps:
       - name: Checkout 🛎️
