@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "ctags-search": {
+      "type": "local",
+      "command": ["npx.cmd", "-y", "mcp-ripgrep"],
+      "enabled": true
+    },
+    "ripgrep-search": {
+      "type": "local",
+      "command": ["npx.cmd", "-y", "mcp-ripgrep"],
+      "enabled": true
+    },
+    "web-research": {
+      "type": "local",
+      "command": ["npx.cmd", "-y", "@mcp-server/google-search-mcp"],
+      "enabled": true
+    },
+    "web-fetch": {
+      "type": "local",
+      "command": ["npx.cmd", "-y", "mcp-fetch-server"],
+      "enabled": true
+    }
+  }
+}
