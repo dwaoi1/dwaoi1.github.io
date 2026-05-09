@@ -13,6 +13,11 @@ This document defines the foundational mandates and technical standards for the 
 - **Mandate:** If a script fails to load a JSON file that it intends to update in-place, it **MUST** abort the write-back process immediately.
 - **Rationale:** Failing to load an existing file (due to syntax errors, merge conflicts, or disk issues) and then proceeding to write will cause the loss of all pre-existing manual mappings or history.
 
+### Firestore Security Rules
+- **Mandate:** All Firestore access **MUST** be restricted to the specific documents used by the application (`wishlists/global`, `price_matches/validations`).
+- **Mandate:** Security rules must include schema validation (e.g., checking field types and list/map sizes) to prevent database pollution.
+- **Mandate:** Any new features requiring Firestore storage **MUST** have corresponding specific rules added to `firestore.rules`.
+
 ## Frontend Standards
 
 ### Image Proxying & Fallbacks
