@@ -478,6 +478,105 @@ def build_rarity_map():
 
 
 # ---------------------------------------------------------------------------
+# Auto-generate variant price entries
+# ---------------------------------------------------------------------------
+
+def auto_generate_variant_history(price_history, code_to_image_codes):
+    """Generate price history entries for _p variants that don't have explicit entries.
+
+    For each base card code that has price history and has _p variants in the card
+    database, create entries for those variants by copying the parallel/subgroup
+    data from the base card's history.
+
+    This ensures every _p variant in the card database has its own price entry,
+    fixing the issue where all variants show the same price graph.
+
+    Args:
+        price_history: Dict of card_code -> {history: [...], confidence: float, ...}
+        code_to_image_codes: Dict of base_code -> [image_code, ...] from card database
+
+    Returns:
+        Dict of image_code -> price history entry (new entries only)
+    """
+    auto_generated = {}
+
+    for base_code, image_codes in code_to_image_codes.items():
+        # Skip if base code has no price history
+        base_entry = price_history.get(base_code)
+        if not base_entry:
+            continue
+
+        # Check if we have any _p variants that need entries
+        variants_needed = []
+        for img_code in image_codes:
+            if '_p' in img_code and img_code not in price_history:
+                variants_needed.append(img_code)
+
+        if not variants_needed:
+            continue
+
+        # Copy parallel/subgroup data from base entry to each variant
+        base_history = base_entry.get('history', [])
+        base_confidence = base_entry.get('confidence', 50.0)
+        base_image = base_entry.get('cardrushImage', '')
+
+        for variant_code in variants_needed:
+            # Extract the variant number for display purposes
+            variant_num = variant_code.split('_p')[-1] if '_p' in variant_code else ''
+
+            # Create variant history by copying relevant subgroup data
+            variant_history = []
+            for entry in base_history:
+                new_entry = {
+                    'date': entry['date'],
+                    'minPrice': None,
+                    'maxPrice': None,
+                    'count': 0,
+                }
+
+                # Copy parallel subgroup if present
+                if 'parallel' in entry:
+                    new_entry['parallel'] = entry['parallel'].copy()
+
+                # Copy sealed subgroup if present
+                if 'sealed' in entry:
+                    new_entry['sealed'] = entry['sealed'].copy()
+
+                # Copy goldText subgroup if present
+                if 'goldText' in entry:
+                    new_entry['goldText'] = entry['goldText'].copy()
+
+                # Copy sealedAsia subgroup if present
+                if 'sealedAsia' in entry:
+                    new_entry['sealedAsia'] = entry['sealedAsia'].copy()
+
+                # Copy parallelAsia subgroup if present
+                if 'parallelAsia' in entry:
+                    new_entry['parallelAsia'] = entry['parallelAsia'].copy()
+
+                # Copy asia subgroup if present
+                if 'asia' in entry:
+                    new_entry['asia'] = entry['asia'].copy()
+
+                # Only include entry if it has any price data
+                if any(k in new_entry for k in ['parallel', 'sealed', 'goldText', 'sealedAsia', 'parallelAsia', 'asia']):
+                    variant_history.append(new_entry)
+
+            # Only add entry if there's any price data
+            if variant_history:
+                auto_generated[variant_code] = {
+                    'history': variant_history,
+                    'confidence': base_confidence,
+                }
+                if base_image:
+                    auto_generated[variant_code]['cardrushImage'] = base_image
+
+                print(f'  Auto-generated: {variant_code} (from {base_code})')
+
+    return auto_generated
+
+
+# ---------------------------------------------------------------------------
 # Unmatched / diagnostic data
 # ---------------------------------------------------------------------------
 
@@ -495,31 +594,40 @@ NAME_PATTERNS = [
 ]
 
 
-def is_multiple_prices_matched(item, mappings):
+def is_multiple_prices_matched(item, mappings, price_history=None):
     """Return True if this multiplePrices entry has been addressed in mappings.
 
     A card is considered matched once any of its image codes (including the base
-    card code) appears as a key in the manual 'mappings' dict.  Matched entries
-    are moved to the bottom of the multiplePrices list so unhandled cards stay
-    visible at the top.
+    card code) appears as a key in the manual 'mappings' dict, OR if the card
+    has _p variants that have been auto-generated in price_history.
+    Matched entries are moved to the bottom of the multiplePrices list so
+    unhandled cards stay visible at the top.
     """
     if item.get('cardCode', '') in mappings:
         return True
     for img_code in item.get('imageCodes', []):
         if img_code in mappings:
             return True
+
+    # Check for auto-routed _p variants in price_history
+    if price_history:
+        for img_code in item.get('imageCodes', []):
+            if '_p' in img_code and img_code in price_history:
+                return True
+
     return False
 
 
-def merge_multiple_prices(existing_list, fresh_list, mappings):
+def merge_multiple_prices(existing_list, fresh_list, mappings, price_history=None):
     """Merge the existing multiplePrices list with a freshly-generated one.
 
     Rules:
     - Existing entries are updated with the latest scrape data where available,
       or kept unchanged if the card no longer appears in the latest scrape.
     - New entries (cards in fresh_list not yet in existing_list) are appended.
-    - After merging, matched entries (any image code present in mappings) are
-      moved to the bottom so unhandled cards remain at the top.
+    - After merging, matched entries (any image code present in mappings OR
+      auto-routed _p variants in price_history) are moved to the bottom so
+      unhandled cards remain at the top.
     - Relative order within the unmatched and matched groups is preserved.
     """
     fresh_by_code = {item['cardCode']: item for item in fresh_list}
@@ -543,11 +651,11 @@ def merge_multiple_prices(existing_list, fresh_list, mappings):
     # Move matched entries to the bottom in one pass, preserving relative order
     unmatched, matched = [], []
     for item in merged:
-        (matched if is_multiple_prices_matched(item, mappings) else unmatched).append(item)
+        (matched if is_multiple_prices_matched(item, mappings, price_history) else unmatched).append(item)
     return unmatched + matched
 
 
-def build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes):
+def build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes, price_history):
     card_codes = set()
     if os.path.isfile(CARDS_JSON):
         try:
@@ -577,6 +685,15 @@ def build_unmatched(history_by_code, price_files, code_to_rarities, code_to_imag
         except (json.JSONDecodeError, OSError) as exc:
             print(f'WARNING: Failed to parse latest file {latest_file}: {exc}')
 
+    def has_auto_routed_variants(code, price_history):
+        """Check if this code has _p variants that have been auto-generated in price_history."""
+        image_codes = code_to_image_codes.get(code, [])
+        variant_codes = [ic for ic in image_codes if '_p' in ic]
+        for vc in variant_codes:
+            if vc in price_history:
+                return True
+        return False
+
     multiple_prices = [
         {
             'cardCode': code,
@@ -585,7 +702,7 @@ def build_unmatched(history_by_code, price_files, code_to_rarities, code_to_imag
             'entries': entries,
         }
         for code, entries in latest_by_code.items()
-        if len(entries) > 1
+        if len(entries) > 1 and not has_auto_routed_variants(code, price_history)
     ]
 
     pattern_counts = {}
@@ -664,15 +781,21 @@ def main():
         price_history.update(image_code_history)
         print(f'  Added {len(image_code_history)} image-code history entries')
 
+    # Build card variant map early so we can auto-generate variant entries
+    code_to_rarities, code_to_image_codes = build_rarity_map()
+    print(f'Loaded card data for {len(code_to_rarities)} card codes')
+
+    # Auto-generate price entries for _p variants that don't have explicit entries
+    # This ensures each variant in the card database has its own price entry
+    auto_generated = auto_generate_variant_history(price_history, code_to_image_codes)
+    if auto_generated:
+        price_history.update(auto_generated)
+        print(f'  Auto-generated {len(auto_generated)} variant entries')
+
     atomic_write_json(PRICE_DATA_OUT, price_history)
     print(f'Wrote {PRICE_DATA_OUT} ({len(price_history)} card codes)')
 
-
-
-    code_to_rarities, code_to_image_codes = build_rarity_map()
-    print(f'Loaded rarity data for {len(code_to_rarities)} card codes')
-
-    unmatched = build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes)
+    unmatched = build_unmatched(history_by_code, price_files, code_to_rarities, code_to_image_codes, price_history)
 
     # Load the existing card_price_overrides.json to preserve '_comment' and 'multiplePrices'.
     existing_comment = None
@@ -706,15 +829,17 @@ def main():
 
     # 'mappings' is already validated; reuse it here.
     # Merge multiplePrices incrementally: add new cards, update existing ones,
-    # and move matched entries (image code present in mappings) to the bottom.
+    # and move matched entries (image code present in mappings OR auto-routed
+    # _p variants in price_history) to the bottom.
     merged_multiple_prices = merge_multiple_prices(
         existing_multiple_prices,
         unmatched['multiplePrices'],
         mappings,
+        price_history,
     )
     matched_count = sum(
         1 for item in merged_multiple_prices
-        if is_multiple_prices_matched(item, mappings)
+        if is_multiple_prices_matched(item, mappings, price_history)
     )
     print(f'  Multiple prices (merged): {len(merged_multiple_prices)} total, '
           f'{matched_count} matched (moved to bottom)')
