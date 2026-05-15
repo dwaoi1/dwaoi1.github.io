@@ -17,13 +17,15 @@ from bs4 import BeautifulSoup
 # Using displayMode=リスト&limit=10000 ensures we get all prices in one go.
 BASE_URL = "https://cardrush.media/onepiece/buying_prices?displayMode=リスト&limit=10000"
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 def get_default_output_path() -> str:
     """Generate a dated output path based on Asia/Tokyo time."""
     tz = zoneinfo.ZoneInfo("Asia/Tokyo")
     now = datetime.now(tz)
     year_month = now.strftime("%Y-%m") # e.g., "2026-04"
     day_file = now.strftime("%Y-%m-%d.json") # e.g., "2026-04-01.json"
-    return os.path.join("one_piece_scripts", "cardrush_buying_prices", year_month, day_file)
+    return os.path.join(SCRIPT_DIR, "cardrush_buying_prices", year_month, day_file)
 
 def build_human_like_headers() -> dict[str, str]:
     return {
