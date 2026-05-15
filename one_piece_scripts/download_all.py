@@ -30,10 +30,14 @@ JAPAN_SERIES_IDS = [
 
 ASIA_EN_URL = "https://asia-en.onepiece-cardgame.com/cardlist/"
 JAPAN_URL = "https://www.onepiece-cardgame.com/cardlist/"
-OUTPUT_DIR = "html_files"
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.dirname(SCRIPT_DIR)
+
+OUTPUT_DIR = os.path.join(SCRIPT_DIR, "html_files")
 USE_LIVE_SERIES_IDS = True
 USE_LIVE_JAPAN_SERIES_IDS = True
-OUTPUT_JSON = "../one_piece_app/src/data.json"
+OUTPUT_JSON = os.path.join(REPO_ROOT, "one_piece_app", "src", "data.json")
 USER_AGENT_POOL = [
     (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
