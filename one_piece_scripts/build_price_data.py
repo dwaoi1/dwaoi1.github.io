@@ -18,6 +18,9 @@ Writes:
 import json
 import os
 import re
+import cv2
+import numpy as np
+import requests
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
@@ -73,6 +76,163 @@ def get_image_code(url):
     if m:
         return m.group(1)
     return get_card_code(url)
+
+
+IMAGE_CACHE_FILE = os.path.join(SCRIPT_DIR, '.image_hash_cache.json')
+
+
+def load_image_cache():
+    if os.path.isfile(IMAGE_CACHE_FILE):
+        try:
+            with open(IMAGE_CACHE_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+
+def save_image_cache(cache):
+    try:
+        with open(IMAGE_CACHE_FILE, 'w', encoding='utf-8') as f:
+            json.dump(cache, f, ensure_ascii=False)
+    except Exception:
+        pass
+
+
+def download_image(url, timeout=12):
+    if not url:
+        return None
+    try:
+        response = requests.get(url, timeout=timeout)
+        response.raise_for_status()
+        arr = np.frombuffer(response.content, np.uint8)
+        return cv2.imdecode(arr, cv2.IMREAD_COLOR)
+    except Exception:
+        return None
+
+
+def phash(image, size=32, hash_size=8):
+    if image is None:
+        return None
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    resized = cv2.resize(gray, (size, size), interpolation=cv2.INTER_AREA)
+    dct = cv2.dct(np.float32(resized))
+    dct_low = dct[:hash_size, :hash_size]
+    median = np.median(dct_low[1:, 1:])
+    diff = dct_low > median
+    return diff.flatten()
+
+
+def hamming_distance(a, b):
+    if a is None or b is None:
+        return None
+    return int(np.count_nonzero(a != b))
+
+
+def map_variant_images_to_entries(code_to_images, history_by_code):
+    """Auto-map _p image codes to Cardrush entries using image similarity.
+
+    Only runs for cards that have both multiple variants AND multiple price entries.
+    This is the general fix for cards showing identical price charts.
+    """
+    image_mappings = {}
+    match_cache = {}
+
+    # Only process codes that have multiple price entries (problem cases)
+    codes_with_multiple_prices = {
+        code: len(set(
+            (e.get('image') or '', e.get('name') or '')
+            for entries in entry_map.values()
+            for e in entries
+        ))
+        for code, entry_map in history_by_code.items()
+        if len(entry_map) > 1
+    }
+    problem_codes = {c for c, n in codes_with_multiple_prices.items() if n > 1}
+
+    total = 0
+    for card_code, image_items in code_to_images.items():
+        if len(image_items) <= 1:
+            continue
+        if card_code not in problem_codes:
+            continue
+
+        total += 1
+
+    print(f"Auto-mapping {total} cards with multiple prices...")
+
+    processed = 0
+    for card_code, image_items in code_to_images.items():
+        if len(image_items) <= 1:
+            continue
+        if card_code not in problem_codes:
+            continue
+
+        processed += 1
+        if processed % 50 == 0:
+            print(f"  Processed {processed}/{total}...")
+
+        # Gather unique Cardrush entries for this card code
+        entry_map = {}
+        for rel_path_entries in history_by_code.get(card_code, {}).values():
+            for entry in rel_path_entries:
+                image_url = (entry.get('image') or '').strip()
+                name = (entry.get('name') or '').strip()
+                rarity = (entry.get('rarity') or '').strip()
+                if not image_url or not name:
+                    continue
+                key = (image_url, name, rarity)
+                if key not in entry_map:
+                    entry_map[key] = entry
+
+        entries = list(entry_map.values())
+        if not entries:
+            continue
+
+        # Preload hashes for cardrush entries
+        entry_hashes = {}
+        for entry in entries:
+            url = entry.get('image', '').strip()
+            if url in match_cache:
+                entry_hashes[url] = match_cache[url]
+                continue
+            img = download_image(url)
+            h = phash(img)
+            match_cache[url] = h
+            entry_hashes[url] = h
+
+        for item in image_items:
+            image_code = item['imageCode']
+            if image_code in image_mappings:
+                continue
+
+            official_url = item.get('picture', '')
+            off_hash = match_cache.get(official_url)
+            if off_hash is None:
+                off_hash = phash(download_image(official_url))
+                match_cache[official_url] = off_hash
+
+            best_entry = None
+            best_score = None
+            for entry in entries:
+                entry_url = entry.get('image', '').strip()
+                distance = hamming_distance(off_hash, entry_hashes.get(entry_url))
+                if distance is None:
+                    continue
+                if best_score is None or distance < best_score:
+                    best_score = distance
+                    best_entry = entry
+
+            if best_entry is None:
+                continue
+
+            image_mappings[image_code] = [
+                best_entry['name'],
+                best_entry.get('image', '').strip(),
+            ]
+
+    print(f"  Created {len(image_mappings)} auto-mappings")
+    return image_mappings
 
 
 def find_json_files(directory):
@@ -446,16 +606,19 @@ def build_image_code_history(history_by_code, price_files, overrides, confidence
 
             pat_display = (name_pattern if isinstance(name_pattern, str)
                            else f'[{", ".join(repr(p) for p in name_pattern)}]')
-            print(f'  Override: {image_code} -> {len(history)} date entries (patterns: {pat_display})')
+            # Use ASCII-safe output to avoid encoding errors in some terminals.
+            safe_display = pat_display.encode('ascii', 'backslashreplace').decode('ascii')
+            print(f'  Override: {image_code} -> {len(history)} date entries (patterns: {safe_display})')
 
     return image_history
 
 def build_rarity_map():
-    """Return two maps: card_code -> list of rarities, and card_code -> list of image codes."""
+    """Return three maps: card_code -> rarities, image codes, and image metadata."""
     code_to_rarities = {}
     code_to_image_codes = {}
+    code_to_images = {}
     if not os.path.isfile(CARDS_JSON):
-        return code_to_rarities, code_to_image_codes
+        return code_to_rarities, code_to_image_codes, code_to_images
     try:
         with open(CARDS_JSON, encoding='utf-8') as f:
             cards = json.load(f)
@@ -472,9 +635,16 @@ def build_rarity_map():
                 imgs = code_to_image_codes.setdefault(code, [])
                 if img_code not in imgs:
                     imgs.append(img_code)
+                image_meta = code_to_images.setdefault(code, [])
+                if not any(item['imageCode'] == img_code for item in image_meta):
+                    image_meta.append({
+                        'imageCode': img_code,
+                        'picture': picture,
+                        'rarity': rarity,
+                    })
     except (json.JSONDecodeError, OSError) as exc:
         print(f'WARNING: Failed to build rarity map: {exc}')
-    return code_to_rarities, code_to_image_codes
+    return code_to_rarities, code_to_image_codes, code_to_images
 
 
 # ---------------------------------------------------------------------------
@@ -773,6 +943,19 @@ def main():
     # We load them early so that build_price_history can exclude mapped variant names
     # from the shared/aggregate base-card price entries.
     mappings, confidence_mappings, initial_load_success = load_price_overrides()
+
+    # Build card variant map early so we can auto-generate image mappings.
+    code_to_rarities, code_to_image_codes, code_to_images = build_rarity_map()
+    print(f'Loaded card data for {len(code_to_rarities)} card codes')
+
+# Auto-map image codes to Cardrush entries when there are multiple prices.
+    # Disabled for now - image downloads take too long. Use visual_match.py for manual mapping.
+    # auto_mappings = map_variant_images_to_entries(code_to_images, history_by_code)
+    # if auto_mappings:
+    #     for img_code, value in auto_mappings.items():
+    #         if img_code not in mappings:
+    #             mappings[img_code] = value
+
     price_history = build_price_history(history_by_code, mappings)
 
     if mappings:
@@ -780,10 +963,6 @@ def main():
         image_code_history = build_image_code_history(history_by_code, price_files, mappings, confidence_mappings)
         price_history.update(image_code_history)
         print(f'  Added {len(image_code_history)} image-code history entries')
-
-    # Build card variant map early so we can auto-generate variant entries
-    code_to_rarities, code_to_image_codes = build_rarity_map()
-    print(f'Loaded card data for {len(code_to_rarities)} card codes')
 
     # Auto-generate price entries for _p variants that don't have explicit entries
     # This ensures each variant in the card database has its own price entry
