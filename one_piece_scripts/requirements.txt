@@ -1,3 +1,5 @@
 curl_cffi 
 beautifulsoup4
 requests
+opencv-python
+numpy
