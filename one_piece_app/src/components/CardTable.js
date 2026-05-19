@@ -475,7 +475,7 @@ const CardTable = ({ data }) => {
                       }}
                     >
                       <img
-                        src={`https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`}
+                        src={`${process.env.PUBLIC_URL}/images/cards/${item.cardId}`}
                         alt={item.Character}
                         loading="lazy"
                         referrerPolicy="no-referrer"
@@ -495,12 +495,12 @@ const CardTable = ({ data }) => {
                           const cleanUrl = item.Picture.split('?')[0];
                           const encodedUrl = encodeURIComponent(cleanUrl);
 
-                          // Fallback Chain: Proxy (wsrv.nl) -> Local -> Cardrush -> Proxy (weserv) -> Corsproxy -> Placeholder
-                          if (currentSrc.includes('wsrv.nl')) {
-                            // Primary proxy failed, try local image
-                            e.target.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
-                          } else if (currentSrc.includes('/images/cards/')) {
-                            // Local failed, try Cardrush fallback
+                          // Fallback Chain: Local -> Proxy (wsrv.nl) -> Cardrush -> Proxy (weserv) -> Corsproxy -> Placeholder
+                          if (currentSrc.includes('/images/cards/')) {
+                            // Local failed, try official site via proxy
+                            e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                          } else if (currentSrc.includes('wsrv.nl')) {
+                            // Official via proxy failed, try cardrush fallback
                             if (crFallback) {
                               e.target.src = crFallback;
                             } else {
