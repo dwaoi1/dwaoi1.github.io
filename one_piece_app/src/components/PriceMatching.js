@@ -215,7 +215,6 @@ const PriceMatching = ({ cardData }) => {
                       const currentSrc = e.target.src;
                       if (currentSrc.includes('placehold')) return;
 
-                      const filename = selectedMatch.picture.split('?')[0].split('/').pop();
                       const cleanUrl = selectedMatch.picture.split('?')[0];
                       const encodedUrl = encodeURIComponent(cleanUrl);
 
