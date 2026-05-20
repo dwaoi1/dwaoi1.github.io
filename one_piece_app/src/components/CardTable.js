@@ -91,10 +91,13 @@ const CardTable = ({ data }) => {
     if (wishlist.length === 0) return;
 
     wishlist.forEach((cardId) => {
+      const baseUrl = cardId.split('?')[0].replace('.png', '');
+      const cardUrl = `https://www.onepiece-cardgame.com/images/cardlist/card/${baseUrl}.png`;
+      
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
-      link.href = `${process.env.PUBLIC_URL}/images/cards/${cardId}`;
+      link.href = `https://wsrv.nl/?url=${encodeURIComponent(cardUrl)}&output=webp&default=https://placehold.co/150?text=No+Image`;
       document.head.appendChild(link);
     });
   }, [wishlist]);
@@ -472,9 +475,9 @@ const CardTable = ({ data }) => {
                       type="button"
                       className="card-image-btn"
 onMouseEnter={() => {
-                          // Preload local image on hover
+                          // Preload proxy image on hover
                           const img = new Image();
-                          img.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
+                          img.src = `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`;
                         }}
                       onClick={() => setPriceModal(item)}
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
@@ -488,7 +491,7 @@ onMouseEnter={() => {
                       }}
                     >
 <img
-                        src={`${process.env.PUBLIC_URL}/images/cards/${item.cardId}`}
+                        src={`https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`}
                         alt={item.Character}
                         loading="lazy"
                         referrerPolicy="no-referrer"
@@ -509,12 +512,12 @@ onMouseEnter={() => {
                           const cleanUrl = item.Picture.split('?')[0];
                           const encodedUrl = encodeURIComponent(cleanUrl);
 
-                          // Fallback Chain: Local -> wsrv.nl proxy -> Cardrush -> Placeholder
-                          if (currentSrc.includes('/images/cards/')) {
-                            // Local failed, try wsrv.nl proxy
-                            e.target.src = `https://wsrv.nl/?url=${encodeURIComponent(cleanUrl)}&output=webp&default=https://placehold.co/150?text=No+Image`;
-                          } else if (currentSrc.includes('wsrv.nl')) {
-                            // Proxy failed, try Cardrush fallback
+                          // Fallback Chain: wsrv.nl proxy -> Local -> Cardrush -> Placeholder
+                          if (currentSrc.includes('wsrv.nl')) {
+                            // Proxy failed, try local image
+                            e.target.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
+                          } else if (currentSrc.includes('/images/cards/')) {
+                            // Local failed, try Cardrush fallback
                             if (crFallback) {
                               e.target.src = crFallback;
                             } else {
