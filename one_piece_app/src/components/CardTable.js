@@ -86,6 +86,19 @@ const CardTable = ({ data }) => {
     return () => unsubscribe();
   }, []);
 
+  // Preload wishlist card images
+  useEffect(() => {
+    if (wishlist.length === 0) return;
+
+    wishlist.forEach((cardId) => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = `${process.env.PUBLIC_URL}/images/cards/${cardId}`;
+      document.head.appendChild(link);
+    });
+  }, [wishlist]);
+
   const toggleWishlist = async (cardId) => {
     const newWishlist = wishlist.includes(cardId)
       ? wishlist.filter((id) => id !== cardId)
@@ -458,11 +471,11 @@ const CardTable = ({ data }) => {
                     <button
                       type="button"
                       className="card-image-btn"
-                      onMouseEnter={() => {
-                        // Preload proxied image
-                        const img = new Image();
-                        img.src = `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`;
-                      }}
+onMouseEnter={() => {
+                          // Preload local image on hover
+                          const img = new Image();
+                          img.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
+                        }}
                       onClick={() => setPriceModal(item)}
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
                       style={{
@@ -475,7 +488,7 @@ const CardTable = ({ data }) => {
                       }}
                     >
 <img
-                        src={`https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`}
+                        src={`${process.env.PUBLIC_URL}/images/cards/${item.cardId}`}
                         alt={item.Character}
                         loading="lazy"
                         referrerPolicy="no-referrer"
@@ -496,24 +509,20 @@ const CardTable = ({ data }) => {
                           const cleanUrl = item.Picture.split('?')[0];
                           const encodedUrl = encodeURIComponent(cleanUrl);
 
-                          // Fallback Chain: Proxy (wsrv.nl) -> Local -> Cardrush -> Proxy (weserv) -> Corsproxy -> Placeholder
-                          if (currentSrc.includes('wsrv.nl')) {
-                            // Primary proxy failed, try local image
-                            e.target.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
-                          } else if (currentSrc.includes('/images/cards/')) {
-                            // Local failed, try Cardrush fallback
+                          // Fallback Chain: Local -> wsrv.nl proxy -> Cardrush -> Placeholder
+                          if (currentSrc.includes('/images/cards/')) {
+                            // Local failed, try wsrv.nl proxy
+                            e.target.src = `https://wsrv.nl/?url=${encodeURIComponent(cleanUrl)}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                          } else if (currentSrc.includes('wsrv.nl')) {
+                            // Proxy failed, try Cardrush fallback
                             if (crFallback) {
                               e.target.src = crFallback;
                             } else {
                               e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
                             }
                           } else if (currentSrc.includes('images.weserv.nl')) {
-                            // Secondary proxy failed, try corsproxy or final placeholder
-                            if (crFallback) {
-                              e.target.src = crFallback;
-                            } else {
-                              e.target.src = `https://corsproxy.io/?${encodedUrl}`;
-                            }
+                            // Secondary proxy failed, try final placeholder
+                            e.target.src = 'https://placehold.co/150?text=No+Image';
                           } else {
                             e.target.src = 'https://placehold.co/150?text=No+Image';
                           }
