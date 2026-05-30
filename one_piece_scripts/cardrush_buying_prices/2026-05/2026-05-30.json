@@ -329,11 +329,25 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/4657.webp"
   },
   {
+    "name": "サカズキ(パラレル/漫画背景/漫画絵)",
+    "rarity": "SR/SP",
+    "model_number": "OP16-065",
+    "amount": "¥370,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13380.webp"
+  },
+  {
     "name": "ナミ(中国版/シリアル/illust:isuZu)",
     "rarity": "R",
     "model_number": "OP01-016",
     "amount": "¥350,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/4585.webp"
+  },
+  {
+    "name": "クザン(パラレル/漫画背景/漫画絵)",
+    "rarity": "R/SP",
+    "model_number": "OP16-063",
+    "amount": "¥340,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13379.webp"
   },
   {
     "name": "ロロノア・ゾロ(パラレル/漫画背景/漫画絵)",
@@ -348,6 +362,13 @@
     "model_number": "OP05-086",
     "amount": "¥330,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/6107.webp"
+  },
+  {
+    "name": "ボルサリーノ(パラレル/漫画背景/漫画絵)",
+    "rarity": "R/SP",
+    "model_number": "OP16-073",
+    "amount": "¥320,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13381.webp"
   },
   {
     "name": "モンキー・D・ルフィ(パラレル/漫画背景/漫画絵)",
@@ -826,6 +847,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/10175.webp"
   },
   {
+    "name": "ミス・オールサンデー(パラレル/SP/illust:Sunohara)",
+    "rarity": "SP",
+    "model_number": "OP14-084",
+    "amount": "¥100,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13387.webp"
+  },
+  {
     "name": "ボア・ハンコック(パラレル/illust:Sunohara)",
     "rarity": "SP",
     "model_number": "OP01-078[OP04]",
@@ -952,6 +980,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/12233.webp"
   },
   {
+    "name": "ポートガス・D・エース(パラレル/SP/illust:Hashimoto Q)",
+    "rarity": "SP",
+    "model_number": "ST15-005",
+    "amount": "¥70,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13382.webp"
+  },
+  {
     "name": "ジュラキュール・ミホーク(未開封/illust:Studio Vigor Co.Ltd)",
     "rarity": "SR",
     "model_number": "OP01-070",
@@ -1027,6 +1062,13 @@
     "model_number": "P-055",
     "amount": "¥60,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/11636.webp"
+  },
+  {
+    "name": "ゼハハハハハハ!!!(パラレル/漫画絵)",
+    "rarity": "R/P",
+    "model_number": "OP16-116",
+    "amount": "¥60,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13405.webp"
   },
   {
     "name": "ナミ(パラレル/フルアート/illust:MOROI)",
@@ -1246,6 +1288,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/10916.webp"
   },
   {
+    "name": "モンキー・Ｄ・ルフィ(パラレル/illust:otton)",
+    "rarity": "L/P",
+    "model_number": "OP16-022",
+    "amount": "¥40,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13399.webp"
+  },
+  {
     "name": "モンキー・D・ルフィ(パラレル/ペンキ背景/漫画絵)",
     "rarity": "SEC/P",
     "model_number": "OP05-119",
@@ -1372,6 +1421,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/12538.webp"
   },
   {
+    "name": "ボア・ハンコック(パラレル/illust:lack)",
+    "rarity": "SR/P",
+    "model_number": "OP16-032",
+    "amount": "¥30,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13391.webp"
+  },
+  {
     "name": "ロロノア・ゾロ(パラレル/漫画絵)",
     "rarity": "L/P",
     "model_number": "OP01-001",
@@ -1482,6 +1538,27 @@
     "model_number": "OP10-005",
     "amount": "¥25,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/9835.webp"
+  },
+  {
+    "name": "たしぎ(パラレル/SP/illust:Hashimoto Q)",
+    "rarity": "SP",
+    "model_number": "OP14-029",
+    "amount": "¥25,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13383.webp"
+  },
+  {
+    "name": "インペルダウンの囚人(パラレル/TR/illust:BISAI)",
+    "rarity": "TR",
+    "model_number": "OP16-042",
+    "amount": "¥25,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13404.webp"
+  },
+  {
+    "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Bashikou)",
+    "rarity": "SR/P",
+    "model_number": "OP16-015",
+    "amount": "¥25,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13389.webp"
   },
   {
     "name": "ロロノア・ゾロ(未開封/金文字/漫画絵)",
@@ -1692,6 +1769,20 @@
     "model_number": "OP11-041",
     "amount": "¥20,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/10814.webp"
+  },
+  {
+    "name": "バーソロミュー・くま(パラレル/SP/illust:Katsuo Tadano)",
+    "rarity": "SP",
+    "model_number": "EB04-054",
+    "amount": "¥20,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13386.webp"
+  },
+  {
+    "name": "マーシャル・Ｄ・ティーチ(パラレル/illust:Akira EGAWA)",
+    "rarity": "SEC/P",
+    "model_number": "OP16-119",
+    "amount": "¥20,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13378.webp"
   },
   {
     "name": "エドワード・ニューゲート(パラレル/SP/illust:Bashikou)",
@@ -1939,6 +2030,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/10834.webp"
   },
   {
+    "name": "ヤマト(パラレル/illust:NAKAuMA)",
+    "rarity": "L/P",
+    "model_number": "OP16-079",
+    "amount": "¥15,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13402.webp"
+  },
+  {
     "name": "ロブ・ルッチ(パラレル/コンパス背景/illust:bikku)",
     "rarity": "SR/P",
     "model_number": "OP05-093",
@@ -2035,6 +2133,20 @@
     "model_number": "-",
     "amount": "¥13,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12047.webp"
+  },
+  {
+    "name": "キャベンディッシュ(パラレル/SP/illust:Sunohara)",
+    "rarity": "SP",
+    "model_number": "OP10-045",
+    "amount": "¥13,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13384.webp"
+  },
+  {
+    "name": "シャーロット・カタクリ(パラレル/SP/illust:Katsuo Tadano)",
+    "rarity": "SP",
+    "model_number": "OP11-067",
+    "amount": "¥13,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13385.webp"
   },
   {
     "name": "ユースタス・キッド(パラレル/コンパス背景/illust:toshiaki takayama)",
@@ -2168,6 +2280,20 @@
     "model_number": "EB04-001",
     "amount": "¥12,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/11721.webp"
+  },
+  {
+    "name": "ポートガス・Ｄ・エース(パラレル/illust:otton)",
+    "rarity": "L/P",
+    "model_number": "OP16-001",
+    "amount": "¥12,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13398.webp"
+  },
+  {
+    "name": "ポートガス・Ｄ・エース(パラレル/illust:Makitoshi)",
+    "rarity": "SEC/P",
+    "model_number": "OP16-118",
+    "amount": "¥12,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13377.webp"
   },
   {
     "name": "トラファルガー・ロー(パラレル/漫画絵)",
@@ -2527,6 +2653,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/12441.webp"
   },
   {
+    "name": "マーシャル・Ｄ・ティーチ(パラレル/illust:Matsumoto Akira)",
+    "rarity": "L/P",
+    "model_number": "OP16-080",
+    "amount": "¥9,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13403.webp"
+  },
+  {
     "name": "ドン!!カード(金枠/UTALIVE/ウタ)",
     "rarity": "-",
     "model_number": "-",
@@ -2665,6 +2798,13 @@
     "model_number": "OP13-002",
     "amount": "¥8,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12633.webp"
+  },
+  {
+    "name": "マーシャル・Ｄ・ティーチ",
+    "rarity": "SEC",
+    "model_number": "OP16-119",
+    "amount": "¥8,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13375.webp"
   },
   {
     "name": "ナミ(illust:Shachinomaru)",
@@ -2919,6 +3059,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/11740.webp"
   },
   {
+    "name": "ヤマト(パラレル/illust:Daisuke izuka)",
+    "rarity": "SR/P",
+    "model_number": "OP16-098",
+    "amount": "¥6,500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13396.webp"
+  },
+  {
     "name": "エドワード・ニューゲート(パラレル/illust:Hayaken-sarena)",
     "rarity": "SP",
     "model_number": "OP02-004[OP04]",
@@ -3036,6 +3183,13 @@
     "model_number": "P-075",
     "amount": "¥6,000",
     "image": "https://files.cardrush.media/onepiece/ocha_products/6806.webp"
+  },
+  {
+    "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Hachi Takashi)",
+    "rarity": "R/P",
+    "model_number": "OP16-034",
+    "amount": "¥6,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13407.webp"
   },
   {
     "name": "ウソ八(パラレル/SP/illust:Hashimoto Q)",
@@ -3500,6 +3654,20 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/9984.webp"
   },
   {
+    "name": "シリュウ(パラレル/illust:Minato Sashima)",
+    "rarity": "SR/P",
+    "model_number": "OP16-108",
+    "amount": "¥4,500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13397.webp"
+  },
+  {
+    "name": "サカズキ(パラレル/illust:Hayaken-sarena)",
+    "rarity": "SR/P",
+    "model_number": "OP16-065",
+    "amount": "¥4,500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13394.webp"
+  },
+  {
     "name": "ボルサリーノ",
     "rarity": "SR",
     "model_number": "EB04-058",
@@ -3738,6 +3906,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/10656.webp"
   },
   {
+    "name": "Mr.3ギャルディーノ(パラレル/illust:DAI-XT.)",
+    "rarity": "SR/P",
+    "model_number": "OP16-056",
+    "amount": "¥3,700",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13393.webp"
+  },
+  {
     "name": "シャーロット・プリン(パラレル/SP/illust:Hashimoto Q)",
     "rarity": "SP",
     "model_number": "ST12-012[OP10]",
@@ -3946,6 +4121,13 @@
     "model_number": "ST30-001",
     "amount": "¥3,500",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12796.webp"
+  },
+  {
+    "name": "エドワード・ニューゲート(パラレル/illust:Bashikou)",
+    "rarity": "SR/P",
+    "model_number": "OP16-003",
+    "amount": "¥3,500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13388.webp"
   },
   {
     "name": "ヤマト(パラレル/illust:Sunohara)",
@@ -4235,6 +4417,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/12826.webp"
   },
   {
+    "name": "バギー(パラレル/illust:Matsumoto Akira)",
+    "rarity": "L/P",
+    "model_number": "OP16-041",
+    "amount": "¥3,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13400.webp"
+  },
+  {
     "name": "ペローナ(パラレル/illust:Ryuda)",
     "rarity": "L/P",
     "model_number": "OP06-021",
@@ -4310,6 +4499,13 @@
     "model_number": "OP15-119",
     "amount": "¥2,700",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12213.webp"
+  },
+  {
+    "name": "ポートガス・Ｄ・エース",
+    "rarity": "SEC",
+    "model_number": "OP16-118",
+    "amount": "¥2,700",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13374.webp"
   },
   {
     "name": "モンキー・D・ルフィ(パラレル/illust:AKIRA EGAWA)",
@@ -4578,6 +4774,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/11088.webp"
   },
   {
+    "name": "光月モモの助(パラレル/illust:Yuki Yoshida)",
+    "rarity": "R/P",
+    "model_number": "OP16-085",
+    "amount": "¥2,500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13412.webp"
+  },
+  {
     "name": "ヴィンスモーク・レイジュ(パラレル/illust:Daisuke izuka)",
     "rarity": "SR/P",
     "model_number": "OP12-063",
@@ -4597,6 +4800,13 @@
     "model_number": "ST30-007",
     "amount": "¥2,300",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12819.webp"
+  },
+  {
+    "name": "ボルサリーノ(パラレル/illust:DAI-XT.)",
+    "rarity": "R/P",
+    "model_number": "OP16-073",
+    "amount": "¥2,300",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13411.webp"
   },
   {
     "name": "キング(パラレル/漫画絵)",
@@ -5068,6 +5278,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/12487.webp"
   },
   {
+    "name": "センゴク(パラレル/illust:Anderson)",
+    "rarity": "L/P",
+    "model_number": "OP16-060",
+    "amount": "¥2,000",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13401.webp"
+  },
+  {
     "name": "ナミ(パラレル/フルアート)",
     "rarity": "C/P",
     "model_number": "ST21-009",
@@ -5290,6 +5507,27 @@
     "model_number": "OP15-032",
     "amount": "¥1,700",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12241.webp"
+  },
+  {
+    "name": "錦えもん(パラレル/illust:Nijihayashi)",
+    "rarity": "SR/P",
+    "model_number": "OP16-082",
+    "amount": "¥1,700",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13395.webp"
+  },
+  {
+    "name": "マルコ(パラレル/illust:Ryuda)",
+    "rarity": "R/P",
+    "model_number": "OP16-014",
+    "amount": "¥1,700",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13406.webp"
+  },
+  {
+    "name": "モビー・ディック号(パラレル/illust:KISUKE)",
+    "rarity": "R/P",
+    "model_number": "OP16-021",
+    "amount": "¥1,700",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13410.webp"
   },
   {
     "name": "レベッカ(パラレル/illust:Yosuke Adachi)",
@@ -5661,6 +5899,27 @@
     "model_number": "EB02-003",
     "amount": "¥1,500",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12981.webp"
+  },
+  {
+    "name": "クザン(パラレル/illust:Koushi Rokushiro)",
+    "rarity": "R/P",
+    "model_number": "OP16-063",
+    "amount": "¥1,500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13409.webp"
+  },
+  {
+    "name": "バギー(パラレル/illust:DAI-XT.)",
+    "rarity": "SR/P",
+    "model_number": "OP16-048",
+    "amount": "¥1,500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13392.webp"
+  },
+  {
+    "name": "Mr.2・ボン・クレーベンサム(パラレル/illust:Morechand)",
+    "rarity": "R/P",
+    "model_number": "OP16-055",
+    "amount": "¥1,500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13408.webp"
   },
   {
     "name": "ドンキホーテ・ロシナンテ(パラレル/illust:Naruse Uroko)",
@@ -6193,6 +6452,34 @@
     "model_number": "ST30-016",
     "amount": "¥1,200",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12828.webp"
+  },
+  {
+    "name": "エンポリオ・イワンコフ(パラレル/illust:Sunohara)",
+    "rarity": "SR/P",
+    "model_number": "OP16-026",
+    "amount": "¥1,200",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13390.webp"
+  },
+  {
+    "name": "ドン!!カード(金枠/さァてこうなったら時間がナッサブル･･････!!!)",
+    "rarity": "-",
+    "model_number": "-",
+    "amount": "¥1,200",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13422.webp"
+  },
+  {
+    "name": "Mr.3ギャルディーノ",
+    "rarity": "SR",
+    "model_number": "OP16-056",
+    "amount": "¥1,200",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13312.webp"
+  },
+  {
+    "name": "インペルダウンの囚人",
+    "rarity": "R",
+    "model_number": "OP16-042",
+    "amount": "¥1,200",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13298.webp"
   },
   {
     "name": "ウソップ(パラレル/illust:Midori Matsuda)",
@@ -7392,6 +7679,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/13234.webp"
   },
   {
+    "name": "シリュウ",
+    "rarity": "SR",
+    "model_number": "OP16-108",
+    "amount": "¥800",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13364.webp"
+  },
+  {
     "name": "サンジ(パラレル/Kazuno Yuikawa)",
     "rarity": "SR/P",
     "model_number": "OP10-005",
@@ -7880,6 +8174,27 @@
     "model_number": "P-061",
     "amount": "¥700",
     "image": "https://files.cardrush.media/onepiece/ocha_products/13235.webp"
+  },
+  {
+    "name": "モンキー・Ｄ・ルフィ",
+    "rarity": "SR",
+    "model_number": "OP16-015",
+    "amount": "¥700",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13271.webp"
+  },
+  {
+    "name": "ボア・ハンコック",
+    "rarity": "SR",
+    "model_number": "OP16-032",
+    "amount": "¥700",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13288.webp"
+  },
+  {
+    "name": "ヤマト",
+    "rarity": "SR",
+    "model_number": "OP16-098",
+    "amount": "¥700",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13354.webp"
   },
   {
     "name": "シーザー・クラウン(パラレル/illust:Shin Kashiwaguma)",
@@ -9282,6 +9597,20 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/12829.webp"
   },
   {
+    "name": "エドワード・ニューゲート",
+    "rarity": "SR",
+    "model_number": "OP16-003",
+    "amount": "¥500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13259.webp"
+  },
+  {
+    "name": "サカズキ",
+    "rarity": "SR",
+    "model_number": "OP16-065",
+    "amount": "¥500",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13321.webp"
+  },
+  {
     "name": "フランキー(パラレル/Moopic)",
     "rarity": "R/P",
     "model_number": "OP10-090",
@@ -9763,6 +10092,20 @@
     "model_number": "ST30-003",
     "amount": "¥400",
     "image": "https://files.cardrush.media/onepiece/ocha_products/12815.webp"
+  },
+  {
+    "name": "バギー",
+    "rarity": "SR",
+    "model_number": "OP16-048",
+    "amount": "¥400",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13304.webp"
+  },
+  {
+    "name": "錦えもん",
+    "rarity": "SR",
+    "model_number": "OP16-082",
+    "amount": "¥400",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13338.webp"
   },
   {
     "name": "そげキング",
@@ -10549,6 +10892,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/12827.webp"
   },
   {
+    "name": "ベン・ベックマン",
+    "rarity": "R",
+    "model_number": "OP16-012",
+    "amount": "¥300",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13268.webp"
+  },
+  {
     "name": "ヴィンスモーク・レイジュ",
     "rarity": "SR",
     "model_number": "OP12-063",
@@ -11207,13 +11557,6 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/8781.webp"
   },
   {
-    "name": "エンポリオ・イワンコフ",
-    "rarity": "SR",
-    "model_number": "ST12-010",
-    "amount": "¥200",
-    "image": "https://files.cardrush.media/onepiece/ocha_products/1252.webp"
-  },
-  {
     "name": "サンジ(illust:Koushi Rokushiro)",
     "rarity": "C",
     "model_number": "ST21-003",
@@ -11233,6 +11576,13 @@
     "model_number": "EB02-020",
     "amount": "¥200",
     "image": "https://files.cardrush.media/onepiece/ocha_products/7084.webp"
+  },
+  {
+    "name": "エンポリオ・イワンコフ",
+    "rarity": "SR",
+    "model_number": "OP16-026",
+    "amount": "¥200",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13282.webp"
   },
   {
     "name": "クザン",
@@ -12516,6 +12866,41 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/476.webp"
   },
   {
+    "name": "モンキー・Ｄ・ルフィ",
+    "rarity": "R",
+    "model_number": "OP16-034",
+    "amount": "¥100",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13290.webp"
+  },
+  {
+    "name": "行くぞ～～～!!!海軍本部～～～!!!",
+    "rarity": "R",
+    "model_number": "OP16-038",
+    "amount": "¥100",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13294.webp"
+  },
+  {
+    "name": "ナミ",
+    "rarity": "R",
+    "model_number": "OP16-091",
+    "amount": "¥100",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13347.webp"
+  },
+  {
+    "name": "モンキー・Ｄ・ルフィ",
+    "rarity": "R",
+    "model_number": "OP16-095",
+    "amount": "¥100",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13351.webp"
+  },
+  {
+    "name": "ゼハハハハハハ!!!",
+    "rarity": "R",
+    "model_number": "OP16-116",
+    "amount": "¥100",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13372.webp"
+  },
+  {
     "name": "サンジ",
     "rarity": "SR",
     "model_number": "OP10-005",
@@ -13636,6 +14021,13 @@
     "image": "https://files.cardrush.media/onepiece/ocha_products/4858.webp"
   },
   {
+    "name": "エンポリオ・イワンコフ",
+    "rarity": "SR",
+    "model_number": "ST12-010",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/1252.webp"
+  },
+  {
     "name": "熱息(foil)",
     "rarity": "C",
     "model_number": "ST04-016",
@@ -13753,6 +14145,90 @@
     "model_number": "PRB02-015",
     "amount": "¥50",
     "image": "https://files.cardrush.media/onepiece/ocha_products/8745.webp"
+  },
+  {
+    "name": "マルコ",
+    "rarity": "R",
+    "model_number": "OP16-014",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13270.webp"
+  },
+  {
+    "name": "モビー・ディック号",
+    "rarity": "R",
+    "model_number": "OP16-021",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13277.webp"
+  },
+  {
+    "name": "トラファルガー・ロー",
+    "rarity": "R",
+    "model_number": "OP16-030",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13286.webp"
+  },
+  {
+    "name": "Mr.1ダズ・ボーネス",
+    "rarity": "R",
+    "model_number": "OP16-054",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13310.webp"
+  },
+  {
+    "name": "Mr.2・ボン・クレーベンサム",
+    "rarity": "R",
+    "model_number": "OP16-055",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13311.webp"
+  },
+  {
+    "name": "コビー",
+    "rarity": "R",
+    "model_number": "OP16-064",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13320.webp"
+  },
+  {
+    "name": "光月モモの助",
+    "rarity": "R",
+    "model_number": "OP16-085",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13341.webp"
+  },
+  {
+    "name": "ヤマト",
+    "rarity": "R",
+    "model_number": "OP16-096",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13352.webp"
+  },
+  {
+    "name": "ヤマト",
+    "rarity": "R",
+    "model_number": "OP16-097",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13353.webp"
+  },
+  {
+    "name": "カタリーナ・デボン",
+    "rarity": "R",
+    "model_number": "OP16-104",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13360.webp"
+  },
+  {
+    "name": "サンファン・ウルフ",
+    "rarity": "R",
+    "model_number": "OP16-106",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13362.webp"
+  },
+  {
+    "name": "バスコ・ショット",
+    "rarity": "R",
+    "model_number": "OP16-110",
+    "amount": "¥50",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13366.webp"
   },
   {
     "name": "たしぎ",
@@ -14901,6 +15377,76 @@
     "model_number": "-",
     "amount": "¥30",
     "image": "https://files.cardrush.media/onepiece/ocha_products/3350.webp"
+  },
+  {
+    "name": "クロコダイル",
+    "rarity": "UC",
+    "model_number": "OP16-045",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13301.webp"
+  },
+  {
+    "name": "モンキー・Ｄ・ルフィ",
+    "rarity": "UC",
+    "model_number": "OP16-052",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13308.webp"
+  },
+  {
+    "name": "ド派手大作戦に変更じゃァ～～～!!!",
+    "rarity": "UC",
+    "model_number": "OP16-059",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13315.webp"
+  },
+  {
+    "name": "つる",
+    "rarity": "UC",
+    "model_number": "OP16-067",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13323.webp"
+  },
+  {
+    "name": "マリンフォード",
+    "rarity": "UC",
+    "model_number": "OP16-078",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13334.webp"
+  },
+  {
+    "name": "ポートガス・Ｄ・エース",
+    "rarity": "UC",
+    "model_number": "OP16-094",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13350.webp"
+  },
+  {
+    "name": "その縁を切りに来た!!!",
+    "rarity": "UC",
+    "model_number": "OP16-099",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13355.webp"
+  },
+  {
+    "name": "ヴァン・オーガー",
+    "rarity": "UC",
+    "model_number": "OP16-103",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13359.webp"
+  },
+  {
+    "name": "ドクQ",
+    "rarity": "UC",
+    "model_number": "OP16-109",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13365.webp"
+  },
+  {
+    "name": "闇水",
+    "rarity": "UC",
+    "model_number": "OP16-115",
+    "amount": "¥30",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13371.webp"
   },
   {
     "name": "モネ",
@@ -16910,5 +17456,82 @@
     "model_number": "OP09-008",
     "amount": "¥10",
     "image": "https://files.cardrush.media/onepiece/ocha_products/5656.webp"
+  },
+  {
+    "name": "クザン",
+    "rarity": "R",
+    "model_number": "OP16-063",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13319.webp"
+  },
+  {
+    "name": "ボルサリーノ",
+    "rarity": "R",
+    "model_number": "OP16-073",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13329.webp"
+  },
+  {
+    "name": "智将仏のセンゴク",
+    "rarity": "R",
+    "model_number": "OP16-077",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13333.webp"
+  },
+  {
+    "name": "サッチ",
+    "rarity": "UC",
+    "model_number": "OP16-005",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13261.webp"
+  },
+  {
+    "name": "おれと共に来る者は命を捨ててついて来い!!!",
+    "rarity": "UC",
+    "model_number": "OP16-020",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13276.webp"
+  },
+  {
+    "name": "センゴク",
+    "rarity": "UC",
+    "model_number": "OP16-066",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13322.webp"
+  },
+  {
+    "name": "「三大将」!!!",
+    "rarity": "UC",
+    "model_number": "OP16-076",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13332.webp"
+  },
+  {
+    "name": "光月モモの助",
+    "rarity": "UC",
+    "model_number": "OP16-084",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13340.webp"
+  },
+  {
+    "name": "しのぶ",
+    "rarity": "UC",
+    "model_number": "OP16-087",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13343.webp"
+  },
+  {
+    "name": "ニコ・ロビン",
+    "rarity": "UC",
+    "model_number": "OP16-092",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13348.webp"
+  },
+  {
+    "name": "ロックスター",
+    "rarity": "C",
+    "model_number": "OP16-018",
+    "amount": "¥10",
+    "image": "https://files.cardrush.media/onepiece/ocha_products/13274.webp"
   }
 ]
