@@ -37,7 +37,8 @@ REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "html_files")
 USE_LIVE_SERIES_IDS = True
 USE_LIVE_JAPAN_SERIES_IDS = True
-OUTPUT_JSON = os.path.join(REPO_ROOT, "one_piece_app", "src", "data.json")
+DEFAULT_OUTPUT_JSON = os.path.join(REPO_ROOT, "one_piece_app", "src", "data.json")
+OUTPUT_JSON = DEFAULT_OUTPUT_JSON
 USER_AGENT_POOL = [
     (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -215,12 +216,25 @@ def parse_downloaded_html(output_dir, images_dir=None):
         with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
             json.dump(all_cards, f, indent=2, ensure_ascii=False)
         print(f"Done. Saved {len(all_cards)} cards to {OUTPUT_JSON}")
+        remove_default_output_if_needed()
     except FileNotFoundError:
         fallback_file = "one_piece_cards.json"
         print(f"Could not find {OUTPUT_JSON}. Saving to {fallback_file} instead.")
         with open(fallback_file, 'w', encoding='utf-8') as f:
             json.dump(all_cards, f, indent=2, ensure_ascii=False)
         print(f"Done. Saved {len(all_cards)} cards to {fallback_file}")
+
+
+def remove_default_output_if_needed():
+    if os.path.normcase(os.path.abspath(OUTPUT_JSON)) != os.path.normcase(os.path.abspath(DEFAULT_OUTPUT_JSON)):
+        return
+    try:
+        os.remove(OUTPUT_JSON)
+        print(f"Removed default output file: {OUTPUT_JSON}")
+    except FileNotFoundError:
+        pass
+    except OSError as exc:
+        print(f"Warning: could not remove {OUTPUT_JSON}: {exc}")
 
 def download_series():
     output_dir = OUTPUT_DIR
