@@ -19,13 +19,6 @@ on:
       - 'gh-pages/**'
       - '.github/workflows/deploy.yml'
       - '!one_piece_scripts/cardrush_buying_prices/**'
-  # Trigger deployment after a successful scrape
-  workflow_run:
-    workflows: ["Scrape Cardrush Buying Prices"]
-    types:
-      - completed
-    branches:
-      - main
   # Allow manual deployment from the Actions tab
   workflow_dispatch:
 
@@ -41,10 +34,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Run if it's a push, a manual trigger, OR a SUCCESSFUL workflow_run
-    if: >
-      github.event_name != 'workflow_run' || 
-      github.event.workflow_run.conclusion == 'success'
 
     steps:
       - name: Checkout 🛎️
@@ -58,9 +47,7 @@ jobs:
           cache-dependency-path: 'one_piece_app/package-lock.json'
 
       - name: Setup Pages
-        if: >
-          github.event_name != 'pull_request' &&
-          (github.ref == 'refs/heads/main' || github.event.workflow_run.head_branch == 'main')
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
         with:
           enablement: true
@@ -95,19 +82,14 @@ jobs:
           test -f build/index.html
 
       - name: Upload Pages artifact 📦
-        if: >
-          github.event_name != 'pull_request' &&
-          (github.ref == 'refs/heads/main' || github.event.workflow_run.head_branch == 'main')
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: one_piece_app/build
 
   deploy:
     needs: build
-    if: >
-      github.event_name == 'pull_request' ||
-      github.ref == 'refs/heads/main' ||
-      github.event.workflow_run.head_branch == 'main'
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event_name == 'pull_request' && 'github-pages-preview' || 'github-pages' }}
@@ -119,7 +101,5 @@ jobs:
         run: echo "Skipping deploy on pull requests."
       - name: Deploy to GitHub Pages 🚀
         id: deployment
-        if: >
-          github.event_name != 'pull_request' &&
-          (github.ref == 'refs/heads/main' || github.event.workflow_run.head_branch == 'main')
+        if: github.event_name != 'pull_request'
         uses: actions/deploy-pages@v4
