@@ -58,7 +58,9 @@ jobs:
           cache-dependency-path: 'one_piece_app/package-lock.json'
 
       - name: Setup Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: >
+          github.event_name != 'pull_request' &&
+          (github.ref == 'refs/heads/main' || github.event.workflow_run.head_branch == 'main')
         uses: actions/configure-pages@v5
         with:
           enablement: true
@@ -90,14 +92,19 @@ jobs:
           test -f build/index.html
 
       - name: Upload Pages artifact 📦
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: >
+          github.event_name != 'pull_request' &&
+          (github.ref == 'refs/heads/main' || github.event.workflow_run.head_branch == 'main')
         uses: actions/upload-pages-artifact@v3
         with:
           path: one_piece_app/build
 
   deploy:
     needs: build
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    if: >
+      github.event_name == 'pull_request' ||
+      github.ref == 'refs/heads/main' ||
+      github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event_name == 'pull_request' && 'github-pages-preview' || 'github-pages' }}
@@ -109,5 +116,7 @@ jobs:
         run: echo "Skipping deploy on pull requests."
       - name: Deploy to GitHub Pages 🚀
         id: deployment
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: >
+          github.event_name != 'pull_request' &&
+          (github.ref == 'refs/heads/main' || github.event.workflow_run.head_branch == 'main')
         uses: actions/deploy-pages@v4
