@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   scrape:
@@ -64,8 +65,17 @@ jobs:
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
+            echo "CHANGES_COMMITTED=false" >> "$GITHUB_ENV"
             exit 0
           fi
 
           git commit -m "chore: update one piece card list data and images"
           git push origin HEAD:${{ github.ref_name }}
+          echo "CHANGES_COMMITTED=true" >> "$GITHUB_ENV"
+
+      - name: Trigger Deploy
+        if: env.CHANGES_COMMITTED == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run deploy.yml --ref main
