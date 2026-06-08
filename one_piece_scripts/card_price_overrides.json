@@ -2269,7 +2269,7 @@
     "ST13-012_p1": 92.8,
     "ST02-004_p5": 91.8
   },
-  "asOf": "2026-06-08",
+  "asOf": "2026-06-09",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -4002,7 +4002,7 @@
           "name": "モンキー・D・ルフィ(ライフ5/illust:BISAI)",
           "rarity": "L",
           "model_number": "P",
-          "amount": "¥800",
+          "amount": "¥1,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/9841.webp"
         }
       ]
@@ -4246,7 +4246,7 @@
           "name": "(NOTFORSALE有り)モンキー・D・ルフィ",
           "rarity": "P",
           "model_number": "P-061",
-          "amount": "¥1,000",
+          "amount": "¥2,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/2191.webp"
         },
         {
@@ -4307,7 +4307,7 @@
           "name": "モンキー・D・ルフィ",
           "rarity": "P",
           "model_number": "P-108",
-          "amount": "¥400",
+          "amount": "¥1,500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/9313.webp"
         }
       ]
@@ -19214,7 +19214,7 @@
           "name": "メロメロ甘風(illust:Sunohara)",
           "rarity": "C",
           "model_number": "ST03-017",
-          "amount": "¥2,500",
+          "amount": "¥3,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/1271.webp"
         },
         {
@@ -20523,7 +20523,7 @@
           "name": "モンキー・D・ルフィ",
           "rarity": "P",
           "model_number": "P-047",
-          "amount": "¥600",
+          "amount": "¥800",
           "image": "https://files.cardrush.media/onepiece/ocha_products/1199.webp"
         }
       ]
@@ -23923,7 +23923,7 @@
           "name": "モンキー・D・ルフィ(ライフ5/illust:BISAI)",
           "rarity": "L",
           "model_number": "P",
-          "amount": "¥800",
+          "amount": "¥1,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/9841.webp"
         }
       ]
