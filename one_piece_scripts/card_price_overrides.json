@@ -2269,7 +2269,7 @@
     "ST13-012_p1": 92.8,
     "ST02-004_p5": 91.8
   },
-  "asOf": "2026-06-12",
+  "asOf": "2026-06-13",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -2354,6 +2354,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/10833.webp"
         },
         {
+          "name": "ドン!!カード(金枠/シャンクス)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥15,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/8924.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/全身ティアラ右向き/ハンコック)",
           "rarity": "-",
           "model_number": "-",
@@ -2366,13 +2373,6 @@
           "model_number": "-",
           "amount": "¥15,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/10834.webp"
-        },
-        {
-          "name": "ドン!!カード(金枠/シャンクス)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥13,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/8924.webp"
         },
         {
           "name": "ドン!!カード(金枠/全身王冠/ナミ)",
@@ -4353,7 +4353,7 @@
           "name": "ウタ",
           "rarity": "SR",
           "model_number": "ST23-001",
-          "amount": "¥500",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/8592.webp"
         }
       ]
@@ -22323,6 +22323,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/10833.webp"
         },
         {
+          "name": "ドン!!カード(金枠/シャンクス)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥15,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/8924.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/全身ティアラ右向き/ハンコック)",
           "rarity": "-",
           "model_number": "-",
@@ -22335,13 +22342,6 @@
           "model_number": "-",
           "amount": "¥15,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/10834.webp"
-        },
-        {
-          "name": "ドン!!カード(金枠/シャンクス)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥13,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/8924.webp"
         },
         {
           "name": "ドン!!カード(金枠/全身王冠/ナミ)",
