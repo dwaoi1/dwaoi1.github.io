@@ -2269,7 +2269,7 @@
     "ST13-012_p1": 92.8,
     "ST02-004_p5": 91.8
   },
-  "asOf": "2026-06-22",
+  "asOf": "2026-06-23",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -4323,7 +4323,7 @@
           "name": "ナミ(illust:otton)",
           "rarity": "R",
           "model_number": "EB03-006",
-          "amount": "¥50,000",
+          "amount": "¥45,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/13184.webp"
         },
         {
@@ -24012,7 +24012,7 @@
           "name": "スモーカー",
           "rarity": "P",
           "model_number": "P-151",
-          "amount": "¥300",
+          "amount": "¥400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/13702.webp"
         }
       ]
