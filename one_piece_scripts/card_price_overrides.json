@@ -2269,7 +2269,7 @@
     "ST13-012_p1": 92.8,
     "ST02-004_p5": 91.8
   },
-  "asOf": "2026-06-30",
+  "asOf": "2026-07-01",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -4353,7 +4353,7 @@
           "name": "ウタ(illust:Bashikou)",
           "rarity": "SR",
           "model_number": "ST23-001",
-          "amount": "¥9,000",
+          "amount": "¥10,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/13191.webp"
         },
         {
@@ -4478,6 +4478,30 @@
           "model_number": "EB04-028",
           "amount": "¥10",
           "image": "https://files.cardrush.media/onepiece/ocha_products/11681.webp"
+        }
+      ]
+    },
+    {
+      "cardCode": "P-056",
+      "priceCount": 2,
+      "imageCodes": [
+        "P-056",
+        "P-056_p1"
+      ],
+      "entries": [
+        {
+          "name": "ロロノア・ゾロ(実写)",
+          "rarity": "P",
+          "model_number": "P-056",
+          "amount": "¥3,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/3201.webp"
+        },
+        {
+          "name": "ロロノア・ゾロ",
+          "rarity": "P",
+          "model_number": "P-056",
+          "amount": "¥30",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/1208.webp"
         }
       ]
     },
@@ -17849,18 +17873,18 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/10008.webp"
         },
         {
-          "name": "ベビー5(illust:Naruse Uroko)",
-          "rarity": "R",
-          "model_number": "OP12-112",
-          "amount": "¥400",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/9739.webp"
-        },
-        {
           "name": "ベビー5",
           "rarity": "R",
           "model_number": "OP12-112",
           "amount": "¥300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/8273.webp"
+        },
+        {
+          "name": "ベビー5(illust:Naruse Uroko)",
+          "rarity": "R",
+          "model_number": "OP12-112",
+          "amount": "¥300",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/9739.webp"
         }
       ]
     },
@@ -21130,7 +21154,7 @@
           "name": "シュラ(illust:ASAKI KURODA)",
           "rarity": "R",
           "model_number": "OP05-106",
-          "amount": "¥100",
+          "amount": "¥50",
           "image": "https://files.cardrush.media/onepiece/ocha_products/3514.webp"
         },
         {
