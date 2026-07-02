@@ -2269,7 +2269,7 @@
     "ST13-012_p1": 92.8,
     "ST02-004_p5": 91.8
   },
-  "asOf": "2026-07-02",
+  "asOf": "2026-07-03",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -24050,7 +24050,7 @@
           "name": "モンキー・D・ルフィ",
           "rarity": "P",
           "model_number": "P-135",
-          "amount": "¥200",
+          "amount": "¥100",
           "image": "https://files.cardrush.media/onepiece/ocha_products/13047.webp"
         }
       ]
