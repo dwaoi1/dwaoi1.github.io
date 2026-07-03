@@ -2269,7 +2269,7 @@
     "ST13-012_p1": 92.8,
     "ST02-004_p5": 91.8
   },
-  "asOf": "2026-07-03",
+  "asOf": "2026-07-04",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -4330,7 +4330,7 @@
           "name": "ナミ(illust:otton)",
           "rarity": "R",
           "model_number": "EB03-006",
-          "amount": "¥35,000",
+          "amount": "¥38,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/13184.webp"
         },
         {
