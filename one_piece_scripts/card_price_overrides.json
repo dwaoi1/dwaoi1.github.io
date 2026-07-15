@@ -2269,7 +2269,7 @@
     "ST13-012_p1": 92.8,
     "ST02-004_p5": 91.8
   },
-  "asOf": "2026-07-15",
+  "asOf": "2026-07-16",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -24192,6 +24192,18 @@
       ]
     },
     {
+      "modelNumber": "P-159",
+      "latestEntries": [
+        {
+          "name": "モンキー・D・ルフィ(白文字)",
+          "rarity": "P",
+          "model_number": "P-159",
+          "amount": "¥1,500",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/13991.webp"
+        }
+      ]
+    },
+    {
       "modelNumber": "ST31-001",
       "latestEntries": [
         {
@@ -24399,7 +24411,7 @@
   "pricesWithoutCardsBreakdown": [
     {
       "series": "P",
-      "count": 5
+      "count": 6
     },
     {
       "series": "ST31",
