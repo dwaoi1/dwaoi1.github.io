@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import random
 import sys
 import time
 from datetime import datetime
@@ -10,7 +11,7 @@ except ImportError:
     from backports import zoneinfo
 from typing import Optional
 
-from curl_cffi import requests
+from curl_cffi import requests as cffi_requests
 from bs4 import BeautifulSoup
 
 # Cardrush uses Next.js, and the data is embedded in a __NEXT_DATA__ script tag.
@@ -29,44 +30,44 @@ def get_default_output_path() -> str:
 
 def build_human_like_headers() -> dict[str, str]:
     return {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
         "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
+        "Referer": "https://cardrush.media/",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
     }
 
-def scrape_cardrush_data(url: str, timeout: int) -> list[dict]:
-    # Use impersonate to bypass potential TLS fingerprinting if needed
-    # If curl_cffi is missing in some environments, fallback to requests
-    try:
-        from curl_cffi import requests as c_requests
-        session = c_requests.Session(impersonate="chrome124")
-    except ImportError:
-        import requests as c_requests
-        session = c_requests.Session()
+def _do_scrape(url: str, timeout: int) -> list[dict]:
+    session = cffi_requests.Session(impersonate="chrome120")
 
     headers = build_human_like_headers()
     session.headers.update(headers)
-    
-    # Hit homepage first for cookies
-    session.get("https://cardrush.media/", timeout=timeout)
-    
+
+    # Visit homepage first to establish cookies
+    home_resp = session.get("https://cardrush.media/", timeout=timeout)
+    if home_resp.status_code == 403:
+        raise RuntimeError("Homepage blocked (403). Cloudflare may require JS.")
+
+    # Fetch the actual data page
     response = session.get(url, timeout=timeout)
     response.raise_for_status()
-    
+
     soup = BeautifulSoup(response.text, "html.parser")
     script = soup.find("script", id="__NEXT_DATA__")
     if not script:
         raise RuntimeError("Could not find __NEXT_DATA__ script tag")
-        
+
     data = json.loads(script.string)
-    # The buying prices are typically in props.pageProps.buyingPrices
     buying_prices = data.get("props", {}).get("pageProps", {}).get("buyingPrices", [])
-    
+
     results = []
     for bp in buying_prices:
-        # Extract the fields we need
         ocha_product = bp.get("ocha_product", {})
-        
+
         name = bp.get("name", "")
         extra = bp.get("extra_difference")
         if extra:
@@ -88,6 +89,20 @@ def scrape_cardrush_data(url: str, timeout: int) -> list[dict]:
             "image": ocha_product.get("image_source", "")
         })
     return results
+
+
+def scrape_cardrush_data(url: str, timeout: int, max_retries: int = 3) -> list[dict]:
+    last_error = None
+    for attempt in range(max_retries):
+        try:
+            return _do_scrape(url, timeout)
+        except Exception as e:
+            last_error = e
+            if attempt < max_retries - 1:
+                wait = (2 ** attempt) + random.uniform(0, 1)
+                print(f"Attempt {attempt + 1} failed: {e}. Retrying in {wait:.1f}s...", file=sys.stderr)
+                time.sleep(wait)
+    raise last_error
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Scrape Cardrush One Piece buying prices with images")
