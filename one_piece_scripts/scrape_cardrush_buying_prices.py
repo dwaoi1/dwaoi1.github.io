@@ -41,6 +41,19 @@ def build_human_like_headers() -> dict[str, str]:
         "Upgrade-Insecure-Requests": "1",
     }
 
+def _log_response(label: str, resp) -> None:
+    print(f"\n{'='*60}", file=sys.stderr)
+    print(f"[{label}] URL: {resp.url}", file=sys.stderr)
+    print(f"[{label}] Status: {resp.status_code}", file=sys.stderr)
+    print(f"[{label}] Headers:", file=sys.stderr)
+    for k, v in resp.headers.items():
+        print(f"  {k}: {v}", file=sys.stderr)
+    body_preview = resp.text[:2000]
+    print(f"[{label}] Body (first 2000 chars):", file=sys.stderr)
+    print(body_preview, file=sys.stderr)
+    print(f"{'='*60}\n", file=sys.stderr)
+
+
 def _do_scrape(url: str, timeout: int) -> list[dict]:
     session = cffi_requests.Session(impersonate="chrome120")
 
@@ -49,11 +62,13 @@ def _do_scrape(url: str, timeout: int) -> list[dict]:
 
     # Visit homepage first to establish cookies
     home_resp = session.get("https://cardrush.media/", timeout=timeout)
+    _log_response("HOMEPAGE", home_resp)
     if home_resp.status_code == 403:
         raise RuntimeError("Homepage blocked (403). Cloudflare may require JS.")
 
     # Fetch the actual data page
     response = session.get(url, timeout=timeout)
+    _log_response("DATA_PAGE", response)
     response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "html.parser")
