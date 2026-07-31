@@ -27,17 +27,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r one_piece_scripts/requirements.txt
 
-      - name: Diagnose and clear proxy environment
-        run: |
-          echo "Proxy-related environment variables before cleanup:"
-          env | grep -Ei '(^|_)(http|https|all|no)_proxy=' || true
-
-          unset HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY
-          unset http_proxy https_proxy all_proxy no_proxy
-
-          echo "Proxy-related environment variables after cleanup:"
-          env | grep -Ei '(^|_)(http|https|all|no)_proxy=' || true
-
       - name: Decide whether today's scrape is needed
         env:
           TZ: Asia/Tokyo
@@ -83,20 +72,18 @@ jobs:
       - name: Scrape Cardrush paginated list
         if: env.SHOULD_SCRAPE == 'true'
         env:
-          HTTP_PROXY: ""
-          HTTPS_PROXY: ""
-          ALL_PROXY: ""
-          NO_PROXY: "cardrush.media"
+          HTTP_PROXY: ${{ secrets.PROXY_URL }}
+          HTTPS_PROXY: ${{ secrets.PROXY_URL }}
+          ALL_PROXY: ${{ secrets.PROXY_URL }}
         run: |
           set -o pipefail
 
           echo "Network diagnostics:"
           python - <<'PY'
           import os, socket
-          print("HTTP_PROXY=", os.getenv("HTTP_PROXY"))
-          print("HTTPS_PROXY=", os.getenv("HTTPS_PROXY"))
-          print("ALL_PROXY=", os.getenv("ALL_PROXY"))
-          print("NO_PROXY=", os.getenv("NO_PROXY"))
+          print("HTTP_PROXY set:", bool(os.getenv("HTTP_PROXY")))
+          print("HTTPS_PROXY set:", bool(os.getenv("HTTPS_PROXY")))
+          print("ALL_PROXY set:", bool(os.getenv("ALL_PROXY")))
           print("cardrush.media resolves to:", socket.gethostbyname("cardrush.media"))
           PY
 
