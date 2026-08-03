@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        timeout-minutes: 5
+        with:
+          sparse-checkout: |
+            one_piece_scripts/
+            one_piece_app/
 
       - name: Set up Python
         uses: actions/setup-python@v5
