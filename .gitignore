@@ -1,3 +1,19 @@
 one_piece_scripts/__pycache__/
 firestore.rules
 opencode.jsonc
+
+# Temp and scratch files
+temp_*
+op16_entries.json
+
+# Scratch scripts
+one_piece_scripts/extract_*.py
+one_piece_scripts/find_st*.py
+one_piece_scripts/prepare_*.py
+one_piece_scripts/revert_*.py
+one_piece_scripts/temp_*
+one_piece_scripts/unmapped_report.txt
+one_piece_scripts/mapping_prep.json
+one_piece_scripts/op16_entries.txt
+one_piece_scripts/extract_*_output.txt
+one_piece_scripts/op16_mappings_tmp.json
