@@ -29,10 +29,9 @@ def get_default_output_path() -> str:
     return os.path.join(SCRIPT_DIR, "cardrush_buying_prices", year_month, day_file)
 
 def build_human_like_headers() -> dict[str, str]:
+    # curl_cffi's impersonation sets User-Agent, Accept, Accept-Language,
+    # and Sec-CH-UA headers. Only add headers it does not set automatically.
     return {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-        "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
         "Referer": "https://cardrush.media/",
         "Sec-Fetch-Dest": "document",
         "Sec-Fetch-Mode": "navigate",
@@ -42,15 +41,21 @@ def build_human_like_headers() -> dict[str, str]:
     }
 
 def _do_scrape(url: str, timeout: int) -> list[dict]:
-    session = cffi_requests.Session(impersonate="chrome120")
+    proxies = None
+    proxy_url = os.environ.get("PROXY_URL")
+    if proxy_url:
+        proxies = {"http": proxy_url, "https": proxy_url}
 
-    headers = build_human_like_headers()
-    session.headers.update(headers)
+    session = cffi_requests.Session(impersonate="chrome142", proxies=proxies)
+    session.headers.update(build_human_like_headers())
 
     # Visit homepage first to establish cookies
     home_resp = session.get("https://cardrush.media/", timeout=timeout)
     if home_resp.status_code == 403:
-        raise RuntimeError("Homepage blocked (403). AWS ELB may be blocking datacenter IPs.")
+        raise RuntimeError("Homepage blocked (403)")
+
+    # Small human-like pause before the data request
+    time.sleep(1 + random.uniform(0.5, 1.5))
 
     # Fetch the actual data page
     response = session.get(url, timeout=timeout)
