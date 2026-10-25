@@ -15,6 +15,11 @@ const CHART_H = 390;
 const MARGIN = { top: 20, right: 20, bottom: 50, left: 72 };
 const PLOT_W = CHART_W - MARGIN.left - MARGIN.right;
 const PLOT_H = CHART_H - MARGIN.top - MARGIN.bottom;
+const DAY_MS = 24 * 60 * 60 * 1000;
+// Max number of consecutive missing dates still bridged with a line.
+// Gaps longer than this render as blank space.
+const MAX_BRIDGE_MISSING_DAYS = 3;
+const X_TICK_COUNT = 7;
 
 function formatYen(value) {
   if (value >= 1000000) {
@@ -212,9 +217,6 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
     );
     if (allPrices.length === 0) return null;
 
-    // Map each date in filteredHistory to its x-axis index position.
-    const dateToIndex = Object.fromEntries(filteredHistory.map((p, i) => [p.date, i]));
-
     const dataMinPrice = Math.min(...allPrices);
     const dataMaxPrice = Math.max(...allPrices);
     const priceRange = dataMaxPrice - dataMinPrice;
@@ -223,8 +225,14 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
     const yMax = dataMaxPrice + priceRange * 0.1;
     const yRange = yMax - yMin || 1;
 
-    const xScale = (i) =>
-      MARGIN.left + (n > 1 ? (i / (n - 1)) * PLOT_W : PLOT_W / 2);
+    // Calendar-proportional x scale: dates with no data occupy real space
+    // instead of being squished together.
+    const t0 = Date.parse(filteredHistory[0].date);
+    const t1 = Date.parse(filteredHistory[n - 1].date);
+    const xScale = (dateStr) =>
+      t1 > t0
+        ? MARGIN.left + ((Date.parse(dateStr) - t0) / (t1 - t0)) * PLOT_W
+        : MARGIN.left + PLOT_W / 2;
     const yScale = (price) =>
       MARGIN.top + PLOT_H - ((price - yMin) / yRange) * PLOT_H;
 
@@ -233,50 +241,83 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
       t => yScale(t) >= MARGIN.top && yScale(t) <= MARGIN.top + PLOT_H
     );
 
-    // Helper: convert a series to a polyline points string.
+    // Split a series into segments whenever more than MAX_BRIDGE_MISSING_DAYS
+    // consecutive dates have no data, leaving blank space across long gaps.
+    const splitSegments = (series) => {
+      const segments = [];
+      let current = [];
+      series.forEach((p, i) => {
+        if (i > 0) {
+          const missing = (Date.parse(p.date) - Date.parse(series[i - 1].date)) / DAY_MS - 1;
+          if (missing > MAX_BRIDGE_MISSING_DAYS) {
+            segments.push(current);
+            current = [];
+          }
+        }
+        current.push(p);
+      });
+      if (current.length) segments.push(current);
+      return segments;
+    };
+
+    // Helper: convert a series to an array of polyline points strings.
     const toPoints = (series) =>
-      series.map(p => `${xScale(dateToIndex[p.date])},${yScale(p.minPrice)}`).join(' ');
+      splitSegments(series)
+        .filter(seg => seg.length >= 2)
+        .map(seg => seg.map(p => `${xScale(p.date)},${yScale(p.minPrice)}`).join(' '));
 
     // Helper: precompute dot positions for a series.
     const toDots = (series) =>
       series.map(p => ({
         ...p,
-        cx: xScale(dateToIndex[p.date]),
+        cx: xScale(p.date),
         cy: yScale(p.minPrice),
       }));
 
     // Base line
-    const minPoints = effectiveHistory.length > 0 ? toPoints(effectiveHistory) : null;
+    const minPoints = toPoints(effectiveHistory);
     const hasRange = effectiveHistory.some(p => p.count > 1 && p.minPrice !== p.maxPrice);
     const areaPoints = hasRange
-      ? [
-          ...effectiveHistory.map(p => `${xScale(dateToIndex[p.date])},${yScale(p.maxPrice)}`),
-          ...effectiveHistory
-            .slice()
-            .reverse()
-            .map(p => `${xScale(dateToIndex[p.date])},${yScale(p.minPrice)}`),
-        ].join(' ')
-      : null;
+      ? splitSegments(effectiveHistory)
+          .filter(seg => seg.length >= 2)
+          .map(seg =>
+            [
+              ...seg.map(p => `${xScale(p.date)},${yScale(p.maxPrice)}`),
+              ...seg
+                .slice()
+                .reverse()
+                .map(p => `${xScale(p.date)},${yScale(p.minPrice)}`),
+            ].join(' ')
+          )
+      : [];
+
+    // Calendar-based x-axis ticks, evenly spaced across the time range.
+    const xTicks = (() => {
+      if (t1 <= t0) {
+        const date = filteredHistory[0].date;
+        return [{ date, x: xScale(date) }];
+      }
+      const ticks = [];
+      for (let k = 0; k <= X_TICK_COUNT; k++) {
+        const date = new Date(t0 + ((t1 - t0) * k) / X_TICK_COUNT).toISOString().slice(0, 10);
+        if (ticks.length && ticks[ticks.length - 1].date === date) continue;
+        ticks.push({ date, x: xScale(date) });
+      }
+      return ticks;
+    })();
 
     return {
       minPoints, areaPoints,
-      sealedPoints: sealedSeries.length > 0 ? toPoints(sealedSeries) : null,
-      goldPoints: goldTextSeries.length > 0 ? toPoints(goldTextSeries) : null,
-      asiaPoints: asiaSeries.length > 0 ? toPoints(asiaSeries) : null,
-      sealedAsiaPoints: sealedAsiaSeries.length > 0 ? toPoints(sealedAsiaSeries) : null,
+      sealedPoints: toPoints(sealedSeries),
+      goldPoints: toPoints(goldTextSeries),
+      asiaPoints: toPoints(asiaSeries),
+      sealedAsiaPoints: toPoints(sealedAsiaSeries),
       effectiveDots: toDots(effectiveHistory),
       sealedDots: toDots(sealedSeries),
       goldDots: toDots(goldTextSeries),
       asiaDots: toDots(asiaSeries),
       sealedAsiaDots: toDots(sealedAsiaSeries),
-      xScale, yScale, yTicks, xTickIndices: (n <= 8 ? Array.from({length:n}, (_,i)=>i) : (() => {
-        const indices = [];
-        const step = Math.ceil(n / 7);
-        for (let i = 0; i < n; i += step) indices.push(i);
-        if (indices[indices.length - 1] !== n - 1) indices.push(n - 1);
-        return indices;
-      })()), hasRange,
-      dates: filteredHistory.map(p => p.date),
+      yScale, yTicks, xTicks, hasRange,
     };
   }, [filteredHistory, effectiveHistory, sealedSeries, goldTextSeries, asiaSeries, sealedAsiaSeries]);
 
@@ -459,87 +500,93 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                   ))}
 
                   {/* X axis labels */}
-                  {chart.xTickIndices.map(i => (
+                  {chart.xTicks.map(tick => (
                     <text
-                      key={i}
-                      x={chart.xScale(i)}
+                      key={tick.date}
+                      x={tick.x}
                       y={MARGIN.top + PLOT_H + 16}
                       textAnchor="middle"
                       fontSize="10"
                       fill="#9ca4b7"
-                      transform={`rotate(-35,${chart.xScale(i)},${MARGIN.top + PLOT_H + 16})`}
+                      transform={`rotate(-35,${tick.x},${MARGIN.top + PLOT_H + 16})`}
                     >
-                      {formatAxisDate(chart.dates[i])}
+                      {formatAxisDate(tick.date)}
                     </text>
                   ))}
 
-                  {/* Base price range shaded area */}
-                  {chart.areaPoints && (
+                  {/* Base price range shaded area (one polygon per segment) */}
+                  {chart.areaPoints.map((pts, i) => (
                     <polygon
-                      points={chart.areaPoints}
+                      key={`area-${i}`}
+                      points={pts}
                       fill="rgba(99,179,237,0.12)"
                     />
-                  )}
+                  ))}
 
                   {/* Base price line (blue) */}
-                  {chart.minPoints && (
+                  {chart.minPoints.map((pts, i) => (
                     <polyline
-                      points={chart.minPoints}
+                      key={`base-line-${i}`}
+                      points={pts}
                       fill="none"
                       stroke="#63b3ed"
                       strokeWidth="2"
                       strokeLinejoin="round"
                       strokeLinecap="round"
                     />
-                  )}
+                  ))}
 
                   {/* Sealed price line (orange) */}
-                  {chart.sealedPoints && (
+                  {chart.sealedPoints.map((pts, i) => (
                     <polyline
-                      points={chart.sealedPoints}
+                      key={`sealed-line-${i}`}
+                      points={pts}
                       fill="none"
                       stroke="#ed8936"
                       strokeWidth="2"
                       strokeLinejoin="round"
                       strokeLinecap="round"
                     />
-                  )}
+                  ))}
 
                   {/* Gold text price line (gold/yellow) */}
-                  {chart.goldPoints && (
+                  {chart.goldPoints.map((pts, i) => (
                     <polyline
-                      points={chart.goldPoints}
+                      key={`gold-line-${i}`}
+                      points={pts}
                       fill="none"
                       stroke="#ecc94b"
                       strokeWidth="2"
                       strokeLinejoin="round"
                       strokeLinecap="round"
                     />
-                  )}
+                  ))}
 
                   {/* Asia Opened line (purple) */}
-                  {chart.asiaPoints && (
+                  {chart.asiaPoints.map((pts, i) => (
                     <polyline
-                      points={chart.asiaPoints}
+                      key={`asia-line-${i}`}
+                      points={pts}
                       fill="none"
                       stroke="#9f7aea"
                       strokeWidth="2"
                       strokeLinejoin="round"
                       strokeLinecap="round"
                     />
-                  )}
+                  ))}
 
                   {/* Asia Sealed line (green) */}
-                  {chart.sealedAsiaPoints && (
+                  {chart.sealedAsiaPoints.map((pts, i) => (
                     <polyline
-                      points={chart.sealedAsiaPoints}
+                      key={`sealedAsia-line-${i}`}
+                      points={pts}
                       fill="none"
                       stroke="#48bb78"
                       strokeWidth="2"
                       strokeLinejoin="round"
                       strokeLinecap="round"
                     />
-                  )}
+                  ))}
 
                   {/* Base data point dots */}
                   {chart.effectiveDots.map((p, i) => {
