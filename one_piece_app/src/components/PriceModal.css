@@ -242,3 +242,12 @@
   z-index: 1100;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
+
+/* Blur-up placeholder */
+img[data-blur] {
+  filter: blur(12px);
+  transition: filter 0.4s ease;
+}
+img[data-blur][data-loaded] {
+  filter: blur(0);
+}
