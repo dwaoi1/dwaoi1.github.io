@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import './PriceModal.css';
+import { getProxiedImageUrl } from '../utils/imageUtils';
 
 const TIME_RANGES = [
   { label: '30d', days: 30 },
@@ -345,10 +346,12 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
           {/* Left panel: card image */}
           <div className="price-modal-card-panel">
             <img
-              src={`${process.env.PUBLIC_URL}/images/cards/${item.cardId}`}
+              src={getProxiedImageUrl(item.Picture)}
               alt={item.Character}
               className="price-modal-card-image-large"
               referrerPolicy="no-referrer"
+              data-blur
+              onLoad={(e) => { e.target.setAttribute('data-loaded', ''); }}
               onError={(e) => {
                 const currentSrc = e.target.src;
                 if (currentSrc.includes('placehold')) return;
@@ -358,22 +361,13 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                 const cleanUrl = item.Picture.split('?')[0];
                 const encodedUrl = encodeURIComponent(cleanUrl);
 
-                if (currentSrc.includes('/images/cards/')) {
-                  // Local failed, try primary proxy
-                  e.target.src = `https://wsrv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
-                } else if (currentSrc.includes('wsrv.nl')) {
-                  // Primary proxy failed, try Cardrush fallback
+                if (currentSrc.includes('wsrv.nl')) {
+                  e.target.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
+                } else if (currentSrc.includes('/images/cards/')) {
                   if (crFallback) {
                     e.target.src = crFallback;
                   } else {
                     e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
-                  }
-                } else if (currentSrc.includes('images.weserv.nl')) {
-                  // Secondary proxy failed, try corsproxy or final placeholder
-                  if (crFallback) {
-                    e.target.src = crFallback;
-                  } else {
-                    e.target.src = `https://corsproxy.io/?${encodedUrl}`;
                   }
                 } else {
                   e.target.src = 'https://placehold.co/150?text=No+Image';

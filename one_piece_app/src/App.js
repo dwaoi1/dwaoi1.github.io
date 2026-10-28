@@ -14,7 +14,7 @@ function App() {
     const loadCardData = async () => {
       try {
         const response = await fetch(`${process.env.PUBLIC_URL}/cards.json`, {
-          cache: 'no-store',
+          cache: 'default',
         });
         if (!response.ok) {
           throw new Error(`Card data request failed: ${response.status}`);

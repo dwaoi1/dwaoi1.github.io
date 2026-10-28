@@ -3,6 +3,7 @@ import './CardTable.css';
 import PriceModal from './PriceModal';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { getProxiedImageUrl, getProxiedImageSrcset } from '../utils/imageUtils';
 
 const CardTable = ({ data }) => {
   const [selectedCharacter, setSelectedCharacter] = useState('');
@@ -93,11 +94,11 @@ const CardTable = ({ data }) => {
     wishlist.forEach((cardId) => {
       const baseUrl = cardId.split('?')[0].replace('.png', '');
       const cardUrl = `https://www.onepiece-cardgame.com/images/cardlist/card/${baseUrl}.png`;
-      
+
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
-      link.href = `https://wsrv.nl/?url=${encodeURIComponent(cardUrl)}&output=webp&default=https://placehold.co/150?text=No+Image`;
+      link.href = getProxiedImageUrl(cardUrl);
       document.head.appendChild(link);
     });
   }, [wishlist]);
@@ -121,7 +122,7 @@ const CardTable = ({ data }) => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`${process.env.PUBLIC_URL}/cardrush_price_history.json`, { cache: 'no-store' })
+    fetch(`${process.env.PUBLIC_URL}/cardrush_price_history.json`, { cache: 'default' })
       .then(r => r.ok ? r.json() : null)
       .then(d => { if (d && isMounted) setPriceHistory(d); })
       .catch(err => console.warn('Unable to load cardrush_price_history.json', err));
@@ -474,10 +475,9 @@ const CardTable = ({ data }) => {
                     <button
                       type="button"
                       className="card-image-btn"
-onMouseEnter={() => {
-                          // Preload proxy image on hover
+                      onMouseEnter={() => {
                           const img = new Image();
-                          img.src = `https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                          img.src = getProxiedImageUrl(item.Picture);
                         }}
                       onClick={() => setPriceModal(item)}
                       aria-label={`View price history for ${item.cardCode || item.Character}`}
@@ -491,11 +491,15 @@ onMouseEnter={() => {
                       }}
                     >
 <img
-                        src={`https://wsrv.nl/?url=${encodeURIComponent(item.Picture.split('?')[0])}&output=webp&default=https://placehold.co/150?text=No+Image`}
+                        src={getProxiedImageUrl(item.Picture)}
+                        srcSet={getProxiedImageSrcset(item.Picture)}
+                        sizes="(max-width: 600px) 150px, (max-width: 1024px) 300px, 600px"
                         alt={item.Character}
                         loading="lazy"
                         referrerPolicy="no-referrer"
                         decoding="async"
+                        data-blur
+                        onLoad={(e) => { e.target.setAttribute('data-loaded', ''); }}
                         style={{
                           width: '100%',
                           height: 'auto',
@@ -512,20 +516,14 @@ onMouseEnter={() => {
                           const cleanUrl = item.Picture.split('?')[0];
                           const encodedUrl = encodeURIComponent(cleanUrl);
 
-                          // Fallback Chain: wsrv.nl proxy -> Local -> Cardrush -> Placeholder
                           if (currentSrc.includes('wsrv.nl')) {
-                            // Proxy failed, try local image
                             e.target.src = `${process.env.PUBLIC_URL}/images/cards/${item.cardId}`;
                           } else if (currentSrc.includes('/images/cards/')) {
-                            // Local failed, try Cardrush fallback
                             if (crFallback) {
                               e.target.src = crFallback;
                             } else {
                               e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
                             }
-                          } else if (currentSrc.includes('images.weserv.nl')) {
-                            // Secondary proxy failed, try final placeholder
-                            e.target.src = 'https://placehold.co/150?text=No+Image';
                           } else {
                             e.target.src = 'https://placehold.co/150?text=No+Image';
                           }

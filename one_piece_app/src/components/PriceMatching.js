@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import './PriceMatching.css';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { getProxiedImageUrl } from '../utils/imageUtils';
 
 const PriceMatching = ({ cardData }) => {
   const [unmatchedData, setUnmatchedData] = useState(null);
@@ -67,8 +68,8 @@ const PriceMatching = ({ cardData }) => {
     const fetchData = async () => {
       try {
         const [unmatchedRes, historyRes] = await Promise.all([
-          fetch(`${process.env.PUBLIC_URL}/unmatched_prices.json`, { cache: 'no-store' }),
-          fetch(`${process.env.PUBLIC_URL}/cardrush_price_history.json`, { cache: 'no-store' })
+          fetch(`${process.env.PUBLIC_URL}/unmatched_prices.json`, { cache: 'default' }),
+          fetch(`${process.env.PUBLIC_URL}/cardrush_price_history.json`, { cache: 'default' })
         ]);
 
         const unmatched = unmatchedRes.ok ? await unmatchedRes.json() : null;
@@ -210,7 +211,7 @@ const PriceMatching = ({ cardData }) => {
                 <h3>Database Card</h3>
                 {selectedMatch.picture ? (
                   <img 
-                    src={`https://wsrv.nl/?url=${encodeURIComponent(selectedMatch.picture.split('?')[0])}&output=webp&default=https://placehold.co/300x420?text=No+Image`} 
+                    src={getProxiedImageUrl(selectedMatch.picture)}
                     onError={(e) => {
                       const currentSrc = e.target.src;
                       if (currentSrc.includes('placehold')) return;
@@ -220,13 +221,15 @@ const PriceMatching = ({ cardData }) => {
                       const encodedUrl = encodeURIComponent(cleanUrl);
 
                       if (currentSrc.includes('wsrv.nl')) {
-                        // Proxy failed, try local
                         e.target.src = `${process.env.PUBLIC_URL}/images/cards/${filename}`;
                       } else if (currentSrc.includes('/images/cards/')) {
-                        // Local failed, try secondary proxy
-                        e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/300x420?text=No+Image`;
+                        if (selectedMatch.cardrushImage) {
+                          e.target.src = selectedMatch.cardrushImage;
+                        } else {
+                          e.target.src = `https://images.weserv.nl/?url=${encodedUrl}&output=webp&default=https://placehold.co/150?text=No+Image`;
+                        }
                       } else {
-                        e.target.src = 'https://placehold.co/300x420?text=No+Image';
+                        e.target.src = 'https://placehold.co/150?text=No+Image';
                       }
                     }}
                     alt={selectedMatch.name || 'Card image'} 
@@ -244,6 +247,9 @@ const PriceMatching = ({ cardData }) => {
                   <img 
                     src={selectedMatch.cardrushImage} 
                     alt="Cardrush Match" 
+                    onError={(e) => {
+                      e.target.src = 'https://placehold.co/300x420?text=No+Image';
+                    }}
                     style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', objectFit: 'contain' }} 
                   />
                 ) : (
