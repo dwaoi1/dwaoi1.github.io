@@ -4,6 +4,8 @@ import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies';
 
+self.skipWaiting();
+
 clientsClaim();
 cleanupOutdatedCaches();
 

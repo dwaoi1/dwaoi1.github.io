@@ -15,6 +15,7 @@ const CardTable = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [priceModal, setPriceModal] = useState(null);
   const [priceHistory, setPriceHistory] = useState({});
+  const [priceTimeRange, setPriceTimeRange] = useState(180);
   const itemsPerPage = 100;
 
   const getCardCode = (url) => {
@@ -575,6 +576,8 @@ const CardTable = ({ data }) => {
         <PriceModal
           item={priceModal}
           priceHistory={priceHistory}
+          timeRange={priceTimeRange}
+          onTimeRangeChange={setPriceTimeRange}
           onClose={() => setPriceModal(null)}
         />
       )}
