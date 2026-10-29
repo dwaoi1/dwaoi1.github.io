@@ -73,8 +73,7 @@ function makeTooltipLabel(prefix, p) {
     : `${dateStr}: ${formatYen(p.minPrice)}`;
 }
 
-const PriceModal = ({ item, priceHistory, onClose }) => {
-  const [timeRange, setTimeRange] = useState(180);
+const PriceModal = ({ item, priceHistory, onClose, timeRange, onTimeRangeChange }) => {
   const [showSealed, setShowSealed] = useState(true);
   const [showGoldText, setShowGoldText] = useState(true);
   const [showAsia, setShowAsia] = useState(true);
@@ -388,7 +387,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                 <button
                   key={label}
                   className={`time-range-btn${timeRange === days ? ' active' : ''}`}
-                  onClick={() => setTimeRange(days)}
+                  onClick={() => onTimeRangeChange(days)}
                 >
                   {label}
                 </button>
