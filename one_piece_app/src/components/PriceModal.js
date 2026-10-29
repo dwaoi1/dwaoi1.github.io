@@ -267,13 +267,18 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
         .filter(seg => seg.length >= 2)
         .map(seg => seg.map(p => `${xScale(p.date)},${yScale(p.minPrice)}`).join(' '));
 
-    // Helper: precompute dot positions for a series.
-    const toDots = (series) =>
-      series.map(p => ({
+    // Helper: precompute dot positions for a series, hiding dots on dense segments.
+    const toDots = (series) => {
+      const segments = splitSegments(series);
+      const segLen = new Map();
+      segments.forEach(seg => seg.forEach(p => segLen.set(p, seg.length)));
+      return series.map(p => ({
         ...p,
         cx: xScale(p.date),
         cy: yScale(p.minPrice),
+        showDot: (segLen.get(p) ?? series.length) <= 3,
       }));
+    };
 
     // Base line
     const minPoints = toPoints(effectiveHistory);
@@ -591,7 +596,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                         cx={p.cx}
                         cy={p.cy}
                         r="4"
-                        fill="#63b3ed"
+                        fill={p.showDot ? '#63b3ed' : 'transparent'}
                         style={{ cursor: 'pointer' }}
                         onMouseEnter={(e) => {
                           const svg = e.currentTarget.closest('svg');
@@ -618,7 +623,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                         cx={p.cx}
                         cy={p.cy}
                         r="4"
-                        fill="#ed8936"
+                        fill={p.showDot ? '#ed8936' : 'transparent'}
                         style={{ cursor: 'pointer' }}
                         onMouseEnter={(e) => {
                           const svg = e.currentTarget.closest('svg');
@@ -645,7 +650,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                         cx={p.cx}
                         cy={p.cy}
                         r="4"
-                        fill="#ecc94b"
+                        fill={p.showDot ? '#ecc94b' : 'transparent'}
                         style={{ cursor: 'pointer' }}
                         onMouseEnter={(e) => {
                           const svg = e.currentTarget.closest('svg');
@@ -672,7 +677,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                         cx={p.cx}
                         cy={p.cy}
                         r="4"
-                        fill="#9f7aea"
+                        fill={p.showDot ? '#9f7aea' : 'transparent'}
                         style={{ cursor: 'pointer' }}
                         onMouseEnter={(e) => {
                           const svg = e.currentTarget.closest('svg');
@@ -699,7 +704,7 @@ const PriceModal = ({ item, priceHistory, onClose }) => {
                         cx={p.cx}
                         cy={p.cy}
                         r="4"
-                        fill="#48bb78"
+                        fill={p.showDot ? '#48bb78' : 'transparent'}
                         style={{ cursor: 'pointer' }}
                         onMouseEnter={(e) => {
                           const svg = e.currentTarget.closest('svg');
