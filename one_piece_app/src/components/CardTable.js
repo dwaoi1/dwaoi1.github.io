@@ -15,7 +15,14 @@ const CardTable = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [priceModal, setPriceModal] = useState(null);
   const [priceHistory, setPriceHistory] = useState({});
-  const [priceTimeRange, setPriceTimeRange] = useState(180);
+  const [priceTimeRange, setPriceTimeRange] = useState(() => {
+    const saved = localStorage.getItem('priceTimeRange');
+    return saved ? Number(saved) : 180;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('priceTimeRange', String(priceTimeRange));
+  }, [priceTimeRange]);
   const itemsPerPage = 100;
 
   const getCardCode = (url) => {
