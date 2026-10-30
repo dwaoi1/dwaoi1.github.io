@@ -7224,7 +7224,7 @@
     "OP11-058_p1": 90,
     "OP11-059_p1": 90
   },
-  "asOf": "2026-10-30",
+  "asOf": "2026-10-31",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -7442,13 +7442,6 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/5083.webp"
         },
         {
-          "name": "ドン!!カード(金枠/全身左向き/ロビン)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥6,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/10198.webp"
-        },
-        {
           "name": "ドン!!カード(金枠/全身王冠/ナミ)",
           "rarity": "-",
           "model_number": "-",
@@ -7482,6 +7475,13 @@
           "model_number": "-",
           "amount": "¥5,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/15252.webp"
+        },
+        {
+          "name": "ドン!!カード(金枠/全身左向き/ロビン)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥4,500",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/10198.webp"
         },
         {
           "name": "ドン!!カード(金枠/ドフラミンゴ)",
@@ -27098,13 +27098,6 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/5083.webp"
         },
         {
-          "name": "ドン!!カード(金枠/全身左向き/ロビン)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥6,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/10198.webp"
-        },
-        {
           "name": "ドン!!カード(金枠/全身王冠/ナミ)",
           "rarity": "-",
           "model_number": "-",
@@ -27138,6 +27131,13 @@
           "model_number": "-",
           "amount": "¥5,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/15252.webp"
+        },
+        {
+          "name": "ドン!!カード(金枠/全身左向き/ロビン)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥4,500",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/10198.webp"
         },
         {
           "name": "ドン!!カード(金枠/ドフラミンゴ)",
