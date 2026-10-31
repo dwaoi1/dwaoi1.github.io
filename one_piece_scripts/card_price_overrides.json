@@ -7224,11 +7224,11 @@
     "OP11-058_p1": 90,
     "OP11-059_p1": 90
   },
-  "asOf": "2026-10-31",
+  "asOf": "2026-11-01",
   "multiplePrices": [
     {
       "cardCode": "-",
-      "priceCount": 97,
+      "priceCount": 98,
       "imageCodes": [],
       "entries": [
         {
@@ -7344,6 +7344,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/12047.webp"
         },
         {
+          "name": "ドン!!カード(金枠/UTALIVE/ウタ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥9,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/5106.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/エース)",
           "rarity": "-",
           "model_number": "-",
@@ -7356,13 +7363,6 @@
           "model_number": "-",
           "amount": "¥8,500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/10196.webp"
-        },
-        {
-          "name": "ドン!!カード(金枠/UTALIVE/ウタ)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥8,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/5106.webp"
         },
         {
           "name": "ドン!!カード(未開封/エルバフ/ONE PIECE DAY25)",
@@ -7438,7 +7438,7 @@
           "name": "ドン!!カード(金枠/エネル)",
           "rarity": "-",
           "model_number": "-",
-          "amount": "¥6,500",
+          "amount": "¥6,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5083.webp"
         },
         {
@@ -7701,13 +7701,6 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/5096.webp"
         },
         {
-          "name": "ドン!!カード(金枠/サカズキ)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥2,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/5104.webp"
-        },
-        {
           "name": "ドン!!カード(金枠/左腕/ルッチ)",
           "rarity": "-",
           "model_number": "-",
@@ -7757,6 +7750,20 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/14530.webp"
         },
         {
+          "name": "ドン!!カード(金枠/椅子/座りナミ&ロビン)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥2,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15792.webp"
+        },
+        {
+          "name": "ドン!!カード(金枠/リリス&ボニー&ロビン&ナミ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥2,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15794.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/ニューゲート)",
           "rarity": "-",
           "model_number": "-",
@@ -7769,6 +7776,13 @@
           "model_number": "-",
           "amount": "¥1,800",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5089.webp"
+        },
+        {
+          "name": "ドン!!カード(金枠/サカズキ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥1,500",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/5104.webp"
         },
         {
           "name": "ドン!!カード(金枠/おでん)",
@@ -7902,13 +7916,6 @@
           "model_number": "-",
           "amount": "¥1,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/14528.webp"
-        },
-        {
-          "name": "ドン!!カード(緑/ゾロ)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥900",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/1082.webp"
         }
       ]
     },
@@ -8811,6 +8818,75 @@
           "model_number": "P-128",
           "amount": "¥10",
           "image": "https://files.cardrush.media/onepiece/ocha_products/13168.webp"
+        }
+      ]
+    },
+    {
+      "cardCode": "EB05-055",
+      "priceCount": 2,
+      "imageCodes": [
+        "EB05-055"
+      ],
+      "entries": [
+        {
+          "name": "ナミ(パラレル/SP/枠無し/illust:Kentaro Yabuki)",
+          "rarity": "SP",
+          "model_number": "EB05-055",
+          "amount": "¥200,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15758.webp"
+        },
+        {
+          "name": "ナミ(パラレル/枠あり/猫背景/illust:Kentaro Yabuki)",
+          "rarity": "SR/P",
+          "model_number": "EB05-055",
+          "amount": "¥5,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15759.webp"
+        }
+      ]
+    },
+    {
+      "cardCode": "EB05-010",
+      "priceCount": 2,
+      "imageCodes": [
+        "EB05-010"
+      ],
+      "entries": [
+        {
+          "name": "ニコ・ロビン(パラレル/SP/漫画背景)",
+          "rarity": "L/SP",
+          "model_number": "EB05-010",
+          "amount": "¥100,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15760.webp"
+        },
+        {
+          "name": "ニコ・ロビン(パラレル/illust:Sunohara)",
+          "rarity": "L/P",
+          "model_number": "EB05-010",
+          "amount": "¥2,700",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15770.webp"
+        }
+      ]
+    },
+    {
+      "cardCode": "EB05-001",
+      "priceCount": 2,
+      "imageCodes": [
+        "EB05-001"
+      ],
+      "entries": [
+        {
+          "name": "ジュエリー・ボニー(パラレル/illust:Tanaka)",
+          "rarity": "SR/P",
+          "model_number": "EB05-001",
+          "amount": "¥3,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15777.webp"
+        },
+        {
+          "name": "ジュエリー・ボニー",
+          "rarity": "SR",
+          "model_number": "EB05-001",
+          "amount": "¥1,700",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15696.webp"
         }
       ]
     },
@@ -26875,6 +26951,10 @@
       "count": 12
     },
     {
+      "pattern": "Parallel",
+      "count": 5
+    },
+    {
       "pattern": "CS event",
       "count": 4
     },
@@ -27000,6 +27080,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/12047.webp"
         },
         {
+          "name": "ドン!!カード(金枠/UTALIVE/ウタ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥9,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/5106.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/エース)",
           "rarity": "-",
           "model_number": "-",
@@ -27012,13 +27099,6 @@
           "model_number": "-",
           "amount": "¥8,500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/10196.webp"
-        },
-        {
-          "name": "ドン!!カード(金枠/UTALIVE/ウタ)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥8,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/5106.webp"
         },
         {
           "name": "ドン!!カード(未開封/エルバフ/ONE PIECE DAY25)",
@@ -27094,7 +27174,7 @@
           "name": "ドン!!カード(金枠/エネル)",
           "rarity": "-",
           "model_number": "-",
-          "amount": "¥6,500",
+          "amount": "¥6,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5083.webp"
         },
         {
@@ -27357,13 +27437,6 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/5096.webp"
         },
         {
-          "name": "ドン!!カード(金枠/サカズキ)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥2,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/5104.webp"
-        },
-        {
           "name": "ドン!!カード(金枠/左腕/ルッチ)",
           "rarity": "-",
           "model_number": "-",
@@ -27413,6 +27486,20 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/14530.webp"
         },
         {
+          "name": "ドン!!カード(金枠/椅子/座りナミ&ロビン)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥2,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15792.webp"
+        },
+        {
+          "name": "ドン!!カード(金枠/リリス&ボニー&ロビン&ナミ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥2,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15794.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/ニューゲート)",
           "rarity": "-",
           "model_number": "-",
@@ -27425,6 +27512,13 @@
           "model_number": "-",
           "amount": "¥1,800",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5089.webp"
+        },
+        {
+          "name": "ドン!!カード(金枠/サカズキ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥1,500",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/5104.webp"
         },
         {
           "name": "ドン!!カード(金枠/おでん)",
@@ -27558,13 +27652,6 @@
           "model_number": "-",
           "amount": "¥1,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/14528.webp"
-        },
-        {
-          "name": "ドン!!カード(緑/ゾロ)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥900",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/1082.webp"
         }
       ]
     },
@@ -27745,43 +27832,34 @@
     "EB04-056",
     "EB04-057",
     "EB04-060",
-    "EB05-001",
     "EB05-002",
     "EB05-003",
     "EB05-004",
     "EB05-005",
-    "EB05-006",
     "EB05-007",
     "EB05-008",
     "EB05-009",
-    "EB05-010",
     "EB05-011",
     "EB05-012",
     "EB05-013",
-    "EB05-014",
     "EB05-015",
-    "EB05-016",
     "EB05-017",
     "EB05-018",
     "EB05-019",
     "EB05-020",
-    "EB05-021",
     "EB05-022",
     "EB05-023",
     "EB05-024",
     "EB05-025",
     "EB05-026",
     "EB05-027",
-    "EB05-028",
     "EB05-029",
     "EB05-030",
-    "EB05-031",
     "EB05-032",
     "EB05-033",
     "EB05-034",
     "EB05-035",
     "EB05-036",
-    "EB05-037",
     "EB05-038",
     "EB05-039",
     "EB05-040",
@@ -27790,7 +27868,6 @@
     "EB05-043",
     "EB05-044",
     "EB05-045",
-    "EB05-046",
     "EB05-047",
     "EB05-048",
     "EB05-049",
@@ -27799,13 +27876,11 @@
     "EB05-052",
     "EB05-053",
     "EB05-054",
-    "EB05-055",
     "EB05-056",
     "EB05-057",
     "EB05-058",
     "EB05-059",
     "EB05-060",
-    "EB05-061",
     "OP01-007",
     "OP01-009",
     "OP01-010",
@@ -29131,10 +29206,6 @@
       "count": 62
     },
     {
-      "series": "EB05",
-      "count": 61
-    },
-    {
       "series": "OP06",
       "count": 61
     },
@@ -29149,6 +29220,10 @@
     {
       "series": "OP15",
       "count": 51
+    },
+    {
+      "series": "EB05",
+      "count": 49
     },
     {
       "series": "OP16",
@@ -29318,23 +29393,15 @@
     },
     {
       "rarity": "R",
-      "count": 172
-    },
-    {
-      "rarity": "SR",
-      "count": 16
+      "count": 169
     },
     {
       "rarity": "P",
       "count": 13
     },
     {
-      "rarity": "L",
-      "count": 1
-    },
-    {
-      "rarity": "SEC",
-      "count": 1
+      "rarity": "SR",
+      "count": 9
     }
   ]
 }
