@@ -7224,7 +7224,7 @@
     "OP11-058_p1": 90,
     "OP11-059_p1": 90
   },
-  "asOf": "2026-11-03",
+  "asOf": "2026-11-04",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -7603,6 +7603,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/8939.webp"
         },
         {
+          "name": "ドン!!カード(金枠/バギー)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥3,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/8933.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/帽子/ロビン)",
           "rarity": "-",
           "model_number": "-",
@@ -7692,13 +7699,6 @@
           "model_number": "-",
           "amount": "¥2,500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/8925.webp"
-        },
-        {
-          "name": "ドン!!カード(金枠/バギー)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥2,500",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/8933.webp"
         },
         {
           "name": "ドン!!カード(金枠/モリア)",
@@ -8832,21 +8832,21 @@
           "name": "ナミ(パラレル/SP/枠無し/illust:Kentaro Yabuki)",
           "rarity": "SP",
           "model_number": "EB05-055",
-          "amount": "¥300,000",
+          "amount": "¥350,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/15758.webp"
         },
         {
           "name": "ナミ(パラレル/枠あり/猫背景/illust:Kentaro Yabuki)",
           "rarity": "SR/P",
           "model_number": "EB05-055",
-          "amount": "¥5,000",
+          "amount": "¥6,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/15759.webp"
         },
         {
           "name": "ナミ(パラレル/illust:yonemuro)",
           "rarity": "SR/P",
           "model_number": "EB05-055",
-          "amount": "¥1,000",
+          "amount": "¥1,100",
           "image": "https://files.cardrush.media/onepiece/ocha_products/15785.webp"
         }
       ]
@@ -8862,7 +8862,7 @@
           "name": "ニコ・ロビン(パラレル/SP/漫画背景)",
           "rarity": "L/SP",
           "model_number": "EB05-010",
-          "amount": "¥100,000",
+          "amount": "¥90,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/15760.webp"
         },
         {
@@ -27346,6 +27346,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/8939.webp"
         },
         {
+          "name": "ドン!!カード(金枠/バギー)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥3,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/8933.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/帽子/ロビン)",
           "rarity": "-",
           "model_number": "-",
@@ -27435,13 +27442,6 @@
           "model_number": "-",
           "amount": "¥2,500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/8925.webp"
-        },
-        {
-          "name": "ドン!!カード(金枠/バギー)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥2,500",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/8933.webp"
         },
         {
           "name": "ドン!!カード(金枠/モリア)",
