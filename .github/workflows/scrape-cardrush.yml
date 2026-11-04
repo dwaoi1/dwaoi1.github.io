@@ -18,9 +18,11 @@ jobs:
         uses: actions/checkout@v4
         timeout-minutes: 5
         with:
+          fetch-depth: 1
+          filter: blob:none
           sparse-checkout: |
-            one_piece_scripts/
-            one_piece_app/
+            one_piece_scripts/*
+            one_piece_app/public/cardrush_price_history.json
 
       - name: Set up Python
         uses: actions/setup-python@v5

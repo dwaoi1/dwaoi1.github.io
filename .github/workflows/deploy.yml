@@ -38,9 +38,11 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+        timeout-minutes: 5
 
       - name: Setup Node.js ⚙️
         uses: actions/setup-node@v4
+        timeout-minutes: 5
         with:
           node-version: '24'
           cache: 'npm'
@@ -59,9 +61,6 @@ jobs:
               cp "gh-pages/${asset}" "one_piece_app/public/${asset}"
             fi
           done
-          if [ -d "gh-pages/images" ]; then
-            cp -r "gh-pages/images" "one_piece_app/public/"
-          fi
           if [ -f one_piece_scripts/one_piece_cards.json ]; then
             cp one_piece_scripts/one_piece_cards.json one_piece_app/public/cards.json
           fi
