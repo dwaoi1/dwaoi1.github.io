@@ -949,7 +949,7 @@ def main():
     print(f'Loaded card data for {len(code_to_rarities)} card codes')
 
 # Auto-map image codes to Cardrush entries when there are multiple prices.
-    # Disabled for now - image downloads take too long. Use visual_match.py for manual mapping.
+    # Disabled for now - image downloads take too long. Add mappings manually in card_price_overrides.json.
     # auto_mappings = map_variant_images_to_entries(code_to_images, history_by_code)
     # if auto_mappings:
     #     for img_code, value in auto_mappings.items():
@@ -989,8 +989,8 @@ def main():
             existing_multiple_prices = raw_multiple_prices if isinstance(raw_multiple_prices, list) else []
             
             # RE-LOAD mappings and confidence_mappings from disk to ensure we don't 
-            # overwrite any updates made (e.g. by visual_match.py) while this script 
-            # was processing the price files.
+            # overwrite any updates made while this script was processing the price 
+            # files.
             disk_mappings = existing.get('mappings', {})
             if isinstance(disk_mappings, dict):
                 mappings.update(disk_mappings)
