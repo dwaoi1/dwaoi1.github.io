@@ -21,8 +21,9 @@ jobs:
           fetch-depth: 1
           filter: blob:none
           sparse-checkout: |
-            one_piece_scripts/*
-            one_piece_app/public/cardrush_price_history.json
+            /one_piece_scripts/**
+            /one_piece_app/public/cardrush_price_history.json
+          sparse-checkout-cone-mode: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
