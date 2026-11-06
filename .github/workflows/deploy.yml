@@ -23,7 +23,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -56,7 +56,7 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          for asset in cards.json favicon.ico logo192.png logo512.png manifest.json robots.txt wishlist.json; do
+          for asset in favicon.ico logo192.png logo512.png manifest.json robots.txt wishlist.json; do
             if [ -f "gh-pages/${asset}" ]; then
               cp "gh-pages/${asset}" "one_piece_app/public/${asset}"
             fi
@@ -67,9 +67,7 @@ jobs:
           if [ -f one_piece_scripts/card_price_overrides.json ]; then
             cp one_piece_scripts/card_price_overrides.json one_piece_app/public/unmatched_prices.json
           fi
-          if [ -d "one_piece_app/public/cardrush_buying_prices" ]; then
-            rm -rf "one_piece_app/public/cardrush_buying_prices"
-          fi
+          rm -rf "one_piece_app/public/cardrush_buying_prices"
           cd one_piece_app
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             export PUBLIC_URL="."
@@ -91,14 +89,10 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event_name == 'pull_request' && 'github-pages-preview' || 'github-pages' }}
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Skip deploy for pull requests
-        if: github.event_name == 'pull_request'
-        run: echo "Skipping deploy on pull requests."
       - name: Deploy to GitHub Pages 🚀
         id: deployment
-        if: github.event_name != 'pull_request'
         uses: actions/deploy-pages@v4
