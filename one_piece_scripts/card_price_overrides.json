@@ -7224,7 +7224,7 @@
     "OP11-058_p1": 90,
     "OP11-059_p1": 90
   },
-  "asOf": "2026-11-08",
+  "asOf": "2026-11-09",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -7470,13 +7470,6 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/8931.webp"
         },
         {
-          "name": "ドン!!カード(未開封/くま＆ボニー/3周年ロゴ)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥5,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/15252.webp"
-        },
-        {
           "name": "ドン!!カード(金枠/花背景/立ちナミ＆ロビン)",
           "rarity": "-",
           "model_number": "-",
@@ -7538,6 +7531,13 @@
           "model_number": "-",
           "amount": "¥4,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/12049.webp"
+        },
+        {
+          "name": "ドン!!カード(未開封/くま＆ボニー/3周年ロゴ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥4,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15252.webp"
         },
         {
           "name": "ドン!!カード(未開封/紫背景/白文字/LUFFY's)",
@@ -8839,7 +8839,7 @@
           "name": "ナミ(パラレル/SP/枠無し/illust:Kentaro Yabuki)",
           "rarity": "SP",
           "model_number": "EB05-055",
-          "amount": "¥400,000",
+          "amount": "¥350,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/15758.webp"
         },
         {
@@ -27266,13 +27266,6 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/8931.webp"
         },
         {
-          "name": "ドン!!カード(未開封/くま＆ボニー/3周年ロゴ)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥5,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/15252.webp"
-        },
-        {
           "name": "ドン!!カード(金枠/花背景/立ちナミ＆ロビン)",
           "rarity": "-",
           "model_number": "-",
@@ -27334,6 +27327,13 @@
           "model_number": "-",
           "amount": "¥4,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/12049.webp"
+        },
+        {
+          "name": "ドン!!カード(未開封/くま＆ボニー/3周年ロゴ)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥4,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/15252.webp"
         },
         {
           "name": "ドン!!カード(未開封/紫背景/白文字/LUFFY's)",
