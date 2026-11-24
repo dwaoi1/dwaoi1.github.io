@@ -7224,7 +7224,7 @@
     "OP11-058_p1": 90,
     "OP11-059_p1": 90
   },
-  "asOf": "2026-11-24",
+  "asOf": "2026-11-25",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -7701,6 +7701,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/5105.webp"
         },
         {
+          "name": "ドン!!カード(金枠/マゼラン)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥2,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/5095.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/ギア4/ルフィ)",
           "rarity": "-",
           "model_number": "-",
@@ -7762,13 +7769,6 @@
           "model_number": "-",
           "amount": "¥1,700",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5099.webp"
-        },
-        {
-          "name": "ドン!!カード(金枠/マゼラン)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥1,500",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/5095.webp"
         },
         {
           "name": "ドン!!カード(金枠/ジンベエ)",
@@ -8938,14 +8938,14 @@
           "name": "軍子宮(神の騎士団背景)",
           "rarity": "SR/P",
           "model_number": "OP18-065",
-          "amount": "¥300,000",
+          "amount": "¥280,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16206.webp"
         },
         {
           "name": "軍子宮(パラレル/illust:Akanegumo)",
           "rarity": "SR/P",
           "model_number": "OP18-065",
-          "amount": "¥2,300",
+          "amount": "¥2,500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16232.webp"
         }
       ]
@@ -8966,14 +8966,14 @@
           "name": "シャムロック聖(パラレル/illust:Yoshitaka Amano)",
           "rarity": "SEC/P",
           "model_number": "OP18-119",
-          "amount": "¥3,000",
+          "amount": "¥3,200",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16209.webp"
         },
         {
           "name": "シャムロック聖",
           "rarity": "SEC",
           "model_number": "OP18-119",
-          "amount": "¥2,000",
+          "amount": "¥2,200",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16203.webp"
         }
       ]
@@ -8987,14 +8987,14 @@
           "name": "ニコ・ロビン(パラレル/漫画背景/漫画絵)",
           "rarity": "SR/SP",
           "model_number": "OP18-031",
-          "amount": "¥80,000",
+          "amount": "¥70,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16204.webp"
         },
         {
           "name": "ニコ・ロビン(パラレル/illust:Nijihayashi)",
           "rarity": "SR/P",
           "model_number": "OP18-031",
-          "amount": "¥1,800",
+          "amount": "¥2,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16227.webp"
         }
       ]
@@ -9008,7 +9008,7 @@
           "name": "軍子宮(パラレル/漫画背景/漫画絵)",
           "rarity": "L/SP",
           "model_number": "OP18-060",
-          "amount": "¥70,000",
+          "amount": "¥60,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16205.webp"
         },
         {
@@ -9029,7 +9029,7 @@
           "name": "軍子宮(パラレル/SP/和柄/illust:Sunohara)",
           "rarity": "SP",
           "model_number": "OP18-084",
-          "amount": "¥11,000",
+          "amount": "¥12,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16216.webp"
         },
         {
@@ -9057,7 +9057,7 @@
           "name": "モンキー・Ｄ・ルフィ",
           "rarity": "SEC",
           "model_number": "OP18-118",
-          "amount": "¥1,200",
+          "amount": "¥1,100",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16202.webp"
         }
       ]
@@ -27609,6 +27609,13 @@
           "image": "https://files.cardrush.media/onepiece/ocha_products/5105.webp"
         },
         {
+          "name": "ドン!!カード(金枠/マゼラン)",
+          "rarity": "-",
+          "model_number": "-",
+          "amount": "¥2,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/5095.webp"
+        },
+        {
           "name": "ドン!!カード(金枠/ギア4/ルフィ)",
           "rarity": "-",
           "model_number": "-",
@@ -27670,13 +27677,6 @@
           "model_number": "-",
           "amount": "¥1,700",
           "image": "https://files.cardrush.media/onepiece/ocha_products/5099.webp"
-        },
-        {
-          "name": "ドン!!カード(金枠/マゼラン)",
-          "rarity": "-",
-          "model_number": "-",
-          "amount": "¥1,500",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/5095.webp"
         },
         {
           "name": "ドン!!カード(金枠/ジンベエ)",
@@ -27832,7 +27832,7 @@
           "name": "フランキー(パラレル/illust:Bashikou)",
           "rarity": "L/P",
           "model_number": "OP18-021",
-          "amount": "¥1,500",
+          "amount": "¥1,400",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16219.webp"
         }
       ]
@@ -27844,7 +27844,7 @@
           "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Bashikou)",
           "rarity": "L/P",
           "model_number": "OP18-022",
-          "amount": "¥3,500",
+          "amount": "¥3,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16220.webp"
         }
       ]
@@ -27856,15 +27856,27 @@
           "name": "ニコ・ロビン(パラレル/漫画背景/漫画絵)",
           "rarity": "SR/SP",
           "model_number": "OP18-031",
-          "amount": "¥80,000",
+          "amount": "¥70,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16204.webp"
         },
         {
           "name": "ニコ・ロビン(パラレル/illust:Nijihayashi)",
           "rarity": "SR/P",
           "model_number": "OP18-031",
-          "amount": "¥1,800",
+          "amount": "¥2,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16227.webp"
+        }
+      ]
+    },
+    {
+      "modelNumber": "OP18-034",
+      "latestEntries": [
+        {
+          "name": "フランキー(パラレル/illust:Norikatsu Miyoshi)",
+          "rarity": "SR/P",
+          "model_number": "OP18-034",
+          "amount": "¥1,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/16228.webp"
         }
       ]
     },
@@ -27911,7 +27923,7 @@
           "name": "軍子宮(パラレル/漫画背景/漫画絵)",
           "rarity": "L/SP",
           "model_number": "OP18-060",
-          "amount": "¥70,000",
+          "amount": "¥60,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16205.webp"
         },
         {
@@ -27930,7 +27942,7 @@
           "name": "キリンガム聖(パラレル/illust:Hayaken-sarena)",
           "rarity": "TR",
           "model_number": "OP18-064",
-          "amount": "¥1,500",
+          "amount": "¥1,700",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16224.webp"
         }
       ]
@@ -27942,29 +27954,21 @@
           "name": "軍子宮(神の騎士団背景)",
           "rarity": "SR/P",
           "model_number": "OP18-065",
-          "amount": "¥300,000",
+          "amount": "¥280,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16206.webp"
         },
         {
           "name": "軍子宮(パラレル/illust:Akanegumo)",
           "rarity": "SR/P",
           "model_number": "OP18-065",
-          "amount": "¥2,300",
+          "amount": "¥2,500",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16232.webp"
         }
       ]
     },
     {
       "modelNumber": "OP18-079",
-      "latestEntries": [
-        {
-          "name": "スパンダム(パラレル/illust:Anderson)",
-          "rarity": "L/P",
-          "model_number": "OP18-079",
-          "amount": "¥1,000",
-          "image": "https://files.cardrush.media/onepiece/ocha_products/16223.webp"
-        }
-      ]
+      "latestEntries": []
     },
     {
       "modelNumber": "OP18-083",
@@ -27973,7 +27977,7 @@
           "name": "キリンガム聖(パラレル/illust:tessy)",
           "rarity": "R/P",
           "model_number": "OP18-083",
-          "amount": "¥1,200",
+          "amount": "¥1,300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16239.webp"
         }
       ]
@@ -27985,7 +27989,7 @@
           "name": "軍子宮(パラレル/SP/和柄/illust:Sunohara)",
           "rarity": "SP",
           "model_number": "OP18-084",
-          "amount": "¥11,000",
+          "amount": "¥12,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16216.webp"
         },
         {
@@ -28016,7 +28020,7 @@
           "name": "呼ぶぞ(パラレル/黒背景/漫画絵)",
           "rarity": "R/P",
           "model_number": "OP18-096",
-          "amount": "¥11,000",
+          "amount": "¥10,000",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16211.webp"
         }
       ]
@@ -28035,7 +28039,7 @@
           "name": "モンキー・Ｄ・ルフィ",
           "rarity": "SEC",
           "model_number": "OP18-118",
-          "amount": "¥1,200",
+          "amount": "¥1,100",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16202.webp"
         }
       ]
@@ -28054,14 +28058,14 @@
           "name": "シャムロック聖(パラレル/illust:Yoshitaka Amano)",
           "rarity": "SEC/P",
           "model_number": "OP18-119",
-          "amount": "¥3,000",
+          "amount": "¥3,200",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16209.webp"
         },
         {
           "name": "シャムロック聖",
           "rarity": "SEC",
           "model_number": "OP18-119",
-          "amount": "¥2,000",
+          "amount": "¥2,200",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16203.webp"
         }
       ]
@@ -28106,7 +28110,7 @@
   "pricesWithoutCardsBreakdown": [
     {
       "series": "OP18",
-      "count": 17
+      "count": 18
     },
     {
       "series": "P",
