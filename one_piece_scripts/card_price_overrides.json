@@ -7224,7 +7224,7 @@
     "OP11-058_p1": 90,
     "OP11-059_p1": 90
   },
-  "asOf": "2026-11-25",
+  "asOf": "2026-11-26",
   "multiplePrices": [
     {
       "cardCode": "-",
@@ -8994,7 +8994,7 @@
           "name": "ニコ・ロビン(パラレル/illust:Nijihayashi)",
           "rarity": "SR/P",
           "model_number": "OP18-031",
-          "amount": "¥2,000",
+          "amount": "¥2,200",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16227.webp"
         }
       ]
@@ -9050,7 +9050,7 @@
           "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Matsumoto Akira)",
           "rarity": "SEC/P",
           "model_number": "OP18-118",
-          "amount": "¥2,500",
+          "amount": "¥2,700",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16225.webp"
         },
         {
@@ -27832,7 +27832,7 @@
           "name": "フランキー(パラレル/illust:Bashikou)",
           "rarity": "L/P",
           "model_number": "OP18-021",
-          "amount": "¥1,400",
+          "amount": "¥1,700",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16219.webp"
         }
       ]
@@ -27844,7 +27844,7 @@
           "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Bashikou)",
           "rarity": "L/P",
           "model_number": "OP18-022",
-          "amount": "¥3,000",
+          "amount": "¥3,300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16220.webp"
         }
       ]
@@ -27863,7 +27863,7 @@
           "name": "ニコ・ロビン(パラレル/illust:Nijihayashi)",
           "rarity": "SR/P",
           "model_number": "OP18-031",
-          "amount": "¥2,000",
+          "amount": "¥2,200",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16227.webp"
         }
       ]
@@ -27875,7 +27875,7 @@
           "name": "フランキー(パラレル/illust:Norikatsu Miyoshi)",
           "rarity": "SR/P",
           "model_number": "OP18-034",
-          "amount": "¥1,000",
+          "amount": "¥1,100",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16228.webp"
         }
       ]
@@ -27887,7 +27887,7 @@
           "name": "ミス・オールサンデー(パラレル/illust:Hashimoto Q)",
           "rarity": "L/P",
           "model_number": "OP18-041",
-          "amount": "¥2,000",
+          "amount": "¥2,200",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16221.webp"
         }
       ]
@@ -27899,7 +27899,7 @@
           "name": "Mr.0＆ミス・オールサンデー(パラレル/illust:Norikatsu Miyoshi)",
           "rarity": "SR/P",
           "model_number": "OP18-046",
-          "amount": "¥1,200",
+          "amount": "¥1,300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16229.webp"
         }
       ]
@@ -27911,7 +27911,7 @@
           "name": "Mr.4＆ミス・メリークリスマス(パラレル/illust:BISAI)",
           "rarity": "R/P",
           "model_number": "OP18-051",
-          "amount": "¥1,200",
+          "amount": "¥1,300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16238.webp"
         }
       ]
@@ -27942,7 +27942,7 @@
           "name": "キリンガム聖(パラレル/illust:Hayaken-sarena)",
           "rarity": "TR",
           "model_number": "OP18-064",
-          "amount": "¥1,700",
+          "amount": "¥1,800",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16224.webp"
         }
       ]
@@ -27968,7 +27968,15 @@
     },
     {
       "modelNumber": "OP18-079",
-      "latestEntries": []
+      "latestEntries": [
+        {
+          "name": "スパンダム(パラレル/illust:Anderson)",
+          "rarity": "L/P",
+          "model_number": "OP18-079",
+          "amount": "¥1,000",
+          "image": "https://files.cardrush.media/onepiece/ocha_products/16223.webp"
+        }
+      ]
     },
     {
       "modelNumber": "OP18-083",
@@ -28008,7 +28016,7 @@
           "name": "ソマーズ聖(パラレル/illust:tatsuya)",
           "rarity": "R/P",
           "model_number": "OP18-088",
-          "amount": "¥1,000",
+          "amount": "¥1,300",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16240.webp"
         }
       ]
@@ -28032,7 +28040,7 @@
           "name": "モンキー・Ｄ・ルフィ(パラレル/illust:Matsumoto Akira)",
           "rarity": "SEC/P",
           "model_number": "OP18-118",
-          "amount": "¥2,500",
+          "amount": "¥2,700",
           "image": "https://files.cardrush.media/onepiece/ocha_products/16225.webp"
         },
         {
