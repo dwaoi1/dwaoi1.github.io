@@ -17,3 +17,7 @@ one_piece_scripts/mapping_prep.json
 one_piece_scripts/op16_entries.txt
 one_piece_scripts/extract_*_output.txt
 one_piece_scripts/op16_mappings_tmp.json
+
+# Rematcher caches (regenerable: images + phash bits)
+one_piece_scripts/.image_cache/
+one_piece_scripts/.phash_cache.json

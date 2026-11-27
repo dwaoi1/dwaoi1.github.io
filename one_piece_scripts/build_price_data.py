@@ -22,6 +22,8 @@ import cv2
 import numpy as np
 import requests
 
+from cardrush_names import classify_price_group
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 PRICE_DIR = os.path.join(SCRIPT_DIR, 'cardrush_buying_prices')
@@ -327,29 +329,12 @@ def build_history_by_code(price_files):
 
 # Detailed classification logic using Cardrush name patterns
 def classify_entry(e):
-    """Classify a Cardrush entry into variant categories based on its name and rarity."""
-    name = e.get('name') or ''
-    rarity = e.get('rarity') or ''
-    is_asia = 'asia' in name.lower()
-    
-    # Classification order matters!
-    if '未開封' in name:
-        return 'sealedAsia' if is_asia else 'sealed'
-    if '金文字' in name:
-        return 'goldText'
-    
-    # Specific parallel markings
-    # Including 'foil' and '白黒版' (black/white) per user feedback
-    parallel_signatures = [
-        'パラレル', '漫画', 'SP', 'シリアル', 'CS', 'アニメ', 
-        'フルアート', 'foil', 'ホイル', '白黒版', '★無し'
-    ]
-    if any(sig in name for sig in parallel_signatures) or '/P' in rarity:
-        if is_asia:
-            return 'parallelAsia'
-        return 'parallel'
-        
-    return 'asia' if is_asia else 'base'
+    """Classify a CardRush entry into variant categories based on its name and rarity.
+
+    Delegates to cardrush_names.classify_price_group so that the price
+    grouping and the rematcher (remap_prices.py) share one tokenizer.
+    """
+    return classify_price_group(e.get('name') or '', e.get('rarity') or '')
 
 
 def build_price_history(history_by_code, mappings=None):

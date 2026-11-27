@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Card Price Matcher</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header id="topbar">
+    <div class="brand">Card Price Matcher</div>
+    <div id="progress">loading…</div>
+    <div class="controls">
+      <input id="search" type="search" placeholder="search code / name" spellcheck="false">
+      <select id="filter">
+        <option value="pending">needs review</option>
+        <option value="resolved">resolved</option>
+        <option value="all">all</option>
+      </select>
+      <button id="prevBtn" title="previous item (←)">◀</button>
+      <button id="nextBtn" title="next item (→)">▶</button>
+      <button id="resolveBtn" class="primary" title="accept current state (Enter)">Accept ✓</button>
+    </div>
+  </header>
+
+  <div id="layout">
+    <aside id="sidebar">
+      <ul id="itemList"></ul>
+    </aside>
+
+    <main id="main">
+      <div id="emptyState" class="hint">Nothing to review with this filter. 🎉</div>
+
+      <section id="itemView" hidden>
+        <h2 id="itemTitle"></h2>
+        <div id="itemMeta" class="meta"></div>
+
+        <h3>Official variants <span class="dim">click one to select, then pick a CardRush entry</span></h3>
+        <div id="officialRow" class="img-row"></div>
+
+        <h3>CardRush entries <span class="dim">click to link to the selected variant</span></h3>
+        <div id="candidateRow" class="img-row"></div>
+
+        <h3>Links for this card</h3>
+        <div id="linkTable"></div>
+
+        <div id="nameMismatchBox" hidden>
+          <div id="nmEntry" class="nm-entry"></div>
+          <div class="btn-row">
+            <button id="nmAdd" class="primary">Link entry to base card</button>
+            <button id="nmIgnore">Ignore entry</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" hidden></div>
+  <script src="/app.js"></script>
+</body>
+</html>
